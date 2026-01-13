@@ -1,6 +1,8 @@
 {
-  "version": "0.1.0",
-  "clientFile": "SeabyssClient.rar",
+  "version": "0.1.1",
+  "clientFile": "SeabyssClient.zip",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.0/SeabyssClient.zip",
   "size": 0,
   "checksum": ""
 }
+	
