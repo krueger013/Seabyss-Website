@@ -1,0 +1,10 @@
+{
+  "gameId": "seabyss",
+  "gameVersion": "0.1.6",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.6/SeabyssClient.zip",
+  "exePath": "Seabyss.exe",
+  "fileSizeText": "À confirmer",
+  "releaseDate": "2026-06-14",
+  "notes": "Version test du launcher Seabyss.",
+  "minimumLauncherVersion": "0.1.0"
+}
