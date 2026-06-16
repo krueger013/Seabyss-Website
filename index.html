@@ -2,28 +2,26 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Seabyss – Dark Pirate Online</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seabyss - Dark Pirate Online</title>
     <meta name="description" content="Seabyss est un jeu pirate en ligne sombre et réaliste.">
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <!-- NAVIGATION -->
     <nav class="top-nav">
         <div class="nav-container">
-            <div class="logo">SEABYSS</div>
+            <a href="index.html" class="logo">SEABYSS</a>
 
             <div class="nav-links">
                 <a href="index.html">Accueil</a>
-                <a href="download.html">Télécharger</a>
+                <a href="#launcher">Launcher</a>
+                <a href="#patch-notes">Patch notes</a>
+                <a href="download.html" class="nav-download">Télécharger</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO -->
     <header class="hero"
         style="
             background-image: url('assets/images/top image site seabyss.png');
@@ -34,82 +32,191 @@
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
+            <p class="eyebrow">MMO pirate sombre en développement</p>
             <h1>SEABYSS</h1>
             <p class="subtitle">
-                Un monde pirate sombre où chaque canon compte.
+                Prenez la mer dans un monde brutal où la stratégie, l’équipement
+                et la maîtrise de votre navire décident de chaque bataille.
             </p>
 
-            <!-- Bouton qui télécharge la version officielle depuis la release GitHub -->
-            <a href="https://github.com/krueger013/Seabyss-Website/releases/download/0.1.6/SeabyssClient.zip"
-               class="btn-primary">
-                Télécharger Seabyss 0.1.6
-            </a>
+            <div class="hero-actions">
+                <a href="https://github.com/krueger013/Seabyss-Website/releases/download/0.1.6/SeabyssClient.zip"
+                   class="btn-primary">
+                    Télécharger Seabyss 0.1.6
+                </a>
+                <a href="#patch-notes" class="btn-secondary">Voir les nouveautés</a>
+            </div>
+
+            <div class="hero-status">
+                <span>Version officielle 0.1.6</span>
+                <span>Launcher requis</span>
+                <span>Windows</span>
+            </div>
         </div>
     </header>
 
-    <!-- UNIVERS -->
     <section class="section">
         <div class="container">
-            <h2>L’univers de Seabyss</h2>
-            <p>
-                Seabyss est un jeu en ligne pirate où la stratégie,
-                l’équipement et la maîtrise de votre navire
-                déterminent votre survie.
-            </p>
+            <div class="section-heading">
+                <p class="eyebrow">Univers</p>
+                <h2>L’océan ne pardonne pas</h2>
+                <p>
+                    Seabyss met l’accent sur la progression navale, les affrontements
+                    au canon et la préparation avant chaque sortie en mer.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <span class="card-kicker">Navigation</span>
+                    <h3>Choisissez votre route</h3>
+                    <p>Explorez, anticipez les rencontres et adaptez votre approche selon votre navire.</p>
+                </article>
+
+                <article class="feature-card">
+                    <span class="card-kicker">Combat</span>
+                    <h3>Chaque bordée compte</h3>
+                    <p>Positionnement, timing et puissance de feu définissent l’issue des affrontements.</p>
+                </article>
+
+                <article class="feature-card">
+                    <span class="card-kicker">Progression</span>
+                    <h3>Améliorez votre flotte</h3>
+                    <p>Faites évoluer votre équipement pour survivre à des mers de plus en plus hostiles.</p>
+                </article>
+            </div>
         </div>
     </section>
 
-    <!-- NAVIRES -->
     <section class="section dark">
         <div class="container">
-            <h2>Navires</h2>
+            <div class="section-heading">
+                <p class="eyebrow">Classes</p>
+                <h2>Navires</h2>
+            </div>
 
             <div class="card-grid">
                 <div class="card">
-                    <h3>Navire Léger</h3>
+                    <span class="ship-stat">Rapidité</span>
+                    <h3>Navire léger</h3>
                     <p>Rapide et agile, idéal pour l’exploration.</p>
                 </div>
 
                 <div class="card">
-                    <h3>Navire Intermédiaire</h3>
+                    <span class="ship-stat">Polyvalence</span>
+                    <h3>Navire intermédiaire</h3>
                     <p>Équilibre parfait entre vitesse et puissance.</p>
                 </div>
 
                 <div class="card">
-                    <h3>Navire Lourd</h3>
+                    <span class="ship-stat">Puissance</span>
+                    <h3>Navire lourd</h3>
                     <p>Lent mais dévastateur en combat.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CANONS -->
-    <section class="section">
+    <section class="section split-section" id="launcher">
         <div class="container">
-            <h2>Canons & Équipement</h2>
-            <p>
-                Personnalisez votre puissance de feu avec différents
-                types de canons et équipements spécialisés.
-            </p>
-        </div>
-    </section>
+            <div class="split-layout">
+                <div>
+                    <p class="eyebrow">Launcher</p>
+                    <h2>Installation officielle</h2>
+                    <p>
+                        Le client officiel passe par le launcher Seabyss. Il récupère
+                        la version actuelle et servira de point d’entrée pour les mises
+                        à jour futures.
+                    </p>
+                </div>
 
-    <!-- APERÇU -->
-    <section class="section dark">
-        <div class="container">
-            <h2>Aperçu du jeu</h2>
-
-            <div class="card-grid">
-                <div class="card">Screenshot 1</div>
-                <div class="card">Screenshot 2</div>
-                <div class="card">Screenshot 3</div>
+                <div class="info-panel">
+                    <div class="info-row">
+                        <span>Version du jeu</span>
+                        <strong>0.1.6</strong>
+                    </div>
+                    <div class="info-row">
+                        <span>Version launcher minimum</span>
+                        <strong>0.1.0</strong>
+                    </div>
+                    <div class="info-row">
+                        <span>Exécutable</span>
+                        <strong>Seabyss.exe</strong>
+                    </div>
+                    <a href="https://github.com/krueger013/Seabyss-Website/releases/download/0.1.6/SeabyssClient.zip"
+                       class="btn-primary btn-wide">
+                        Télécharger le client 0.1.6
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <section class="section dark" id="patch-notes">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Patch notes</p>
+                <h2>Version 0.1.6</h2>
+                <p>Version test du launcher Seabyss publiée le 14 juin 2026.</p>
+            </div>
+
+            <div class="patch-list">
+                <article class="patch-item">
+                    <span>01</span>
+                    <div>
+                        <h3>Distribution officielle</h3>
+                        <p>Le client est distribué depuis la release GitHub officielle en archive ZIP.</p>
+                    </div>
+                </article>
+
+                <article class="patch-item">
+                    <span>02</span>
+                    <div>
+                        <h3>Manifest launcher</h3>
+                        <p>Le manifeste public indique la version du jeu, l’URL de téléchargement et l’exécutable attendu.</p>
+                    </div>
+                </article>
+
+                <article class="patch-item">
+                    <span>03</span>
+                    <div>
+                        <h3>Préparation des mises à jour</h3>
+                        <p>La structure reste prête pour les prochaines notes de version et évolutions du client.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="apercu">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">Aperçu du jeu</p>
+                <h2>Galerie prête pour les screenshots</h2>
+                <p>Les emplacements ci-dessous sont préparés pour recevoir les captures officielles du jeu.</p>
+            </div>
+
+            <div class="screenshot-grid">
+                <figure class="screenshot-slot">
+                    <div class="screenshot-frame"></div>
+                    <figcaption>Combat naval</figcaption>
+                </figure>
+
+                <figure class="screenshot-slot">
+                    <div class="screenshot-frame"></div>
+                    <figcaption>Navigation</figcaption>
+                </figure>
+
+                <figure class="screenshot-slot">
+                    <div class="screenshot-frame"></div>
+                    <figcaption>Progression</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>© 2025 Seabyss – Tous droits réservés</p>
+        <p>© 2025 Seabyss - Tous droits réservés</p>
     </footer>
 
 </body>

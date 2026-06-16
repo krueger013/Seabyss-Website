@@ -1,49 +1,99 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Télécharger Seabyss</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Télécharger Seabyss 0.1.6</title>
+    <meta name="description" content="Télécharger la version officielle 0.1.6 de Seabyss.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<!-- NAVIGATION -->
 <nav class="top-nav">
     <div class="nav-container">
-        <div class="logo">SEABYSS</div>
+        <a href="index.html" class="logo">SEABYSS</a>
         <div class="nav-links">
             <a href="index.html">Accueil</a>
-            <a href="download.html">Télécharger</a>
+            <a href="index.html#launcher">Launcher</a>
+            <a href="index.html#patch-notes">Patch notes</a>
+            <a href="download.html" class="nav-download">Télécharger</a>
         </div>
     </div>
 </nav>
 
-<!-- CONTENU -->
-<section class="section">
+<main class="download-page">
     <div class="container">
-        <h2>Télécharger Seabyss</h2>
+        <section class="download-hero">
+            <div>
+                <p class="eyebrow">Client officiel</p>
+                <h1>Télécharger Seabyss</h1>
+                <p>
+                    Téléchargez la version officielle actuelle. Le launcher se chargera
+                    automatiquement des mises à jour futures.
+                </p>
 
-        <p>
-            Téléchargez le client officiel de Seabyss.<br>
-            Le launcher se chargera automatiquement des mises à jour futures.
-        </p>
+                <div class="hero-actions">
+                    <a href="https://github.com/krueger013/Seabyss-Website/releases/download/0.1.6/SeabyssClient.zip" class="btn-primary">
+                        Télécharger le client 0.1.6
+                    </a>
+                    <a href="index.html#patch-notes" class="btn-secondary">Lire les patch notes</a>
+                </div>
+            </div>
 
-        <div style="margin-top:40px; text-align:center;">
-            <a href="https://github.com/krueger013/Seabyss-Website/releases/download/0.1.6/SeabyssClient.zip" class="btn-primary">
-                Télécharger le client (v0.1.6)
-            </a>
-        </div>
+            <aside class="info-panel">
+                <div class="info-row">
+                    <span>Version actuelle</span>
+                    <strong>0.1.6</strong>
+                </div>
+                <div class="info-row">
+                    <span>Archive</span>
+                    <strong>SeabyssClient.zip</strong>
+                </div>
+                <div class="info-row">
+                    <span>Launcher minimum</span>
+                    <strong>0.1.0</strong>
+                </div>
+                <div class="info-row">
+                    <span>Exécutable</span>
+                    <strong>Seabyss.exe</strong>
+                </div>
+            </aside>
+        </section>
 
-        <p style="margin-top:25px; font-size:0.9rem; opacity:0.8; text-align:center;">
-            Version actuelle : 0.1.6
-        </p>
+        <section class="section compact-section">
+            <div class="section-heading">
+                <p class="eyebrow">Installation</p>
+                <h2>Launcher Seabyss</h2>
+                <p>
+                    Le launcher utilise le manifeste officiel du site pour connaître
+                    la version courante du jeu et l’adresse du client.
+                </p>
+            </div>
+
+            <div class="patch-list">
+                <article class="patch-item">
+                    <span>01</span>
+                    <div>
+                        <h3>Télécharger l’archive ZIP</h3>
+                        <p>Le bouton principal pointe vers la release officielle 0.1.6.</p>
+                    </div>
+                </article>
+
+                <article class="patch-item">
+                    <span>02</span>
+                    <div>
+                        <h3>Lancer Seabyss.exe</h3>
+                        <p>Le manifeste indique l’exécutable attendu dans le client.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
     </div>
-</section>
+</main>
 
-<!-- FOOTER -->
 <footer>
-    <p>© 2025 Seabyss – Tous droits réservés</p>
+    <p>© 2025 Seabyss - Tous droits réservés</p>
 </footer>
 
 </body>
