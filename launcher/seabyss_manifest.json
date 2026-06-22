@@ -1,11 +1,11 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.1",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.1/SeabyssClient-Beta-0.1.7-beta.1.zip",
+  "gameVersion": "0.1.7-beta.2",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.2/SeabyssClient-Beta-0.1.7-beta.2.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778",
-  "fileSizeText": "A confirmer",
-  "releaseDate": "2026-06-21",
-  "notes": "Beta de test. Les comptes, guildes, inventaires, monnaies et progressions créés pendant la Beta ne seront pas conservés au lancement officiel. Tous les joueurs recommenceront à zéro.",
+  "fileSizeText": "À confirmer",
+  "releaseDate": "2026-06-22",
+  "notes": "Mise à jour UI Beta. Seabyss Beta est une version de test. Les comptes, guildes, inventaires, monnaies et progressions créés pendant la Beta ne seront pas conservés au lancement officiel. Tous les joueurs recommenceront à zéro.",
   "minimumLauncherVersion": "0.1.0"
 }
