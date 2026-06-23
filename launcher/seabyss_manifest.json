@@ -1,11 +1,11 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.4",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.4/SeabyssClient-Beta-0.1.7-beta.4.zip",
+  "gameVersion": "0.1.7-beta.5",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.5/SeabyssClient-Beta-0.1.7-beta.5.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 -screen-fullscreen 0 -screen-width 1280 -screen-height 720",
   "fileSizeText": "To confirm",
   "releaseDate": "2026-06-22",
-  "notes": "Beta connection retry update. Seabyss Beta is a test version. Accounts, guilds, inventories, currencies, and progress created during Beta will not be kept for the official launch. All players will start from zero at launch.",
+  "notes": "Beta connection retry UI cleanup. Seabyss Beta is a test version. Accounts, guilds, inventories, currencies, and progress created during Beta will not be kept for the official launch. All players will start from zero at launch.",
   "minimumLauncherVersion": "0.1.0"
 }
