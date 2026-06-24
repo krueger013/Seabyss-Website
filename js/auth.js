@@ -39,7 +39,7 @@
         if (!isLoggedIn(session)) {
             const currentPage = window.location.pathname.split("/").pop() || "profile.html";
             const target = encodeURIComponent(currentPage === "login.html" ? "profile.html" : currentPage);
-            window.location.href = `login.html?returnTo=${target}`;
+            window.location.href = `login.html?v=2&returnTo=${target}`;
             return null;
         }
         return session;

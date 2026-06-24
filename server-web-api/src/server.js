@@ -144,6 +144,32 @@ const loginLimiter = rateLimit({
     message: { message: "Too many login attempts. Please try again later." }
 });
 
+const combatGradeThresholds = [
+    { min: 1000, grade: "Legende Abyssale" },
+    { min: 750, grade: "Couronne Or" },
+    { min: 500, grade: "Couronne Argent" },
+    { min: 300, grade: "Couronne Bronze" },
+    { min: 200, grade: "Crane Or" },
+    { min: 150, grade: "Crane Argent" },
+    { min: 100, grade: "Crane Bronze" },
+    { min: 75, grade: "Bouclier Or" },
+    { min: 50, grade: "Bouclier Argent" },
+    { min: 30, grade: "Bouclier Bronze" },
+    { min: 20, grade: "Or I" },
+    { min: 10, grade: "Argent I" },
+    { min: 1, grade: "Bronze I" }
+];
+
+const shipNameById = {
+    elite_1: "Elite Ship 1"
+};
+
+const cannonNameById = {
+    carronade: "Carronade",
+    long_range_cannon: "Long Range Cannon",
+    iron_cannon: "Iron Cannon"
+};
+
 function maskEmail(email) {
     if (!email || !email.includes("@")) {
         return undefined;
@@ -159,6 +185,50 @@ function maskPlayFabId(playFabId) {
         return undefined;
     }
     return `${playFabId.slice(0, 4)}...${playFabId.slice(-4)}`;
+}
+
+function toReadableId(id) {
+    if (typeof id !== "string" || !id.trim()) {
+        return null;
+    }
+
+    return id
+        .trim()
+        .replace(/[_-]+/g, " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function formatNumber(value) {
+    const number = toPublicNumber(value);
+    return number === null ? null : new Intl.NumberFormat("en-US").format(number);
+}
+
+function formatDateTime(value) {
+    if (!value) {
+        return null;
+    }
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return null;
+    }
+
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const hours = String(date.getUTCHours()).padStart(2, "0");
+    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes} UTC`;
+}
+
+function deriveCombatGrade(combatPoints) {
+    const points = toPublicNumber(combatPoints);
+    if (!points || points <= 0) {
+        return "Unranked";
+    }
+
+    const match = combatGradeThresholds.find((grade) => points >= grade.min);
+    return match ? match.grade : "Unranked";
 }
 
 function publicSession(req) {
@@ -192,6 +262,147 @@ function validateLoginInput(req, res, next) {
 
     req.loginInput = { email, password };
     next();
+}
+
+function emptyGameplayProfile() {
+    return {
+        gold: null,
+        diamonds: null,
+        sirenTears: null,
+        xp: null,
+        level: null,
+        elitePoints: null,
+        combatPoints: null,
+        combatGrade: null,
+        equippedShip: null,
+        equippedShipId: null,
+        equippedCannons: [],
+        npcKills: null,
+        boardingCount: null,
+        playerKills: null
+    };
+}
+
+function toPublicNumber(value) {
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return value;
+    }
+
+    if (typeof value === "string" && value.trim() !== "") {
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : null;
+    }
+
+    return null;
+}
+
+function calculateLevel(xp) {
+    const safeXp = Math.max(0, Number(xp) || 0);
+    return Math.max(1, Math.floor(Math.sqrt(safeXp / 100)) + 1);
+}
+
+function summarizeEquippedCannons(cannons) {
+    if (!Array.isArray(cannons)) {
+        return [];
+    }
+
+    return cannons
+        .map((cannon) => ({
+            id: typeof cannon.id === "string" ? cannon.id : null,
+            name: cannonNameById[cannon.id] || toReadableId(cannon.id),
+            equipped: toPublicNumber(cannon.equipped)
+        }))
+        .filter((cannon) => cannon.id && cannon.equipped && cannon.equipped > 0);
+}
+
+function buildGameplaySummary(rawProfile) {
+    if (!rawProfile || typeof rawProfile !== "object") {
+        return emptyGameplayProfile();
+    }
+
+    const xp = toPublicNumber(rawProfile.xp);
+    const equippedShipId = typeof rawProfile.equippedEliteShipId === "string" && rawProfile.equippedEliteShipId
+        ? rawProfile.equippedEliteShipId
+        : null;
+    const playerKills = toPublicNumber(rawProfile.playerKills);
+    const storedCombatPoints = toPublicNumber(rawProfile.combatPoints);
+    // PlayerProfileData.playerKills is currently the available persisted score for the web combat profile.
+    const combatPoints = storedCombatPoints === null ? playerKills : storedCombatPoints;
+    const storedCombatGrade = typeof rawProfile.combatGrade === "string" && rawProfile.combatGrade
+        ? rawProfile.combatGrade
+        : null;
+
+    return {
+        gold: toPublicNumber(rawProfile.gold),
+        diamonds: toPublicNumber(rawProfile.diamonds),
+        sirenTears: toPublicNumber(rawProfile.sirenTears),
+        xp,
+        level: xp === null ? null : calculateLevel(xp),
+        elitePoints: toPublicNumber(rawProfile.elitePoints),
+        combatPoints,
+        combatGrade: storedCombatGrade || deriveCombatGrade(combatPoints),
+        equippedShip: equippedShipId ? shipNameById[equippedShipId] || toReadableId(equippedShipId) : null,
+        equippedShipId,
+        equippedCannons: summarizeEquippedCannons(rawProfile.cannons),
+        npcKills: toPublicNumber(rawProfile.npcKills),
+        boardingCount: toPublicNumber(rawProfile.boardingCount),
+        playerKills
+    };
+}
+
+async function getGameplayProfile(playFabId) {
+    if (!playFabId || !config.playFabTitleId || !config.playFabSecretKey) {
+        return emptyGameplayProfile();
+    }
+
+    try {
+        const response = await fetch(`https://${config.playFabTitleId}.playfabapi.com/Server/GetUserInternalData`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-SecretKey": config.playFabSecretKey
+            },
+            body: JSON.stringify({
+                PlayFabId: playFabId,
+                Keys: ["profile_v1"]
+            })
+        });
+
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || payload.code !== 200) {
+            console.error("PlayFab gameplay profile request failed", {
+                playFabId: maskPlayFabId(playFabId),
+                status: response.status,
+                code: payload.error || "unknown"
+            });
+            return emptyGameplayProfile();
+        }
+
+        const rawValue = payload.data &&
+            payload.data.Data &&
+            payload.data.Data.profile_v1 &&
+            payload.data.Data.profile_v1.Value;
+
+        if (!rawValue) {
+            return emptyGameplayProfile();
+        }
+
+        try {
+            return buildGameplaySummary(JSON.parse(rawValue));
+        } catch (error) {
+            console.error("PlayFab gameplay profile JSON invalid", {
+                playFabId: maskPlayFabId(playFabId),
+                message: error.message
+            });
+            return emptyGameplayProfile();
+        }
+    } catch (error) {
+        console.error("PlayFab gameplay profile unavailable", {
+            playFabId: maskPlayFabId(playFabId),
+            message: error.message
+        });
+        return emptyGameplayProfile();
+    }
 }
 
 async function loginWithPlayFab(email, password) {
@@ -228,23 +439,34 @@ async function loginWithPlayFab(email, password) {
     return payload.data;
 }
 
-function buildProfile(sessionPlayer) {
+async function buildProfile(sessionPlayer) {
+    const gameplay = await getGameplayProfile(sessionPlayer.playFabId);
+    const equippedCannonsLabel = gameplay.equippedCannons.length
+        ? gameplay.equippedCannons.map((cannon) => `${cannon.name || cannon.id} x${formatNumber(cannon.equipped)}`).join(", ")
+        : null;
+
     return {
         displayName: sessionPlayer.displayName || "Captain",
         playFabId: maskPlayFabId(sessionPlayer.playFabId),
         email: maskEmail(sessionPlayer.email),
-        createdAt: sessionPlayer.createdAt,
-        lastLoginAt: sessionPlayer.lastLoginAt,
-        level: sessionPlayer.level,
-        xp: sessionPlayer.xp,
-        gold: sessionPlayer.gold,
-        diamonds: sessionPlayer.diamonds,
-        sirenTears: sessionPlayer.sirenTears,
-        combatGrade: sessionPlayer.combatGrade,
-        elitePoints: sessionPlayer.elitePoints,
-        equippedShip: sessionPlayer.equippedShip,
-        equippedCannons: sessionPlayer.equippedCannons,
-        stats: sessionPlayer.stats,
+        createdAt: formatDateTime(sessionPlayer.createdAt),
+        lastLoginAt: formatDateTime(sessionPlayer.lastLoginAt),
+        level: formatNumber(gameplay.level),
+        xp: formatNumber(gameplay.xp),
+        gold: formatNumber(gameplay.gold),
+        diamonds: formatNumber(gameplay.diamonds),
+        sirenTears: formatNumber(gameplay.sirenTears),
+        combatGrade: gameplay.combatGrade,
+        elitePoints: formatNumber(gameplay.elitePoints),
+        equippedShip: gameplay.equippedShip,
+        equippedCannons: equippedCannonsLabel,
+        stats: {
+            "Combat points": formatNumber(gameplay.combatPoints),
+            "Player kills": formatNumber(gameplay.playerKills),
+            "NPC kills": formatNumber(gameplay.npcKills),
+            "Boardings": formatNumber(gameplay.boardingCount)
+        },
+        gameplay,
         environment: config.seabyssEnv
     };
 }
@@ -306,8 +528,12 @@ app.get("/auth/session", (req, res) => {
     res.json(publicSession(req));
 });
 
-app.get("/me", requireAuth, (req, res) => {
-    res.json(buildProfile(req.session.player));
+app.get("/me", requireAuth, async (req, res, next) => {
+    try {
+        res.json(await buildProfile(req.session.player));
+    } catch (error) {
+        next(error);
+    }
 });
 
 app.use((req, res) => {

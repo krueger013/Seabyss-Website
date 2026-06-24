@@ -1,20 +1,42 @@
 (function () {
     const missing = "Not available yet";
+    const statLabels = {
+        playerKills: "Player kills",
+        npcKills: "NPC kills",
+        boardingCount: "Boardings",
+        combatPoints: "Combat points"
+    };
+
+    function isMissing(value) {
+        return value === null || value === undefined || value === "";
+    }
+
+    function formatNumber(value) {
+        if (typeof value !== "number" || !Number.isFinite(value)) {
+            return null;
+        }
+
+        return new Intl.NumberFormat("en-US").format(value);
+    }
 
     function getValue(profile, key) {
         const value = profile && profile[key];
-        if (value === null || value === undefined || value === "") {
+        if (isMissing(value)) {
             return missing;
         }
         if (Array.isArray(value)) {
             return value.length ? value.join(", ") : missing;
+        }
+        const formattedNumber = formatNumber(value);
+        if (formattedNumber !== null) {
+            return formattedNumber;
         }
         return String(value);
     }
 
     function setField(key, value) {
         document.querySelectorAll(`[data-profile-field="${key}"]`).forEach((element) => {
-            element.textContent = value || missing;
+            element.textContent = isMissing(value) ? missing : String(value);
         });
     }
 
@@ -35,8 +57,8 @@
             const row = document.createElement("div");
             const name = document.createElement("span");
             const statValue = document.createElement("strong");
-            name.textContent = label;
-            statValue.textContent = value === null || value === undefined || value === "" ? missing : String(value);
+            name.textContent = statLabels[label] || label;
+            statValue.textContent = isMissing(value) ? missing : (formatNumber(value) || String(value));
             row.append(name, statValue);
             container.appendChild(row);
         });

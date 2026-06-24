@@ -12,6 +12,10 @@ The GitHub Pages frontend must not contain PlayFab secrets, payment secrets, SSH
 - `GET /auth/session`
 - `GET /me`
 
+`GET /me` reads the official gameplay save from PlayFab `UserInternalData`, key `profile_v1`, using the PlayFab Server API from the backend only. The frontend never receives the PlayFab SecretKey and never receives the raw `profile_v1` JSON.
+
+The public profile response formats the player-facing values for display: readable ship/cannon names, formatted numbers, readable UTC dates, and a derived combat grade. The web combat score currently uses `PlayerProfileData.playerKills` when no persisted `combatPoints` field exists.
+
 ## Local setup
 
 ```bash
@@ -41,5 +45,6 @@ If Redis is not reachable in production, the API fails at startup instead of fal
 - Login errors are intentionally generic.
 - Passwords and tokens are never logged by the app.
 - `/me` is read-only and does not modify inventory, currencies, or progression.
+- Gameplay data is returned as a sanitized public summary. Missing or invalid `profile_v1` data falls back to empty profile fields instead of failing the whole request.
 
 Before official launch, audit session rotation, Redis persistence/backup policy, and incident response.

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compte joueur - Seabyss</title>
     <meta name="description" content="Redirection vers le profil ou la connexion Seabyss.">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 
@@ -15,18 +15,18 @@
             <p class="eyebrow">Compte joueur</p>
             <h1>Redirection en cours</h1>
             <p>Verification de votre session Seabyss...</p>
-            <p><a href="login.html">Connexion</a> · <a href="profile.html">Profil</a></p>
+            <p><a href="login.html?v=2">Connexion</a> · <a href="profile.html">Profil</a></p>
         </div>
     </section>
 </main>
 
-<script src="js/config.js"></script>
-<script src="js/api.js"></script>
-<script src="js/auth.js"></script>
+<script src="js/config.js?v=2"></script>
+<script src="js/api.js?v=2"></script>
+<script src="js/auth.js?v=2"></script>
 <script>
     document.addEventListener("DOMContentLoaded", async function () {
         const session = await window.SeabyssAuth.getSession();
-        window.location.href = window.SeabyssAuth.isLoggedIn(session) ? "profile.html" : "login.html";
+        window.location.href = window.SeabyssAuth.isLoggedIn(session) ? "profile.html" : "login.html?v=2";
     });
 </script>
 </body>

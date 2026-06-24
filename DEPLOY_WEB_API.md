@@ -192,7 +192,9 @@ The website login flow should be used only over HTTPS in production.
 - Bad `POST /auth/login` returns a generic error.
 - Good `POST /auth/login` creates an HttpOnly Secure SameSite cookie.
 - `GET /auth/session` returns `loggedIn`.
-- `GET /me` returns sanitized profile data only.
+- `GET /me` returns sanitized account data and sanitized gameplay data from PlayFab `UserInternalData.profile_v1`.
+- `GET /me` must not return raw `profile_v1`, PlayFab SecretKey, SessionTicket, or inventory mutation endpoints.
+- `GET /me` displays readable dates, formatted numbers, readable ship/cannon names, and a read-only derived combat grade.
 - `POST /auth/logout` clears the session cookie.
 - Restart `seabyss-web-api`, then verify the same browser session still works.
 - `POST /auth/logout`, then verify `GET /me` returns `401`.
@@ -204,7 +206,7 @@ The website login flow should be used only over HTTPS in production.
 ## Launch limitations to audit
 
 - Review Redis persistence, memory limits, backup policy, and operational monitoring before official launch.
-- Review PlayFab profile and inventory reads before exposing more data.
+- Review PlayFab profile and inventory reads before exposing more data beyond the public `profile_v1` summary.
 - Add account recovery and account creation only through reviewed flows.
 - Keep Market disabled until payments are implemented through a secured backend and official provider verification.
 - Run a security review before treating the site as official launch ready.
