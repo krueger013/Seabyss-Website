@@ -3,89 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seabyss - Dark Pirate Online</title>
-    <meta name="description" content="Seabyss est un jeu pirate en ligne sombre et réaliste.">
+    <title>Seabyss - MMO pirate en ligne</title>
+    <meta name="description" content="Seabyss est un MMO pirate sombre en Beta. Telechargez le launcher officiel et suivez votre profil joueur.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <nav class="top-nav">
-        <div class="nav-container">
-            <a href="index.html" class="logo">SEABYSS</a>
-
-            <div class="nav-links">
-                <a href="index.html">Accueil</a>
-                <a href="download.html">Télécharger</a>
-                <a href="login.html">Connexion</a>
-                <a href="register.html">Créer un compte</a>
-                <a href="market.html">Marché</a>
-                <a href="privacy.html">Confidentialité</a>
-                <a href="support.html" class="nav-download">Support</a>
-            </div>
+<nav class="top-nav">
+    <div class="nav-container">
+        <a href="index.html" class="logo">SEABYSS</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+        <div class="nav-links" id="main-nav">
+            <a href="index.html">Home</a>
+            <a href="download.html">Download</a>
+            <a href="profile.html" data-auth-show="connected">My Profile</a>
+            <a href="login.html" data-auth-show="guest">Login</a>
+            <a href="market.html">Market</a>
+            <a href="support.html">Support</a>
+            <a href="privacy.html">Privacy</a>
+            <button class="nav-button" type="button" data-logout data-auth-show="connected">Logout</button>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <header class="hero"
-        style="
-            background-image: url('assets/images/top image site seabyss.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        ">
-        <div class="hero-overlay"></div>
+<header class="hero" style="background-image: url('assets/images/top image site seabyss.png');">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="eyebrow">Dark pirate online world</p>
+        <h1>SEABYSS</h1>
+        <p class="subtitle">
+            Sail into a brutal ocean where preparation, ship mastery, cannon fire,
+            and crew progression decide who survives the abyss.
+        </p>
 
-        <div class="hero-content">
-            <p class="eyebrow">MMO pirate sombre en développement</p>
-            <h1>SEABYSS</h1>
-            <p class="subtitle">
-                Prenez la mer dans un monde brutal où la stratégie, l’équipement
-                et la maîtrise de votre navire décident de chaque bataille.
-            </p>
-
-            <div class="hero-actions">
-                <a href="https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.2/SeabyssLauncher-0.1.2-Setup.zip"
-                   class="btn-primary">
-                    Télécharger le launcher 0.1.2
-                </a>
-                <a href="#patch-notes" class="btn-secondary">Voir les nouveautés</a>
-            </div>
-
-            <div class="hero-status">
-                <span>Launcher Seabyss 0.1.2</span>
-                <span>Client Beta via manifest</span>
-                <span>Windows</span>
-            </div>
+        <div class="hero-actions">
+            <a href="download.html" class="btn-primary">Download Seabyss</a>
+            <a href="login.html" class="btn-secondary" data-auth-show="guest">Login</a>
+            <a href="profile.html" class="btn-secondary" data-auth-show="connected">My Profile</a>
+            <button class="btn-secondary button-reset" type="button" data-logout data-auth-show="connected">Logout</button>
+            <a href="market.html" class="btn-secondary">Market Coming Soon</a>
         </div>
-    </header>
 
+        <div class="hero-status">
+            <span>Environment: <strong data-site-environment>Beta</strong></span>
+            <span>Launcher: <strong>0.1.2</strong></span>
+            <span>Client: <strong data-manifest-version>Loading...</strong></span>
+            <span>Windows</span>
+        </div>
+    </div>
+</header>
+
+<main>
     <section class="section">
         <div class="container">
             <div class="section-heading">
-                <p class="eyebrow">Univers</p>
-                <h2>L’océan ne pardonne pas</h2>
+                <p class="eyebrow">Official Beta</p>
+                <h2>One launcher, one public manifest, one clear path in.</h2>
                 <p>
-                    Seabyss met l’accent sur la progression navale, les affrontements
-                    au canon et la préparation avant chaque sortie en mer.
+                    The website distributes the official Seabyss launcher. The launcher reads
+                    the public manifest to install the current Beta client and keep it updated.
                 </p>
             </div>
 
             <div class="feature-grid">
                 <article class="feature-card">
-                    <span class="card-kicker">Navigation</span>
-                    <h3>Choisissez votre route</h3>
-                    <p>Explorez, anticipez les rencontres et adaptez votre approche selon votre navire.</p>
+                    <span class="card-kicker">Download</span>
+                    <h3>Official launcher</h3>
+                    <p>The public download points to the current Seabyss Launcher 0.1.2 release.</p>
                 </article>
 
                 <article class="feature-card">
-                    <span class="card-kicker">Combat</span>
-                    <h3>Chaque bordée compte</h3>
-                    <p>Positionnement, timing et puissance de feu définissent l’issue des affrontements.</p>
+                    <span class="card-kicker">Account</span>
+                    <h3>Secure web login</h3>
+                    <p>Login is designed to go through the Seabyss Web API. No PlayFab secret belongs in the browser.</p>
                 </article>
 
                 <article class="feature-card">
-                    <span class="card-kicker">Progression</span>
-                    <h3>Améliorez votre flotte</h3>
-                    <p>Faites évoluer votre équipement pour survivre à des mers de plus en plus hostiles.</p>
+                    <span class="card-kicker">Market</span>
+                    <h3>Payments disabled</h3>
+                    <p>The Market is a placeholder only. Purchases and rewards are not active yet.</p>
                 </article>
             </div>
         </div>
@@ -96,22 +92,26 @@
             <div class="split-layout">
                 <div>
                     <p class="eyebrow">Launcher</p>
-                    <h2>Installation officielle</h2>
+                    <h2>Install Seabyss safely.</h2>
                     <p>
-                        Téléchargez le nouveau launcher Seabyss. Il récupère le manifest
-                        officiel, installe le client Beta et servira de point d’entrée
-                        pour les mises à jour futures.
+                        Download the launcher, extract the archive, run the installer, then log in
+                        with your Seabyss account. The client package itself is managed through
+                        <a href="launcher/seabyss_manifest.json">launcher/seabyss_manifest.json</a>.
+                    </p>
+                    <p class="security-note">
+                        Beta is a test environment. Accounts, guilds, inventories, currencies,
+                        and progress created during Beta will not be kept for the official launch.
                     </p>
                 </div>
 
                 <div class="info-panel">
                     <div class="info-row">
-                        <span>Version du launcher</span>
+                        <span>Launcher version</span>
                         <strong>0.1.2</strong>
                     </div>
                     <div class="info-row">
-                        <span>Client servi par manifest</span>
-                        <strong>0.1.7-beta.4</strong>
+                        <span>Current client</span>
+                        <strong data-manifest-version>Loading...</strong>
                     </div>
                     <div class="info-row">
                         <span>Archive</span>
@@ -119,7 +119,7 @@
                     </div>
                     <a href="https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.2/SeabyssLauncher-0.1.2-Setup.zip"
                        class="btn-primary btn-wide">
-                        Télécharger SeabyssLauncher 0.1.2
+                        Download Seabyss Launcher
                     </a>
                 </div>
             </div>
@@ -130,68 +130,75 @@
         <div class="container">
             <div class="section-heading">
                 <p class="eyebrow">Patch notes</p>
-                <h2>Beta 0.1.7-beta.4</h2>
-                <p>Beta de test. La progression créée pendant la Beta ne sera pas conservée au lancement officiel.</p>
+                <h2 data-patch-title>Current Beta</h2>
+                <p data-manifest-notes>
+                    Loading current Beta notes from the public launcher manifest.
+                </p>
             </div>
 
             <div class="patch-list">
                 <article class="patch-item">
                     <span>01</span>
                     <div>
-                        <h3>Launcher officiel</h3>
-                        <p>Le site distribue le nouveau launcher Seabyss 0.1.2 depuis la release GitHub officielle.</p>
+                        <h3>Launcher distribution</h3>
+                        <p>The public website downloads only the official Seabyss Launcher 0.1.2 package.</p>
                     </div>
                 </article>
 
                 <article class="patch-item">
                     <span>02</span>
                     <div>
-                        <h3>Manifest Beta</h3>
-                        <p>Le manifest public indique le client Beta, l’URL de téléchargement, l’exécutable et les arguments serveur.</p>
+                        <h3>Beta client manifest</h3>
+                        <p>The launcher manifest remains public and read-only for the website and launcher.</p>
                     </div>
                 </article>
 
                 <article class="patch-item">
                     <span>03</span>
                     <div>
-                        <h3>Reset au lancement officiel</h3>
-                        <p>Les comptes, guildes, inventaires, monnaies et progressions de Beta ne seront pas conservés.</p>
+                        <h3>Beta reset warning</h3>
+                        <p>All Beta progress will reset at official launch. This warning is shown before players enter.</p>
                     </div>
                 </article>
             </div>
         </div>
     </section>
 
-    <section class="section" id="apercu">
+    <section class="section" id="preview">
         <div class="container">
             <div class="section-heading">
-                <p class="eyebrow">Aperçu du jeu</p>
-                <h2>Galerie prête pour les screenshots</h2>
-                <p>Les emplacements ci-dessous sont préparés pour recevoir les captures officielles du jeu.</p>
+                <p class="eyebrow">Game preview</p>
+                <h2>Screenshot slots ready for official captures.</h2>
+                <p>These blocks are structured to receive real game screenshots without redesigning the page.</p>
             </div>
 
             <div class="screenshot-grid">
                 <figure class="screenshot-slot">
                     <div class="screenshot-frame"></div>
-                    <figcaption>Combat naval</figcaption>
+                    <figcaption>Naval combat</figcaption>
                 </figure>
 
                 <figure class="screenshot-slot">
                     <div class="screenshot-frame"></div>
-                    <figcaption>Navigation</figcaption>
+                    <figcaption>Open ocean navigation</figcaption>
                 </figure>
 
                 <figure class="screenshot-slot">
                     <div class="screenshot-frame"></div>
-                    <figcaption>Progression</figcaption>
+                    <figcaption>Player progression</figcaption>
                 </figure>
             </div>
         </div>
     </section>
+</main>
 
-    <footer>
-        <p>© 2025 Seabyss - Tous droits réservés</p>
-    </footer>
+<footer>
+    <p>© 2026 Seabyss - Official website</p>
+</footer>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>

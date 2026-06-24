@@ -73,13 +73,38 @@ a {
     gap: 22px;
 }
 
-.nav-links a {
+.nav-toggle,
+.nav-button,
+.button-reset {
+    font: inherit;
+}
+
+.nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    background: rgba(7, 9, 11, 0.7);
+    color: var(--gold-bright);
+    padding: 8px 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.nav-links a,
+.nav-button {
     text-decoration: none;
     color: var(--mist);
     font-size: 0.94rem;
 }
 
-.nav-links a:hover {
+.nav-button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.nav-links a:hover,
+.nav-button:hover {
     color: var(--gold-bright);
 }
 
@@ -175,6 +200,8 @@ a {
     border-radius: 6px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    border: 0;
+    cursor: pointer;
 }
 
 .btn-primary:hover {
@@ -194,11 +221,16 @@ a {
     font-weight: 700;
     border-radius: 6px;
     background: rgba(7, 9, 11, 0.5);
+    cursor: pointer;
 }
 
 .btn-secondary:hover {
     border-color: var(--gold-bright);
     color: var(--gold-bright);
+}
+
+.button-reset {
+    appearance: none;
 }
 
 .btn-wide {
@@ -480,6 +512,12 @@ a {
     font: inherit;
 }
 
+.form-panel .btn-primary:disabled {
+    opacity: 0.72;
+    cursor: wait;
+    transform: none;
+}
+
 .form-panel input:disabled {
     opacity: 0.72;
     cursor: not-allowed;
@@ -511,6 +549,25 @@ a {
     font: inherit;
     font-weight: 800;
     cursor: not-allowed;
+}
+
+.form-message {
+    min-height: 24px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.form-message.is-error {
+    color: #ffb1b8;
+}
+
+.form-message.is-success {
+    color: #a7e8c1;
+}
+
+.security-note {
+    color: var(--muted);
+    font-size: 0.94rem;
 }
 
 .text-links {
@@ -586,6 +643,66 @@ a {
     padding: 26px;
 }
 
+.warning-panel {
+    border-color: rgba(240, 204, 114, 0.48);
+    background: linear-gradient(180deg, rgba(125, 38, 48, 0.34), rgba(10, 13, 16, 0.96));
+}
+
+.profile-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.profile-card {
+    background: linear-gradient(180deg, rgba(23, 33, 42, 0.96), rgba(10, 13, 16, 0.96));
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 26px;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+}
+
+.profile-summary {
+    grid-column: span 2;
+}
+
+.profile-card h2 {
+    color: var(--gold-bright);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.08;
+    margin-bottom: 16px;
+}
+
+.profile-card p {
+    color: var(--muted);
+}
+
+.profile-card strong {
+    color: var(--mist);
+}
+
+.stat-list {
+    display: grid;
+    gap: 12px;
+}
+
+.stat-list div {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(215, 221, 223, 0.09);
+}
+
+.stat-list span {
+    color: var(--muted);
+}
+
+.stat-list strong {
+    color: var(--gold-bright);
+    text-align: right;
+}
+
 .legal-content {
     padding: 34px;
 }
@@ -622,21 +739,36 @@ footer {
     }
 
     .nav-container {
-        align-items: flex-start;
-        flex-direction: column;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
         gap: 12px;
         padding: 14px 18px;
     }
 
-    .nav-links {
-        width: 100%;
-        gap: 12px;
-        overflow-x: auto;
-        padding-bottom: 2px;
+    .nav-toggle {
+        display: inline-flex;
+        margin-left: auto;
     }
 
-    .nav-links a {
-        white-space: nowrap;
+    .nav-links {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 12px 0 4px;
+    }
+
+    .nav-links.is-open {
+        display: flex;
+    }
+
+    .nav-links a,
+    .nav-button {
+        width: 100%;
+        text-align: left;
+        padding: 8px 0;
         font-size: 0.88rem;
     }
 
@@ -696,6 +828,10 @@ footer {
     .patch-item {
         grid-template-columns: 1fr;
     }
+
+    .profile-summary {
+        grid-column: span 1;
+    }
 }
 
 @media (max-width: 420px) {
@@ -717,6 +853,15 @@ footer {
     }
 
     .info-row strong {
+        text-align: left;
+    }
+
+    .stat-list div {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .stat-list strong {
         text-align: left;
     }
 }

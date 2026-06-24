@@ -1,0 +1,21 @@
+[Unit]
+Description=Seabyss Web API
+After=network.target redis-server.service
+Wants=redis-server.service
+
+[Service]
+Type=simple
+User=seabyss
+Group=seabyss
+WorkingDirectory=/opt/seabyss/web-api
+EnvironmentFile=/opt/seabyss/web-api/.env
+ExecStart=/usr/bin/node /opt/seabyss/web-api/src/server.js
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

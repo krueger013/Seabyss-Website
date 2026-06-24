@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Seabyss</title>
+    <meta name="description" content="Read-only Seabyss player profile.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-requires-auth="true">
+
+<nav class="top-nav">
+    <div class="nav-container">
+        <a href="index.html" class="logo">SEABYSS</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+        <div class="nav-links" id="main-nav">
+            <a href="index.html">Home</a>
+            <a href="download.html">Download</a>
+            <a href="profile.html" data-auth-show="connected">My Profile</a>
+            <a href="login.html" data-auth-show="guest">Login</a>
+            <a href="market.html">Market</a>
+            <a href="support.html">Support</a>
+            <a href="privacy.html">Privacy</a>
+            <button class="nav-button" type="button" data-logout data-auth-show="connected">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<main class="page-shell">
+    <section class="page-hero compact-hero">
+        <div class="container">
+            <p class="eyebrow">Player profile</p>
+            <h1>My Seabyss Profile</h1>
+            <p>
+                This page is read-only. Inventory, currencies, and progression are shown
+                only when returned by the secure backend.
+            </p>
+            <div class="hero-actions page-action">
+                <button class="btn-primary button-reset" type="button" id="refresh-profile">Refresh Profile</button>
+                <button class="btn-secondary button-reset" type="button" data-logout>Logout</button>
+                <a href="index.html" class="btn-secondary">Back Home</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section compact-section">
+        <div class="container">
+            <div class="form-message" id="profile-message" role="status" aria-live="polite"></div>
+
+            <div class="profile-layout">
+                <article class="profile-card profile-summary">
+                    <span class="card-kicker">Captain</span>
+                    <h2 data-profile-field="displayName">Loading...</h2>
+                    <p>Status: <strong data-profile-field="environment">Not available yet</strong></p>
+                    <p>Email: <strong data-profile-field="email">Not available yet</strong></p>
+                    <p>PlayFabId: <strong data-profile-field="playFabId">Not available yet</strong></p>
+                </article>
+
+                <article class="profile-card">
+                    <span class="card-kicker">Account</span>
+                    <div class="stat-list">
+                        <div><span>Created</span><strong data-profile-field="createdAt">Not available yet</strong></div>
+                        <div><span>Last login</span><strong data-profile-field="lastLoginAt">Not available yet</strong></div>
+                        <div><span>Combat grade</span><strong data-profile-field="combatGrade">Not available yet</strong></div>
+                    </div>
+                </article>
+
+                <article class="profile-card">
+                    <span class="card-kicker">Progression</span>
+                    <div class="stat-list">
+                        <div><span>Level</span><strong data-profile-field="level">Not available yet</strong></div>
+                        <div><span>XP</span><strong data-profile-field="xp">Not available yet</strong></div>
+                        <div><span>Elite points</span><strong data-profile-field="elitePoints">Not available yet</strong></div>
+                    </div>
+                </article>
+
+                <article class="profile-card">
+                    <span class="card-kicker">Currencies</span>
+                    <div class="stat-list">
+                        <div><span>Gold</span><strong data-profile-field="gold">Not available yet</strong></div>
+                        <div><span>Diamonds</span><strong data-profile-field="diamonds">Not available yet</strong></div>
+                        <div><span>Siren tears</span><strong data-profile-field="sirenTears">Not available yet</strong></div>
+                    </div>
+                </article>
+
+                <article class="profile-card">
+                    <span class="card-kicker">Loadout</span>
+                    <div class="stat-list">
+                        <div><span>Equipped ship</span><strong data-profile-field="equippedShip">Not available yet</strong></div>
+                        <div><span>Equipped cannons</span><strong data-profile-field="equippedCannons">Not available yet</strong></div>
+                    </div>
+                </article>
+
+                <article class="profile-card">
+                    <span class="card-kicker">Stats</span>
+                    <div class="stat-list" id="profile-stats">
+                        <div><span>Important stats</span><strong>Not available yet</strong></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 Seabyss - Official website</p>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>

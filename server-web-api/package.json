@@ -1,0 +1,24 @@
+{
+  "name": "seabyss-web-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Secure web API bridge for the Seabyss public website.",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "connect-redis": "^8.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.18.1",
+    "helmet": "^8.0.0",
+    "redis": "^4.7.0"
+  }
+}

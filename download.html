@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Télécharger le launcher Seabyss 0.1.2</title>
-    <meta name="description" content="Télécharger le nouveau launcher officiel Seabyss 0.1.2.">
+    <title>Download Seabyss Launcher 0.1.2</title>
+    <meta name="description" content="Download the official Seabyss launcher for Windows.">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
 <nav class="top-nav">
     <div class="nav-container">
         <a href="index.html" class="logo">SEABYSS</a>
-        <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="download.html">Télécharger</a>
-            <a href="login.html">Connexion</a>
-            <a href="register.html">Créer un compte</a>
-            <a href="market.html">Marché</a>
-            <a href="privacy.html">Confidentialité</a>
-            <a href="support.html" class="nav-download">Support</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+        <div class="nav-links" id="main-nav">
+            <a href="index.html">Home</a>
+            <a href="download.html">Download</a>
+            <a href="profile.html" data-auth-show="connected">My Profile</a>
+            <a href="login.html" data-auth-show="guest">Login</a>
+            <a href="market.html">Market</a>
+            <a href="support.html">Support</a>
+            <a href="privacy.html">Privacy</a>
+            <button class="nav-button" type="button" data-logout data-auth-show="connected">Logout</button>
         </div>
     </div>
 </nav>
@@ -29,48 +30,50 @@
     <div class="container">
         <section class="download-hero">
             <div>
-                <p class="eyebrow">Client officiel</p>
-                <h1>Télécharger le launcher Seabyss</h1>
+                <p class="eyebrow">Official Windows launcher</p>
+                <h1>Download Seabyss Launcher</h1>
                 <p>
-                    Téléchargez le nouveau launcher officiel Seabyss. Il récupère le
-                    manifest public, installe le client Beta et servira aux mises à jour.
+                    Install the launcher first. It reads the official public manifest,
+                    downloads the current Beta client, and launches the game with the
+                    required Beta server arguments.
                 </p>
 
                 <div class="hero-actions">
                     <a href="https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.2/SeabyssLauncher-0.1.2-Setup.zip" class="btn-primary">
-                        Télécharger SeabyssLauncher 0.1.2
+                        Download Seabyss Launcher 0.1.2
                     </a>
-                    <a href="index.html#patch-notes" class="btn-secondary">Lire les patch notes</a>
+                    <a href="launcher/seabyss_manifest.json" class="btn-secondary" data-manifest-download>Download current Beta client</a>
+                    <a href="launcher/seabyss_manifest.json" class="btn-secondary">View public manifest</a>
                 </div>
             </div>
 
             <aside class="info-panel">
                 <div class="info-row">
-                    <span>Version launcher</span>
+                    <span>Launcher version</span>
                     <strong>0.1.2</strong>
                 </div>
                 <div class="info-row">
-                    <span>Archive</span>
+                    <span>Launcher archive</span>
                     <strong>SeabyssLauncher-0.1.2-Setup.zip</strong>
                 </div>
                 <div class="info-row">
-                    <span>Client Beta</span>
-                    <strong>0.1.7-beta.4</strong>
+                    <span>Current Beta client</span>
+                    <strong data-manifest-version>Loading...</strong>
                 </div>
                 <div class="info-row">
-                    <span>Source du client</span>
-                    <strong>Manifest public</strong>
+                    <span>Client source</span>
+                    <strong>Public manifest</strong>
                 </div>
             </aside>
         </section>
 
         <section class="section compact-section">
             <div class="section-heading">
-                <p class="eyebrow">Installation</p>
-                <h2>Launcher Seabyss</h2>
+                <p class="eyebrow">Install steps</p>
+                <h2>From download to login</h2>
                 <p>
-                    Le launcher utilise le manifeste officiel du site pour connaître
-                    la version Beta courante, l’adresse du client et les arguments de lancement.
+                    The website no longer offers direct client ZIP downloads. Players should
+                    install and use the launcher so updates stay consistent with the manifest.
                 </p>
             </div>
 
@@ -78,26 +81,53 @@
                 <article class="patch-item">
                     <span>01</span>
                     <div>
-                        <h3>Télécharger l’archive ZIP</h3>
-                        <p>Le bouton principal pointe vers la release officielle du launcher 0.1.2.</p>
+                        <h3>Download</h3>
+                        <p>Download the official Seabyss Launcher 0.1.2 archive from GitHub Releases.</p>
                     </div>
                 </article>
 
                 <article class="patch-item">
                     <span>02</span>
                     <div>
-                        <h3>Lancer le launcher</h3>
-                        <p>Le launcher téléchargera ensuite le client Beta décrit par le manifest public.</p>
+                        <h3>Extract and run</h3>
+                        <p>Extract the archive, run the setup package, then open the launcher.</p>
                     </div>
                 </article>
+
+                <article class="patch-item">
+                    <span>03</span>
+                    <div>
+                        <h3>Launch the Beta client</h3>
+                        <p>The launcher downloads the client listed in the manifest and starts it against the Beta server.</p>
+                    </div>
+                </article>
+
+                <article class="patch-item">
+                    <span>04</span>
+                    <div>
+                        <h3>Login</h3>
+                        <p>Use your Seabyss account in the launcher or game. Seabyss support will never ask for your password.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section compact-section">
+            <div class="notice-panel">
+                <h2>Current manifest notes</h2>
+                <p data-manifest-notes>Loading current notes from launcher/seabyss_manifest.json.</p>
             </div>
         </section>
     </div>
 </main>
 
 <footer>
-    <p>© 2025 Seabyss - Tous droits réservés</p>
+    <p>© 2026 Seabyss - Official website</p>
 </footer>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>

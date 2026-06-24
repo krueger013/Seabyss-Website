@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marché Seabyss</title>
-    <meta name="description" content="Page temporaire du marché Seabyss. Aucun achat réel n’est actif.">
+    <title>Market Coming Soon - Seabyss</title>
+    <meta name="description" content="The Seabyss Market is not available yet.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,14 +12,16 @@
 <nav class="top-nav">
     <div class="nav-container">
         <a href="index.html" class="logo">SEABYSS</a>
-        <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="download.html">Télécharger</a>
-            <a href="login.html">Connexion</a>
-            <a href="register.html">Créer un compte</a>
-            <a href="market.html">Marché</a>
-            <a href="privacy.html">Confidentialité</a>
-            <a href="support.html" class="nav-download">Support</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+        <div class="nav-links" id="main-nav">
+            <a href="index.html">Home</a>
+            <a href="download.html">Download</a>
+            <a href="profile.html" data-auth-show="connected">My Profile</a>
+            <a href="login.html" data-auth-show="guest">Login</a>
+            <a href="market.html">Market</a>
+            <a href="support.html">Support</a>
+            <a href="privacy.html">Privacy</a>
+            <button class="nav-button" type="button" data-logout data-auth-show="connected">Logout</button>
         </div>
     </div>
 </nav>
@@ -27,74 +29,55 @@
 <main class="page-shell">
     <section class="page-hero compact-hero">
         <div class="container">
-            <p class="eyebrow">Boutique temporaire</p>
-            <h1>Marché Seabyss</h1>
-            <p>Les achats réels ne sont pas encore actifs.</p>
+            <p class="eyebrow">Market disabled</p>
+            <h1>Market coming soon</h1>
+            <p>Purchases are not available yet. This page contains no payment flow, no Xsolla call, and no reward button.</p>
         </div>
     </section>
 
     <section class="section compact-section">
         <div class="container">
-            <div class="category-strip">
-                <span>Premium</span>
-                <span>Starter Packs</span>
-                <span>Diamants</span>
-                <span>Items</span>
-                <span>Designs de navire</span>
-            </div>
-
             <div class="market-grid">
                 <article class="market-card">
                     <span class="card-kicker">Premium</span>
-                    <h2>Abonnement Premium</h2>
-                    <p>Avantages de compte et bonus de confort. Détails à venir.</p>
-                    <button class="btn-disabled" type="button" disabled>Bientôt disponible</button>
+                    <h2>Premium status</h2>
+                    <p>Planned for a later official integration. No purchase is active today.</p>
+                    <button class="btn-disabled" type="button" disabled>Purchases disabled</button>
                 </article>
 
                 <article class="market-card">
-                    <span class="card-kicker">Starter Packs</span>
-                    <h2>Pack de départ</h2>
-                    <p>Un ensemble visuel pour préparer les nouveaux capitaines.</p>
-                    <button class="btn-disabled" type="button" disabled>Bientôt disponible</button>
+                    <span class="card-kicker">Starter packs</span>
+                    <h2>Starter packs</h2>
+                    <p>Placeholder only. No pack can be bought or granted from this website.</p>
+                    <button class="btn-disabled" type="button" disabled>Coming soon</button>
                 </article>
 
                 <article class="market-card">
-                    <span class="card-kicker">Diamants</span>
-                    <h2>Réserve de diamants</h2>
-                    <p>Monnaie premium prévue pour les futures fonctionnalités.</p>
-                    <button class="btn-disabled" type="button" disabled>Bientôt disponible</button>
-                </article>
-
-                <article class="market-card">
-                    <span class="card-kicker">Items</span>
-                    <h2>Objets spéciaux</h2>
-                    <p>Emplacements prévus pour des objets cosmétiques ou de service.</p>
-                    <button class="btn-disabled" type="button" disabled>Bientôt disponible</button>
-                </article>
-
-                <article class="market-card">
-                    <span class="card-kicker">Designs de navire</span>
-                    <h2>Apparences de navire</h2>
-                    <p>Designs visuels pour personnaliser votre flotte.</p>
-                    <button class="btn-disabled" type="button" disabled>Bientôt disponible</button>
+                    <span class="card-kicker">Currencies</span>
+                    <h2>Gold, diamonds, siren tears</h2>
+                    <p>Currency modification is never handled by the public frontend.</p>
+                    <button class="btn-disabled" type="button" disabled>Unavailable</button>
                 </article>
             </div>
 
             <div class="notice-panel">
-                <h2>Note importante</h2>
+                <h2>Security note</h2>
                 <p>
-                    Les paiements seront traités plus tard par Xsolla. Seabyss ne collectera
-                    ni ne stockera les informations bancaires.
+                    Future payments must be implemented through a secured backend and official payment provider flow.
+                    The browser must never receive payment secrets or account mutation privileges.
                 </p>
-                <a href="privacy.html">Lire la politique de confidentialité</a>
             </div>
         </div>
     </section>
 </main>
 
 <footer>
-    <p>© 2025 Seabyss - Tous droits réservés</p>
+    <p>© 2026 Seabyss - Official website</p>
 </footer>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>

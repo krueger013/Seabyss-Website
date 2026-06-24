@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support Seabyss</title>
-    <meta name="description" content="Support temporaire pour le launcher, les comptes, les paiements et les bugs Seabyss.">
+    <title>Support - Seabyss</title>
+    <meta name="description" content="Seabyss support information for accounts, login, launcher, future payments, and bugs.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,14 +12,16 @@
 <nav class="top-nav">
     <div class="nav-container">
         <a href="index.html" class="logo">SEABYSS</a>
-        <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="download.html">Télécharger</a>
-            <a href="login.html">Connexion</a>
-            <a href="register.html">Créer un compte</a>
-            <a href="market.html">Marché</a>
-            <a href="privacy.html">Confidentialité</a>
-            <a href="support.html" class="nav-download">Support</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+        <div class="nav-links" id="main-nav">
+            <a href="index.html">Home</a>
+            <a href="download.html">Download</a>
+            <a href="profile.html" data-auth-show="connected">My Profile</a>
+            <a href="login.html" data-auth-show="guest">Login</a>
+            <a href="market.html">Market</a>
+            <a href="support.html">Support</a>
+            <a href="privacy.html">Privacy</a>
+            <button class="nav-button" type="button" data-logout data-auth-show="connected">Logout</button>
         </div>
     </div>
 </nav>
@@ -28,48 +30,63 @@
     <section class="page-hero compact-hero">
         <div class="container">
             <p class="eyebrow">Assistance</p>
-            <h1>Support Seabyss</h1>
-            <p>Centre temporaire pour orienter les demandes liées au jeu et au launcher.</p>
+            <h1>Seabyss Support</h1>
+            <p>Use this page to route account, login, launcher, future payment, and Beta bug reports.</p>
         </div>
     </section>
 
     <section class="section compact-section">
         <div class="container">
+            <div class="notice-panel warning-panel">
+                <h2>Seabyss support will never ask for your password.</h2>
+                <p>
+                    Do not send passwords, PlayFab session tickets, private keys, payment details,
+                    or screenshots containing sensitive account data.
+                </p>
+            </div>
+
             <div class="placeholder-grid">
                 <article class="placeholder-card">
-                    <span class="card-kicker">Support</span>
-                    <h2>Problème de launcher</h2>
-                    <p>Installation, mise à jour, téléchargement ou lancement du client.</p>
+                    <span class="card-kicker">Launcher</span>
+                    <h2>Download or update problem</h2>
+                    <p>Include your launcher version, Windows version, and the exact visible error message.</p>
                 </article>
+
                 <article class="placeholder-card">
-                    <span class="card-kicker">Support</span>
-                    <h2>Problème de compte</h2>
-                    <p>Connexion, création de compte et accès au profil joueur.</p>
+                    <span class="card-kicker">Account</span>
+                    <h2>Login problem</h2>
+                    <p>Describe what happens after login. Never include your password.</p>
                 </article>
+
                 <article class="placeholder-card">
-                    <span class="card-kicker">Support</span>
-                    <h2>Problème de paiement</h2>
-                    <p>Les paiements ne sont pas encore actifs. Les informations seront ajoutées plus tard.</p>
+                    <span class="card-kicker">Future payments</span>
+                    <h2>Payment question</h2>
+                    <p>Payments are not active yet. No payment support flow is live today.</p>
                 </article>
+
                 <article class="placeholder-card">
-                    <span class="card-kicker">Support</span>
-                    <h2>Bug en jeu</h2>
-                    <p>Signalement de comportements anormaux pendant les sessions de test.</p>
+                    <span class="card-kicker">Beta bug</span>
+                    <h2>Gameplay or connection bug</h2>
+                    <p>Include date, time, character name, and steps to reproduce when possible.</p>
                 </article>
             </div>
 
             <div class="notice-panel">
                 <h2>Contact</h2>
-                <p>Email : <a href="mailto:support@seabyss.com">support@seabyss.com</a></p>
-                <a href="privacy.html">Politique de confidentialité</a>
+                <p>Email: <a href="mailto:support@seabyss.com">support@seabyss.com</a></p>
+                <a href="privacy.html">Read privacy information</a>
             </div>
         </div>
     </section>
 </main>
 
 <footer>
-    <p>© 2025 Seabyss - Tous droits réservés</p>
+    <p>© 2026 Seabyss - Official website</p>
 </footer>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>

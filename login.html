@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion à Seabyss</title>
-    <meta name="description" content="Page temporaire de connexion au compte joueur Seabyss.">
+    <title>Connexion - Seabyss</title>
+    <meta name="description" content="Connexion joueur Seabyss via l'API web securisee.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,14 +12,16 @@
 <nav class="top-nav">
     <div class="nav-container">
         <a href="index.html" class="logo">SEABYSS</a>
-        <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="download.html">Télécharger</a>
-            <a href="login.html">Connexion</a>
-            <a href="register.html">Créer un compte</a>
-            <a href="market.html">Marché</a>
-            <a href="privacy.html">Confidentialité</a>
-            <a href="support.html" class="nav-download">Support</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+        <div class="nav-links" id="main-nav">
+            <a href="index.html">Home</a>
+            <a href="download.html">Download</a>
+            <a href="profile.html" data-auth-show="connected">My Profile</a>
+            <a href="login.html" data-auth-show="guest">Login</a>
+            <a href="market.html">Market</a>
+            <a href="support.html">Support</a>
+            <a href="privacy.html">Privacy</a>
+            <button class="nav-button" type="button" data-logout data-auth-show="connected">Logout</button>
         </div>
     </div>
 </nav>
@@ -28,34 +30,48 @@
     <section class="page-hero compact-hero">
         <div class="container narrow-container">
             <p class="eyebrow">Compte joueur</p>
-            <h1>Connexion à Seabyss</h1>
-            <p>Cette section sera connectée plus tard au système de comptes Seabyss.</p>
+            <h1>Connexion Seabyss</h1>
+            <p>
+                Connectez-vous avec votre compte Seabyss.
+            </p>
         </div>
     </section>
 
     <section class="section compact-section">
         <div class="container narrow-container">
-            <div class="form-panel">
+            <form class="form-panel" id="login-form" novalidate>
+                <div class="form-message" id="login-message" role="status" aria-live="polite"></div>
+
                 <label for="login-email">Email</label>
-                <input id="login-email" type="email" placeholder="pirate@seabyss.com" disabled>
+                <input id="login-email" name="email" type="email" autocomplete="email" placeholder="captain@seabyss.com" required>
 
                 <label for="login-password">Mot de passe</label>
-                <input id="login-password" type="password" placeholder="••••••••" disabled>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Votre mot de passe" required>
 
-                <button class="btn-disabled" type="button" disabled>Connexion bientôt disponible</button>
+                <button class="btn-primary" id="login-submit" type="submit">Se connecter</button>
+
+                <p class="security-note">
+                    Utilisez le meme compte que dans le jeu. Le support Seabyss ne vous demandera jamais votre mot de passe.
+                    La creation de compte et le changement de mot de passe ne sont pas disponibles sur le site pour le moment.
+                </p>
 
                 <div class="text-links">
-                    <a href="register.html">Créer un compte</a>
-                    <a href="privacy.html">Politique de confidentialité</a>
+                    <a href="profile.html">Mon profil</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="support.html">Besoin d'aide ?</a>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 </main>
 
 <footer>
-    <p>© 2025 Seabyss - Tous droits réservés</p>
+    <p>© 2026 Seabyss - Official website</p>
 </footer>
 
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>
