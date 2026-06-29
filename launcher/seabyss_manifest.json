@@ -1,11 +1,11 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.15",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.15/SeabyssClient-Beta-0.1.7-beta.15.zip",
+  "gameVersion": "0.1.7-beta.16",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.16/SeabyssClient-Beta-0.1.7-beta.16.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 -screen-fullscreen 0 -screen-width 1280 -screen-height 720",
   "fileSizeText": "248.87 MB",
   "releaseDate": "2026-06-28",
-  "notes": "Beta connectivity reliability update. Improves Mirror/KCP login stability with longer timeout, safer retries, retry cleanup, and better connection diagnostics. Beta progress may still be reset before official launch.",
+  "notes": "Fast login retry update. Reduces Mirror/KCP login wait time with a client-side watchdog, faster retry backoff, and safer retry cleanup. Beta progress may still be reset before official launch.",
   "minimumLauncherVersion": "0.1.0"
 }
