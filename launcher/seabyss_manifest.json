@@ -1,7 +1,7 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.19",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.19/SeabyssClient-Beta-0.1.7-beta.19.zip",
+  "gameVersion": "0.1.7-beta.20",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.20/SeabyssClient-Beta-0.1.7-beta.20.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 -screen-fullscreen 0 -screen-width 1280 -screen-height 720",
   "fileSizeText": "248.87 MB",
