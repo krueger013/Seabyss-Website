@@ -1,11 +1,11 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.26",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.26/SeabyssClient-Beta-0.1.7-beta.26.zip",
+    "gameVersion":  "0.1.7-beta.27",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.27/SeabyssClient-Beta-0.1.7-beta.27.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -screen-fullscreen 0 -screen-width 1280 -screen-height 720",
     "fileSizeText":  "188,24 MB",
-    "releaseDate":  "2026-07-04",
-    "notes":  "Beta26 client UI polish: updated game bar icons, top menu order, and currency icon/value display. Uses the existing Beta server endpoint.",
+    "releaseDate":  "2026-07-05",
+    "notes":  "Beta27 adds the server-authoritative boarding system, grouped pirate crew UI, HUD anchoring updates, draggable quest tracker, island/map bake updates, and pirate/captain image sharpness improvements.",
     "minimumLauncherVersion":  "0.1.0"
 }
