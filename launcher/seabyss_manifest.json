@@ -3,7 +3,7 @@
     "gameVersion":  "0.1.7-beta.27",
     "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.27/SeabyssClient-Beta-0.1.7-beta.27.zip",
     "exePath":  "SeabyssClient.exe",
-    "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -screen-fullscreen 0 -screen-width 1280 -screen-height 720",
+    "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp",
     "fileSizeText":  "196,80 MB",
     "releaseDate":  "2026-07-05",
     "notes":  "Beta27 adds the server-authoritative boarding system, grouped pirate crew UI, HUD anchoring updates, draggable quest tracker, island/map bake updates, and pirate/captain image sharpness improvements.",
