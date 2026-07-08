@@ -690,13 +690,18 @@ app.use((req, res) => {
 });
 
 app.use((error, req, res, next) => {
-    const status = error.publicStatus || 500;
+    const status = error.publicStatus || error.status || error.statusCode || 500;
     if (status >= 500) {
         console.error("Request failed", {
             path: req.path,
             method: req.method,
             message: error.message
         });
+    }
+
+    if (error.type === "entity.parse.failed") {
+        res.status(400).json({ message: "Invalid JSON request body." });
+        return;
     }
 
     res.status(status).json({
