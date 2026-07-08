@@ -189,6 +189,8 @@ The website login flow should be used only over HTTPS in production.
 ## 9. Production checks
 
 - `GET https://api.seabyss.com/health`
+- Bad `POST /register` validation returns friendly `400` errors.
+- Valid `POST /register` creates a real PlayFab account for the configured title and creates an HttpOnly Secure SameSite cookie.
 - Bad `POST /auth/login` returns a generic error.
 - Good `POST /auth/login` creates an HttpOnly Secure SameSite cookie.
 - `GET /auth/session` returns `loggedIn`.
@@ -207,6 +209,6 @@ The website login flow should be used only over HTTPS in production.
 
 - Review Redis persistence, memory limits, backup policy, and operational monitoring before official launch.
 - Review PlayFab profile and inventory reads before exposing more data beyond the public `profile_v1` summary.
-- Add account recovery and account creation only through reviewed flows.
+- Add account recovery only through a reviewed flow.
 - Keep Market disabled until payments are implemented through a secured backend and official provider verification.
 - Run a security review before treating the site as official launch ready.

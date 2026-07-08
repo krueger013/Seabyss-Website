@@ -25,6 +25,16 @@
         return result;
     }
 
+    async function register(email, password, confirmPassword, displayName) {
+        const result = await window.SeabyssApi.request("/register", {
+            method: "POST",
+            body: { email, password, confirmPassword, displayName }
+        });
+
+        cachedSession = result;
+        return result;
+    }
+
     async function logout() {
         try {
             await window.SeabyssApi.request("/auth/logout", { method: "POST" });
@@ -93,12 +103,66 @@
         });
     }
 
-    document.addEventListener("DOMContentLoaded", attachLoginForm);
+    function attachRegisterForm() {
+        const form = document.getElementById("register-form");
+        if (!form) {
+            return;
+        }
+
+        const submit = document.getElementById("register-submit");
+        const message = document.getElementById("register-message");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const email = String(form.email.value || "").trim();
+            const displayName = String(form.displayName.value || "").trim();
+            const password = String(form.password.value || "");
+            const confirmPassword = String(form.confirmPassword.value || "");
+
+            if (!email || !password || !confirmPassword) {
+                message.textContent = "Entrez votre email et votre mot de passe.";
+                message.className = "form-message is-error";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                message.textContent = "Les mots de passe ne correspondent pas.";
+                message.className = "form-message is-error";
+                return;
+            }
+
+            submit.disabled = true;
+            submit.textContent = "Creation...";
+            message.textContent = "";
+            message.className = "form-message";
+
+            try {
+                await register(email, password, confirmPassword, displayName);
+                message.textContent = "Compte cree. Redirection vers votre profil...";
+                message.className = "form-message is-success";
+                window.location.href = "profile.html";
+            } catch (error) {
+                message.textContent = error.message || "Creation de compte impossible pour le moment.";
+                message.className = "form-message is-error";
+            } finally {
+                submit.disabled = false;
+                submit.textContent = "Creer mon compte";
+                form.password.value = "";
+                form.confirmPassword.value = "";
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        attachLoginForm();
+        attachRegisterForm();
+    });
 
     window.SeabyssAuth = {
         getSession,
         requireSession,
         login,
+        register,
         logout,
         isLoggedIn
     };

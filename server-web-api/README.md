@@ -7,10 +7,13 @@ The GitHub Pages frontend must not contain PlayFab secrets, payment secrets, SSH
 ## Endpoints
 
 - `GET /health`
+- `POST /register`
 - `POST /auth/login`
 - `POST /auth/logout`
 - `GET /auth/session`
 - `GET /me`
+
+`POST /register` creates a real PlayFab account in the configured Seabyss title through the PlayFab Client API. It does not create a website-only account, does not expose the PlayFab SecretKey, and does not grant gameplay rewards, currency, items, ships, or inventory.
 
 `GET /me` reads the official gameplay save from PlayFab `UserInternalData`, key `profile_v1`, using the PlayFab Server API from the backend only. The frontend never receives the PlayFab SecretKey and never receives the raw `profile_v1` JSON.
 
@@ -39,6 +42,7 @@ If Redis is not reachable in production, the API fails at startup instead of fal
 ## Security notes
 
 - Login has rate limiting.
+- Account registration has rate limiting and returns friendly errors for common PlayFab failures.
 - Browser sessions are intended to use HttpOnly Secure SameSite cookies.
 - Production sessions are stored in Redis, not in process memory.
 - CORS is restricted to configured public origins.

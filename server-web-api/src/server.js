@@ -144,6 +144,14 @@ const loginLimiter = rateLimit({
     message: { message: "Too many login attempts. Please try again later." }
 });
 
+const registerLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { message: "Too many account creation attempts. Please try again later." }
+});
+
 const combatGradeThresholds = [
     { min: 1000, grade: "Legende Abyssale" },
     { min: 750, grade: "Couronne Or" },
@@ -261,6 +269,49 @@ function validateLoginInput(req, res, next) {
     }
 
     req.loginInput = { email, password };
+    next();
+}
+
+function isLikelyEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validateRegistrationInput(req, res, next) {
+    const email = typeof req.body.email === "string" ? req.body.email.trim() : "";
+    const password = typeof req.body.password === "string" ? req.body.password : "";
+    const confirmPassword = typeof req.body.confirmPassword === "string" ? req.body.confirmPassword : undefined;
+    const displayName = typeof req.body.displayName === "string" ? req.body.displayName.trim() : "";
+
+    if (!email || email.length > 254 || !isLikelyEmail(email)) {
+        res.status(400).json({ message: "Enter a valid email address." });
+        return;
+    }
+
+    if (!password || password.length < 8 || password.length > 256) {
+        res.status(400).json({ message: "Password must be at least 8 characters." });
+        return;
+    }
+
+    if (confirmPassword !== undefined && password !== confirmPassword) {
+        res.status(400).json({ message: "Passwords do not match." });
+        return;
+    }
+
+    if (displayName && (displayName.length < 3 || displayName.length > 25)) {
+        res.status(400).json({ message: "Player name must be between 3 and 25 characters." });
+        return;
+    }
+
+    if (displayName && !/^[a-zA-Z0-9 _.-]+$/.test(displayName)) {
+        res.status(400).json({ message: "Player name can only use letters, numbers, spaces, dots, underscores, and hyphens." });
+        return;
+    }
+
+    req.registrationInput = {
+        email,
+        password,
+        displayName: displayName || undefined
+    };
     next();
 }
 
@@ -439,6 +490,89 @@ async function loginWithPlayFab(email, password) {
     return payload.data;
 }
 
+function createRegistrationError(playFabError, statusCode) {
+    const errorCode = playFabError && playFabError.error;
+    const error = new Error("Registration failed. Please try again.");
+    error.publicStatus = statusCode || 400;
+
+    if (errorCode === "AccountAlreadyExists" || errorCode === "EmailAddressNotAvailable") {
+        error.message = "An account already exists for this email.";
+        error.publicStatus = 409;
+        return error;
+    }
+
+    if (errorCode === "InvalidEmailAddress") {
+        error.message = "Enter a valid email address.";
+        error.publicStatus = 400;
+        return error;
+    }
+
+    if (errorCode === "InvalidPassword" || errorCode === "PasswordTooShort") {
+        error.message = "Password does not meet the account requirements.";
+        error.publicStatus = 400;
+        return error;
+    }
+
+    if (errorCode === "InvalidParams" || errorCode === "NameNotAvailable" || errorCode === "InvalidUsername") {
+        error.message = "Check the account details and try again.";
+        error.publicStatus = 400;
+        return error;
+    }
+
+    if (statusCode >= 500) {
+        error.message = "Account service unavailable. Please try again later.";
+        error.publicStatus = 503;
+    }
+
+    return error;
+}
+
+async function registerWithPlayFab(email, password, displayName) {
+    if (!config.playFabTitleId) {
+        const error = new Error("PlayFab title is not configured.");
+        error.publicStatus = 503;
+        throw error;
+    }
+
+    const requestBody = {
+        TitleId: config.playFabTitleId,
+        Email: email,
+        Password: password,
+        RequireBothUsernameAndEmail: false
+    };
+
+    if (displayName) {
+        requestBody.DisplayName = displayName;
+    }
+
+    const response = await fetch(`https://${config.playFabTitleId}.playfabapi.com/Client/RegisterPlayFabUser`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody)
+    });
+
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || payload.code !== 200) {
+        throw createRegistrationError(payload, response.status);
+    }
+
+    return payload.data;
+}
+
+function createPlayerSession(req, player) {
+    return new Promise((resolve, reject) => {
+        req.session.regenerate((regenerateError) => {
+            if (regenerateError) {
+                reject(regenerateError);
+                return;
+            }
+
+            req.session.player = player;
+            resolve();
+        });
+    });
+}
+
 async function buildProfile(sessionPlayer) {
     const gameplay = await getGameplayProfile(sessionPlayer.playFabId);
     const equippedCannonsLabel = gameplay.equippedCannons.length
@@ -483,31 +617,46 @@ app.post("/auth/login", loginLimiter, validateLoginInput, async (req, res, next)
     try {
         const { email, password } = req.loginInput;
         const data = await loginWithPlayFab(email, password);
+        const accountInfo = data.InfoResultPayload && data.InfoResultPayload.AccountInfo;
+        const playerProfile = data.InfoResultPayload && data.InfoResultPayload.PlayerProfile;
 
-        req.session.regenerate((regenerateError) => {
-            if (regenerateError) {
-                next(regenerateError);
-                return;
-            }
-
-            const accountInfo = data.InfoResultPayload && data.InfoResultPayload.AccountInfo;
-            const playerProfile = data.InfoResultPayload && data.InfoResultPayload.PlayerProfile;
-
-            req.session.player = {
-                playFabId: data.PlayFabId,
-                email,
-                displayName: data.NewlyCreated ? undefined : (playerProfile && playerProfile.DisplayName),
-                createdAt: accountInfo && accountInfo.Created,
-                lastLoginAt: new Date().toISOString()
-            };
-
-            res.json(publicSession(req));
+        await createPlayerSession(req, {
+            playFabId: data.PlayFabId,
+            email,
+            displayName: data.NewlyCreated ? undefined : (playerProfile && playerProfile.DisplayName),
+            createdAt: accountInfo && accountInfo.Created,
+            lastLoginAt: new Date().toISOString()
         });
+
+        res.json(publicSession(req));
     } catch (error) {
         if (error.publicStatus === 401) {
             res.status(401).json({ message: "Invalid email or password." });
             return;
         }
+        next(error);
+    }
+});
+
+app.post("/register", registerLimiter, validateRegistrationInput, async (req, res, next) => {
+    try {
+        const { email, password, displayName } = req.registrationInput;
+        const data = await registerWithPlayFab(email, password, displayName);
+
+        await createPlayerSession(req, {
+            playFabId: data.PlayFabId,
+            email,
+            displayName: displayName || data.Username,
+            createdAt: new Date().toISOString(),
+            lastLoginAt: new Date().toISOString()
+        });
+
+        res.status(201).json({
+            ...publicSession(req),
+            created: true,
+            message: "Account created. You can now login in the launcher and game."
+        });
+    } catch (error) {
         next(error);
     }
 });

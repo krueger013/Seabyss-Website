@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account creation unavailable - Seabyss</title>
-    <meta name="description" content="Seabyss account creation is not available on the public website yet.">
+    <title>Create account - Seabyss</title>
+    <meta name="description" content="Create a Seabyss player account for the website and game client.">
     <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
@@ -29,16 +29,44 @@
 <main class="page-shell">
     <section class="page-hero compact-hero">
         <div class="container narrow-container">
-            <p class="eyebrow">Accounts</p>
-            <h1>Account creation is not available here yet</h1>
+            <p class="eyebrow">Compte joueur</p>
+            <h1>Create your Seabyss account</h1>
             <p>
-                The public website does not currently create accounts or change passwords.
-                This avoids exposing unfinished account flows before the secured backend is deployed.
+                Create a real Seabyss PlayFab account. The same email and password can be used
+                on the website and in the Seabyss game client.
             </p>
-            <div class="hero-actions page-action">
-                <a href="login.html?v=2" class="btn-primary">Login</a>
-                <a href="support.html" class="btn-secondary">Contact support</a>
-            </div>
+        </div>
+    </section>
+
+    <section class="section compact-section">
+        <div class="container narrow-container">
+            <form class="form-panel" id="register-form" novalidate>
+                <div class="form-message" id="register-message" role="status" aria-live="polite"></div>
+
+                <label for="register-email">Email</label>
+                <input id="register-email" name="email" type="email" autocomplete="email" placeholder="captain@seabyss.com" required>
+
+                <label for="register-display-name">Player name</label>
+                <input id="register-display-name" name="displayName" type="text" autocomplete="nickname" placeholder="Captain name" minlength="3" maxlength="25">
+
+                <label for="register-password">Mot de passe</label>
+                <input id="register-password" name="password" type="password" autocomplete="new-password" placeholder="Minimum 8 caracteres" minlength="8" required>
+
+                <label for="register-confirm-password">Confirmer le mot de passe</label>
+                <input id="register-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Repetez le mot de passe" minlength="8" required>
+
+                <button class="btn-primary" id="register-submit" type="submit">Creer mon compte</button>
+
+                <p class="security-note">
+                    Aucun secret PlayFab n'est expose dans le navigateur. La creation passe par
+                    l'API web Seabyss et ne donne aucun or, diamant, item ou progression.
+                </p>
+
+                <div class="text-links">
+                    <a href="login.html?v=2">J'ai deja un compte</a>
+                    <a href="support.html">Besoin d'aide ?</a>
+                </div>
+            </form>
         </div>
     </section>
 </main>
