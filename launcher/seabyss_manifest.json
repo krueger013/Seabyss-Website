@@ -1,11 +1,11 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.29",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.29/SeabyssClient-Beta-0.1.7-beta.29.zip",
+    "gameVersion":  "0.1.7-beta.30",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.30/SeabyssClient-Beta-0.1.7-beta.30.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
     "fileSizeText":  "214,07 MB",
     "releaseDate":  "2026-07-09",
-    "notes":  "Beta29 ships the latest server/client gameplay, UI, NPC boss, profile persistence, logout, respawn, minimap, and boss reward contribution updates.",
+    "notes":  "Beta30 registers the boss prefab, repairs settings interactivity, and hides combat visuals through fog.",
     "minimumLauncherVersion":  "0.1.0"
 }
