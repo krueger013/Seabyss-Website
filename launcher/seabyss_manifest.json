@@ -1,12 +1,12 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.32",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.32/SeabyssClient-Beta-0.1.7-beta.32.zip",
+    "gameVersion":  "0.1.7-beta.33",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.33/SeabyssClient-Beta-0.1.7-beta.33.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
     "fileSizeText":  "220,44 MB",
     "releaseDate":  "2026-07-11",
-    "notes":  "Beta32 improves hotbar persistence, remote player HUD reliability, top-menu first-click behavior, UI scrolling consistency, and NPC combat reliability.",
+    "notes":  "Fixed an issue where NPCs could become aggressive inconsistently.",
     "minimumLauncherVersion":  "0.1.0",
-    "sha256":  "6e3f3b0c6d6f41e9b707a5c455a29dfca9a0e6afe0c9cd952510620a48623319"
+    "sha256":  "fb7b5109f91d92ae9f7a4ea799953f8ebadd6aaa49c5432daf588f59d9373370"
 }
