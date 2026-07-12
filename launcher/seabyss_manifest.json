@@ -1,12 +1,12 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.34",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.34/SeabyssClient-Beta-0.1.7-beta.34.zip",
+    "gameVersion":  "0.1.7-beta.35",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.35/SeabyssClient-Beta-0.1.7-beta.35.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-    "fileSizeText":  "220,44 MB",
-    "releaseDate":  "2026-07-11",
-    "notes":  "Fixed an issue where roaming NPCs could stop attacking nearby players after moving too far from their original spawn position.",
+    "fileSizeText":  "238,68 MB",
+    "releaseDate":  "2026-07-12",
+    "notes":  "Added complete visual damage support for Elite Ship 1.\nAdded Elite Ship 2 with clean and damaged high- and low-quality models.\nFixed an issue where roaming NPCs could stop attacking nearby players after moving too far from their original spawn position.",
     "minimumLauncherVersion":  "0.1.0",
-    "sha256":  "6202bc815624e4d460d9bb04a75a5936765cc45c96e75d8ea627d13ad093c150"
+    "sha256":  "55406b60fad4f49f274b7ac36673639d3d31e50cc56fca7f8ec7f4e9c81e3b67"
 }
