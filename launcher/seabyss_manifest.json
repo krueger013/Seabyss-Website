@@ -1,12 +1,12 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.36",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.36/SeabyssClient-Beta-0.1.7-beta.36.zip",
+    "gameVersion":  "0.1.7-beta.37",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.37/SeabyssClient-Beta-0.1.7-beta.37.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-    "fileSizeText":  "201.79 MB",
+    "fileSizeText":  "200.35 MB",
     "releaseDate":  "2026-07-13",
-    "notes":  "Added Thor's Wrath and unified Special Items, Ammo, hotbar, and combat overlay behavior.\nAdded the camera recenter HUD control and improved inventory panels.\nAdded Elite Ship 3 visual variants plus updated item, captain, chest, and legacy UI artwork.\nRemoved obsolete invalid island materials.",
+    "notes":  "Improved the camera recenter button and camera zoom controls.\nImproved the Login screen server display and Quit button.\nAdded new Bronze, Silver, and Gold Combat Grade artwork.\nUpdated Combat Grade progression and validation.\nSafe logout now closes the game and returns the player to the launcher.\nFixed the Login screen showing localhost after disconnecting.",
     "minimumLauncherVersion":  "0.1.0",
-    "sha256":  "3cab296dae26c38317375e03c822bfa6b9663ad0613619b003d66335df028065"
+    "sha256":  "05f0df6af1b52d89abe4fc1cdd4cffcda58887dbc25dfc91c21043fdb28d1bc6"
 }
