@@ -1,12 +1,12 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.39",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.39/SeabyssClient-Beta-0.1.7-beta.39.zip",
+    "gameVersion":  "0.1.7-beta.40",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.40/SeabyssClient-Beta-0.1.7-beta.40.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
     "fileSizeText":  "219.43 MB",
     "releaseDate":  "2026-07-17",
-    "notes":  "Increased cannon ranges to 30 / 30 / 60 and player vision radius from 60 to 70.\nRedesigned the Shipyard, Market, Profile, Tavern, Guild, and Logbook interfaces, with guild capacity increased to 200 members.\nFixed Pirate Exam tabs, click-through HUD notifications, health bars, stretched Profile images, and camera zoom positioning.\nMoved active combat-item icons slightly right and added minimize/restore controls to the Quest Tracker.\nImproved UI responsiveness, scrolling, performance, and EN/FR/ES/TR localization.",
+    "notes":  "Seabyss II — Beta 0.1.7-beta.40\n\n- Added double-click attack for valid NPCs, bosses and enemy players.\n- Single-click still selects targets without attacking.\n- Double-click attacks now use the same server-authoritative combat rules as the Attack button.\n- Repositioned the camera zoom control to prevent overlap with the Game Bar.\n- Added a dedicated drag handle for moving the zoom control.\n- Improved UI and chat protection against accidental world attacks.",
     "minimumLauncherVersion":  "0.1.0",
-    "sha256":  "612fead8da8043b7eb2730664eeda22b77aba9530957e0db97580c58853f0e40"
+    "sha256":  "20c04608e57dba23aa909044655751bd34900e4e8d9b53aaeff19f4f0866f941"
 }
