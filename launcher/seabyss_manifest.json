@@ -1,12 +1,12 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.38",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.38/SeabyssClient-Beta-0.1.7-beta.38.zip",
+    "gameVersion":  "0.1.7-beta.39",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.39/SeabyssClient-Beta-0.1.7-beta.39.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-    "fileSizeText":  "217.56 MB",
-    "releaseDate":  "2026-07-15",
-    "notes":  "Rebuilt the Quest system and Quest window with categories, one-click internal tabs, objectives, rewards, tracking, and persistence.\nAdded Corvus Deadeyes to Map 1 with four damage states, a portrait, 4,200 HP, and 5 Gold / 5 XP rewards.\nExpanded Combat Grade artwork and mappings.\nImproved Elite Ship cards with dedicated cover portraits and corrected layouts.\nIntegrated Thor's Wrath market behavior and strengthened NPC, reward, progression, and combat UI reliability.",
+    "fileSizeText":  "219.43 MB",
+    "releaseDate":  "2026-07-17",
+    "notes":  "Increased cannon ranges to 30 / 30 / 60 and player vision radius from 60 to 70.\nRedesigned the Shipyard, Market, Profile, Tavern, Guild, and Logbook interfaces, with guild capacity increased to 200 members.\nFixed Pirate Exam tabs, click-through HUD notifications, health bars, stretched Profile images, and camera zoom positioning.\nMoved active combat-item icons slightly right and added minimize/restore controls to the Quest Tracker.\nImproved UI responsiveness, scrolling, performance, and EN/FR/ES/TR localization.",
     "minimumLauncherVersion":  "0.1.0",
-    "sha256":  "680a8840b82e5f2e4084f664f0d67601342271b4dd30811e5d68e466916ede66"
+    "sha256":  "612fead8da8043b7eb2730664eeda22b77aba9530957e0db97580c58853f0e40"
 }
