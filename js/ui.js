@@ -26,12 +26,43 @@
 
     function attachLogoutButtons() {
         document.querySelectorAll("[data-logout]").forEach((button) => {
-            button.addEventListener("click", () => {
+            button.addEventListener("click", async () => {
                 if (window.SeabyssAuth) {
-                    window.SeabyssAuth.logout();
+                    button.disabled = true;
+                    try {
+                        await window.SeabyssAuth.logout();
+                    } catch (error) {
+                        button.disabled = false;
+                        const message = document.getElementById("profile-message");
+                        if (message) {
+                            message.textContent = "Deconnexion impossible. Votre session peut encore etre active.";
+                            message.className = "form-message is-error";
+                        } else {
+                            window.alert("Deconnexion impossible. Votre session peut encore etre active.");
+                        }
+                    }
                 }
             });
         });
+    }
+
+    function getSafeReleaseUrl(value) {
+        try {
+            const url = new URL(value);
+            if (
+                url.origin !== "https://github.com" ||
+                !url.pathname.startsWith("/krueger013/Seabyss-Website/releases/download/") ||
+                url.search ||
+                url.hash ||
+                url.username ||
+                url.password
+            ) {
+                return null;
+            }
+            return url.href;
+        } catch (error) {
+            return null;
+        }
     }
 
     async function loadSessionState() {
@@ -64,8 +95,11 @@
                 element.textContent = manifest.gameVersion ? `Current Beta ${manifest.gameVersion}` : "Current Beta";
             });
             document.querySelectorAll("[data-manifest-download]").forEach((element) => {
-                if (manifest.downloadUrl) {
-                    element.setAttribute("href", manifest.downloadUrl);
+                const downloadUrl = getSafeReleaseUrl(manifest.downloadUrl);
+                if (downloadUrl) {
+                    element.setAttribute("href", downloadUrl);
+                } else {
+                    element.removeAttribute("href");
                 }
             });
         } catch (error) {

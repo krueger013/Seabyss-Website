@@ -36,12 +36,9 @@
     }
 
     async function logout() {
-        try {
-            await window.SeabyssApi.request("/auth/logout", { method: "POST" });
-        } finally {
-            cachedSession = { loggedIn: false };
-            window.location.href = "index.html";
-        }
+        await window.SeabyssApi.request("/auth/logout", { method: "POST" });
+        cachedSession = { loggedIn: false };
+        window.location.href = "index.html";
     }
 
     async function requireSession() {
@@ -72,11 +69,24 @@
 
         const submit = document.getElementById("login-submit");
         const message = document.getElementById("login-message");
+        const emailInput = document.getElementById("login-email");
+        const passwordInput = document.getElementById("login-password");
+
+        if (!submit || !message || !emailInput || !passwordInput) {
+            return;
+        }
+
+        if (!window.SeabyssApi || !window.SeabyssApi.isConfigured()) {
+            submit.disabled = true;
+            message.textContent = "Configuration de connexion indisponible.";
+            message.className = "form-message is-error";
+            return;
+        }
 
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
-            const email = String(form.email.value || "").trim();
-            const password = String(form.password.value || "");
+            const email = String(emailInput.value || "").trim();
+            const password = String(passwordInput.value || "");
 
             if (!email || !password) {
                 message.textContent = "Entrez votre email et votre mot de passe.";
@@ -98,7 +108,7 @@
             } finally {
                 submit.disabled = false;
                 submit.textContent = "Se connecter";
-                form.password.value = "";
+                passwordInput.value = "";
             }
         });
     }
@@ -111,13 +121,28 @@
 
         const submit = document.getElementById("register-submit");
         const message = document.getElementById("register-message");
+        const emailInput = document.getElementById("register-email");
+        const displayNameInput = document.getElementById("register-display-name");
+        const passwordInput = document.getElementById("register-password");
+        const confirmPasswordInput = document.getElementById("register-confirm-password");
+
+        if (!submit || !message || !emailInput || !displayNameInput || !passwordInput || !confirmPasswordInput) {
+            return;
+        }
+
+        if (!window.SeabyssApi || !window.SeabyssApi.isConfigured()) {
+            submit.disabled = true;
+            message.textContent = "Configuration de creation de compte indisponible.";
+            message.className = "form-message is-error";
+            return;
+        }
 
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
-            const email = String(form.email.value || "").trim();
-            const displayName = String(form.displayName.value || "").trim();
-            const password = String(form.password.value || "");
-            const confirmPassword = String(form.confirmPassword.value || "");
+            const email = String(emailInput.value || "").trim();
+            const displayName = String(displayNameInput.value || "").trim();
+            const password = String(passwordInput.value || "");
+            const confirmPassword = String(confirmPasswordInput.value || "");
 
             if (!email || !password || !confirmPassword) {
                 message.textContent = "Entrez votre email et votre mot de passe.";
@@ -147,8 +172,8 @@
             } finally {
                 submit.disabled = false;
                 submit.textContent = "Creer mon compte";
-                form.password.value = "";
-                form.confirmPassword.value = "";
+                passwordInput.value = "";
+                confirmPasswordInput.value = "";
             }
         });
     }

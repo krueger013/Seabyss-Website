@@ -11,6 +11,7 @@ const app = express();
 
 const config = {
     nodeEnv: process.env.NODE_ENV || "development",
+    host: process.env.HOST || "127.0.0.1",
     port: Number(process.env.PORT || 3000),
     publicOrigins: String(process.env.PUBLIC_SITE_ORIGIN || "http://localhost:8080")
         .split(",")
@@ -19,16 +20,26 @@ const config = {
     playFabTitleId: process.env.PLAYFAB_TITLE_ID,
     playFabSecretKey: process.env.PLAYFAB_SECRET_KEY,
     sessionSecret: process.env.SESSION_SECRET,
-    cookieDomain: process.env.COOKIE_DOMAIN || undefined,
     seabyssEnv: process.env.SEABYSS_ENV || "beta",
     redisUrl: process.env.REDIS_URL,
-    sessionTtlSeconds: Number(process.env.SESSION_TTL_SECONDS || 86400)
+    sessionTtlSeconds: Number(process.env.SESSION_TTL_SECONDS || 86400),
+    upstreamTimeoutMs: Number(process.env.UPSTREAM_TIMEOUT_MS || 8000)
 };
 
-const isProduction = config.nodeEnv === "production";
+const allowedNodeEnvironments = new Set(["development", "test", "production"]);
+if (!allowedNodeEnvironments.has(config.nodeEnv)) {
+    throw new Error("NODE_ENV must be development, test, or production.");
+}
 
-if (!config.sessionSecret && isProduction) {
-    throw new Error("SESSION_SECRET is required in production.");
+const isProduction = config.nodeEnv === "production";
+const sessionCookieName = isProduction ? "__Host-seabyss.sid" : "seabyss.sid";
+
+if (isProduction && (
+    !config.sessionSecret ||
+    Buffer.byteLength(config.sessionSecret, "utf8") < 32 ||
+    config.sessionSecret === "change_me_long_random_secret"
+)) {
+    throw new Error("SESSION_SECRET must contain at least 32 random bytes in production.");
 }
 
 if (isProduction && !config.playFabTitleId) {
@@ -45,6 +56,10 @@ if (isProduction && !config.redisUrl) {
 
 if (!Number.isFinite(config.sessionTtlSeconds) || config.sessionTtlSeconds < 300) {
     throw new Error("SESSION_TTL_SECONDS must be a number of at least 300 seconds.");
+}
+
+if (!Number.isInteger(config.upstreamTimeoutMs) || config.upstreamTimeoutMs < 1000 || config.upstreamTimeoutMs > 30000) {
+    throw new Error("UPSTREAM_TIMEOUT_MS must be an integer between 1000 and 30000 milliseconds.");
 }
 
 if (!config.playFabTitleId) {
@@ -68,10 +83,20 @@ app.use(cors({
             return;
         }
 
-        callback(new Error("CORS origin not allowed."));
+        const error = new Error("CORS origin not allowed.");
+        error.publicStatus = 403;
+        callback(error);
     },
     credentials: true
 }));
+
+app.use([
+    "/register",
+    "/auth/login",
+    "/auth/logout",
+    "/auth/session",
+    "/me"
+], preventSensitiveResponseCaching);
 
 app.use(express.json({ limit: "16kb" }));
 
@@ -122,7 +147,7 @@ async function createSessionStore() {
 const sessionStore = await createSessionStore();
 
 app.use(session({
-    name: "seabyss.sid",
+    name: sessionCookieName,
     store: sessionStore,
     secret: config.sessionSecret || "development-only-change-me",
     resave: false,
@@ -131,7 +156,7 @@ app.use(session({
         httpOnly: true,
         secure: isProduction,
         sameSite: "lax",
-        domain: isProduction ? config.cookieDomain : undefined,
+        path: "/",
         maxAge: config.sessionTtlSeconds * 1000
     }
 }));
@@ -150,6 +175,17 @@ const registerLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
     message: { message: "Too many account creation attempts. Please try again later." }
+});
+
+const profileLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 30,
+    standardHeaders: true,
+    legacyHeaders: false,
+    keyGenerator(req) {
+        return String(req.session.player.playFabId || req.sessionID);
+    },
+    message: { message: "Too many profile requests. Please try again later." }
 });
 
 const combatGradeThresholds = [
@@ -256,6 +292,28 @@ function requireAuth(req, res, next) {
         res.status(401).json({ message: "Authentication required." });
         return;
     }
+    next();
+}
+
+function preventSensitiveResponseCaching(req, res, next) {
+    res.set({
+        "Cache-Control": "private, no-store",
+        Pragma: "no-cache"
+    });
+    next();
+}
+
+function requireJsonObject(req, res, next) {
+    if (!req.is("application/json")) {
+        res.status(415).json({ message: "Content-Type must be application/json." });
+        return;
+    }
+
+    if (!req.body || typeof req.body !== "object" || Array.isArray(req.body)) {
+        res.status(400).json({ message: "Request body must be a JSON object." });
+        return;
+    }
+
     next();
 }
 
@@ -409,6 +467,8 @@ async function getGameplayProfile(playFabId) {
     try {
         const response = await fetch(`https://${config.playFabTitleId}.playfabapi.com/Server/GetUserInternalData`, {
             method: "POST",
+            redirect: "error",
+            signal: AbortSignal.timeout(config.upstreamTimeoutMs),
             headers: {
                 "Content-Type": "application/json",
                 "X-SecretKey": config.playFabSecretKey
@@ -465,6 +525,8 @@ async function loginWithPlayFab(email, password) {
 
     const response = await fetch(`https://${config.playFabTitleId}.playfabapi.com/Client/LoginWithEmailAddress`, {
         method: "POST",
+        redirect: "error",
+        signal: AbortSignal.timeout(config.upstreamTimeoutMs),
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             TitleId: config.playFabTitleId,
@@ -547,13 +609,15 @@ async function registerWithPlayFab(email, password, displayName) {
 
     const response = await fetch(`https://${config.playFabTitleId}.playfabapi.com/Client/RegisterPlayFabUser`, {
         method: "POST",
+        redirect: "error",
+        signal: AbortSignal.timeout(config.upstreamTimeoutMs),
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody)
     });
 
     const payload = await response.json().catch(() => ({}));
     if (!response.ok || payload.code !== 200) {
-        throw createRegistrationError(payload, response.status);
+        throw createRegistrationError(payload, response.ok ? 502 : response.status);
     }
 
     return payload.data;
@@ -613,7 +677,7 @@ app.get("/health", (req, res) => {
     });
 });
 
-app.post("/auth/login", loginLimiter, validateLoginInput, async (req, res, next) => {
+app.post("/auth/login", preventSensitiveResponseCaching, loginLimiter, requireJsonObject, validateLoginInput, async (req, res, next) => {
     try {
         const { email, password } = req.loginInput;
         const data = await loginWithPlayFab(email, password);
@@ -638,7 +702,7 @@ app.post("/auth/login", loginLimiter, validateLoginInput, async (req, res, next)
     }
 });
 
-app.post("/register", registerLimiter, validateRegistrationInput, async (req, res, next) => {
+app.post("/register", preventSensitiveResponseCaching, registerLimiter, requireJsonObject, validateRegistrationInput, async (req, res, next) => {
     try {
         const { email, password, displayName } = req.registrationInput;
         const data = await registerWithPlayFab(email, password, displayName);
@@ -661,23 +725,40 @@ app.post("/register", registerLimiter, validateRegistrationInput, async (req, re
     }
 });
 
-app.post("/auth/logout", (req, res) => {
-    req.session.destroy(() => {
-        res.clearCookie("seabyss.sid", {
+app.post("/auth/logout", preventSensitiveResponseCaching, (req, res, next) => {
+    req.session.destroy((destroyError) => {
+        res.clearCookie(sessionCookieName, {
             httpOnly: true,
             secure: isProduction,
             sameSite: "lax",
-            domain: isProduction ? config.cookieDomain : undefined
+            path: "/"
         });
+
+        if (isProduction) {
+            res.clearCookie("seabyss.sid", {
+                httpOnly: true,
+                secure: true,
+                sameSite: "lax",
+                domain: ".seabyss.com",
+                path: "/"
+            });
+        }
+
+        if (destroyError) {
+            destroyError.publicStatus = 503;
+            next(destroyError);
+            return;
+        }
+
         res.json({ success: true });
     });
 });
 
-app.get("/auth/session", (req, res) => {
+app.get("/auth/session", preventSensitiveResponseCaching, (req, res) => {
     res.json(publicSession(req));
 });
 
-app.get("/me", requireAuth, async (req, res, next) => {
+app.get("/me", preventSensitiveResponseCaching, requireAuth, profileLimiter, async (req, res, next) => {
     try {
         res.json(await buildProfile(req.session.player));
     } catch (error) {
@@ -709,6 +790,6 @@ app.use((error, req, res, next) => {
     });
 });
 
-app.listen(config.port, () => {
-    console.log(`Seabyss web API listening on port ${config.port} (${config.seabyssEnv}).`);
+app.listen(config.port, config.host, () => {
+    console.log(`Seabyss web API listening on ${config.host}:${config.port} (${config.seabyssEnv}).`);
 });

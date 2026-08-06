@@ -1,11 +1,44 @@
 (function () {
-    const config = window.SEABYSS_CONFIG || {};
+    const config = window.SEABYSS_CONFIG;
     const defaultTimeoutMs = 10000;
+    const expectedApiOrigin = "https://api.seabyss.com";
+    let apiBaseUrl = null;
 
-    function joinUrl(baseUrl, path) {
-        const cleanBase = String(baseUrl || "").replace(/\/+$/, "");
-        const cleanPath = String(path || "").replace(/^\/+/, "");
-        return `${cleanBase}/${cleanPath}`;
+    try {
+        const candidate = new URL(config && config.apiBaseUrl);
+        if (
+            candidate.origin !== expectedApiOrigin ||
+            candidate.pathname !== "/" ||
+            candidate.search ||
+            candidate.hash ||
+            candidate.username ||
+            candidate.password
+        ) {
+            throw new Error("Unexpected API origin.");
+        }
+        apiBaseUrl = candidate.origin;
+    } catch (error) {
+        apiBaseUrl = null;
+    }
+
+    function isConfigured() {
+        return apiBaseUrl !== null;
+    }
+
+    function resolveApiUrl(path) {
+        if (!isConfigured()) {
+            throw new Error("API configuration unavailable.");
+        }
+
+        if (typeof path !== "string" || !path.startsWith("/") || path.startsWith("//")) {
+            throw new Error("Invalid API path.");
+        }
+
+        const url = new URL(path, `${apiBaseUrl}/`);
+        if (url.origin !== apiBaseUrl) {
+            throw new Error("Invalid API origin.");
+        }
+        return url.href;
     }
 
     async function request(path, options) {
@@ -19,9 +52,12 @@
         }
 
         try {
-            const response = await fetch(joinUrl(config.apiBaseUrl, path), {
+            const response = await fetch(resolveApiUrl(path), {
                 method: settings.method || "GET",
                 credentials: "include",
+                cache: "no-store",
+                redirect: "error",
+                referrerPolicy: "no-referrer",
                 headers,
                 body: settings.body ? JSON.stringify(settings.body) : undefined,
                 signal: controller.signal
@@ -48,16 +84,58 @@
         }
     }
 
+    function resolveManifestUrl() {
+        if (!config || typeof config.manifestUrl !== "string") {
+            throw new Error("Manifest configuration unavailable.");
+        }
+
+        const url = new URL(config.manifestUrl, window.location.href);
+        if (
+            url.origin !== window.location.origin ||
+            url.pathname !== "/launcher/seabyss_manifest.json" ||
+            url.search ||
+            url.hash ||
+            url.username ||
+            url.password
+        ) {
+            throw new Error("Invalid manifest URL.");
+        }
+        return url.href;
+    }
+
+    function validateManifest(manifest) {
+        if (
+            !manifest ||
+            typeof manifest !== "object" ||
+            Array.isArray(manifest) ||
+            typeof manifest.gameVersion !== "string" ||
+            typeof manifest.downloadUrl !== "string" ||
+            typeof manifest.notes !== "string" ||
+            !/^[a-f0-9]{64}$/i.test(manifest.sha256 || "") ||
+            !Number.isSafeInteger(manifest.size) ||
+            manifest.size <= 0
+        ) {
+            throw new Error("Invalid manifest.");
+        }
+        return manifest;
+    }
+
     async function loadManifest() {
-        const response = await fetch(config.manifestUrl, { cache: "no-store" });
+        const response = await fetch(resolveManifestUrl(), {
+            cache: "no-store",
+            credentials: "same-origin",
+            redirect: "error",
+            referrerPolicy: "no-referrer"
+        });
         if (!response.ok) {
             throw new Error("Manifest unavailable.");
         }
-        return response.json();
+        return validateManifest(await response.json());
     }
 
-    window.SeabyssApi = {
+    window.SeabyssApi = Object.freeze({
         request,
-        loadManifest
-    };
+        loadManifest,
+        isConfigured
+    });
 })();

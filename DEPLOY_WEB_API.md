@@ -94,12 +94,13 @@ Create `/opt/seabyss/web-api/.env` directly on the server:
 
 ```txt
 NODE_ENV=production
+HOST=127.0.0.1
 PORT=3000
 PUBLIC_SITE_ORIGIN=https://www.seabyss.com,https://seabyss.com
 PLAYFAB_TITLE_ID=xxxxx
 PLAYFAB_SECRET_KEY=xxxxx
-SESSION_SECRET=long_random_secret
-COOKIE_DOMAIN=.seabyss.com
+UPSTREAM_TIMEOUT_MS=8000
+SESSION_SECRET=replace_with_at_least_32_random_bytes
 SEABYSS_ENV=beta
 REDIS_URL=redis://127.0.0.1:6379
 SESSION_TTL_SECONDS=86400

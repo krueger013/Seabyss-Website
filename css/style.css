@@ -118,6 +118,9 @@ a {
     display: flex;
     align-items: center;
     background-color: var(--bg-deep);
+    background-image: url("../assets/images/top image site seabyss.png");
+    background-position: center;
+    background-size: cover;
     overflow: hidden;
 }
 
