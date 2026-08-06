@@ -1,17 +1,29 @@
 (function () {
     let cachedSession = null;
+    let sessionRequest = null;
+    let loginRedirectPending = false;
 
     function isLoggedIn(session) {
         return Boolean(session && session.loggedIn);
     }
 
     async function getSession() {
+        if (!sessionRequest) {
+            sessionRequest = (async () => {
+                try {
+                    cachedSession = await window.SeabyssApi.request("/auth/session");
+                    return cachedSession;
+                } catch (error) {
+                    cachedSession = { loggedIn: false };
+                    return cachedSession;
+                }
+            })();
+        }
+
         try {
-            cachedSession = await window.SeabyssApi.request("/auth/session");
-            return cachedSession;
-        } catch (error) {
-            cachedSession = { loggedIn: false };
-            return cachedSession;
+            return await sessionRequest;
+        } finally {
+            sessionRequest = null;
         }
     }
 
@@ -44,9 +56,12 @@
     async function requireSession() {
         const session = cachedSession || await getSession();
         if (!isLoggedIn(session)) {
-            const currentPage = window.location.pathname.split("/").pop() || "profile.html";
-            const target = encodeURIComponent(currentPage === "login.html" ? "profile.html" : currentPage);
-            window.location.href = `login.html?v=2&returnTo=${target}`;
+            if (!loginRedirectPending) {
+                loginRedirectPending = true;
+                const currentPage = window.location.pathname.split("/").pop() || "profile.html";
+                const target = encodeURIComponent(currentPage === "login.html" ? "profile.html" : currentPage);
+                window.location.href = `login.html?v=2&returnTo=${target}`;
+            }
             return null;
         }
         return session;

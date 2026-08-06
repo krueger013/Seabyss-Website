@@ -91,7 +91,10 @@
         }
 
         try {
-            await window.SeabyssAuth.requireSession();
+            const session = await window.SeabyssAuth.requireSession();
+            if (!session) {
+                return;
+            }
             const profile = await window.SeabyssApi.request("/me");
             renderProfile(profile);
             if (message) {
