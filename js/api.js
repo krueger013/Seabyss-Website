@@ -92,7 +92,7 @@
         const url = new URL(config.manifestUrl, window.location.href);
         if (
             url.origin !== window.location.origin ||
-            url.pathname !== "/launcher/seabyss_manifest.json" ||
+            url.pathname !== "/launcher/v2/seabyss_manifest.json" ||
             url.search ||
             url.hash ||
             url.username ||
