@@ -1,13 +1,13 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.41",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.41/SeabyssClient-Beta-0.1.7-beta.41.zip",
+    "gameVersion":  "0.1.7-beta.42",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.42/SeabyssClient-Beta-0.1.7-beta.42.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-    "fileSizeText":  "234.38 MB",
-    "releaseDate":  "2026-07-19",
-    "notes":  "Seabyss II — Beta 0.1.7-beta.41\n\n- Added safe daily and manually scheduled server restarts with localized warnings and complete save-before-exit handling.\n- Added a protected SERVER RESTART notification for compatible Beta41 clients while keeping Beta40 clients isolated from the new Mirror message.\n- Added Poison, Ice, Fire and Electric resistances with profile persistence, migration, display and server-authoritative damage reduction.\n- Added quantity purchases for Diamond Powder and Diamond Armor Plate, including 1, 10, 100 and custom bundle counts.\n- Fixed the combat THREAT HUD so real NPC and player attackers appear and update correctly.\n- Hardened full player-profile persistence, round-trip validation and restart-time mutation barriers.",
+    "fileSizeText":  "336.40 MB",
+    "releaseDate":  "2026-08-08",
+    "notes":  "Seabyss II — Beta 0.1.7-beta.42\n\n- Expanded and polished Guild, Market, Quest, Ranking, Logbook, Shipyard and profile interfaces.\n- Added new islands, tropical waters, destination markers, sea monsters, harpoons and world content.\n- Improved NPCs, world spawners, progression, economy transactions and purchase reliability.\n- Added new ship designs, visual presentation updates and profile loading improvements.\n- Added LauncherUpdates integrity migration for compatibility with historical launcher installations.\n- Improved client stability and release regression coverage.",
     "minimumLauncherVersion":  "0.1.5",
-    "sha256":  "2571c9b15287a527de990df9169ca8314d54881bd17d906f6f538bac5f58d84e",
-    "size":  245766812
+    "sha256":  "4933c20baa3aebc4fe04a3dc3f4938f362eddf259b1c1d7c7c8cf4eb49876800",
+    "size":  352740849
 }
