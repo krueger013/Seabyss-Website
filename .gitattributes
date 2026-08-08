@@ -1,0 +1,6 @@
+launcher/launcher_manifest.json text eol=lf
+launcher/v2/launcher_manifest.json text eol=lf
+launcher/v2/seabyss_manifest.json text eol=lf
+launcher/v2/bootstrap/0.1.5/launcher_manifest.json text eol=lf
+launcher/v2/*.sig binary
+launcher/v2/bootstrap/0.1.5/*.sig binary
