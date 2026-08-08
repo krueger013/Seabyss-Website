@@ -1,14 +1,14 @@
 {
-    "launcherVersion": "0.1.4",
-    "minimumLauncherVersion": "0.1.4",
-    "mandatory": true,
-    "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.4/SeabyssLauncher-0.1.4-Update.zip",
-    "size": 44700789,
-    "sha256": "e476919120b8d502f370f0c9497a88f05bbf302123f799113707eda18f0174ad",
-    "executablePath": "SeabyssLauncher.exe",
-    "updaterExecutablePath": "SeabyssLauncherUpdater.exe",
-    "releaseDate": "2026-07-12",
-    "notes": [
-        "Added automatic launcher self-updates with secure SHA-256 verification and rollback support."
-    ]
+    "launcherVersion":  "0.1.5-bootstrap.1",
+    "minimumLauncherVersion":  "0.1.4",
+    "mandatory":  true,
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.5-bootstrap.1/SeabyssLauncher-0.1.5-bootstrap.1-Update.zip",
+    "size":  5959138,
+    "sha256":  "deb7e3dd81f6790564631bc502175787031f270b35ccb53a365e40bad4da4abf",
+    "executablePath":  "SeabyssLauncher.exe",
+    "updaterExecutablePath":  "SeabyssLauncherUpdater.exe",
+    "releaseDate":  "2026-08-08",
+    "notes":  [
+                  "Preparing a secure Seabyss Launcher update."
+              ]
 }
