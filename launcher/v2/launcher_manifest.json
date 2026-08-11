@@ -1,16 +1,16 @@
 {
     "schemaVersion":  2,
-    "launcherVersion":  "0.1.5",
-    "minimumLauncherVersion":  "0.1.5",
+    "launcherVersion":  "0.1.6",
+    "minimumLauncherVersion":  "0.1.6",
     "mandatory":  true,
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.5/SeabyssLauncher-0.1.5-Update.zip",
-    "size":  45011657,
-    "uncompressedSize":  120085323,
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.6/SeabyssLauncher-0.1.6-Update.zip",
+    "size":  45024977,
+    "uncompressedSize":  120118763,
     "entryCount":  187,
-    "sha256":  "48f2ed0a60835391fa5717838ef729b06d4347e3bbe68cfe3c3edb64f05b56af",
+    "sha256":  "c6072a01ca5beea3b4c94258f5b3b698e31372cf17c9cc30452cd7ecb704de74",
     "executablePath":  "SeabyssLauncher.exe",
     "updaterExecutablePath":  "SeabyssLauncherUpdater.exe",
-    "releaseDate":  "2026-08-08",
+    "releaseDate":  "2026-08-11",
     "notes":  [
                   "Secured update manifests and improved downloads on slow or interrupted connections."
               ]
