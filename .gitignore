@@ -9,3 +9,16 @@ yarn-error.log*
 dump.rdb
 server-web-api/.env
 server-web-api/node_modules/
+
+# Local financial certification evidence/runtime state (never source)
+server-web-api/config/*.local.json
+server-web-api/.financial-canary-runtime/
+server-web-api/evidence/local/
+**/appendonlydir/
+*.aof
+*.aof.*
+*.rdb
+*.clixml
+TestResults*.xml
+*-results.xml
+*.orig

@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "kind": "seabyss_financial_shadow_cutover_tracker",
+  "baseline": {
+    "baselineVersion": 2,
+    "digest": "2285076de72cb00a1233655bb8ccbf3c17fa2a5457d366a058fdf8b520c5476d",
+    "pathCount": 22,
+    "occurrenceCount": 121
+  },
+  "cutoverReady": false,
+  "summary": {
+    "pathCount": 22,
+    "occurrenceCount": 121,
+    "auditedPathCount": 22,
+    "partialShadowPathCount": 14,
+    "fullShadowPathCount": 0,
+    "shadowCoveredPathCount": 0,
+    "migratedPathCount": 0,
+    "cutoverReadyPathCount": 0
+  },
+  "paths": [
+    {
+      "path": "Boarding/PlayerPirateCrew.cs", "occurrenceCount": 7,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 6, "baselineOccurrenceCount": 7,
+        "shadowCoverage": ["Unity Shadow Diamonds observation wired; other economic mutations remain Legacy."], "migration": [] }
+    },
+    {
+      "path": "Captains/PlayerCaptainInventory.cs", "occurrenceCount": 4,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 4, "baselineOccurrenceCount": 4,
+        "shadowCoverage": ["Unity Shadow Diamonds observation wired; other economic mutations remain Legacy."], "migration": [] }
+    },
+    {
+      "path": "Cauldron/CauldronManager.cs", "occurrenceCount": 4,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 4, "baselineOccurrenceCount": 4,
+        "shadowCoverage": ["Unity Shadow Diamonds observation wired; other economic mutations remain Legacy."], "migration": [] }
+    },
+    {
+      "path": "Entities/Combat/PlayerCannonInventory.cs", "occurrenceCount": 4,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds", "Elite"],
+      "exclusions": ["Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 4, "baselineOccurrenceCount": 4,
+        "shadowCoverage": ["Extended Sandbox soak 2026-08-24: 10,000 ordered Elite mutations in 1,000 batches, exact net-zero state, 20-shot runtime batching PASS.", "Unity Shadow Diamonds and batched Elite observations wired; Gold and other inventory remain Legacy."], "migration": [] }
+    },
+    {
+      "path": "Entities/npcs/CombatTarget.cs", "occurrenceCount": 14,
+      "domains": ["direct_inventory_mutation", "legacy_profile_write"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["OfflineDirectMutation", "OtherInventory", "Premium"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 14, "baselineOccurrenceCount": 14,
+        "shadowCoverage": ["Connected Diamonds path observed; offline direct mutation remains excluded."], "migration": [] }
+    },
+    {
+      "path": "Entities/PlayerCombatController.cs", "occurrenceCount": 1,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "none", "coveredDomains": [], "exclusions": [],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 1, "baselineOccurrenceCount": 1, "shadowCoverage": [], "migration": [] }
+    },
+    {
+      "path": "Entities/PlayerRewardState.cs", "occurrenceCount": 13,
+      "domains": ["direct_inventory_mutation", "legacy_profile_write"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 9, "baselineOccurrenceCount": 13,
+        "shadowCoverage": ["Central Diamonds reward observation wired; remaining reward domains stay Legacy."], "migration": [] }
+    },
+    {
+      "path": "Guilds/GuildService.cs", "occurrenceCount": 6,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 6, "baselineOccurrenceCount": 6,
+        "shadowCoverage": ["Unity Shadow Diamonds observation wired; other economic mutations remain Legacy."], "migration": [] }
+    },
+    {
+      "path": "Guilds/GuildService.DailyTax.cs", "occurrenceCount": 2,
+      "domains": ["legacy_profile_write"], "audited": true,
+      "coverageStatus": "none", "coveredDomains": [], "exclusions": [],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 2, "baselineOccurrenceCount": 2, "shadowCoverage": [], "migration": [] }
+    },
+    {
+      "path": "Loot/FloatingLootChestManager.cs", "occurrenceCount": 3,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 3, "baselineOccurrenceCount": 3,
+        "shadowCoverage": ["Unity Shadow Diamonds observation wired; other loot remains Legacy."], "migration": [] }
+    },
+    {
+      "path": "Persistence/BossRewardDeliveryQueueTestHarness.cs", "occurrenceCount": 1,
+      "domains": ["legacy_profile_write"], "audited": true,
+      "coverageStatus": "none", "coveredDomains": [], "exclusions": [],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 1, "baselineOccurrenceCount": 1, "shadowCoverage": [], "migration": [] }
+    },
+    {
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs", "occurrenceCount": 11,
+      "domains": ["direct_inventory_mutation", "legacy_profile_write"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["OfflineDelivery", "OtherInventory", "Premium"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 11, "baselineOccurrenceCount": 11,
+        "shadowCoverage": ["Connected Diamonds delivery is observed; offline delivery remains excluded."], "migration": [] }
+    },
+    {
+      "path": "Persistence/DurableEconomyTransaction.cs", "occurrenceCount": 1,
+      "domains": ["legacy_playfab_currency"], "audited": true,
+      "coverageStatus": "none", "coveredDomains": [], "exclusions": [],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 1, "baselineOccurrenceCount": 1, "shadowCoverage": [], "migration": [] }
+    },
+    {
+      "path": "Persistence/PlayerProfileCoordinator.cs", "occurrenceCount": 24,
+      "domains": ["direct_inventory_mutation", "legacy_profile_write"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds", "Elite", "Premium"],
+      "exclusions": ["Gold", "InventoryOther", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 22, "baselineOccurrenceCount": 24,
+        "shadowCoverage": ["Extended Sandbox soak 2026-08-24: real Unity/Mirror Diamonds grant/spend, Elite grant/consume/rollback, Bronze extension/Gold/replay, 30 logins, 20 reconnects and 5 Mirror restarts PASS.", "Login bootstrap and Diamonds, batched Elite, and semantic Premium observations wired."], "migration": [] }
+    },
+    {
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.cs", "occurrenceCount": 9,
+      "domains": ["legacy_playfab_currency", "legacy_profile_write"], "audited": true,
+      "coverageStatus": "none", "coveredDomains": [], "exclusions": [],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 5, "baselineOccurrenceCount": 9, "shadowCoverage": [], "migration": [] }
+    },
+    {
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.XsollaDiamond.cs", "occurrenceCount": 2,
+      "domains": ["legacy_playfab_currency", "legacy_profile_write"], "audited": true,
+      "coverageStatus": "none", "coveredDomains": [], "exclusions": [],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 2, "baselineOccurrenceCount": 2, "shadowCoverage": [], "migration": [] }
+    },
+    {
+      "path": "Persistence/PlayFab/PlayFabVirtualCurrencyStore.cs", "occurrenceCount": 3,
+      "domains": ["legacy_playfab_currency"], "audited": true,
+      "coverageStatus": "none", "coveredDomains": [], "exclusions": [],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 3, "baselineOccurrenceCount": 3, "shadowCoverage": [], "migration": [] }
+    },
+    {
+      "path": "Persistence/StarterProfilePolicy.cs", "occurrenceCount": 3,
+      "domains": ["legacy_profile_write"], "audited": true,
+      "coverageStatus": "none", "coveredDomains": [], "exclusions": [],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 3, "baselineOccurrenceCount": 3, "shadowCoverage": [], "migration": [] }
+    },
+    {
+      "path": "PirateExams/PirateExamRewardService.cs", "occurrenceCount": 2,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 2, "baselineOccurrenceCount": 2,
+        "shadowCoverage": ["Unity Shadow Diamonds reward observation wired; remaining rewards stay Legacy."], "migration": [] }
+    },
+    {
+      "path": "Quests/QuestRewardService.cs", "occurrenceCount": 3,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 3, "baselineOccurrenceCount": 3,
+        "shadowCoverage": ["Unity Shadow Diamonds reward observation wired; remaining rewards stay Legacy."], "migration": [] }
+    },
+    {
+      "path": "SeaMonsters/SeaMonsterRewardService.cs", "occurrenceCount": 2,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds"],
+      "exclusions": ["Elite", "Gold", "InventoryOther", "Premium", "Unlocks"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 2, "baselineOccurrenceCount": 2,
+        "shadowCoverage": ["Unity Shadow Diamonds reward observation wired; remaining rewards stay Legacy."], "migration": [] }
+    },
+    {
+      "path": "Shop/XsollaStarterPackGrantService.cs", "occurrenceCount": 2,
+      "domains": ["direct_inventory_mutation"], "audited": true,
+      "coverageStatus": "partial", "coveredDomains": ["Diamonds", "Elite", "Premium"],
+      "exclusions": ["OtherStarterRewards", "ProductionGrant"],
+      "shadowCovered": false, "migrated": false, "cutoverReady": false,
+      "evidence": { "baselineFingerprintCount": 2, "baselineOccurrenceCount": 2,
+        "shadowCoverage": ["Extended Sandbox soak 2026-08-24: trusted immutable Starter I receipt projected offline, provider completed before login, backend restart recovery and login visibility without Legacy grant PASS.", "Starter transit observes Diamonds, batched Elite, and semantic Premium; no production grant or other rewards migrate."], "migration": [] }
+    }
+  ]
+}

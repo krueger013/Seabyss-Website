@@ -99,12 +99,18 @@ PORT=3000
 PUBLIC_SITE_ORIGIN=https://www.seabyss.com,https://seabyss.com
 PLAYFAB_TITLE_ID=xxxxx
 PLAYFAB_SECRET_KEY=xxxxx
+XSOLLA_WEBHOOK_SECRET=replace_with_xsolla_publisher_webhook_secret
+XSOLLA_PROJECT_ID=310966
 UPSTREAM_TIMEOUT_MS=8000
 SESSION_SECRET=replace_with_at_least_32_random_bytes
 SEABYSS_ENV=beta
 REDIS_URL=redis://127.0.0.1:6379
 SESSION_TTL_SECONDS=86400
 ```
+
+`XSOLLA_WEBHOOK_SECRET` must contain only the server-side webhook secret configured in Xsolla Publisher Account. The existing HTTPS reverse proxy exposes the listener at `https://api.seabyss.com/xsolla/webhook`; no additional public HTTP listener is required.
+
+Never place the real webhook secret in Git, the website frontend, Unity, deployment logs, or support output.
 
 Do not commit this file and do not copy real values into the GitHub Pages repository.
 

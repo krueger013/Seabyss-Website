@@ -1,0 +1,2309 @@
+{
+  "schemaVersion": 1,
+  "kind": "seabyss_unity_legacy_financial_access_baseline",
+  "sourceRootLabel": "Seabyss II Unity current legacy financial access",
+  "policy": {
+    "Legacy": "existing fingerprints allowed; every new occurrence fails",
+    "ShadowRead": "existing fingerprints allowed; every new occurrence fails",
+    "Cutover": "baseline ignored; every finding fails"
+  },
+  "ignoredCanonicalFiles": [
+    "FinancialAuthorityCurrencyStore.cs",
+    "FinancialAuthorityCutoverGate.cs",
+    "FinancialAuthorityRuntime.cs",
+    "FinancialAuthorityStateV2.cs",
+    "FinancialProfileMergePolicy.cs",
+    "FinancialProfileSnapshotV2.cs",
+    "FinancialResourceRegistry.cs",
+    "FinanciallyIsolatedPlayerProfileStore.cs",
+    "PlayFabFinancialAuthorityV2RestTransport.cs",
+    "PlayFabFinancialAuthorityV2Store.cs",
+    "PlayerProfileStoreMode.cs"
+  ],
+  "additionalIgnoredPaths": [],
+  "entries": [
+    {
+      "fingerprint": "e4a274619ce648577bba2d338fe00b1bf3aa36e13647c2cb940b0a233279a6f5",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Boarding/PirateCrewType.cs",
+      "snippet": "Gold = 0,",
+      "count": 1
+    },
+    {
+      "fingerprint": "00c174e73a3d2a5834b590fc137a082bc82c770d93eca44a7f59f70d4a32a143",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Boarding/PlayerPirateCrew.cs",
+      "snippet": "bool spent = await loserRewards.TrySpendGoldAsync(debitedGold, \"Boarding\");",
+      "count": 1
+    },
+    {
+      "fingerprint": "39393c7b66222f7bc4bac9f82fe672251d31b23e8dd8c19ada485a2b49ac42e4",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Boarding/PlayerPirateCrew.cs",
+      "snippet": "winnerCreditRemoved = await winnerRewards.TrySpendGoldAsync(",
+      "count": 1
+    },
+    {
+      "fingerprint": "4c5253238271a838e4bd3ab220815682723c3cfed5b88fe639f8bac81b07fe5d",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Boarding/PlayerPirateCrew.cs",
+      "snippet": "await rewardState.AddDiamondsAsync(cost, \"Pirates refund\", addLogbook: false);",
+      "count": 1
+    },
+    {
+      "fingerprint": "61f4bb968abdb2863d75a2141b7fcbd74ef68100be6cd1dba66862ac07487093",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Boarding/PlayerPirateCrew.cs",
+      "snippet": "await rewardState.AddGoldAsync(cost, \"Pirates refund\", addLogbook: false);",
+      "count": 1
+    },
+    {
+      "fingerprint": "63a0567a62a5583f1c114e79b39e598985b37b8309fdd0d55a79e841d269500c",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Boarding/PlayerPirateCrew.cs",
+      "snippet": "long refundedGold = await loserRewards.AddGoldAsync(",
+      "count": 2
+    },
+    {
+      "fingerprint": "bb0597e738702adff5749404d6b1957becdfa4237ebe2e39d8789a6d13cd2905",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Boarding/PlayerPirateCrew.cs",
+      "snippet": "creditedGold = await winnerRewards.AddGoldAsync(",
+      "count": 1
+    },
+    {
+      "fingerprint": "0dd09868744b9ff6cb137df95bf99f0c449a3d3cbaa87e21f7f80babce16695c",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Captains/PlayerCaptainInventory.cs",
+      "snippet": "? await purchaseRewardState.AddGoldAsync(price, \"Captain rollback\", false, false, mutationScope)",
+      "count": 1
+    },
+    {
+      "fingerprint": "1087a1a36625046797136b3e2a99af0dee2fd64d917d4be2d37685bce5dddfcc",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Captains/PlayerCaptainInventory.cs",
+      "snippet": ": purchaseRewardState.TrySpendDiamondsAsync(price, \"Captain\", mutationScope);",
+      "count": 1
+    },
+    {
+      "fingerprint": "857c6ae6d09f48c5ee0b7baba9336730ef976a03a0da2970078654f52fc6d8e0",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Captains/PlayerCaptainInventory.cs",
+      "snippet": ": await purchaseRewardState.AddDiamondsAsync(price, \"Captain rollback\", false, false, mutationScope);",
+      "count": 1
+    },
+    {
+      "fingerprint": "c935abbbef85e8fdb44178dee370a6452970971bd810087ae7986e5a73050ed4",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Captains/PlayerCaptainInventory.cs",
+      "snippet": "? purchaseRewardState.TrySpendGoldAsync(price, \"Captain\", mutationScope)",
+      "count": 1
+    },
+    {
+      "fingerprint": "3be0cef5be5970dc5c15eb7c2f317a93f003879e9840bd89dd1ed877fff7280c",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Captains/UI/CaptainShopItemUI.cs",
+      "snippet": "bool owned = inventory != null && inventory.OwnsCaptain(definition.CaptainId);",
+      "count": 1
+    },
+    {
+      "fingerprint": "9f0fb45adda1e7f32a26cae4cd42e10ac2128ccd078e302096baf1d9680fac35",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Cauldron/CauldronManager.cs",
+      "snippet": "grantedAmount = rewardState != null ? await rewardState.AddDiamondsAsync(amount, source, false, false, profileMutation) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "b02f3984fb927b71f314225ea106b89671f9898e6122172aa201e688b2a5ba7c",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Cauldron/CauldronManager.cs",
+      "snippet": "grantedAmount = rewardState != null ? rewardState.AddSirenTears(amount, false, profileMutation) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "d904ae940471c94c29bf368610c1c756edbc79e05165ad72a4d863c1e6527f30",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Cauldron/CauldronManager.cs",
+      "snippet": "if (!rewardState.TrySpendSirenTears(totalCost, profileMutation))",
+      "count": 1
+    },
+    {
+      "fingerprint": "f6e39b3d0a3a6aefa89c2bd05ccfb92eed3de08bbcc6cfcf2e2ab9820dbe823c",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Cauldron/CauldronManager.cs",
+      "snippet": "grantedAmount = rewardState != null ? await rewardState.AddGoldAsync(amount, source, false, false, profileMutation) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "e9b94b940c37d93c7c0e001a9bf52d3169b6c80e598ed153deecbc0122759847",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Cauldron/CauldronManager.cs",
+      "snippet": "int amount = (int)granted.Amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "6d17cf2b174aaad2b3bc1f579937de5d87edf201ceb5148fb8fd6fc546d2e4ec",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Cauldron/CauldronPanelUI.cs",
+      "snippet": "long sirenTears = localRewardState != null ? localRewardState.SirenTears : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "252ec47fd15919c7fc20a6737becf4f4e39aad8315b7208cd87e95bc02abc15c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Cauldron/CauldronRewardType.cs",
+      "snippet": "Ammo = 13,",
+      "count": 1
+    },
+    {
+      "fingerprint": "366657c9b4748c351742305a489507998454eb63c43d081e2c9c3f1fe13e2da4",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Cauldron/CauldronRewardType.cs",
+      "snippet": "Gold = 0,",
+      "count": 1
+    },
+    {
+      "fingerprint": "948fd678d24f737bf5f039d6e157fd023de3390d72afe2cb944aac1023f1311c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Cauldron/CauldronRewardType.cs",
+      "snippet": "Diamonds = 1,",
+      "count": 1
+    },
+    {
+      "fingerprint": "39fcc8914f8516ccd3dd377659eb6bebdd51de1292f8158248b57e2524cee032",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Editor/BoardingSmokeValidator.cs",
+      "snippet": "List<int> gold = new List<int>();",
+      "count": 2
+    },
+    {
+      "fingerprint": "643f3119de5c9d53676ec2ea4d0d155a4e79500a7004acb0ff8df25a261f75b6",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Editor/BoardingSmokeValidator.cs",
+      "snippet": "List<int> diamonds = new List<int>();",
+      "count": 1
+    },
+    {
+      "fingerprint": "28a74eca8e6403835889f387f1fed0705ab7e33c1e2525dbb066a11078845af3",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Editor/ProfilePersistenceSmokeValidator.cs",
+      "snippet": "profile.gold = checked(profile.gold + (int)reward.amount);",
+      "count": 1
+    },
+    {
+      "fingerprint": "4cec033c0da4f54837c9e2075e2d2cc267d06d17975362dcbe3b9b9a0eac13be",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Editor/ProfilePersistenceSmokeValidator.cs",
+      "snippet": "profile.diamonds = 5678;",
+      "count": 1
+    },
+    {
+      "fingerprint": "b4863a67baceebfb7d5181a8204c0ce218fc96881a876d85fd2f5ad9f951d917",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Editor/ProfilePersistenceSmokeValidator.cs",
+      "snippet": "profile.gold = 1234;",
+      "count": 1
+    },
+    {
+      "fingerprint": "c89b30728d761f77f6405066f5fccf5a6ff5675c3677c2000be5efe6ec2de4de",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Editor/ProfilePersistenceSmokeValidator.cs",
+      "snippet": "profile.diamonds = checked(profile.diamonds + (int)reward.amount);",
+      "count": 1
+    },
+    {
+      "fingerprint": "5e945c0f138f2032280985c90c6577914f98392185fb7173625874e9596b64cb",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Editor/SpecialItemsLayoutInstallerEditor.cs",
+      "snippet": "$\"[InventoryLayout] installer completed specialItems={entries.Count} ammo={ammoEntries.Count} \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "29e632a746c3021df3b80dd2a4f1a24874a31c9bcff39c7f72af493e65d5dd61",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "long returnedAmount = await rewardState.AddGoldAsync(totalPrice, \"Market rollback\", false, false, mutationScope);",
+      "count": 1
+    },
+    {
+      "fingerprint": "6919d7ccf0165fcf4cf95dde1238765e68409acd1cbdaca577012b7386da8eb1",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "MarketCurrency.Diamonds => rewardState.TrySpendDiamondsAsync(totalPrice, \"Market\", mutationScope),",
+      "count": 1
+    },
+    {
+      "fingerprint": "a2da32b7f8fdad190a2d016e58e2b89fffa3476ab5e3769f71ed4f46a771cefc",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "MarketCurrency.Gold => rewardState.TrySpendGoldAsync(totalPrice, \"Market\", mutationScope),",
+      "count": 1
+    },
+    {
+      "fingerprint": "aa1ee27d4973d4cd5f349dda9f7d9b6b763abf689c5615079a1a93f4ec5c3dcf",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "long returnedAmount = await rewardState.AddDiamondsAsync(totalPrice, \"Market rollback\", false, false, mutationScope);",
+      "count": 1
+    },
+    {
+      "fingerprint": "af9ee171dc63cd6e6bd40064a4edd4068f9ee1146d1f4f25ca0aa68f64c03668",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "eliteShipState.OwnsMarketShipDesign(item.ItemId)",
+      "count": 1
+    },
+    {
+      "fingerprint": "de0bc671dcac811af38a6dbe37e9e6a7bf5bf00ad167bee82fe4905262f30cf2",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "return CombatConsumableDefinition.ApplyCannonMultiplier(normalDamage, resolution.multiplier);",
+      "count": 2
+    },
+    {
+      "fingerprint": "00d2d6c31bf3877faf561e4836a53c50b900ea3b87279851b3f5086fffbf804c",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "int owned = stack != null ? Mathf.Max(0, stack.owned) : 0;",
+      "count": 1
+    },
+    {
+      "fingerprint": "3aee0c60064e41b58e4d77da67be467e3738962ffeef5998b158aa9f9470d112",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "$\"but the rollback could not be durably saved. itemId={itemId} quantity={quantity}\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "437bbc24e7e40b615729696c4f9a9bf877f57a9ec85a4557919362e8f8f6cbd2",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "owned = owned,",
+      "count": 1
+    },
+    {
+      "fingerprint": "6b062e3b8dca9d641c4a0815393eae91c81b19bd8719f2597e0e5994767cd544",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "$\"Market ammo purchase simulated: success={success}, ammoId={ammoId}, quantity={quantity}, ownedNow={ownedNow}, reason={reason}\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "77514e567cec5854aedf52c1875b52f2b2bba7f0c766270696e961f05cc7f699",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "int owned = GetOwnedCount(cannon.id);",
+      "count": 1
+    },
+    {
+      "fingerprint": "92e299bace578c601dc8d355fd3901fb84b9db4a83254f0579a6e1c0a40db6df",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "int owned = saved != null ? Mathf.Max(0, saved.owned) : 0;",
+      "count": 1
+    },
+    {
+      "fingerprint": "93bd09c58b4868f7196c93bd805b5041f3650c3535edbf9e65a9c4aebf47d375",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "int amount = GetOwnedAmmoCount(ammo.id);",
+      "count": 1
+    },
+    {
+      "fingerprint": "9ebf90d03020346077878cc62a688e14a228d35df32749e5b8a040f0ddf4b727",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "snapshot.Add(new InventoryEntryData { id = ammo.id, amount = amount });",
+      "count": 1
+    },
+    {
+      "fingerprint": "f0538e51b9243835da409869291588ebd2509058650ee3008ba75d9563984f8e",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/Combat/PlayerCannonInventory.cs",
+      "snippet": "$\"itemId={itemId} quantity={quantity} detail={rollbackReason} durableSave={compensationSaved}. \" +",
+      "count": 2
+    },
+    {
+      "fingerprint": "3f21127550b3e50695d1b9104986fb7b5a02a116df1fb25a77dd07db0e2b2f49",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/BossRewardShareCalculator.cs",
+      "snippet": "share.SirenTears += safeSirenTears;",
+      "count": 1
+    },
+    {
+      "fingerprint": "472262fbc686d6b75f188715d5aa58d6fd53d0d23055492ed95117b14384e78a",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/BossRewardShareCalculator.cs",
+      "snippet": "Gold = Math.Max(0L, gold);",
+      "count": 1
+    },
+    {
+      "fingerprint": "9b3e59aaa2ecf3a5be6643479b3e09494f9bbae902ea4b74aa6eea1b3308deb4",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/BossRewardShareCalculator.cs",
+      "snippet": "Diamonds = Math.Max(0L, diamonds);",
+      "count": 1
+    },
+    {
+      "fingerprint": "a33f4db3c17ef8dc586fb62f02248344970c4bb4fbbebd853a0fa0ca0e16d594",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/BossRewardShareCalculator.cs",
+      "snippet": "SirenTears = Math.Max(0L, sirenTears);",
+      "count": 1
+    },
+    {
+      "fingerprint": "b88d6a08ef13fff2986a2db713d1fef0f8fd2d5a70a4fc801a6b88e509182689",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/BossRewardShareCalculator.cs",
+      "snippet": "share.Diamonds += amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "f222fcde17fec5e8116bf18e3f6b9cad9f68f264e7b9c54204ebae064fd67015",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/BossRewardShareCalculator.cs",
+      "snippet": "share.Gold += amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "273420071eddf00839efbcd369b174de39a3d527dd1053da5435165e8c1e290a",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "PlayFabCurrencyBalanceUpdate update = await currencyStore.AddDiamondsAsync(accountId, share.Diamonds);",
+      "count": 1
+    },
+    {
+      "fingerprint": "2faa5cda872f1ac0133342361efda4a550e3210b4ef975ff99868b2c456abcb7",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "? await rewardState.AddGoldAsync(share.Gold, \"Boss NPC\")",
+      "count": 1
+    },
+    {
+      "fingerprint": "b0e2dce0b09b78370ac73b027027a21ff710c068aa16a7e92e8548601b9d1ced",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "? await rewardState.AddDiamondsAsync(share.Diamonds, \"Boss NPC\")",
+      "count": 1
+    },
+    {
+      "fingerprint": "cb4565643056be2625f9ffb1d1fd9ea60dc394386571314d68cf560577c71134",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "PlayFabCurrencyBalanceUpdate update = await currencyStore.AddGoldAsync(accountId, share.Gold);",
+      "count": 1
+    },
+    {
+      "fingerprint": "ccf63dc5b5916a870b6a755ac7100621fbd10cbfa06001f1cfeb0982aed9f9d6",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "? await playerRewardState.AddDiamondsAsync(diamondReward, \"NPC\")",
+      "count": 1
+    },
+    {
+      "fingerprint": "dbd1667e779ab32b9fb7faa27ecec19ca6cecbd15a121e99af4d14046a017fdb",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "long grantedGold = await playerRewardState.AddGoldAsync(goldReward, \"NPC\");",
+      "count": 1
+    },
+    {
+      "fingerprint": "e51d5e083791522f4202809c8673cd760e559d3dbceb2c318f806eca7aa66c60",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "? rewardState.AddSirenTears(share.SirenTears)",
+      "count": 1
+    },
+    {
+      "fingerprint": "2e9c65ce6cf866d43586a6005c7197b07ad45e7730bda9e63a8cf9b714857aa2",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "entry = new InventoryEntryData { id = definition.id, amount = 0 };",
+      "count": 1
+    },
+    {
+      "fingerprint": "31102a1fad84f71b9cb746dac8ecbadbd30f425da59b1a8e69238d832fa567e6",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "entry.amount = entry.amount > int.MaxValue - reward.Quantity",
+      "count": 1
+    },
+    {
+      "fingerprint": "0a3fad837e3e8ebd070fb192c20952883a933e6ad5fe6758450d9e376819be9d",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "profile.gold = currencyAlreadyMigrated",
+      "count": 1
+    },
+    {
+      "fingerprint": "16cc4f165d0b54f2b73a5481d00c95c5305659fdfbe0872334ac5d45e2ec1fc2",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "usableItems = durableUsableItems,",
+      "count": 1
+    },
+    {
+      "fingerprint": "2feb6c9f7d115de2fa85522b531763321734f3e15c5c52fe658e8e2402174dde",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "$\"NPC reward granted: npc={npcLogName}, killer={(attacker != null ? attacker.name : \"null\")}, gold={grantedGold}, xp={grantedXp}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "32dd48873877eb7603dd3fede1786b2ba9495bd82c59143011f729e1463dc999",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "gold = share.Gold,",
+      "count": 1
+    },
+    {
+      "fingerprint": "615a17682e9329db7c1c0594b78bbcbf326b6f0b49a1193186b591000741b97b",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "$\"damage={share.Damage:0.##}, percent={share.ContributionPercent:P2}, gold={grantedGold}, xp={grantedXp}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "6bd705c41d85538c95654c579a699f94f23322ef202938b137fde48de14e0b32",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "profile.sirenTears = AddToProfileInt(profile.sirenTears, share.SirenTears);",
+      "count": 1
+    },
+    {
+      "fingerprint": "71bec93559e54c786369502b68387d09e43bee7277d6292e1437e9ca714f9013",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "diamonds = share.Diamonds,",
+      "count": 1
+    },
+    {
+      "fingerprint": "794c85f7f0c43859de9f8864140cdf4be2d0218ddbaaac8b4a3ce77fd0b0c096",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "$\"gold={share.Gold}, xp={share.Xp}, diamonds={share.Diamonds}, sirenTears={share.SirenTears}, lastHit={isLastHit}\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "9cc9303e3c21ba184f54e6565bbbb8224e8c894dbf5bf055acb20fd07f6fc325",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "profile.gold = AddToProfileInt(profile.gold, share.Gold);",
+      "count": 1
+    },
+    {
+      "fingerprint": "a4f58b155ac6748e3400fe4240132fc0a7bdc61b84c6e2d6a2bcc72d6c196e2c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "$\"gold={share.Gold}, xp={share.Xp}, diamonds={share.Diamonds}, sirenTears={share.SirenTears}, reason={exception.Message}\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "a69ba3dc4e5e3ae4397ed4d40d560f98c87b8fa94b4eb64be7932e0818973515",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "$\"diamonds={grantedDiamonds}, elitePoints=0, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "c6565bac4f3db17e3f0cfab2bf348b4cd3f55b862eca7d9b30f41843093b582a",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "profile.usableItems.Add(entry);",
+      "count": 1
+    },
+    {
+      "fingerprint": "ede209e4fd3d999718a7e0716c482fb10895b83126993db4e4122892483f74c6",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "profile.diamonds = currencyAlreadyMigrated",
+      "count": 1
+    },
+    {
+      "fingerprint": "f13ff1b78ea817c2fe8d500c5273dc50e828539b999459822da036acfea9bc3b",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "$\"diamonds={grantedDiamonds}, sirenTears={grantedSirenTears}, lastHit={isLastHit}, success={success}\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "f34d0d951fd0c9bc9720d4a9be504fd6f7d06371fd986455c198172604c3c67d",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "profile.diamonds = AddToProfileInt(profile.diamonds, share.Diamonds);",
+      "count": 1
+    },
+    {
+      "fingerprint": "f87ec570d1adc9785e1b85ec51bb4f58755339f205ca2fa1e478ea10914b3122",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/CombatTarget.cs",
+      "snippet": "sirenTears = share.SirenTears,",
+      "count": 1
+    },
+    {
+      "fingerprint": "643b10e69bc49677ce5d9d87d664ab26de337461c6e78c793479d4244be6ffcd",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/NpcReward.cs",
+      "snippet": "int gold = RollCurrencyReward(GoldReward);",
+      "count": 1
+    },
+    {
+      "fingerprint": "bc74245b77c29b6fd19e050bfcfd19a062458abb7858c89f44384596eb3a78b8",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/NpcReward.cs",
+      "snippet": "int diamonds = RollDiamondReward(out float diamondChanceRoll);",
+      "count": 1
+    },
+    {
+      "fingerprint": "c6402cf665362404630a46d31cfe29d17aecebeaaa37a65cd8e290ddba30bc0d",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/NpcReward.cs",
+      "snippet": "Gold = Mathf.Max(0, gold);",
+      "count": 1
+    },
+    {
+      "fingerprint": "ebd8134e46c38db5fbd068a88c01321a8cb5a8a4f95436f6bc36e7e05c79ffa0",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/npcs/NpcReward.cs",
+      "snippet": "Diamonds = Mathf.Max(0, diamonds);",
+      "count": 1
+    },
+    {
+      "fingerprint": "2d1490191dcfa85cbfb1e307e2d548e7242359789366985cb0e48260014d71e8",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "target.playerTarget.ApplyCannonDamage(damageAmount, damageContext, isCritical);",
+      "count": 1
+    },
+    {
+      "fingerprint": "2ed0c15df8430dc92b8d1bef0deeb282aab18ed47038ba1f4a75d4f08c38eb9f",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "target.npcTarget.ApplyCannonDamage(damageAmount, damageContext, isCritical);",
+      "count": 1
+    },
+    {
+      "fingerprint": "2fa0c533a353bc1155083b50a17c34f9b82230ea5b27c7deefdf0cba85fb36b1",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "if (!cannonInventory.TryConsumeAmmoForVolley(ammoId, requiredAmmo, out _, out _))",
+      "count": 1
+    },
+    {
+      "fingerprint": "8a1f9b0cb450ce198ee621ecfe7c3ecfd44bb25d844d7fdcc907efac5712e695",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "long finalElitePoints = playerRewardState.AddElitePoints(stats.elitePointsPerShot);",
+      "count": 1
+    },
+    {
+      "fingerprint": "30f14608451a95582390a3a5a18acf4214eb929f5ebce6b71cf52a22f05ca934",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "$\"Attack stopped: not enough ammo, ammoId={stats.selectedAmmoId}, required={stats.totalCannons}, owned={ownedAmmo}\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "726303647475c3570ad47324093992943bfd688ac7d3f34d64c5e239d57ff591",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "reason = $\"not enough ammo, ammoId={ammoId}, required={requiredAmmo}, owned={ownedAmmo}\";",
+      "count": 1
+    },
+    {
+      "fingerprint": "7329b092cd545ea15d3c4e0f58de2db93c968f1263fcd524edea036ebc5de31a",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "int quantity = Mathf.Min(requestedQuantity, remainingSlots);",
+      "count": 1
+    },
+    {
+      "fingerprint": "d1fef94e8eb0288106af82f640c7ab78dc401e9fe27552e56de69b89cb297eee",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "CombatDebugLog($\"Server attack refused: not enough ammo. ammoId={ammoId}, required={requiredAmmo}, owned={ownedAmmo}\");",
+      "count": 1
+    },
+    {
+      "fingerprint": "2edde6b87e319529ecfb2555633709cf855cfe66c3923696c0d5a309a958eb69",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "$\"equipped={totalCannons}, baseDamage={baseDamage:0}, ammo={ammo.id}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "761dacc1d0e2003e8c21c9f48d45f585aae13d2fbf25a588aa0695014ffef63a",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "AmmoDefinition ammo = GetAmmoDefinition(stats.selectedAmmoId);",
+      "count": 1
+    },
+    {
+      "fingerprint": "8dd26c8a908350a6ebcbce813f27b8a97904859e0043c717d478e8bf7cfe8f2c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "AmmoDefinition ammo = GetAmmoDefinition(ammoId);",
+      "count": 1
+    },
+    {
+      "fingerprint": "edad6093d561718d2362d32d1898a6bb474ffe489a896492d400be3b07f602cd",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerCombatController.cs",
+      "snippet": "$\"DEBUG PRESET: equipped={totalCannons}, baseDamage={totalCannonPower:0}, ammo={ammo.id}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "4187e290188715006ef3136d55bfa908ea1d8736da904f1c4c7296c44c4f7e6f",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": ": await currencyStore.AddDiamondsAsync(playFabId, amount);",
+      "count": 3
+    },
+    {
+      "fingerprint": "755ae373f474f662d610d23bb834739c5177eba8b66155125b4a5c0fabebcc74",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "? await currencyStore.AddGoldAsync(playFabId, amount)",
+      "count": 3
+    },
+    {
+      "fingerprint": "04f2d417a562d847f9189955d0e8ae4cc8827ab3bc6eb3ed31fb4d76257898eb",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "gold = System.Math.Max(0L, savedGold);",
+      "count": 1
+    },
+    {
+      "fingerprint": "0e969187769af20b98d2d0377dd93e2abca234eb65c254caf4ecddaec06e09ed",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "sirenTears = System.Math.Max(0L, savedSirenTears);",
+      "count": 1
+    },
+    {
+      "fingerprint": "163b4edbbc1817598a2d13da63d55005031d0b1dad8b480a9da6921632d8e232",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "diamonds += amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "1de24982bbef6e41f1e8f5d1595ebd646a042e8e9b932b5ea6af9698a04a972a",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "diamonds -= amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "49b9d0e2c88d28c419095f98d2b2bccfe5d5c2fb73b79337a5b0c25d311848cb",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "gold = nextGold;",
+      "count": 1
+    },
+    {
+      "fingerprint": "4ba124f43327f4e25143da0b857182f2e46d54a3f0ef758bf1724a428bf70f6e",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "diamonds = balance;",
+      "count": 1
+    },
+    {
+      "fingerprint": "6a9d18cea3d7681cae5b29a6f1db682d1aa8df7b7d18b8a2fd178233c064ea3c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "gold += amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "717042b7695dd9e38cdb5d943c80d940091055d8c77b9ed7bb8c631bb373822d",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "diamonds = System.Math.Max(0L, savedDiamonds);",
+      "count": 1
+    },
+    {
+      "fingerprint": "7bd3b47234df3ce1a12ce50417abe3b6a61ab506655fdfafedc7bb41740b981c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "gold -= amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "808890080a596a77eb8dd9ced5f6d96a1865c33cc6f5c99a2df6bcdafd516f0d",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "gold = balance;",
+      "count": 1
+    },
+    {
+      "fingerprint": "8d8e42f6224cbc0f491225e6d706ed288a84e91c3c7dbfa1ed5f7570ac449a49",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "diamonds = nextDiamonds;",
+      "count": 1
+    },
+    {
+      "fingerprint": "9a1679aba8a734d3e52ee3be5b665b033e3f480662c32ac5a63e4716c734c518",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "private long diamonds = 0;",
+      "count": 1
+    },
+    {
+      "fingerprint": "9f77102e86bbfc6cb61a32e040cb1dd2e46f38d5acede401ef5e3904fb19724c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "gold = Math.Max(0L, balance);",
+      "count": 2
+    },
+    {
+      "fingerprint": "b30656faa60250dc9a21c272daa9b6c118c112bc6f48786f2be6c03920472f0e",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "diamonds = Math.Max(0L, balance);",
+      "count": 2
+    },
+    {
+      "fingerprint": "c1c7b65f4bc1b4aa6835f5cad7be7d2fd2400413c46b2698bd8fb191bc55ce6a",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "sirenTears = tearsWithoutGrant + spentSirenTears;",
+      "count": 1
+    },
+    {
+      "fingerprint": "c92541c294ee183fc015caff508da90e5362d85552e9a216ef942736e9f605e7",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "sirenTears -= amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "d56bc3b52cd4be105136b09309b7eded914973537790c9277270c3eae35219d7",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "elitePoints += finalAmount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "e34123b76bf152992fe25bfaafbbb7ddb8bdea220dd414572441c303c0ee8376",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "sirenTears += amount;",
+      "count": 1
+    },
+    {
+      "fingerprint": "f2458e378da04ea06e7152a2aa6cfc04403d44b4d3b91746b70c017031358dde",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Entities/PlayerRewardState.cs",
+      "snippet": "elitePoints = System.Math.Max(0L, savedElitePoints);",
+      "count": 1
+    },
+    {
+      "fingerprint": "24fabe51816666e869f4fe4eb100339080a69e603d756b17869ce33d34cadab2",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Guilds/GuildData.cs",
+      "snippet": "Gold = 0,",
+      "count": 1
+    },
+    {
+      "fingerprint": "7c40fa8222912358449b9da674c1c09f3b8db3eb6da174110dc611acc8e83606",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Guilds/GuildData.cs",
+      "snippet": "Diamonds = 1",
+      "count": 1
+    },
+    {
+      "fingerprint": "3822d93365afe9db0bb6bdcb1523fe8cd4e3de84afee501149b880328fc0f8bd",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Guilds/GuildService.cs",
+      "snippet": "long returnedAmount = await rewards.AddGoldAsync(",
+      "count": 1
+    },
+    {
+      "fingerprint": "7a2110ded62784f0feb7487aba458497927320d27c89bbd179cc291abda8e2e7",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Guilds/GuildService.cs",
+      "snippet": "returnedAmount = await rewards.AddDiamondsAsync(",
+      "count": 1
+    },
+    {
+      "fingerprint": "acbfe37fa1d23fb56d94b15d98e54da4921ab74b4d21f200d2e960dd12419bb6",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Guilds/GuildService.cs",
+      "snippet": "returnedAmount = await rewards.AddGoldAsync(",
+      "count": 1
+    },
+    {
+      "fingerprint": "ca25b6b69dc9b32e5ed355f0738f6d66f3561ba3d8ee8555984cd3668db57c6c",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Guilds/GuildService.cs",
+      "snippet": ": await rewards.TrySpendDiamondsAsync(amount, \"GuildDeposit\");",
+      "count": 1
+    },
+    {
+      "fingerprint": "ea0dac9130d42cb203f70a2d78d93c06b62febf058d665110a4fd36d292b73da",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Guilds/GuildService.cs",
+      "snippet": "? await rewards.TrySpendGoldAsync(amount, \"GuildDeposit\")",
+      "count": 1
+    },
+    {
+      "fingerprint": "fdfa3f8e5d80030981f5a2d91a05eab433ce4e609f3bd6803a6d34ee429c85c1",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Guilds/GuildService.cs",
+      "snippet": "spent = await rewards.TrySpendGoldAsync(",
+      "count": 1
+    },
+    {
+      "fingerprint": "9d79d9e32acc38f61b82639bc2ff61c6b2cbfd5668c7d9e87d93580ec949ffa9",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Guilds/GuildService.DailyTax.cs",
+      "snippet": "profile.gold = (int)after;",
+      "count": 1
+    },
+    {
+      "fingerprint": "b877a1cacc76e8400867d4a82f8d538f9ac81ffb518e5330eaab8b6d3f64144e",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Guilds/GuildService.DailyTax.cs",
+      "snippet": "profile.gold = ToDailyTaxProfileCurrency(update.Balance);",
+      "count": 1
+    },
+    {
+      "fingerprint": "ea67484c8f3d0f4de28eee13faedffd699c8c1d0120e6ade6e37ae6d8b611448",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Guilds/UI/GuildUI.cs",
+      "snippet": "bool diamonds = currency == GuildCurrency.Diamonds;",
+      "count": 3
+    },
+    {
+      "fingerprint": "17f6028379d0b33e519376fb5b815399e6e340ac5d848962f21cabe18b698382",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Guilds/UI/GuildUiStyle.cs",
+      "snippet": "public static readonly Color Gold = new Color(0.79f, 0.635f, 0.35f, 1f);",
+      "count": 1
+    },
+    {
+      "fingerprint": "d277c55f1124bc526b52024c7d884ac1d9998f921ee623b78c458923d78d4213",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Harpoons/PlayerHarpoonCombatController.cs",
+      "snippet": "? monster.CombatTarget.ApplyHarpoonDamage(definition.Damage, context)",
+      "count": 1
+    },
+    {
+      "fingerprint": "791dc34226c746fd14b6ce5e20e38dd59db0f2544edae81a5b52d3844829f34e",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Harpoons/PlayerHarpoonInventory.AttackReservations.cs",
+      "snippet": "$\"amount={amount}, before={before}, after={GetOwnedCount(harpoonId)}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "37f293b537bb4e6e4a035c866e59626769eda26fda4d6bc08dad4839902df2ef",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Harpoons/PlayerHarpoonInventory.cs",
+      "snippet": "$\"Harpoon consumed: id={definition.HarpoonId}, amount={amount}, before={before}, after={GetOwnedCount(definition.HarpoonId)}\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "59dffaeda9e4bac1b6daba6bafe9012d80a08c787e2d90658d215765d2f55351",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "LoadTesting/LoadTestInMemoryStores.cs",
+      "snippet": "gold = next;",
+      "count": 1
+    },
+    {
+      "fingerprint": "d0e06d17411f66ce943fb1e9300fe69e0a7fb4ca80306e7730db246f5192571d",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "LoadTesting/LoadTestInMemoryStores.cs",
+      "snippet": "diamonds = next;",
+      "count": 1
+    },
+    {
+      "fingerprint": "55b1e3a54093a8045e050edff713a3c2ae9da8d66184970d6d34247c367ac5c5",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Logbook/LogbookEventType.cs",
+      "snippet": "Diamonds = 5,",
+      "count": 1
+    },
+    {
+      "fingerprint": "5b17d8ae7f8d51728a6ad37ca3c2c0f8c57a5511bc802659c460c41169016612",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Logbook/LogbookEventType.cs",
+      "snippet": "Ammo = 8,",
+      "count": 1
+    },
+    {
+      "fingerprint": "7dcf8d0ff118d0a54e1b2f7f85af2fca48b65d744cda65803381757e0c49fe4f",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Logbook/LogbookEventType.cs",
+      "snippet": "Gold = 4,",
+      "count": 1
+    },
+    {
+      "fingerprint": "1134937547d127461323ec17282f644093fee6de311da3f382821cef5549c2be",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Loot/FloatingLootChestManager.cs",
+      "snippet": "grantedAmount = await rewardState.AddDiamondsAsync(amount, source);",
+      "count": 1
+    },
+    {
+      "fingerprint": "887d57ec22316187de4c4901b8410994e1331ccb71a54fbb787905d45ad9a918",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Loot/FloatingLootChestManager.cs",
+      "snippet": "grantedAmount = await rewardState.AddGoldAsync(amount, source);",
+      "count": 1
+    },
+    {
+      "fingerprint": "d91bef8deacdb248eed377eb75fb7c4a24617cffd746620a3bcc77d95b7b6a5a",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Loot/FloatingLootChestManager.cs",
+      "snippet": "grantedAmount = rewardState.AddSirenTears(amount);",
+      "count": 1
+    },
+    {
+      "fingerprint": "4531a9cc1ef6750d04b259ddb53c8f1ecb52159471aa4a235a01d60a1ca05998",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardDeliveryQueue.cs",
+      "snippet": "diamonds = diamonds,",
+      "count": 1
+    },
+    {
+      "fingerprint": "4f9e68d9998541bf7e71c8769388a52e81764330a4ef3f757efd9fad183eef83",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardDeliveryQueue.cs",
+      "snippet": "sirenTears = sirenTears,",
+      "count": 1
+    },
+    {
+      "fingerprint": "626a6355a56f77eff071183e8994dfbd49a0ef64f73d8bfa50584e6d0c43679f",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardDeliveryQueue.cs",
+      "snippet": "public List<BossRewardUsableItemData> usableItems = new List<BossRewardUsableItemData>();",
+      "count": 1
+    },
+    {
+      "fingerprint": "791c50f9dd1a882dd6c2186f26f547005b464baa60c5365d7539f80938c927d8",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardDeliveryQueue.cs",
+      "snippet": "usableItems = usableItems != null",
+      "count": 1
+    },
+    {
+      "fingerprint": "7dea45adb34625b78c6bfa90a22c9f84442be964a61d56d7c745d50d8a8aed74",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardDeliveryQueue.cs",
+      "snippet": "gold = gold,",
+      "count": 1
+    },
+    {
+      "fingerprint": "3a6c883f8d7e41a3af0ac8b9b8acbf56654fb2a44b585626d3dd6a9ec03e2545",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardDeliveryQueueTestHarness.cs",
+      "snippet": "gold = 1,",
+      "count": 1
+    },
+    {
+      "fingerprint": "a9dc6f569dd261530b73540c2f79bbbc4456ee112d6cd82b01c2779c88b2497b",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardDeliveryQueueTestHarness.cs",
+      "snippet": "jobs[1].sirenTears = 3;",
+      "count": 1
+    },
+    {
+      "fingerprint": "cfbba6af5b8cc6b7e26cb50aa1e6a75e0b45b0efb4c4894eee5118cb0856806f",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardDeliveryQueueTestHarness.cs",
+      "snippet": "conflicting.gold++;",
+      "count": 1
+    },
+    {
+      "fingerprint": "45f10183ba1aebc01a9f7088dd8eee8739716f18ea3f7812323844ee38500171",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "? await currencyStore.AddGoldAsync(accountId, amount)",
+      "count": 1
+    },
+    {
+      "fingerprint": "841871c81e37f82b54739a714b58457776127b772585955add398966635eb574",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": ": await currencyStore.AddDiamondsAsync(accountId, amount);",
+      "count": 1
+    },
+    {
+      "fingerprint": "af268d90ce46edb058a3101350d05996db69d8d5495542bcd18736a1b05cbf3b",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "? rewards.AddSirenTears(job.sirenTears, false, mutationScope)",
+      "count": 1
+    },
+    {
+      "fingerprint": "0c788063a90cffe95d6e0587a090863d462723d8139f594dbd879f548e730d61",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "entry.amount = entry.amount > int.MaxValue - item.quantity",
+      "count": 1
+    },
+    {
+      "fingerprint": "b7fdab3fcc4ccbe666dcd08387236a8db043420836bcd01a45266eafd429d3bb",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "entry = new InventoryEntryData { id = definition.id, amount = 0 };",
+      "count": 1
+    },
+    {
+      "fingerprint": "0d287a9f7a64f8e9c56b754c5c44d90a8397ee93304c17911654347b2b81927f",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "profile.gold = ToProfileInt(transaction.currencyBalanceAfter);",
+      "count": 1
+    },
+    {
+      "fingerprint": "1f2188faa30ba78436e1d41a52cc846d676a23824a11674aba3050c549dc6259",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "$\"sirenTears={job.sirenTears}, lastHit={job.isLastHit}\");",
+      "count": 1
+    },
+    {
+      "fingerprint": "412914d9e9e46f0e4c3379a789f92b45d79dbe95fa9145ca2a331833178973f8",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "$\"gold={job.gold}, xp={job.xp}, diamonds={job.diamonds}, sirenTears={job.sirenTears}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "4152ae2bce50ae1751340d8151b5bcae4db2c1407d47e56f01500d9e67004187",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "profile.diamonds = ToProfileInt(transaction.currencyBalanceAfter);",
+      "count": 1
+    },
+    {
+      "fingerprint": "50bf2d6598faf30c51e94fb89577d751e5e81191ac4730bc99c2b4643d3896d3",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "profile.gold = ToProfileInt(update.Balance);",
+      "count": 1
+    },
+    {
+      "fingerprint": "772a131c1f2a1d7b58418e000bc7cc3ff9f3db56c7ab82b9b3b36879eba279d6",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "$\"mode={job.profileStoreMode}, gold={job.gold}, xp={job.xp}, diamonds={job.diamonds}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "c751e50c93edf9685dde73b4394d355d63172b2078b106275b118ed4e3519cf7",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "profile.diamonds = ToProfileInt(update.Balance);",
+      "count": 1
+    },
+    {
+      "fingerprint": "d861a22217dc7f19eb26de0048dd9acf662ac0fa3891fcd9d0e66c70a97c8fd2",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "profile.usableItems.Add(entry);",
+      "count": 1
+    },
+    {
+      "fingerprint": "d89c3ce545f2152ccc2d1043c899cd701642797fa66b85bcd9cc85c2bfcb05e6",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/BossRewardProfileDeliveryProcessor.cs",
+      "snippet": "profile.sirenTears = AddToProfileInt(profile.sirenTears, job.sirenTears);",
+      "count": 1
+    },
+    {
+      "fingerprint": "32bacfde0268ad4e13da2a11f3c3aa1a2abd520be74550457c7150528aa2d82f",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/DurableRewardTransactionService.cs",
+      "snippet": "Gold = 1,",
+      "count": 1
+    },
+    {
+      "fingerprint": "3930c89f204964157076481a3af209ff48d1e8d897a8f7f87cd7da0b86bac0c4",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/DurableRewardTransactionService.cs",
+      "snippet": "Diamonds = 2",
+      "count": 1
+    },
+    {
+      "fingerprint": "38b19d03dddad3d43ea6dfed44446308b3ab5a65971e44ad4f4f222ddd028ed5",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "PlayFabCurrencyBalanceUpdate goldUpdate = await currencyStore.AddGoldAsync(accountId, addedGold);",
+      "count": 1
+    },
+    {
+      "fingerprint": "3bdb61853006161a3c43e27bbd7bd4a080e5f229cdb706772114020c26fa0ad9",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "DurableRewardTransactionService.AddDiamondSteps(",
+      "count": 1
+    },
+    {
+      "fingerprint": "5e3d0ddd01035cec044c5e1eedbf78955cc658c7cf0db28160aacab928ed4be8",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "long grantedElitePoints = rewardState.AddElitePoints(",
+      "count": 1
+    },
+    {
+      "fingerprint": "8a86c1af470a77395eb170d8d9df9d1b19d82bc6a439070dc5a64b50f40aa745",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "long grantedTears = rewardState.AddSirenTears(reward.amount, true, mutationScope);",
+      "count": 1
+    },
+    {
+      "fingerprint": "a078567589a51c393b1e040ce5e683ba47095044e189004fd09fc492bca10b0d",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "DurableRewardTransactionService.AddGoldSteps(",
+      "count": 1
+    },
+    {
+      "fingerprint": "b280dd3907bfc73881ca10eed40895d6cc9be18a752cf8fb83dcedb496f4851c",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "PlayFabCurrencyBalanceUpdate diamondsUpdate = await currencyStore.AddDiamondsAsync(accountId, addedDiamonds);",
+      "count": 1
+    },
+    {
+      "fingerprint": "5b719d27702d993a312f89c543fdd02a22efcd043f3ca34d1578fe9ee89480b0",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "Debug.Log($\"[SBII REDEEM] Reward grant: code={code}, type=UsableItem, id={reward.rewardId}, amount={itemAmount}, success={itemGranted}\", this);",
+      "count": 1
+    },
+    {
+      "fingerprint": "bce1619c789b5b0a487a770137c55767670987f7fff41e4b4f52fd3f16fc5d29",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "Debug.Log($\"[SBII REDEEM] Reward grant: code={code}, type=ElitePoints, amount={grantedElitePoints}\", this);",
+      "count": 1
+    },
+    {
+      "fingerprint": "d5187b6990e47bef6d1df368fb95c871bc1ef0193dde530e04fafbda870dd87e",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "Debug.Log($\"[SBII REDEEM] Reward grant: code={code}, type=Cannon, id={reward.rewardId}, amount={cannonAmount}, success={cannonGranted}, reason={cannonReason}\", this);",
+      "count": 1
+    },
+    {
+      "fingerprint": "f6208fa4ae22df327dfc4e3e341c1065c71176205449021c889e1664525d21f3",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "Debug.Log($\"[SBII REDEEM] Reward grant: code={code}, type=Ammo, id={reward.rewardId}, amount={ammoAmount}, success={ammoGranted}, reason={ammoReason}\", this);",
+      "count": 1
+    },
+    {
+      "fingerprint": "169707b1b72253167beb73700b81deb18e4a2dc2436c94dbfc80c2cd0543be65",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.usableItems = cannonInventory != null",
+      "count": 1
+    },
+    {
+      "fingerprint": "202bd324879ecfdc05a524316afaeed35d2b56ad222b70d38e49d7bc5bb72739",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.shopEntitlements =",
+      "count": 2
+    },
+    {
+      "fingerprint": "2272851fcbf35c5a72111e28cf18dbff6033b5fd0726786474706b62c1e7786c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.ownedDestinationMarkerIds = serverDestinationMarkers.CreateOwnedSnapshot();",
+      "count": 2
+    },
+    {
+      "fingerprint": "275dd4dd2ce1583920cc585f7937297985187634e2b2a656f5fa6276a2def6e5",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "$\"{prefix}: accountId={accountId}, gold={profile.gold}, diamonds={profile.diamonds}, sirenTears={profile.sirenTears}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "27bf0d81ecb6fa6dbf4d3c4e80d85065e7f3e701ec723d54bd72dc19a89829d3",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.ownedShipDesignIds = eliteShipState != null",
+      "count": 1
+    },
+    {
+      "fingerprint": "2b2c7d7c24185d1c0b6dc01047fbfd3688173c4cc1489953ba34a91fe9a63f30",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.ownedDestinationMarkerIds = normalizedState.CreateOwnedSnapshot();",
+      "count": 1
+    },
+    {
+      "fingerprint": "2fe07ef787203f28a1f7b421dad2d827c578e27998401d81766b707be30244c9",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.durableEconomyTransactions =",
+      "count": 1
+    },
+    {
+      "fingerprint": "395694a6652977dc595528d926628bffc141eeaacbfcf99f18425d0dc05d6c23",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.sirenTears = ToProfileInt(rewardState != null ? rewardState.SirenTears : 0L);",
+      "count": 1
+    },
+    {
+      "fingerprint": "3e8bc70992c5a5d7ed4ded94d3d92e6674c85734f7bf66997401a5937256ecf2",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.harpoons = normalizedHarpoons;",
+      "count": 1
+    },
+    {
+      "fingerprint": "44e4aa01e7d6df9a8e07edfdc834a5968f9c3b8fe86ce59283c8be96f09b0f49",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "$\"Profile load succeeded: accountId={accountId}, gold={profile.gold}, diamonds={profile.diamonds}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "541648e1bae62794f9a1e56e3e2229d1d8576747f5e7014a163363ab18e67113",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.cannons = cannonInventory != null",
+      "count": 1
+    },
+    {
+      "fingerprint": "57209df58ac1f66a11fa8b22b1f9c71395b0aa8a8802db4716a04dae97381c16",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.elitePoints = rewardState != null ? Math.Max(0L, rewardState.ElitePoints) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "646036eadc1d74c29f1c97b23edf1eee982aca9ce070e8bfa568c3b54f6a31c8",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.diamonds = ToProfileInt(rewardState != null ? rewardState.Diamonds : 0L);",
+      "count": 1
+    },
+    {
+      "fingerprint": "7fb77b6189d05cb162fd3cc3b0b5925c5dcce8514b772bfdf67b78bd9ff455ba",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.harpoons = harpoonInventory != null",
+      "count": 1
+    },
+    {
+      "fingerprint": "9b6661f36d4a587f53edde17f7b5bb1671202933f0dc1a3173bc432f12d840ae",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.gold = ToProfileInt(rewardState != null ? rewardState.Gold : 0L);",
+      "count": 1
+    },
+    {
+      "fingerprint": "b1bcc3ae56c17b8378e4c43e91b6493ca82d0b72e2668901af5f1beec584b13e",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.gold = finalGold;",
+      "count": 1
+    },
+    {
+      "fingerprint": "b68989d554a6a625dfb5534363018f90a25af72adb95a813233eeb9edd080d54",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "$\"xp={profile.xp}, elitePoints={profile.elitePoints}, publicPlayerId={profile.publicPlayerId}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "e2b99005bf662354a12877eedfb45fa9accbb032b8054bc844cc4922532a1c40",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.ammo = cannonInventory != null",
+      "count": 1
+    },
+    {
+      "fingerprint": "ec4ce1ca6aac597a85d1f88171f9e50b3c7ff075df4269ec0ccb2d83967b92a4",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileCoordinator.cs",
+      "snippet": "profile.diamonds = finalDiamonds;",
+      "count": 1
+    },
+    {
+      "fingerprint": "102cfc7057dd61ba8766cdb66c8906b0ab48a4092d412899cb2e5c5f83e08e48",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileData.cs",
+      "snippet": "public HarpoonSaveData harpoons = new HarpoonSaveData();",
+      "count": 1
+    },
+    {
+      "fingerprint": "15be8004ecf4d18d02f725210a6d6b938f7472759746bdf47fea70528dcdc7c1",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileData.cs",
+      "snippet": "public List<InventoryEntryData> usableItems = new List<InventoryEntryData>();",
+      "count": 1
+    },
+    {
+      "fingerprint": "7b9b7ba1fa5e27086161ba556dfa8c80dfce00d0e0d5572b040d2cd573c71539",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileData.cs",
+      "snippet": "public List<PlayerShopEntitlementData> shopEntitlements =",
+      "count": 1
+    },
+    {
+      "fingerprint": "a09c7c931afd29aebd5c69349373e5bf1ebd5b69cf89aa6173264f8aed769104",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileData.cs",
+      "snippet": "public List<CannonEntryData> cannons = new List<CannonEntryData>();",
+      "count": 1
+    },
+    {
+      "fingerprint": "c25aecedb355e77f9d16c8448dbf4f8c633a30a31595132e484c9ea76be7df13",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileData.cs",
+      "snippet": "public List<string> ownedShipDesignIds = new List<string>();",
+      "count": 1
+    },
+    {
+      "fingerprint": "dc848572bfe9b81e11f7cd872b1af24ad9c5013c45cf4079a41c7851e1494c78",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileData.cs",
+      "snippet": "public List<string> ownedDestinationMarkerIds = new List<string>",
+      "count": 1
+    },
+    {
+      "fingerprint": "e02a1348789f1f66111f733681053ce51a6b0dbbb966e4d2bb6b93ea5df3c3f1",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileData.cs",
+      "snippet": "public List<InventoryEntryData> ammo = new List<InventoryEntryData>();",
+      "count": 1
+    },
+    {
+      "fingerprint": "e4a789b7ce709b3e0227106b7938431f3f1217a766ece53f3145dbc10780903e",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayerProfileData.cs",
+      "snippet": "public List<DurableEconomyTransactionData> durableEconomyTransactions =",
+      "count": 1
+    },
+    {
+      "fingerprint": "3e61235fdcdc24fbe9842a8a34871302dc4d0d8c38f3a04f01fc6cecb356b4b0",
+      "category": "legacy_playfab_currency",
+      "detector": "legacy_virtual_currency_mutation_api",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.cs",
+      "snippet": "\"/Server/AddUserVirtualCurrency\",",
+      "count": 2
+    },
+    {
+      "fingerprint": "1b1cbc486a05e3d58d3fe60ef403f435c2daa69192c9422a4fca292df756023c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.cs",
+      "snippet": "Gold = gold;",
+      "count": 1
+    },
+    {
+      "fingerprint": "9eb3f5f902973dba5a7f380dbf6f02163e5f526d215f7e644ea07e868d5e9567",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.cs",
+      "snippet": "Diamonds = diamonds;",
+      "count": 1
+    },
+    {
+      "fingerprint": "088e308b0fded94d0a2808b8b69ba1c436dd0aea73375de8d9a1b7b13bccab17",
+      "category": "legacy_profile_write",
+      "detector": "legacy_profile_storage_write_api",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.cs",
+      "snippet": "\"/Server/UpdateUserInternalData\",",
+      "count": 4
+    },
+    {
+      "fingerprint": "dba058af33b10d1a28ad8637365397e7e006e90db08231d6b17250df8c0b3ff7",
+      "category": "legacy_profile_write",
+      "detector": "profile_v1_storage_write",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.cs",
+      "snippet": "private const string ProfileKey = \"profile_v1\";",
+      "count": 1
+    },
+    {
+      "fingerprint": "0d7f06a9f6157a37a6feb8a35ff51dc215c56102e834dcb31e341a0b77c776b7",
+      "category": "legacy_playfab_currency",
+      "detector": "legacy_virtual_currency_mutation_api",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.XsollaDiamond.cs",
+      "snippet": ": \"provider outcome is ambiguous after AddUserVirtualCurrency\");",
+      "count": 1
+    },
+    {
+      "fingerprint": "ffd5c0d8ceb1006e6af878c5d169dff39c0b1ced6dbf1d4402328e41da378ad8",
+      "category": "legacy_playfab_currency",
+      "detector": "legacy_virtual_currency_mutation_api",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.XsollaDiamond.cs",
+      "snippet": "\"/Server/AddUserVirtualCurrency\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "f86c0fdaeac1a8856380226a054f7eda6ac08f2e9e35609e0a6fc83fc4de955c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.XsollaDiamond.cs",
+      "snippet": "profile.diamonds = checked((int)transaction.currencyBalanceAfter);",
+      "count": 1
+    },
+    {
+      "fingerprint": "8cbdcb05cc63cbbe24c331108c09c4f6028442cd26f486ac8e5653c5da30bba9",
+      "category": "legacy_profile_write",
+      "detector": "legacy_profile_storage_write_api",
+      "path": "Persistence/PlayFab/PlayFabPlayerProfileStore.XsollaDiamond.cs",
+      "snippet": "\"/Server/UpdateUserInternalData\",",
+      "count": 1
+    },
+    {
+      "fingerprint": "3f1ab8616a5d603b8a04c9369be56326a83a2e397706a79b24d127b5eab6f38e",
+      "category": "legacy_playfab_currency",
+      "detector": "legacy_virtual_currency_mutation_api",
+      "path": "Persistence/PlayFab/PlayFabVirtualCurrencyStore.cs",
+      "snippet": "string endpoint = add ? \"/Server/AddUserVirtualCurrency\" : \"/Server/SubtractUserVirtualCurrency\";",
+      "count": 1
+    },
+    {
+      "fingerprint": "e49381c7a425317c618b6ed48865433b65549d4a86395ae92f2fd7d8fe4b34a3",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayFab/PlayFabVirtualCurrencyStore.cs",
+      "snippet": "Diamonds = Math.Max(0L, diamonds);",
+      "count": 1
+    },
+    {
+      "fingerprint": "fb04056d16b538722270bd58ee8592da346cdbd5ba7bb2042be481b93c8dd297",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/PlayFab/PlayFabVirtualCurrencyStore.cs",
+      "snippet": "Gold = Math.Max(0L, gold);",
+      "count": 1
+    },
+    {
+      "fingerprint": "39baf170d60d8a830a2de3bfd72aa874118d49c1e7073f169d30dfa546b2ee87",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/StarterProfilePolicy.cs",
+      "snippet": "profile.cannons.Clear();",
+      "count": 1
+    },
+    {
+      "fingerprint": "41447564cc5627025b980a55db22db798bed66975de06d222372643a07bcdcc9",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/StarterProfilePolicy.cs",
+      "snippet": "profile.gold = StartingGold;",
+      "count": 1
+    },
+    {
+      "fingerprint": "b5af4a1daf2bd7adfd5efc2a0930dfc30d47180d9e3177252087317ffd58221b",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Persistence/StarterProfilePolicy.cs",
+      "snippet": "profile.diamonds = StartingDiamonds;",
+      "count": 1
+    },
+    {
+      "fingerprint": "cb873dd9b7cad51caf540afba9035580f2b60e8c9be2cc4af31771e3e8ce039c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "PirateExams/PirateExamDefinition.cs",
+      "snippet": "Ammo = 2",
+      "count": 1
+    },
+    {
+      "fingerprint": "29a5f6e2c01f68dfa95183e2dc6d22c1639bb32cf634332fc797b4293f79f117",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "PirateExams/PirateExamRewardService.cs",
+      "snippet": "DurableRewardTransactionService.AddGoldSteps(rebuilt, rewards, baseId, balance.amount, \"Pirate Exam\", completionReceiptExists);",
+      "count": 1
+    },
+    {
+      "fingerprint": "53b889d8c7823fd935da8042e876fef867a627a011653495e23bb348a0ce2aac",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "PirateExams/PirateExamRewardService.cs",
+      "snippet": "DurableRewardTransactionService.AddGoldSteps(",
+      "count": 1
+    },
+    {
+      "fingerprint": "63723a419e402b66d46dfb6c144e86c3093a5b408226127aca3722d446823d0c",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "PirateExams/PirateExamRewardService.cs",
+      "snippet": "DurableRewardTransactionService.AddDiamondSteps(",
+      "count": 1
+    },
+    {
+      "fingerprint": "6b97a03db6bda3ebc2cd78df478d588a6afecb6f74490b9a71ce69b223a76d2e",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "PirateExams/PirateExamRewardService.cs",
+      "snippet": "scope => rewards.AddSirenTears(amount, true, scope) > 0L,",
+      "count": 1
+    },
+    {
+      "fingerprint": "b35dee5275b25279742f71c81ba37942465a6677e3fa13dcd9163d5501676281",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "PirateExams/PirateExamRewardService.cs",
+      "snippet": "scope => rewards.AddSirenTears(",
+      "count": 1
+    },
+    {
+      "fingerprint": "b9ca42ecc7ab378f8d3b27883f6b674e83e7b9465d8f51d5524b8c1b7f003e32",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "PirateExams/PirateExamRewardService.cs",
+      "snippet": "DurableRewardTransactionService.AddDiamondSteps(rebuilt, rewards, baseId, balance.amount, \"Pirate Exam\", completionReceiptExists);",
+      "count": 1
+    },
+    {
+      "fingerprint": "ea5807ff2d163b57d7508a967cf10e6781cf1789d890a4f47c69350377a682f1",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "PirateExams/PirateExamServerService.cs",
+      "snippet": "Log($\"Rewards granted instanceId={session.InstanceId} gold={definition.RewardGold} \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "f8e3d05aed74b798614b2f587b39d1f88474d304ed77854d1b56995d03afa4a9",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "PirateExams/PirateExamServerService.cs",
+      "snippet": "$\"diamonds={definition.RewardDiamonds} tears={definition.RewardSirenTears} \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "18450311e919fb7c98bec8af8dfc466837b5ddad13f11a21cccc21ea89a6fed8",
+      "category": "legacy_profile_write",
+      "detector": "legacy_profile_storage_write_api",
+      "path": "PlayFab/PlayerLocationPlayFabService.cs",
+      "snippet": "new UpdateUserDataRequest",
+      "count": 1
+    },
+    {
+      "fingerprint": "6e824e92a995bd1916d42960c28b8cb88206ff14300c69427745ebc0a95e00e5",
+      "category": "legacy_profile_write",
+      "detector": "legacy_profile_storage_write_api",
+      "path": "PlayFab/PlayerLocationPlayFabService.cs",
+      "snippet": "PlayFabClientAPI.UpdateUserData(",
+      "count": 1
+    },
+    {
+      "fingerprint": "3f82803b57cc86dd099d5d7a14d6ebbee486afe1230c53712d61b14c1e0d28c6",
+      "category": "legacy_profile_write",
+      "detector": "legacy_profile_storage_write_api",
+      "path": "PlayFab/ProfileStatsPlayFabService.cs",
+      "snippet": "PlayFabClientAPI.UpdateUserData(",
+      "count": 1
+    },
+    {
+      "fingerprint": "c13ffb8d8af4937a35b9631ddc8e979c7f1e38d6eedf89d1ea94316cd0d1f722",
+      "category": "legacy_profile_write",
+      "detector": "legacy_profile_storage_write_api",
+      "path": "PlayFab/ProfileStatsPlayFabService.cs",
+      "snippet": "new UpdateUserDataRequest",
+      "count": 1
+    },
+    {
+      "fingerprint": "04c0a8cdc8ffd13625eee73c285ca0fb3e11c47f241875b5cf3fbd5a50d4a450",
+      "category": "legacy_profile_write",
+      "detector": "legacy_profile_storage_write_api",
+      "path": "PlayFab/QuestProgressPlayFabService.cs",
+      "snippet": "new UpdateUserDataRequest",
+      "count": 1
+    },
+    {
+      "fingerprint": "f741445eb1ccd6dfd7a99aee1ecdc65a065945512ea4df239c3a24bbaa4f41a1",
+      "category": "legacy_profile_write",
+      "detector": "legacy_profile_storage_write_api",
+      "path": "PlayFab/QuestProgressPlayFabService.cs",
+      "snippet": "PlayFabClientAPI.UpdateUserData(",
+      "count": 1
+    },
+    {
+      "fingerprint": "3508f241461ab0d7fd0367c5144f8f63a5aa323a9a6b3821396ae3fa2d144a91",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Quests/QuestDefinition.cs",
+      "snippet": "Ammo = 5,",
+      "count": 1
+    },
+    {
+      "fingerprint": "4331685aff95372bd32ddd445174014727b85e2426a9b2e7bf0d9d366d4efc87",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Quests/QuestDefinition.cs",
+      "snippet": "Gold = 0,",
+      "count": 1
+    },
+    {
+      "fingerprint": "8270ec525e551fb562dc8ac082c01b7bb217a68dbb06b4ce235c91eefbfdc635",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Quests/QuestDefinition.cs",
+      "snippet": "Diamonds = 1,",
+      "count": 1
+    },
+    {
+      "fingerprint": "896c6660fa7741f854eb3f8f4d04aaba92139e0340348a1b70adfc0dc8ad17fd",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Quests/QuestDefinition.cs",
+      "snippet": "ElitePoints = 8,",
+      "count": 1
+    },
+    {
+      "fingerprint": "f76001330e06c3c853d093f382ccc8d5bfa2ebc2324a904aadbb3de22448018c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Quests/QuestDefinition.cs",
+      "snippet": "SirenTears = 7,",
+      "count": 1
+    },
+    {
+      "fingerprint": "70fdda72e1428cf823b7235b400cb3747e23145afb73d7c5068fa074e97e74ce",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Quests/QuestRewardService.cs",
+      "snippet": "DurableRewardTransactionService.AddDiamondSteps(",
+      "count": 1
+    },
+    {
+      "fingerprint": "7b5ba8e7162c2075862a4304a6c5eb85573b7303fd27b669a9ea90f319c39dcc",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Quests/QuestRewardService.cs",
+      "snippet": "DurableRewardTransactionService.AddDiamondSteps(rebuilt, rewards, baseId, snapshot.amount, $\"Quest:{questId}\", satisfied, ensureReceipt);",
+      "count": 1
+    },
+    {
+      "fingerprint": "8e558f611be7fda42c1fc8ed880503fdfaf791f15fbd1ae82cd3421f96e3bfdb",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Quests/QuestRewardService.cs",
+      "snippet": "DurableRewardTransactionService.AddGoldSteps(rebuilt, rewards, baseId, snapshot.amount, $\"Quest:{questId}\", satisfied, ensureReceipt);",
+      "count": 1
+    },
+    {
+      "fingerprint": "901c2ffcb50b45a30a80bf6812e6cbfec5a64c6cfbb0df9538ba3975c98aacd9",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Quests/QuestRewardService.cs",
+      "snippet": "DurableRewardTransactionService.AddGoldSteps(",
+      "count": 1
+    },
+    {
+      "fingerprint": "9524e13cbcb4fc6e34889477deb2e4bb84f348559c0e65e1e7488a2b517817a6",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Quests/QuestRewardService.cs",
+      "snippet": "(!shipVisuals.OwnsShipDesign(reward.RewardId) &&",
+      "count": 1
+    },
+    {
+      "fingerprint": "aef378a8657e8788ad34ab4b44825ab0cf174f3b42578eb28e45f9657c152cff",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Quests/QuestRewardService.cs",
+      "snippet": "return rewards.AddElitePoints(reward.Amount, mutationScope) > 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "c27a02e17f876e0a0d5fda405f46e6f12b0407a4073618308169dc66fdf96aa9",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Quests/QuestRewardService.cs",
+      "snippet": "return rewards.AddSirenTears(reward.Amount, true, mutationScope) > 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "52e3c9cbbe96f12eeb9a3f7aa52fb7739c45bf0f4fed9dec9807ec0d99d246b1",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "SeaMonsters/SeaMonsterDefinition.cs",
+      "snippet": "Gold = 0,",
+      "count": 1
+    },
+    {
+      "fingerprint": "ab790ffa2cb786d0af6ba3aba004fb392226c2983df1ef7306196f9c170a1e6c",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "SeaMonsters/SeaMonsterDefinition.cs",
+      "snippet": "Diamonds = 1,",
+      "count": 1
+    },
+    {
+      "fingerprint": "9dae5fe9f362cc9ab826c7cf64f969741a3af4b5caee98e7ba881020eced429b",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "SeaMonsters/SeaMonsterRewardService.cs",
+      "snippet": "? await rewardState.AddGoldAsync(",
+      "count": 1
+    },
+    {
+      "fingerprint": "ab6724d9861eca08b75517deea4cb052da3184853e7873553fc8c1f2cfa37700",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "SeaMonsters/SeaMonsterRewardService.cs",
+      "snippet": "? await rewardState.AddDiamondsAsync(",
+      "count": 1
+    },
+    {
+      "fingerprint": "57e81408a3ee392ac92b68a76fccfe16715777af2fbd60ce803f763a2427e3b7",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "SeaMonsters/SeaMonsterRewardService.cs",
+      "snippet": "diamonds = SaturatingAdd(diamonds, amount);",
+      "count": 1
+    },
+    {
+      "fingerprint": "db7b8f08183e7f2561ddd2b2e9c60d7ee7353d0f324b6965f3afaedeefe0ecef",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "SeaMonsters/SeaMonsterRewardService.cs",
+      "snippet": "gold = SaturatingAdd(gold, amount);",
+      "count": 1
+    },
+    {
+      "fingerprint": "f59048ad83d20bfd6f0ec2b7e50d7202a3dd0e90975afc3efae0baa366f179a9",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "SeaMonsters/SeaMonsterTarget.cs",
+      "snippet": "$\"gold={result.GrantedGold}/{result.RequestedGold}, diamonds={result.GrantedDiamonds}/{result.RequestedDiamonds}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "a357c087db040d79f102a70500b3eb81524bc95c4aa773cc3a77bb087bbacccd",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Ships/EliteShips/EliteShipSlotUI.cs",
+      "snippet": "playerState.OwnsShipDesign(design.ShipId);",
+      "count": 1
+    },
+    {
+      "fingerprint": "03d6e2bd7474cf739bd07e912e2e0290fcb9fb4ae15b73b03d581d1d6f4b69df",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Ships/EliteShips/EliteShipyardUI.cs",
+      "snippet": "shipyardUI.SetEliteShipsVisible(true);",
+      "count": 1
+    },
+    {
+      "fingerprint": "65d68d7245a529f0536e66e0371ce365c67fdd027617017dbe2bfe72e90323ea",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Ships/EliteShips/EliteShipyardUI.cs",
+      "snippet": "shipyardUI.SetEliteShipsVisible(false);",
+      "count": 1
+    },
+    {
+      "fingerprint": "02c74486db03c96ac07a6c7271e93464a8b33dfc40b80932a9728f93dc9c7ad8",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Ships/EliteShips/EliteShipyardUI.cs",
+      "snippet": "long elitePoints = localRewardState != null ? Math.Max(0L, localRewardState.ElitePoints) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "552263538317ebdfc42eab7ff2705c1a3c1a4628d6d48b4de14e12990b7b0afa",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Ships/EliteShips/PlayerEliteShipState.cs",
+      "snippet": "long elitePoints = rewardState != null ? rewardState.ElitePoints : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "6418f59520c5b7e9536808f1060851320bccb0e453e0d17a0dfde72390bc5cab",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Ships/EliteShips/PlayerEliteShipState.cs",
+      "snippet": "$\"Elite ship unlock check: player={name}, elitePoints={elitePoints}, \" +",
+      "count": 1
+    },
+    {
+      "fingerprint": "3cb97f89a87a565b6594967f4e498ed601a60919c474569a6ea373f1e92c9c78",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Ships/EliteShips/PlayerEliteShipState.Designs.cs",
+      "snippet": "private readonly SyncList<string> ownedShipDesignIds = new SyncList<string>();",
+      "count": 1
+    },
+    {
+      "fingerprint": "e443b23755f2a52b436e7b9c1f0f64e7fcb6db3e13302be4b77fb6cd87dd532b",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Shop/Entitlements/ShopPremiumTier.cs",
+      "snippet": "Gold = 3",
+      "count": 1
+    },
+    {
+      "fingerprint": "1eca29ad5b2a540cc8e1219029d65b2637d398eda5998ba6238384a293f22d51",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Shop/ShopRewardType.cs",
+      "snippet": "Diamonds = 1,",
+      "count": 1
+    },
+    {
+      "fingerprint": "7dfca3f2b2c3173403e7330cd989adfc7b5058b5a123389c4f6988353534ca3e",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Shop/ShopRewardType.cs",
+      "snippet": "Gold = 0,",
+      "count": 1
+    },
+    {
+      "fingerprint": "5e22ccd8fad87f8dd3b01bdc338d53b3949b850ed6e92617c8c71d4a17ccbb33",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Shop/XsollaStarterPackGrantPlan.cs",
+      "snippet": "Ammo = 1,",
+      "count": 1
+    },
+    {
+      "fingerprint": "db65ff01ecad1ea86788a24ece1bfa99bb205eaf7c840b3bcdd3c25a5998becf",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "Shop/XsollaStarterPackGrantPlan.cs",
+      "snippet": "Diamonds = 0,",
+      "count": 1
+    },
+    {
+      "fingerprint": "58466978ec51d5ac8e2c0959203bb0b2c2eb299a65497a7fdfb867453ff8842c",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Shop/XsollaStarterPackGrantService.cs",
+      "snippet": "eliteShipState.OwnsShipDesign(reward.RewardId);",
+      "count": 1
+    },
+    {
+      "fingerprint": "be3254d0f67f08e5771b76cc73ea04ed4191bb7a218032d0e5bcf17afa0c4c78",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Shop/XsollaStarterPackGrantService.cs",
+      "snippet": "DurableRewardTransactionService.AddDiamondSteps(",
+      "count": 1
+    },
+    {
+      "fingerprint": "d80bb04ee8ba9046732246f6d95b071721b5421b7b4eec458444f07443b68a22",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "Shop/XsollaStarterPackGrantService.cs",
+      "snippet": "if (eliteShipState.OwnsShipDesign(reward.RewardId))",
+      "count": 1
+    },
+    {
+      "fingerprint": "884894ccce74bab560a1caf38664ad91abbea1db430e819acb53aba52e00a4e9",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/GameActionBarUI.cs",
+      "snippet": "long diamonds = rewardState != null ? rewardState.Diamonds : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "f0fd9f7a6953ad9101e7b08830465e7651856312852bea165829147499eee330",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/GameActionBarUI.cs",
+      "snippet": "long gold = rewardState != null ? rewardState.Gold : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "0946d4c0e76a492110dc0760da22b260ed64ebcbc7990a0a45f81fd8556973d8",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "UI/Harpoons/HarpoonInventoryPanelUI.cs",
+      "snippet": "int quantity = inventory.GetOwnedCount(definition.HarpoonId);",
+      "count": 1
+    },
+    {
+      "fingerprint": "1fdde05593c599f02d3132188c94f9d86a08680a503277d262c81e075baf2987",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Logbook/LogbookWindowUI.cs",
+      "snippet": "private static readonly Color Gold = new Color(1f, 0.79f, 0.34f, 1f);",
+      "count": 1
+    },
+    {
+      "fingerprint": "79434991b329f2a5f2a7f540c55ac9e8869719085f0328fe95cf0dc98a17ea99",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Market/MarketCategory.cs",
+      "snippet": "Ammo = 0,",
+      "count": 1
+    },
+    {
+      "fingerprint": "aa333fda6091151523f3f9ba3b96bf59d5539162f9200538ee0630776319d3d6",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Market/MarketCategory.cs",
+      "snippet": "Cannons = 1,",
+      "count": 1
+    },
+    {
+      "fingerprint": "b6eeac3d7f383e72e888d727118a1d2ed02d2b30756968b9130964b4bc35d11e",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Market/MarketCategory.cs",
+      "snippet": "Harpoons = 5",
+      "count": 1
+    },
+    {
+      "fingerprint": "db616a31530412de2c90849ef97015fbda43f553e4805bab00ab228cd02d4aec",
+      "category": "direct_inventory_mutation",
+      "detector": "gameplay_financial_mutation_call",
+      "path": "UI/Market/MarketUI.cs",
+      "snippet": "return shipDesignState != null && shipDesignState.OwnsMarketShipDesign(item.ItemId) ? 1 : 0;",
+      "count": 1
+    },
+    {
+      "fingerprint": "701631e53b18d78dbf30681e18f86d6a9312ffda48beec30c2416dc359b44e32",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Market/MarketUI.cs",
+      "snippet": "long diamonds = previewBalancesEnabled ? previewDiamonds : rewardState != null ? rewardState.Diamonds : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "eeaefa681f417f270ea4b0399112a9cb503acda55b07c49380342fdc820db5bc",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Market/MarketUI.cs",
+      "snippet": "long gold = previewBalancesEnabled ? previewGold : rewardState != null ? rewardState.Gold : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "2d39513d8c23cf971a771129913d2870c88e08aa9d196a81eed80964fc0af5f6",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileDataProvider.cs",
+      "snippet": "Cannons = boundPlayer.GetComponent<PlayerCannonInventory>();",
+      "count": 1
+    },
+    {
+      "fingerprint": "2ddbea46fb6b29e8fbf0e6d8b4d0f289d28ddaffbfd99431ecf0e1547f7bec0b",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileDataProvider.cs",
+      "snippet": "Cannons = null;",
+      "count": 1
+    },
+    {
+      "fingerprint": "565e3709ad97b52be6246aedcad325c8b40b7434b4b7c98af0b2ff1ac9bb136f",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileDataProvider.cs",
+      "snippet": "snapshot.Diamonds = Rewards != null ? Math.Max(0L, Rewards.Diamonds) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "a20737d37baefa52a5d31417237b09958bf2b9638991399a9d985e3851254ed7",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileDataProvider.cs",
+      "snippet": "snapshot.SirenTears = Rewards != null ? Math.Max(0L, Rewards.SirenTears) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "cae26741aff89d626716f1918417834c3fabf61c0192ac958cecd5510d5657b4",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileDataProvider.cs",
+      "snippet": "snapshot.Gold = Rewards != null ? Math.Max(0L, Rewards.Gold) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "ce630341e7f13dcb0acabbd735937d49c6b5f94346f994d0a633283e86dc3866",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileDataProvider.cs",
+      "snippet": "snapshot.ElitePoints = Rewards != null ? Math.Max(0L, Rewards.ElitePoints) : 0L;",
+      "count": 1
+    },
+    {
+      "fingerprint": "176fe7c794d694691634be65a49b44fac4b48387bb1b85d4719db67c41b0bdad",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileSnapshot.cs",
+      "snippet": "ElitePoints = largeValues ? 65432100L : 12750L,",
+      "count": 1
+    },
+    {
+      "fingerprint": "478fd6afedc693dc2e42b857d6e60c7bef381c0348198fbbf9b29ddfc2ca1077",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileSnapshot.cs",
+      "snippet": "Diamonds = largeValues ? 876543210L : 18250L,",
+      "count": 1
+    },
+    {
+      "fingerprint": "8789bd01e4fa4e30819c333c976add35067a64756addb6671357b11efacdc22b",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileSnapshot.cs",
+      "snippet": "SirenTears = largeValues ? 76543210L : 64L,",
+      "count": 1
+    },
+    {
+      "fingerprint": "ef6471540b0d21e73c69ca0a65e6e6c14edfe2b9a6f5fc62c14685d6ee7c8f61",
+      "category": "legacy_profile_write",
+      "detector": "financial_profile_field_mutation",
+      "path": "UI/Profile/PlayerProfileSnapshot.cs",
+      "snippet": "Gold = large,",
+      "count": 1
+    },
+    {
+      "fingerprint": "2aee197b66f26faba3d4d28d59a8e20c8886708567cf996229ffc7a9fe04498a",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "UI/Shipyard/ShipyardCannonQuantityModalUI.cs",
+      "snippet": "Log($\"Confirm {(equipMode ? \"equip\" : \"unequip\")} cannon: cannonId={cannon.id}, quantity={quantity}\");",
+      "count": 1
+    },
+    {
+      "fingerprint": "2c3f3333cc0cf047c55c8ab7e466f356a23118b11434beb9ba0bf058dbda37ab",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "UI/Shipyard/ShipyardCannonQuantityModalUI.cs",
+      "snippet": "Debug.LogWarning($\"Shipyard quantity modal confirmation rejected: mode={(equipMode ? \"Equip\" : \"Unequip\")}, cannonId={cannon.id}, quantity={quantity}\", this);",
+      "count": 1
+    },
+    {
+      "fingerprint": "fd80902940d6870804ac85c9c6cf7e52607b5183547478920c67aca11c4de534",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "UI/Shipyard/ShipyardCannonRowUI.cs",
+      "snippet": "int owned = inventory != null ? inventory.GetOwnedCount(cannon.id) : 0;",
+      "count": 1
+    },
+    {
+      "fingerprint": "2314c74d9a2cd0f718b68b8b11f6c53b7855fa9d8ca11966f78e08383ecd0d04",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "UI/Shipyard/ShipyardUI.cs",
+      "snippet": "Debug.LogWarning($\"Shipyard modal callback rejected: mode={(equip ? \"Equip\" : \"Unequip\")}, cannonId={cannonId}, quantity={quantity}\", this);",
+      "count": 1
+    },
+    {
+      "fingerprint": "f3330845723aa910dbed92a22038fc6aae3f4edeb01d9d932f8307d74c5370f4",
+      "category": "direct_inventory_mutation",
+      "detector": "inventory_quantity_mutation",
+      "path": "UI/Shipyard/ShipyardUI.cs",
+      "snippet": "LogShipyard($\"Shipyard modal callback invoked: mode={(equip ? \"Equip\" : \"Unequip\")}, cannonId={cannonId}, quantity={quantity}\");",
+      "count": 1
+    }
+  ],
+  "digest": "9b1544573b5c6b757ed59bcabc22e90d2417766df7f838bacd250a238274428a",
+  "generationEvidence": {
+    "scannedFileCount": 373,
+    "findingCount": 302,
+    "categoryCounts": {
+      "legacy_playfab_currency": 5,
+      "legacy_profile_write": 185,
+      "direct_inventory_mutation": 112
+    },
+    "ignoredCount": 12
+  }
+}

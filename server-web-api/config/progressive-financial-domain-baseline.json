@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "kind": "seabyss_progressive_financial_domain_baseline",
+  "capturedAtUtc": "2026-08-24T00:00:00.000Z",
+  "activeAuthority": "Legacy",
+  "certifiedTargetContract": "SeabyssEconomyStateV1",
+  "deprecatedMigrationOnlyTarget": "SeabyssFinancialAuthorityV2",
+  "domains": {
+    "Diamonds": {
+      "legacyStore": "PlayFab DM plus PlayerRewardState Mirror projection",
+      "targetStore": "SeabyssEconomyStateV1.diamonds",
+      "before": {
+        "facadeMutationExpressions": 32,
+        "facadeMutationFiles": 14,
+        "playerRewardBalanceReadExpressions": 33,
+        "playerRewardBalanceReadFiles": 17,
+        "profileFieldAccessExpressions": 20,
+        "profileFieldAccessFiles": 7,
+        "profileMirrorAssignments": 10,
+        "eventCurrencyRuntimeCalls": 0,
+        "forbiddenDirectRoutes": 5
+      },
+      "afterPreparation": {
+        "facadeMutationExpressions": 32,
+        "eventDomainRuntimeCalls": 5,
+        "forbiddenDirectRoutes": 0,
+        "classified": true,
+        "centralServiceAvailable": true,
+        "targetAdapterComposed": true,
+        "liveSourceScannerFailClosed": true,
+        "selectiveStaleSaveFenceAvailable": true
+      },
+      "readers": [
+        "PlayerRewardState.Diamonds",
+        "GameActionBarUI.RefreshTopCurrencyDisplay",
+        "MarketItemPresentation.GetBalance",
+        "MarketUI.RefreshBalances",
+        "PlayerProfileDataProvider.PopulateResources",
+        "PlayerRewardDisplay.UpdateDisplay",
+        "PlayerRewardNotification.CheckForRewardChanges",
+        "PlayerCaptainInventory currency checks",
+        "PlayerPirateCrew currency checks",
+        "GuildService balance checks",
+        "PlayerCannonInventory Market balance checks",
+        "CauldronManager reward validation",
+        "SeaMonsterRewardService boundaries",
+        "QuestRewardService preflight",
+        "PirateExamRewardService preflight",
+        "DurableRewardTransactionService checkpoints",
+        "BossRewardProfileDeliveryProcessor boundaries",
+        "PlayerProfileCoordinator load/save/refresh",
+        "FinancialShadowRuntimeBridgeV1"
+      ],
+      "intentionalLegacyAdapters": [
+        "DiamondFinancialDomainRuntime Legacy adapter",
+        "BossRewardLegacyDiamondAdapter",
+        "PlayFabVirtualCurrencyStore",
+        "StarterProfileLegacyDiamondAdapter"
+      ],
+      "migrationOnly": [
+        "BossRewardProfileDeliveryProcessor profile projection",
+        "LegacyFinancialStateProjection",
+        "StarterProfilePolicy bootstrap",
+        "FinancialProfileMergePolicy",
+        "PlayerProfileCoordinator.ServerSyncPlayFabCurrencyOnLoadAsync",
+        "FinanciallyIsolatedPlayerProfileStore save fence",
+        "DiamondLegacyProfileMirror",
+        "PlayFabPlayerProfileStore xsd1 legacy drain"
+      ],
+      "forbiddenDirect": [],
+      "remainingBlockers": [],
+      "readyForCanary": true
+    },
+    "Elite": {
+      "legacyStore": "PlayerCannonInventory.ownedAmmo[elite_ball] plus profile_v1.ammo",
+      "targetStore": "SeabyssEconomyStateV1.eliteBall with Redis WAL",
+      "before": {
+        "externalReaderRoutes": 13,
+        "externalMutationRoutes": 9,
+        "internalRawOwnedAmmoWrites": 8
+      },
+      "afterPreparation": {
+        "externalReaderRoutes": 13,
+        "externalMutationRoutes": 9,
+        "internalRawOwnedAmmoWrites": 8,
+        "classified": true,
+        "centralServiceAvailable": true,
+        "selectiveStaleSaveFenceAvailable": true
+      },
+      "readers": [
+        "PlayerCombatController",
+        "QuestRewardService",
+        "PirateExamRewardService",
+        "XsollaStarterPackGrantService",
+        "PlayerProfileCoordinator",
+        "FinancialShadowRuntimeBridgeV1",
+        "PlayerProfileDataProvider",
+        "MarketUI"
+      ],
+      "writers": [
+        "PlayerCannonInventory.TryConsumeAmmoForVolley",
+        "PlayerCannonInventory Market grant/rollback",
+        "Cauldron grant/rollback",
+        "QuestRewardService",
+        "PirateExamRewardService",
+        "Redeem/admin",
+        "XsollaStarterPackGrantService",
+        "PlayerProfileCoordinator profile load",
+        "BossRewardProfileDeliveryProcessor compatibility load"
+      ],
+      "intentionalLegacyAdapters": [
+        "PlayerCannonInventory ownedAmmo hot state",
+        "FinancialShadowEliteBatcherV1 WAL"
+      ],
+      "migrationOnly": [
+        "LegacyFinancialStateProjection",
+        "FinancialProfileMergePolicy",
+        "profile_v1.ammo bootstrap"
+      ],
+      "forbiddenDirect": [
+        "External GetOwnedAmmoCount consumers after cutover",
+        "External ServerAddAmmoReward calls after cutover",
+        "External TryConsumeAmmoForVolley calls after cutover",
+        "Direct profile.ammo writes outside adapter/migration"
+      ],
+      "remainingBlockers": [
+        "Elite gameplay call sites still enter the Legacy inventory facade",
+        "Certified Target adapter composition remains disabled",
+        "No authorized Sandbox migration dry-run certificate exists"
+      ],
+      "readyForCanary": false
+    },
+    "Premium": {
+      "legacyStore": "PlayerProfileCoordinator.serverShopEntitlements plus profile_v1.shopEntitlements",
+      "targetStore": "SeabyssEconomyStateV1.premium",
+      "before": {
+        "gameplayAndDisplayReaderPaths": 8,
+        "activeWriterLayers": 3,
+        "compatibilityWriterRoutes": 2
+      },
+      "afterPreparation": {
+        "gameplayAndDisplayReaderPaths": 8,
+        "activeWriterLayers": 3,
+        "compatibilityWriterRoutes": 2,
+        "classified": true,
+        "centralServiceAvailable": true,
+        "selectiveStaleSaveFenceAvailable": true
+      },
+      "readers": [
+        "PlayerHealthState repair and respawn",
+        "PlayerQuestState slots and requirements",
+        "PlayerCannonInventory Market discount",
+        "MarketUI preview",
+        "FloatingLootChestManager doubler",
+        "ProfileActiveBonusesUI",
+        "ShopEntitlementCardUI",
+        "FinancialShadowRuntimeBridgeV1"
+      ],
+      "writers": [
+        "XsollaStarterPackGrantService",
+        "PlayerProfileCoordinator.ServerGrantPremiumTier",
+        "PlayerShopPremiumEntitlementLedger",
+        "PlayFabPlayerProfileStore pending Premium inbox compatibility",
+        "PlayerProfileCoordinator.GrantEntitlement generic compatibility"
+      ],
+      "intentionalLegacyAdapters": [
+        "PlayerProfileCoordinator serverShopEntitlements",
+        "PlayerShopPremiumEntitlementLedger",
+        "ShopPremiumPolicy benefit policy"
+      ],
+      "migrationOnly": [
+        "PlayFabPlayerProfileStore pending Premium inbox",
+        "profile_v1.shopEntitlements normalization",
+        "LegacyFinancialStateProjection",
+        "FinancialProfileMergePolicy"
+      ],
+      "forbiddenDirect": [
+        "Direct GetActivePremiumTier consumers after cutover",
+        "Direct ClientActivePremiumTier consumers after cutover",
+        "Direct ServerGrantPremiumTier calls after cutover",
+        "Direct profile.shopEntitlements writes outside adapter/migration"
+      ],
+      "remainingBlockers": [
+        "Premium gameplay readers still use the Legacy entitlement projection",
+        "No certified Unity-to-backend Premium Target writer is composed",
+        "No authorized Sandbox migration dry-run certificate exists"
+      ],
+      "readyForCanary": false
+    }
+  }
+}

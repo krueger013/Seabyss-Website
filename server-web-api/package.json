@@ -6,7 +6,10 @@
   "description": "Secure web API bridge for the Seabyss public website.",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node src/server.js"
+    "dev": "node src/server.js",
+    "pretest": "node src/validate-diamonds-live-source-cli.js",
+    "test": "node --test \"test/*.test.mjs\"",
+    "validate:diamonds-access": "node src/validate-diamonds-live-source-cli.js"
   },
   "engines": {
     "node": ">=20"
