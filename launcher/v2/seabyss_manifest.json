@@ -1,13 +1,13 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.42",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.42/SeabyssClient-Beta-0.1.7-beta.42.zip",
+    "gameVersion":  "0.1.7-beta.43",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.43/SeabyssClient-Beta-0.1.7-beta.43.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-    "fileSizeText":  "336.40 MB",
-    "releaseDate":  "2026-08-08",
-    "notes":  "Seabyss II — Beta 0.1.7-beta.42\n\n- Expanded and polished Guild, Market, Quest, Ranking, Logbook, Shipyard and profile interfaces.\n- Added new islands, tropical waters, destination markers, sea monsters, harpoons and world content.\n- Improved NPCs, world spawners, progression, economy transactions and purchase reliability.\n- Added new ship designs, visual presentation updates and profile loading improvements.\n- Added LauncherUpdates integrity migration for compatibility with historical launcher installations.\n- Improved client stability and release regression coverage.",
-    "minimumLauncherVersion":  "0.1.5",
-    "sha256":  "4933c20baa3aebc4fe04a3dc3f4938f362eddf259b1c1d7c7c8cf4eb49876800",
-    "size":  352740849
+    "fileSizeText":  "581.27 MB",
+    "releaseDate":  "2026-08-27",
+    "notes":  "Seabyss II — Beta 0.1.7-beta.43\n\n- Redesigned the Quest interface and rebalanced Quest rewards and XP progression.\n- Added the 10-minute Captain equipment lock and clearer target-out-of-range HUD feedback.\n- Updated World Boss rewards, spawn thresholds and reward-HUD delivery.\n- Added Safe Maps PvP protections, world-map colors and safe-PvP messaging.\n- Improved combat, world, persistence and release stability across the client and dedicated server.\n- Purchases remain disabled for this Beta release.",
+    "minimumLauncherVersion":  "0.1.7",
+    "sha256":  "8ea68548b81d7e8965dbd2e04a8354ed40f08b8b50c2807f41074dd349843d33",
+    "size":  609504718
 }
