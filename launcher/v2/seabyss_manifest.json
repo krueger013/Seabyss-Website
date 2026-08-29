@@ -1,13 +1,13 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.43",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.43/SeabyssClient-Beta-0.1.7-beta.43.zip",
+    "gameVersion":  "0.1.7-beta.44",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.44/SeabyssClient-Beta-0.1.7-beta.44.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-    "fileSizeText":  "581.27 MB",
-    "releaseDate":  "2026-08-27",
-    "notes":  "Seabyss II — Beta 0.1.7-beta.43\n\n- Redesigned the Quest interface and rebalanced Quest rewards and XP progression.\n- Added the 10-minute Captain equipment lock and clearer target-out-of-range HUD feedback.\n- Updated World Boss rewards, spawn thresholds and reward-HUD delivery.\n- Added Safe Maps PvP protections, world-map colors and safe-PvP messaging.\n- Improved combat, world, persistence and release stability across the client and dedicated server.\n- Purchases remain disabled for this Beta release.",
+    "fileSizeText":  "581.28 MB",
+    "releaseDate":  "2026-08-28",
+    "notes":  "Seabyss II — Beta 0.1.7-beta.44\n\n- Fixed normal NPC population recovery across all 24 maps, including Jack RedSails on Map 1/1.\n- Normal NPC replacements now preserve the defeated NPC type, respect the configured population cap, and return after a seven-second server-authoritative delay.\n- Kept World Boss thresholds, rewards, combat balance, and kill-credit behavior unchanged while hardening rapid multi-kill respawns.\n- Added server-authoritative game-version admission so beta.44 servers request the current beta.44 client through the Launcher.\n- Reduced the Guild creation price from 50,000 Gold to 1,000 Gold.\n- Rebalanced cannon prices to 2× and cannonball pack prices to 4× their previous values.\n- Purchases remain disabled for this Beta release.",
     "minimumLauncherVersion":  "0.1.7",
-    "sha256":  "8ea68548b81d7e8965dbd2e04a8354ed40f08b8b50c2807f41074dd349843d33",
-    "size":  609504718
+    "sha256":  "360475e8b6856a5ba2e4c17c6bf2ae12bcf75aa402702066926bbb786f6b4eac",
+    "size":  609515964
 }
