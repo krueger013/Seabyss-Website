@@ -1,13 +1,13 @@
 {
     "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.44",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.44/SeabyssClient-Beta-0.1.7-beta.44.zip",
+    "gameVersion":  "0.1.7-beta.45",
+    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.45/SeabyssClient-Beta-0.1.7-beta.45.zip",
     "exePath":  "SeabyssClient.exe",
     "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-    "fileSizeText":  "581.28 MB",
+    "fileSizeText":  "581.34 MB",
     "releaseDate":  "2026-08-28",
-    "notes":  "Seabyss II — Beta 0.1.7-beta.44\n\n- Fixed normal NPC population recovery across all 24 maps, including Jack RedSails on Map 1/1.\n- Normal NPC replacements now preserve the defeated NPC type, respect the configured population cap, and return after a seven-second server-authoritative delay.\n- Kept World Boss thresholds, rewards, combat balance, and kill-credit behavior unchanged while hardening rapid multi-kill respawns.\n- Added server-authoritative game-version admission so beta.44 servers request the current beta.44 client through the Launcher.\n- Reduced the Guild creation price from 50,000 Gold to 1,000 Gold.\n- Rebalanced cannon prices to 2× and cannonball pack prices to 4× their previous values.\n- Purchases remain disabled for this Beta release.",
+    "notes":  "Seabyss II — Beta 0.1.7-beta.45\n\n- Added the Pirate Exam boss marker to the minimap for levels 2–6, including a tightly scoped Fog exception for the active exam boss.\n- Hardened Pirate Exam reward validation and exactly-once progression/reward recovery across levels 2–6, including historical v2 to current v3 compatibility.\n- Updated cannonball pack prices: Elite 10 Gold; Poison, Ice, and Electric 15 Gold each; Hollow unchanged.\n- Applied the exact official Seabyss Launcher logo to the Windows game executable, taskbar, and Alt+Tab presentation.\n- Enforced exact Beta 0.1.7-beta.45 client/server admission.\n- Purchases remain disabled for this Beta release.",
     "minimumLauncherVersion":  "0.1.7",
-    "sha256":  "360475e8b6856a5ba2e4c17c6bf2ae12bcf75aa402702066926bbb786f6b4eac",
-    "size":  609515964
+    "sha256":  "a9b57ca169fdfeaca27edd3a52e479ad175cf498173119d23d9b1248903cba67",
+    "size":  609576841
 }
