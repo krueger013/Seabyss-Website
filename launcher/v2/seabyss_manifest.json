@@ -1,13 +1,13 @@
 {
-    "gameId":  "seabyss",
-    "gameVersion":  "0.1.7-beta.46",
-    "downloadUrl":  "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.46/SeabyssClient-Beta-0.1.7-beta.46.zip",
-    "exePath":  "SeabyssClient.exe",
-    "launchArguments":  "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-    "fileSizeText":  "581.42 MB",
-    "releaseDate":  "2026-08-30",
-    "notes":  "Seabyss II — Beta 0.1.7-beta.46\n\n- Increased ship repair from 250 to 500 HP per second while preserving the existing safety checks.\n- Enabled pass-through between player and NPC ships, between NPC ships, and between player ships; islands and world geometry remain blocking.\n- Improved player navigation with direct-path priority, shortest complete paths, corner simplification, partial-path rejection, and bounded direct-path rechecks around islands.\n- Planned server restarts now close Beta.46 clients completely while ordinary disconnects retain their existing behavior.\n- Improved Equip and Unequip button visibility with the validated brown, gold, and ivory authored visuals.\n- Fixed Quest Processing with durable terminal acknowledgements, bounded reconciliation, and exactly-once reward protection.\n- Added signed, owner-only chunked Quest profile transfer for large profiles and reconnects.\n- Compacted Cauldron persistence while preserving immutable plans, provider fencing, crash recovery, receipts, and exactly-once rewards.\n- Purchases remain disabled for this Beta release.",
-    "minimumLauncherVersion":  "0.1.7",
-    "sha256":  "544a8b4dd8cb4baa86a7f56ff25cb5f26b8d1feb0320d5c5fe192d4e31d12b39",
-    "size":  609657546
+  "gameId": "seabyss",
+  "gameVersion": "0.1.7-beta.47",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.47/SeabyssClient-Beta-0.1.7-beta.47.zip",
+  "exePath": "SeabyssClient.exe",
+  "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
+  "fileSizeText": "597.69 MB",
+  "releaseDate": "2026-09-01",
+  "notes": "Seabyss II — Beta 0.1.7-beta.47\n\n- Preserves the latest validated Quest Panel visuals and user edits.\n- Doubles Gold rewards for all active Quests; XP, Diamonds, and item rewards remain unchanged.\n- Sets the Iron Cannon price to 250 Gold while preserving Diamond cannon and cannonball prices.\n- Sets Floating Chest base XP rewards to 1–20 while preserving the existing Doubler and Premium behavior.\n- Preserves the validated Pirate Exam movement and completion-latency fixes with exactly-once progression and rewards.\n- Preserves the current Cauldron UI and compact durable transaction pipeline.\n- Adds the validated 512x512 HUD portraits for NPCs, Bosses, and Sea Monsters.\n- Adds the validated public online-player count to Login.\n- Purchases and all financial gates remain disabled for this Beta release.",
+  "minimumLauncherVersion": "0.1.7",
+  "sha256": "d7ffd5cbdbb4eeb6ea0d80ed8cac4629d3b87f7f1e50182c476053ebddded530",
+  "size": 626727396
 }
