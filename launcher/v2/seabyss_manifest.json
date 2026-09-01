@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.47",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.47/SeabyssClient-Beta-0.1.7-beta.47.zip",
+  "gameVersion": "0.1.7-beta.48",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.48/SeabyssClient-Beta-0.1.7-beta.48.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "597.69 MB",
+  "fileSizeText": "591.56 MB",
   "releaseDate": "2026-09-01",
-  "notes": "Seabyss II — Beta 0.1.7-beta.47\n\n- Preserves the latest validated Quest Panel visuals and user edits.\n- Doubles Gold rewards for all active Quests; XP, Diamonds, and item rewards remain unchanged.\n- Sets the Iron Cannon price to 250 Gold while preserving Diamond cannon and cannonball prices.\n- Sets Floating Chest base XP rewards to 1–20 while preserving the existing Doubler and Premium behavior.\n- Preserves the validated Pirate Exam movement and completion-latency fixes with exactly-once progression and rewards.\n- Preserves the current Cauldron UI and compact durable transaction pipeline.\n- Adds the validated 512x512 HUD portraits for NPCs, Bosses, and Sea Monsters.\n- Adds the validated public online-player count to Login.\n- Purchases and all financial gates remain disabled for this Beta release.",
+  "notes": "Seabyss II — Beta 0.1.7-beta.48\n\n- Fixes intermittent Quest Claim and Cauldron Try Again responses caused by temporary profile-admission contention.\n- Keeps the original operation pending for a bounded maximum of 45 seconds and resumes it without a blind economic retry.\n- Preserves exactly-once, replay, reconnect and reconciliation safeguards.\n- Enables the compact provider-fenced path for new Quest reward transactions, reducing blocking profile saves.\n- Preserves all gameplay, UI, portraits, navigation, economy and player-work changes already validated in Beta.47.\n- Purchases and all financial gates remain disabled for this Beta release.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "d7ffd5cbdbb4eeb6ea0d80ed8cac4629d3b87f7f1e50182c476053ebddded530",
-  "size": 626727396
+  "sha256": "41abad8257b63d2f0d625762436f1932434c6930091dabb8e5190ac621e89f35",
+  "size": 620292230
 }
