@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.48",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.48/SeabyssClient-Beta-0.1.7-beta.48.zip",
+  "gameVersion": "0.1.7-beta.49",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.49/SeabyssClient-Beta-0.1.7-beta.49.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "591.56 MB",
-  "releaseDate": "2026-09-01",
-  "notes": "Seabyss II — Beta 0.1.7-beta.48\n\n- Fixes intermittent Quest Claim and Cauldron Try Again responses caused by temporary profile-admission contention.\n- Keeps the original operation pending for a bounded maximum of 45 seconds and resumes it without a blind economic retry.\n- Preserves exactly-once, replay, reconnect and reconciliation safeguards.\n- Enables the compact provider-fenced path for new Quest reward transactions, reducing blocking profile saves.\n- Preserves all gameplay, UI, portraits, navigation, economy and player-work changes already validated in Beta.47.\n- Purchases and all financial gates remain disabled for this Beta release.",
+  "fileSizeText": "599.63 MB",
+  "releaseDate": "2026-09-02",
+  "notes": "Seabyss II — Beta 0.1.7-beta.49\n\n- Sets authoritative Diamond prices per 100 cannonballs: Elite Shot 5; Poison, Ice and Electric Shot 7.\n- Keeps these four advertised prices exact at every supported pack size, without a hidden Premium discount.\n- Preserves Hollow Shot pricing and Premium behavior; Illuminated Shot remains disabled.\n- Includes the validated Seabyss Encyclopedia, matte portraits, NPC and World Boss reward balancing, and the latest Quest/Cauldron latency and exactly-once safeguards.\n- Purchases and all financial gates remain disabled for this Beta release.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "41abad8257b63d2f0d625762436f1932434c6930091dabb8e5190ac621e89f35",
-  "size": 620292230
+  "sha256": "072197321b6e2cfa54187f90006b2170ab2ff0a66c575896f7b8d28541d6b612",
+  "size": 628762748
 }
