@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.50",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.50/SeabyssClient-Beta-0.1.7-beta.50.zip",
+  "gameVersion": "0.1.7-beta.49",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.49/SeabyssClient-Beta-0.1.7-beta.49.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "579.23 MB",
-  "releaseDate": "2026-09-04",
-  "notes": "Seabyss II — Beta 0.1.7-beta.50\n\n- Adds boss mastery progression and validated ship-design unlocks for six World Bosses.\n- Expands the Seabyss Encyclopedia and market presentation with new ship-design portraits.\n- Adds Cauldron reward history and bulk-processing safeguards while preserving exactly-once delivery.\n- Aligns quest prerequisites, catalog balance, NPC quest availability, and respawn behavior with the validated Beta 50 game state.\n- Includes deterministic boss-reward queue timing fixes.\n- Purchases and all financial gates remain disabled for this Beta release.",
+  "fileSizeText": "599.63 MB",
+  "releaseDate": "2026-09-02",
+  "notes": "Seabyss II — Beta 0.1.7-beta.49\n\n- Sets authoritative Diamond prices per 100 cannonballs: Elite Shot 5; Poison, Ice and Electric Shot 7.\n- Keeps these four advertised prices exact at every supported pack size, without a hidden Premium discount.\n- Preserves Hollow Shot pricing and Premium behavior; Illuminated Shot remains disabled.\n- Includes the validated Seabyss Encyclopedia, matte portraits, NPC and World Boss reward balancing, and the latest Quest/Cauldron latency and exactly-once safeguards.\n- Purchases and all financial gates remain disabled for this Beta release.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "ef8c8342a7c3599cba191007ef65c4af6e245e4329283c0ff25760b344a7a68f",
-  "size": 607367580
+  "sha256": "072197321b6e2cfa54187f90006b2170ab2ff0a66c575896f7b8d28541d6b612",
+  "size": 628762748
 }
