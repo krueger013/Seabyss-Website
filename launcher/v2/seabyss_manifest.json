@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.50",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.50/SeabyssClient-Beta-0.1.7-beta.50.zip",
+  "gameVersion": "0.1.7-beta.51",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.51/SeabyssClient-Beta-0.1.7-beta.51.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "579.23 MB",
-  "releaseDate": "2026-09-04",
-  "notes": "Seabyss II — Beta 0.1.7-beta.50\n\n- Adds boss mastery progression and validated ship-design unlocks for six World Bosses.\n- Expands the Seabyss Encyclopedia and market presentation with new ship-design portraits.\n- Adds Cauldron reward history and bulk-processing safeguards while preserving exactly-once delivery.\n- Aligns quest prerequisites, catalog balance, NPC quest availability, and respawn behavior with the validated Beta 50 game state.\n- Includes deterministic boss-reward queue timing fixes.\n- Purchases and all financial gates remain disabled for this Beta release.",
+  "fileSizeText": "576,37 MB",
+  "releaseDate": "2026-09-05",
+  "notes": "Seabyss — Beta 0.1.7-beta.51\n\n- Redesigned the Logbook, Shop, Market and Ranking interfaces.\n- Preserved the validated Market presentation when its runtime fallback is used.\n- Improved Cauldron Processing recovery after delayed replies, temporary status uncertainty and connection changes.\n- Bounded transaction admission while preserving request identity, reconciliation, persistence and duplicate reward protections.\n- Includes the complete approved project state following Beta 50.\n\nWindows x64 client: extract the archive and start SeabyssClient.exe, or update through the Seabyss Launcher.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "ef8c8342a7c3599cba191007ef65c4af6e245e4329283c0ff25760b344a7a68f",
-  "size": 607367580
+  "sha256": "ac9649017b21fb49645559ca1262e6d9edd1c976ccd31c1298092582bc8e18c3",
+  "size": 604370055
 }
