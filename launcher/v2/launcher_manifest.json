@@ -1,17 +1,17 @@
 {
   "schemaVersion": 2,
-  "launcherVersion": "0.1.8",
-  "minimumLauncherVersion": "0.1.8",
+  "launcherVersion": "0.1.9",
+  "minimumLauncherVersion": "0.1.9",
   "mandatory": true,
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.8/SeabyssLauncher-0.1.8-Update.zip",
-  "size": 54455158,
-  "uncompressedSize": 136603455,
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.9/SeabyssLauncher-0.1.9-Update.zip",
+  "size": 50184310,
+  "uncompressedSize": 124859535,
   "entryCount": 187,
-  "sha256": "cb439ab53a3c5f96252ee29591841eb7830d91dfbb55ca99a10b612569cb6fcf",
+  "sha256": "78779bc7d109bff7819b607da0c14781599b2a6771f846e2e851372c4c910b1d",
   "executablePath": "SeabyssLauncher.exe",
   "updaterExecutablePath": "SeabyssLauncherUpdater.exe",
-  "releaseDate": "2026-08-28",
+  "releaseDate": "2026-09-05",
   "notes": [
-    "Refined launcher background visuals with signed, resilient automatic updates."
+    "New clean dark interface, approved Seabyss artwork, clearer progress and accessible diagnostics. Signed, resilient automatic updates are preserved."
   ]
 }
