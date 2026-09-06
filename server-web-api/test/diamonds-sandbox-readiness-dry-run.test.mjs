@@ -1,3 +1,4 @@
+import "./fixtures/diamonds-canary-legacy.mjs";
 import assert from "node:assert/strict";
 import test from "node:test";
 
@@ -14,7 +15,7 @@ function environment(overrides = {}) {
     return {
         PLAYFAB_SEABYSS_FINANCIAL_SANDBOX_TITLE_ID: "1D0C16",
         PLAYFAB_SEABYSS_FINANCIAL_SANDBOX_SECRET_KEY: SECRET,
-        PLAYFAB_SEABYSS_FINANCIAL_SANDBOX_CANARY_PLAYFAB_ID:
+        FINANCIAL_DIAMONDS_CANARY_PLAYFAB_ID:
             DIAMONDS_SANDBOX_CANARY_PLAYFAB_ID,
         ...overrides
     };
@@ -114,10 +115,10 @@ test("Sandbox dry-run refuses Production before issuing any provider call", asyn
     assert.equal(calls, 0);
 });
 
-test("Sandbox dry-run refuses a different canary before issuing any provider call", () => {
+test("Sandbox dry-run refuses conflicting configured identities before any provider call", () => {
     assert.throws(() => readDiamondsSandboxDryRunEnvironment(environment({
-        PLAYFAB_SEABYSS_FINANCIAL_SANDBOX_CANARY_PLAYFAB_ID: "0000000000000001"
-    })), { code: "DIAMONDS_SANDBOX_CANARY_MISMATCH" });
+        FINANCIAL_DIAMONDS_CANARY_PLAYFAB_IDS: "0000000000000001"
+    })), { code: "DIAMONDS_CANARY_ID_CONFLICT" });
 });
 
 test("Sandbox dry-run refuses certificate evidence if provider state changes between reads", async () => {

@@ -35,8 +35,8 @@ test("every gameplay grant/spend snapshot has the exact 10-field Unity V1 contra
     assert.deepEqual(Object.keys(await harness.poc.readSnapshot("CONTRACT_PLAYER")).sort(), SNAPSHOT_KEYS);
     await harness.poc.trustedDiamonds.execute(dto("SPEND", "EVENT_SPEND", -7));
     assert.deepEqual(Object.keys(await harness.poc.readSnapshot("CONTRACT_PLAYER")).sort(), SNAPSHOT_KEYS);
-    const rejected = await harness.poc.trustedDiamonds.execute(dto("REJECT", "EVENT_REJECT", -7));
-    assert.equal(rejected.consumed.status, "rejected_insufficient_funds");
+    await assert.rejects(harness.poc.trustedDiamonds.execute(dto("REJECT", "EVENT_REJECT", -7)),
+        { code: "POC_INSUFFICIENT_DIAMONDS" });
     const snapshot = await harness.poc.readSnapshot("CONTRACT_PLAYER");
     assert.deepEqual(Object.keys(snapshot).sort(), SNAPSHOT_KEYS);
     assert.equal(JSON.stringify(snapshot).includes("GameplayResolution"), false);

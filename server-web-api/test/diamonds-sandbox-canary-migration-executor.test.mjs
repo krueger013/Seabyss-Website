@@ -1,3 +1,4 @@
+import "./fixtures/diamonds-canary-legacy.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";

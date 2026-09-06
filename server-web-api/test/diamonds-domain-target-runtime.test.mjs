@@ -130,7 +130,7 @@ test("Target read exposes provider-confirmed balance/revision but accepts identi
         playFabId: PLAYER,
         balance: 25,
         revision: 1,
-        fencingEpoch: 1,
+        fencingEpoch: 2,
         highValueAppliedThroughSequence: 1,
         objectName: "SeabyssEconomyStateV1"
     });

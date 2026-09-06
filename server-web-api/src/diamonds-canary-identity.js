@@ -11,6 +11,8 @@ function exactSinglePlayFabId(environment, { required }) {
     const singular = environment.FINANCIAL_DIAMONDS_CANARY_PLAYFAB_ID;
     const compatibility = environment.FINANCIAL_DIAMONDS_CANARY_PLAYFAB_IDS;
     const values = [singular, compatibility].filter((value) => value !== undefined && value !== null);
+    // Disabled Legacy mode documents empty allowlists; these do not configure a Canary.
+    if (!required && values.length > 0 && values.every((value) => value === "")) return null;
     if (values.length === 0) {
         if (!required) return null;
         throw coded("DIAMONDS_CANARY_ID_REQUIRED", "One exact Diamonds Canary PlayFabId is required.");

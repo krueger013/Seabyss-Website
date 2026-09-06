@@ -980,6 +980,7 @@ describe("Seabyss web API integration", { concurrency: false }, () => {
             const grantRequests = playFabMock.state.requests.slice(requestsBefore);
             assert.deepEqual(grantRequests.map((entry) => entry.path), [
                 "/Server/GetUserAccountInfo",
+                "/Server/GetUserInternalData",
                 "/Server/UpdateUserInternalData",
                 "/Server/GetUserInternalData"
             ]);
@@ -992,9 +993,10 @@ describe("Seabyss web API integration", { concurrency: false }, () => {
                 productId: "diamond_pack_1",
                 xsollaSku: "seabyss_diamond_pack_1",
                 productType: "diamond_pack",
-                source: "xsolla_sandbox"
+                source: "xsolla_sandbox",
+                productPlanVersion: 2
             });
-            assert.deepEqual(grantRequests[1].body, {
+            assert.deepEqual(grantRequests[2].body, {
                 PlayFabId: "ABCDEF123456",
                 Data: { [sandboxKey]: sandboxValue }
             });
@@ -1022,19 +1024,21 @@ describe("Seabyss web API integration", { concurrency: false }, () => {
             const combinedRequests = playFabMock.state.requests.slice(combinedRequestsBefore);
             assert.deepEqual(combinedRequests.map((entry) => entry.path), [
                 "/Server/GetUserAccountInfo",
+                "/Server/GetUserInternalData",
                 "/Server/UpdateUserInternalData",
                 "/Server/GetUserInternalData"
             ]);
             const combinedKey = "xsd1_" + createHash("sha256")
                 .update(combinedSandboxPayload.billing.transaction.id, "utf8")
                 .digest("base64url");
-            assert.deepEqual(JSON.parse(combinedRequests[1].body.Data[combinedKey]), {
+            assert.deepEqual(JSON.parse(combinedRequests[2].body.Data[combinedKey]), {
                 schemaVersion: 1,
                 transactionId: combinedSandboxPayload.billing.transaction.id,
                 productId: "diamond_pack_2",
                 xsollaSku: "seabyss_diamond_pack_2",
                 productType: "diamond_pack",
-                source: "xsolla_sandbox"
+                source: "xsolla_sandbox",
+                productPlanVersion: 2
             });
 
             const writesBeforeRejected = playFabMock.state.requests.filter(
@@ -1100,13 +1104,14 @@ describe("Seabyss web API integration", { concurrency: false }, () => {
         const productionRequests = playFabMock.state.requests.slice(productionRequestsBefore);
         assert.deepEqual(productionRequests.map((entry) => entry.path), [
             "/Server/GetUserAccountInfo",
+            "/Server/GetUserInternalData",
             "/Server/UpdateUserInternalData",
             "/Server/GetUserInternalData"
         ]);
         const productionKey = "xsd1_" + createHash("sha256")
             .update(productionPayload.billing.transaction.id, "utf8")
             .digest("base64url");
-        assert.deepEqual(productionRequests[1].body, {
+        assert.deepEqual(productionRequests[2].body, {
             PlayFabId: "ABCDEF123456",
             Data: {
                 [productionKey]: JSON.stringify({
@@ -1115,7 +1120,8 @@ describe("Seabyss web API integration", { concurrency: false }, () => {
                     productId: "diamond_pack_3",
                     xsollaSku: "seabyss_diamond_pack_3",
                     productType: "diamond_pack",
-                    source: "xsolla_production"
+                    source: "xsolla_production",
+                    productPlanVersion: 2
                 })
             }
         });

@@ -51,3 +51,14 @@ test("rejects Production and any wrong Title", () => {
         }), /Sandbox Title 1D0C16/u);
     }
 });
+
+test("disabled runtime accepts explicitly empty identity settings but activation still refuses them", () => {
+    for (const settings of [
+        { FINANCIAL_DIAMONDS_CANARY_PLAYFAB_IDS: "" },
+        { FINANCIAL_DIAMONDS_CANARY_PLAYFAB_ID: "", FINANCIAL_DIAMONDS_CANARY_PLAYFAB_IDS: "" }
+    ]) {
+        assert.deepEqual(readDiamondsCanaryIdentity(settings, { required: false }),
+            { titleId: null, playFabId: null, configured: false });
+        assert.throws(() => readDiamondsCanaryIdentity(settings), /one exact uppercase legacy PlayFabId/u);
+    }
+});

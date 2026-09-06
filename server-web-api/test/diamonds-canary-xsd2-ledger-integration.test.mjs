@@ -1,3 +1,4 @@
+import "./fixtures/diamonds-canary-payment.mjs";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createDiamondsCanaryXsd2Composition } from "../src/diamonds-canary-xsd2-composition.js";
@@ -22,7 +23,7 @@ const TITLE = "1D0C16";
 const CREATED_AT = "2026-08-24T13:00:00.000Z";
 
 function receipt(transactionId) {
-    const product = getXsollaProductPlan("seabyss_diamond_pack_1");
+    const product = getXsollaProductPlan("seabyss_diamond_pack_1", 1);
     return {
         playFabId: CANARY,
         transactionId,

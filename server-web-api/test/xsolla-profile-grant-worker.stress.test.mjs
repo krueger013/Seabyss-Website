@@ -18,7 +18,7 @@ function profile(playFabId) {
 }
 
 function diamondReceipt(transactionId, playFabId, sku = "seabyss_diamond_pack_1") {
-    const plan = getXsollaProductPlan(sku);
+    const plan = getXsollaProductPlan(sku, 1);
     return { playFabId, transactionId, provider: "xsolla", providerTransactionId: transactionId,
         userId: playFabId, createdAtUtc: "2026-08-22T20:00:00.000Z", environment: "sandbox",
         notificationType: "payment", orderId: transactionId, productId: plan.productId,

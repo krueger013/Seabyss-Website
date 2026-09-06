@@ -28,6 +28,7 @@ function dto({ playFabId = "INTEGRITY_PLAYER", operationId, eventId, diamondsDel
 
 test("same operationId/eventId with another signed Diamonds effect is a conflict", async () => {
     const harness = createCanonicalMemoryServerEconomyPocHarness();
+    await harness.poc.trustedDiamonds.execute(dto({ operationId: "FUND", eventId: "FUND_EVENT", diamondsDelta: 10 }));
     await harness.poc.trustedDiamonds.enqueue(dto({
         operationId: "SIGNED_SPEND",
         eventId: "SIGNED_EVENT",
