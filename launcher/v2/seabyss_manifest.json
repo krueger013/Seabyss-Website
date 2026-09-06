@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.51",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/0.1.7-beta.51/SeabyssClient-Beta-0.1.7-beta.51.zip",
+  "gameVersion": "0.1.7-beta.52",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.52/SeabyssClient-Beta-0.1.7-beta.52.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "576,37 MB",
-  "releaseDate": "2026-09-05",
-  "notes": "Seabyss — Beta 0.1.7-beta.51\n\n- Redesigned the Logbook, Shop, Market and Ranking interfaces.\n- Preserved the validated Market presentation when its runtime fallback is used.\n- Improved Cauldron Processing recovery after delayed replies, temporary status uncertainty and connection changes.\n- Bounded transaction admission while preserving request identity, reconciliation, persistence and duplicate reward protections.\n- Includes the complete approved project state following Beta 50.\n\nWindows x64 client: extract the archive and start SeabyssClient.exe, or update through the Seabyss Launcher.",
+  "fileSizeText": "589,55 MB",
+  "releaseDate": "2026-09-06",
+  "notes": "Seabyss — Beta 0.1.7-beta.52\n\n- Updated the Guild, World Map, Minimap, Quest Tracker, Profile, Tavern, Logbook, Shop, Market and Ranking interfaces.\n- Quest tracking keeps compact progress with the required objective, target and location context.\n- Improved damaged-ship fire placement and rendering across the ship catalog.\n- Includes the approved quest Diamond rewards x3 and five Diamond packs. Purchases remain disabled during Beta.\n- Improved reward recovery after temporary service throttling and preserved reliable Cauldron Processing recovery.\n\nWindows x64: update through Seabyss Launcher 0.1.9, or extract the archive and start SeabyssClient.exe.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "ac9649017b21fb49645559ca1262e6d9edd1c976ccd31c1298092582bc8e18c3",
-  "size": 604370055
+  "sha256": "7f5364ca56407d9bde0d67a21fe67ee458a7ce0c5700736e93ce21b2b92cc508",
+  "size": 618186467
 }
