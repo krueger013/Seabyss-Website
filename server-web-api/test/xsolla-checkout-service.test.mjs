@@ -213,7 +213,7 @@ describe("authenticated Xsolla checkout service", () => {
             async createProviderToken(request) {
                 assert.deepEqual(request.customParameters, {
                     seabyss_checkout_id: "diamond-attempt-1",
-                    seabyss_product_plan_version: "1"
+                    seabyss_product_plan_version: "2"
                 });
                 assert.equal(Object.hasOwn(request, "mode"), false);
                 return {

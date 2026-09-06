@@ -17,6 +17,36 @@ const playFabId = "46789223F9CB1BB9";
 const transactionId = "850000500";
 const nowUtc = "2026-08-23T00:00:00.000Z";
 
+for (const [number, quantity, price] of [[1,1000,199],[2,2500,399],[3,5000,699],[4,8000,999],[5,20000,1899]]) {
+    test(`approved Diamond ${number}: current xsd2 grants ${quantity}, completes, replays once and rejects altered economics`, async () => {
+        const h = await harness({
+            expectedQuantity: quantity,
+            receiptOverrides: {
+                productId: `diamond_pack_${number}`,
+                xsollaSku: `seabyss_diamond_pack_${number}`,
+                productPlanVersion: 2,
+                unitAmountMinor: price,
+                totalAmountMinor: price
+            }
+        });
+        const worker = h.makeWorker("approved-diamond");
+        const results = await worker.processPending();
+        assert.equal(results[0].status, "completed");
+        assertCompletedWithProof(await storedTransaction(h));
+        assert.equal(h.provider.diamonds(), quantity);
+        assert.equal(h.provider.effects.size, 1);
+        const calls = h.provider.requests.length;
+        await h.processReceipt(h.receipt);
+        await h.makeWorker("approved-diamond-after-restart").processPending();
+        assert.equal(h.provider.diamonds(), quantity);
+        assert.equal(h.provider.requests.length, calls);
+        await assert.rejects(h.processReceipt({ ...h.receipt, totalAmountMinor: price + 1 }));
+        assert.equal(h.provider.diamonds(), quantity);
+        assert.equal(h.provider.requests.length, calls);
+    });
+}
+
+
 function diamondReceipt() {
     return {
         schemaVersion: 2,
@@ -42,7 +72,7 @@ function diamondReceipt() {
     };
 }
 
-function economyProvider({ ambiguousOnce = false } = {}) {
+function economyProvider({ ambiguousOnce = false, expectedQuantity = 500 } = {}) {
     const effects = new Map();
     const requests = [];
     let diamonds = 0;
@@ -66,7 +96,7 @@ function economyProvider({ ambiguousOnce = false } = {}) {
             requests.push(structuredClone(request));
             if (!effects.has(request.IdempotencyId)) {
                 const amounts = request.Operations.map((operation) => operation.Add?.Amount ?? 0);
-                assert.deepEqual(amounts, [500]);
+                assert.deepEqual(amounts, [expectedQuantity]);
                 diamonds += amounts.reduce((total, amount) => total + amount, 0);
                 effects.set(request.IdempotencyId, {
                     IdempotencyId: request.IdempotencyId,
@@ -163,7 +193,8 @@ function authorityStore() {
     };
 }
 
-async function harness({ faultInjector = async () => {}, ambiguousOnce = false } = {}) {
+async function harness({ faultInjector = async () => {}, ambiguousOnce = false,
+    receiptOverrides = {}, expectedQuantity = 500 } = {}) {
     let clock = 1_800_000_000_000;
     let receiptWrites = 0;
     let receiptPersisted = false;
@@ -171,7 +202,7 @@ async function harness({ faultInjector = async () => {}, ambiguousOnce = false }
         store: createMemoryPaymentLedgerStore(),
         nowMilliseconds: () => clock
     });
-    const receipt = diamondReceipt();
+    const receipt = { ...diamondReceipt(), ...receiptOverrides };
     const receiptKey = getXsollaDiamondReceiptV2Key(receipt.transactionId);
     const processReceipt = createXsollaLedgeredReceiptProcessor({
         ledger,
@@ -194,7 +225,7 @@ async function harness({ faultInjector = async () => {}, ambiguousOnce = false }
         }
     });
     const firstReceipt = await processReceipt(receipt);
-    const provider = economyProvider({ ambiguousOnce });
+    const provider = economyProvider({ ambiguousOnce, expectedQuantity });
     const economy = createPlayFabEconomyV2GrantAdapter({
         client: provider,
         catalogMappings: {

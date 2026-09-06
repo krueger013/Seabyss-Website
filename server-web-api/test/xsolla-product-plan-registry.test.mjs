@@ -13,10 +13,12 @@ const expectedPlans = Object.freeze([
     ["seabyss_starter_pack_3", "starter_pack_3", "starter_pack", "virtual_good", "one_time", false, 1099, true, null],
     ["seabyss_diamond_pack_1", "diamond_pack_1", "diamond_pack", "bundle", "repeatable", true, 199, true, null],
     ["seabyss_diamond_pack_2", "diamond_pack_2", "diamond_pack", "bundle", "repeatable", true, 399, true, null],
-    ["seabyss_diamond_pack_3", "diamond_pack_3", "diamond_pack", "bundle", "repeatable", true, 799, true, null],
+    ["seabyss_diamond_pack_3", "diamond_pack_3", "diamond_pack", "bundle", "repeatable", true, 699, true, null],
     ["seabyss_premium_bronze", "premium", "premium", "virtual_good", "repeatable", true, 199, false, 30],
     ["seabyss_premium_silver", "premium", "premium", "virtual_good", "repeatable", true, 399, false, 30],
-    ["seabyss_premium_gold", "premium", "premium", "virtual_good", "repeatable", true, 799, false, 30]
+    ["seabyss_premium_gold", "premium", "premium", "virtual_good", "repeatable", true, 799, false, 30],
+    ["seabyss_diamond_pack_4", "diamond_pack_4", "diamond_pack", "bundle", "repeatable", true, 999, true, null],
+    ["seabyss_diamond_pack_5", "diamond_pack_5", "diamond_pack", "bundle", "repeatable", true, 1899, true, null]
 ]);
 
 
@@ -51,7 +53,7 @@ describe("versioned Xsolla ProductPlan registry", () => {
 
         for (const plan of plans) {
             assert.equal(plan.schemaVersion, 1);
-            assert.equal(plan.planVersion, 1);
+            assert.equal(plan.planVersion, plan.productType === "diamond_pack" ? 2 : 1);
             assert.equal(plan.currency, "USD");
             assert.equal(plan.minorUnitScale, 2);
             assert.equal(Number.isSafeInteger(plan.unitAmountMinor), true);
@@ -76,7 +78,7 @@ describe("versioned Xsolla ProductPlan registry", () => {
         assert.deepEqual(
             plans.filter((plan) => plan.productType !== "premium")
                 .map((plan) => [plan.sku, plan.catalogEnabled]),
-            expectedPlans.slice(0, 6).map(([sku]) => [sku, true])
+            expectedPlans.filter((p) => p[2] !== "premium").map(([sku]) => [sku, true])
         );
         assert.equal(plans.filter((plan) => plan.productType === "premium")
             .every((plan) => plan.catalogEnabled === false), true);
@@ -84,7 +86,8 @@ describe("versioned Xsolla ProductPlan registry", () => {
 
     test("looks up only an exact canonical SKU at the exact version", () => {
         for (const [sku] of expectedPlans) {
-            assert.equal(getXsollaProductPlan(sku), getXsollaProductPlan(sku, 1));
+            const current = getXsollaProductPlan(sku);
+            assert.equal(current, getXsollaProductPlan(sku, current.planVersion));
         }
         for (const sku of [
             "",

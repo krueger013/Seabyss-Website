@@ -275,7 +275,7 @@ describe("hardened Xsolla catalog event processor", () => {
             xsollaSku: "seabyss_diamond_pack_2",
             productType: "diamond_pack",
             source: "xsolla_production",
-            productPlanVersion: 1,
+            productPlanVersion: 2,
             notificationType: "order_paid",
             orderId: "700010",
             currency: "USD",

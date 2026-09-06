@@ -250,7 +250,8 @@ describe("immutable Xsolla v2 receipt stores", () => {
         });
         for (const change of [
             { playFabId: " bad" },
-            { productPlanVersion: 2 },
+            { productPlanVersion: 99 },
+            { productPlanVersion: undefined },
             { unitAmountMinor: 0 },
             { totalAmountMinor: 398 },
             { currency: "CAD" },

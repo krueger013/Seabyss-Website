@@ -50,7 +50,7 @@ test("unique unlocks are no-op and Premium extends UTC while preserving the high
 });
 
 test("Diamond pack quantities are exact and repeatable with distinct transaction receipts", () => {
-    for (const [sku, quantity] of Object.entries({ seabyss_diamond_pack_1: 500, seabyss_diamond_pack_2: 1200, seabyss_diamond_pack_3: 3000 })) {
+    for (const [sku, quantity] of Object.entries({ seabyss_diamond_pack_1: 1000, seabyss_diamond_pack_2: 2500, seabyss_diamond_pack_3: 5000, seabyss_diamond_pack_4: 8000, seabyss_diamond_pack_5: 20000 })) {
         const result = applyXsollaFinancialProfileGrant(profile(), { sku, transactionId: `tx-${quantity}`, nowUtc: "2026-08-23T00:00:00Z" });
         assert.equal(result.profile.diamonds, 10 + quantity);
         assert.deepEqual(result.profile.shopReceiptLedger.appliedTransactionIds, [`tx-${quantity}`]);

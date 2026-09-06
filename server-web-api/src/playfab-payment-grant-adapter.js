@@ -211,6 +211,7 @@ export function createPlayFabPaymentGrantAdapter({
                 mutation = mutateProfile(snapshot.profile, {
                     sku: transaction.sku,
                     transactionId: transaction.providerTransactionId,
+                    productPlanVersion: receipt.productPlanVersion,
                     nowUtc: nowUtc(),
                     grantSource: "xsolla"
                 });

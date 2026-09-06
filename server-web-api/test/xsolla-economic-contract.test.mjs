@@ -89,7 +89,7 @@ describe("Xsolla economic contract", () => {
         const diamondPayload = legacyDiamondPayment();
         const diamond = resolveXsollaDiamondPack(diamondPayload, "payment");
         assert.deepEqual(validate(diamondPayload, "payment", diamond), {
-            productPlanVersion: 1,
+            productPlanVersion: 2,
             notificationType: "payment",
             orderId: "700002",
             currency: "USD",

@@ -2,7 +2,9 @@ export const XSOLLA_DIAMOND_CURRENCY_SKU = "seabyss_diamonds";
 export const XSOLLA_DIAMOND_PACK_SKU_TO_PRODUCT_ID = Object.freeze({
     seabyss_diamond_pack_1: "diamond_pack_1",
     seabyss_diamond_pack_2: "diamond_pack_2",
-    seabyss_diamond_pack_3: "diamond_pack_3"
+    seabyss_diamond_pack_3: "diamond_pack_3",
+    seabyss_diamond_pack_4: "diamond_pack_4",
+    seabyss_diamond_pack_5: "diamond_pack_5"
 });
 
 function asStrictSku(value) {

@@ -2,9 +2,42 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createPlayFabPaymentGrantAdapter, PaymentGrantPermanentError } from "../src/playfab-payment-grant-adapter.js";
 import { getXsollaStarterReceiptV2Key } from "../src/playfab-xsolla-starter-receipt-v2-store.js";
+import { getXsollaDiamondReceiptV2Key } from "../src/playfab-xsolla-diamond-receipt-v2-store.js";
+import { getXsollaProductPlan } from "../src/xsolla-product-plan-registry.js";
 import { getStarterRewardPlan } from "../src/xsolla-starter-reward-plan-registry.js";
 
 const playFabId = "46789223F9CB1BB9";
+
+for (const [n, oldQuantity, currentQuantity] of [[1, 500, 1000], [2, 1200, 2500], [3, 3000, 5000], [4, null, 8000], [5, null, 20000]]) {
+    for (const [version, quantity] of (oldQuantity === null ? [[2, currentQuantity]] : [[1, oldQuantity], [2, currentQuantity]])) {
+        test(`Diamond ${n} profile adapter pins receipt v${version} to ${quantity}, replay no-op`, async () => {
+            const product = getXsollaProductPlan(`seabyss_diamond_pack_${n}`, version);
+            const r = {
+                schemaVersion: 2, transactionId: "920000001", provider: "xsolla",
+                providerTransactionId: "920000001", userId: playFabId,
+                createdAtUtc: "2026-08-22T20:00:00.000Z", environment: "sandbox",
+                notificationType: "payment", orderId: "920000001",
+                productId: product.productId, xsollaSku: product.sku,
+                productType: "diamond_pack", source: "xsolla_sandbox", productPlanVersion: version,
+                currency: "USD", unitAmountMinor: product.unitAmountMinor, quantity: 1,
+                totalAmountMinor: product.unitAmountMinor, promotionPolicy: "disabled"
+            };
+            const receiptId = getXsollaDiamondReceiptV2Key(r.transactionId);
+            const tx = transaction(r, { receiptId, planHash: product.planHash,
+                checkpoints: { receipt_persisted: { result: { receiptId } } } });
+            const profileStore = store();
+            const grant = adapter(profileStore, r);
+            assert.equal((await grant.grant(context(tx))).status, "applied");
+            assert.equal(profileStore.snapshot().diamonds, quantity);
+            assert.equal((await grant.grant(context(tx))).status, "already_applied");
+            assert.equal(profileStore.snapshot().diamonds, quantity);
+            assert.equal(profileStore.writes(), 1);
+            await assert.rejects(grant.grant(context({ ...tx, amountMinor: 1 })), { code: "ECONOMIC_MISMATCH" });
+            assert.equal(profileStore.writes(), 1);
+        });
+    }
+}
+
 function profile() {
     return { schemaVersion: 12, playerAccountId: playFabId, updatedUtc: "", diamonds: 0, ammo: [], usableItems: [], cannons: [],
         harpoons: { quantities: [], equippedHarpoonId: "" }, ownedDestinationMarkerIds: [], ownedShipDesignIds: [],

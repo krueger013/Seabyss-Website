@@ -129,7 +129,7 @@ describe("trusted payment producer to Financial Shadow", () => {
         assert.equal(h.enqueueCalls(), 1);
     });
 
-    test("xsd2 Diamond I derives exactly +500 with no Elite or Premium", async () => {
+    test("xsd2 Diamond I derives exactly +1000 with no Elite or Premium", async () => {
         const h = harness();
         const receipt = paidReceipt("seabyss_diamond_pack_1", "910000002");
         const result = await persistThenProject(h, receipt);
@@ -137,7 +137,7 @@ describe("trusted payment producer to Financial Shadow", () => {
             diamonds: result.operation.diamonds,
             eliteBall: result.operation.eliteBall,
             premium: result.operation.premium
-        }, { diamonds: 500, eliteBall: 0, premium: null });
+        }, { diamonds: 1000, eliteBall: 0, premium: null });
         assert.equal(result.operation.playFabId, PLAYER);
     });
 
@@ -152,7 +152,7 @@ describe("trusted payment producer to Financial Shadow", () => {
         assert.equal(replay.status, "already_projected");
         assert.equal(page.entries.length, 1);
         assert.equal(page.entries[0].state, "Pending");
-        assert.equal(page.entries[0].operation.diamonds, 500);
+        assert.equal(page.entries[0].operation.diamonds, 1000);
         assert.equal(h.enqueueCalls(), 2);
     });
 

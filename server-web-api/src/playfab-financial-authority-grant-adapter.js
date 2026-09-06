@@ -1,17 +1,12 @@
 import { getXsollaDiamondReceiptV2Key, serializeXsollaDiamondReceiptV2 } from "./playfab-xsolla-diamond-receipt-v2-store.js";
 import { getXsollaStarterReceiptV2Key, serializeXsollaStarterReceiptV2 } from "./playfab-xsolla-starter-receipt-v2-store.js";
-import { getXsollaProductPlan } from "./xsolla-product-plan-registry.js";
+import { getXsollaProductPlan, getXsollaDiamondRewardQuantity } from "./xsolla-product-plan-registry.js";
 import { getStarterRewardPlan } from "./xsolla-starter-reward-plan-registry.js";
 import {
     applyFinancialEntitlementGrant,
     verifyFinancialEntitlementGrant
 } from "./financial-authority-v2.js";
 
-const DIAMOND_PACK_REWARDS = Object.freeze({
-    seabyss_diamond_pack_1: 500,
-    seabyss_diamond_pack_2: 1200,
-    seabyss_diamond_pack_3: 3000
-});
 
 export class FinancialAuthorityGrantError extends Error {
     constructor(code, message, { permanent = false, retryable = false, details = null } = {}) {
@@ -126,7 +121,7 @@ function rewardSets(receipt, product) {
         return Object.freeze({ quantitative: Object.freeze(quantitative), hasEntitlements: true });
     }
     if (product.productType === "diamond_pack") {
-        const quantity = DIAMOND_PACK_REWARDS[receipt.xsollaSku];
+        const quantity = getXsollaDiamondRewardQuantity(receipt.xsollaSku, product.planVersion);
         if (!quantity) fail("PLAN_MISMATCH", "Diamond quantity is unavailable.", { permanent: true });
         return Object.freeze({
             quantitative: Object.freeze([Object.freeze({ rewardId: "diamonds", quantity })]),

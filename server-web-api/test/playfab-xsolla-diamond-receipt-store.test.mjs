@@ -70,14 +70,15 @@ describe("PlayFab Xsolla Diamond receipt store", () => {
 
         const result = await persist(receipt);
         assert.deepEqual(calls.map((call) => call.url), [
+            "https://local-title.playfabapi.com/Server/GetUserInternalData",
             "https://local-title.playfabapi.com/Server/UpdateUserInternalData",
             "https://local-title.playfabapi.com/Server/GetUserInternalData"
         ]);
-        assert.deepEqual(calls[0].body, {
+        assert.deepEqual(calls[1].body, {
             PlayFabId: receipt.playFabId,
             Data: { [result.key]: result.value }
         });
-        assert.deepEqual(calls[1].body, {
+        assert.deepEqual(calls[2].body, {
             PlayFabId: receipt.playFabId,
             Keys: [result.key]
         });

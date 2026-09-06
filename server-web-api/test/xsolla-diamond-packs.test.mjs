@@ -129,11 +129,13 @@ async function process(harness, payload) {
 }
 
 describe("Xsolla Diamond Pack processor", () => {
-    test("uses the exact three-SKU mapping and never display names", () => {
+    test("uses the exact five-SKU mapping and never display names", () => {
         assert.deepEqual({ ...XSOLLA_DIAMOND_PACK_SKU_TO_PRODUCT_ID }, {
             seabyss_diamond_pack_1: "diamond_pack_1",
             seabyss_diamond_pack_2: "diamond_pack_2",
-            seabyss_diamond_pack_3: "diamond_pack_3"
+            seabyss_diamond_pack_3: "diamond_pack_3",
+            seabyss_diamond_pack_4: "diamond_pack_4",
+            seabyss_diamond_pack_5: "diamond_pack_5"
         });
         assert.equal(Object.isFrozen(XSOLLA_DIAMOND_PACK_SKU_TO_PRODUCT_ID), true);
         assert.equal(resolveXsollaDiamondPack(legacyPayment({

@@ -1,6 +1,21 @@
 import { createHash } from "node:crypto";
 
 export const XSOLLA_PRODUCT_PLAN_VERSION = 1;
+export const XSOLLA_DIAMOND_PRODUCT_PLAN_VERSION = 2;
+
+// V1 is immutable: existing receipts must retain their original reward amount/hash.
+const LEGACY_DIAMOND_QUANTITIES = Object.freeze({
+    seabyss_diamond_pack_1: 500,
+    seabyss_diamond_pack_2: 1200,
+    seabyss_diamond_pack_3: 3000
+});
+const APPROVED_DIAMOND_QUANTITIES = Object.freeze({
+    seabyss_diamond_pack_1: 1000,
+    seabyss_diamond_pack_2: 2500,
+    seabyss_diamond_pack_3: 5000,
+    seabyss_diamond_pack_4: 8000,
+    seabyss_diamond_pack_5: 20000
+});
 
 const USD_CURRENCY = "USD";
 const ALLOWED_ENVIRONMENTS = deepFreeze(["sandbox", "production"]);
@@ -220,26 +235,49 @@ const productPlanBySku = Object.freeze(Object.fromEntries(
     productPlans.map((plan) => [plan.sku, plan])
 ));
 
-function requireCurrentVersion(planVersion) {
-    if (planVersion !== XSOLLA_PRODUCT_PLAN_VERSION) {
-        throw new RangeError("Unsupported Xsolla product plan version.");
-    }
-}
+const currentProductPlans = deepFreeze([...productPlans.map((legacy) => {
+    if (legacy.productType !== "diamond_pack") return legacy;
+    const { planHash, ...material } = legacy;
+    const plan = { ...material, planVersion: XSOLLA_DIAMOND_PRODUCT_PLAN_VERSION,
+        unitAmountMinor: legacy.sku === "seabyss_diamond_pack_3" ? 699 : legacy.unitAmountMinor,
+        diamondQuantity: APPROVED_DIAMOND_QUANTITIES[legacy.sku] };
+    return { ...plan, planHash: calculatePlanHash(plan) };
+}), ...[4, 5].map((number) => {
+    const { planHash, ...template } = productPlanBySku.seabyss_diamond_pack_1;
+    const sku = `seabyss_diamond_pack_${number}`;
+    const plan = { ...template, sku, productId: `diamond_pack_${number}`,
+        planVersion: XSOLLA_DIAMOND_PRODUCT_PLAN_VERSION,
+        unitAmountMinor: number === 4 ? 999 : 1899,
+        diamondQuantity: APPROVED_DIAMOND_QUANTITIES[sku] };
+    return { ...plan, planHash: calculatePlanHash(plan) };
+})]);
+const currentProductPlanBySku = Object.freeze(Object.fromEntries(
+    currentProductPlans.map((plan) => [plan.sku, plan])
+));
 
 export function getXsollaProductPlan(
     sku,
-    planVersion = XSOLLA_PRODUCT_PLAN_VERSION
+    planVersion = undefined
 ) {
-    requireCurrentVersion(planVersion);
-    if (!isCanonicalIdentifier(sku) || !Object.hasOwn(productPlanBySku, sku)) {
+    if (!isCanonicalIdentifier(sku) || !Object.hasOwn(currentProductPlanBySku, sku)) {
         throw new RangeError("Unknown Xsolla product SKU.");
     }
-    return productPlanBySku[sku];
+    if (planVersion === XSOLLA_PRODUCT_PLAN_VERSION && Object.hasOwn(productPlanBySku, sku)) return productPlanBySku[sku];
+    const current = currentProductPlanBySku[sku];
+    if (planVersion === undefined || planVersion === current.planVersion) return current;
+    throw new RangeError("Unsupported Xsolla product plan version.");
 }
 
 export function listXsollaProductPlans(
-    planVersion = XSOLLA_PRODUCT_PLAN_VERSION
+    planVersion = undefined
 ) {
-    requireCurrentVersion(planVersion);
-    return productPlans;
+    if (planVersion === undefined) return currentProductPlans;
+    if (planVersion === XSOLLA_PRODUCT_PLAN_VERSION) return productPlans;
+    throw new RangeError("Unsupported Xsolla product plan collection version.");
+}
+
+export function getXsollaDiamondRewardQuantity(sku, planVersion = undefined) {
+    const plan = getXsollaProductPlan(sku, planVersion);
+    if (plan.productType !== "diamond_pack") throw new RangeError("Not a Diamond pack.");
+    return plan.planVersion === 1 ? LEGACY_DIAMOND_QUANTITIES[sku] : plan.diamondQuantity;
 }

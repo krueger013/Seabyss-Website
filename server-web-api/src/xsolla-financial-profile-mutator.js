@@ -1,12 +1,7 @@
 import { createHash } from "node:crypto";
-import { getXsollaProductPlan } from "./xsolla-product-plan-registry.js";
+import { getXsollaProductPlan, getXsollaDiamondRewardQuantity } from "./xsolla-product-plan-registry.js";
 import { getStarterRewardPlan } from "./xsolla-starter-reward-plan-registry.js";
 
-const DIAMONDS = Object.freeze({
-    seabyss_diamond_pack_1: 500,
-    seabyss_diamond_pack_2: 1200,
-    seabyss_diamond_pack_3: 3000
-});
 const AMMO = new Set(["elite_ball", "poison_cannonball"]);
 const ITEMS = new Set(["thors_wrath", "green_amulet", "blue_amulet", "red_amulet",
     "diamond_offensive_powder", "diamond_armor_plate", "star_dust"]);
@@ -115,6 +110,7 @@ function applyReward(profile, reward, transactionId, now) {
 export function applyXsollaFinancialProfileGrant(profile, {
     sku,
     transactionId,
+    productPlanVersion,
     nowUtc = new Date(),
     grantSource = "xsolla"
 }) {
@@ -127,7 +123,7 @@ export function applyXsollaFinancialProfileGrant(profile, {
     if (next.shopReceiptLedger.appliedTransactionIds.includes(transactionId)) {
         return { status: "already_applied", profile: next, rewardsApplied: 0 };
     }
-    const product = getXsollaProductPlan(sku);
+    const product = getXsollaProductPlan(sku, productPlanVersion);
     let rewardCount = 1;
     if (product.productType === "starter_pack") {
         const plan = getStarterRewardPlan(sku);
@@ -138,7 +134,7 @@ export function applyXsollaFinancialProfileGrant(profile, {
             unlock(next.appliedXsollaStarterPackRewardStepIds, `${transactionId}|starter:${index}:${reward.rewardId}`);
         });
     } else if (product.productType === "diamond_pack") {
-        const quantity = DIAMONDS[sku];
+        const quantity = getXsollaDiamondRewardQuantity(sku, product.planVersion);
         if (!quantity) throw new RangeError("Diamond Pack quantity is not defined.");
         next.diamonds = safeAdd(next.diamonds, quantity, "diamonds");
     } else if (product.productType === "premium") {

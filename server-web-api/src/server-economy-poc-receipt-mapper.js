@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { getStarterRewardPlan } from "./xsolla-starter-reward-plan-registry.js";
-import { getXsollaProductPlan } from "./xsolla-product-plan-registry.js";
+import { getXsollaProductPlan, getXsollaDiamondRewardQuantity } from "./xsolla-product-plan-registry.js";
 import {
     serverEconomyPocFail,
     serverEconomyPocId,
@@ -8,11 +8,6 @@ import {
     serverEconomyPocReadonly
 } from "./server-economy-poc-model.js";
 
-const DIAMOND_REWARDS = Object.freeze({
-    seabyss_diamond_pack_1: 500,
-    seabyss_diamond_pack_2: 1200,
-    seabyss_diamond_pack_3: 3000
-});
 const PREMIUM_TIERS = Object.freeze({
     seabyss_premium_bronze: "bronze",
     seabyss_premium_silver: "silver",
@@ -90,6 +85,7 @@ export function mapValidatedXsollaReceiptToServerEconomyPocOperation(projection)
     );
     let product;
     try {
+        if (!Number.isSafeInteger(receipt.productPlanVersion)) throw new TypeError("Explicit receipt plan version required.");
         product = getXsollaProductPlan(sku, receipt.productPlanVersion);
     } catch {
         serverEconomyPocFail("POC_PLAN_MISMATCH", "Product plan is unavailable.");
@@ -108,8 +104,8 @@ export function mapValidatedXsollaReceiptToServerEconomyPocOperation(projection)
             serverEconomyPocFail("POC_PLAN_MISMATCH", "Starter reward plan hash differs.");
         }
         effects = starterEffects(plan);
-    } else if (Object.hasOwn(DIAMOND_REWARDS, sku)) {
-        effects = { diamonds: DIAMOND_REWARDS[sku], eliteBall: 0, premium: null };
+    } else if (product.productType === "diamond_pack") {
+        effects = { diamonds: getXsollaDiamondRewardQuantity(sku, product.planVersion), eliteBall: 0, premium: null };
     } else if (Object.hasOwn(PREMIUM_TIERS, sku) && product.productType === "premium") {
         effects = {
             diamonds: 0,

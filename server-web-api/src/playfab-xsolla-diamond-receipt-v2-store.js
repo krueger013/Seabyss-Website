@@ -86,6 +86,7 @@ export function serializeXsollaDiamondReceiptV2(receipt = {}) {
     }
     let productPlan;
     try {
+        if (!Number.isSafeInteger(productPlanVersion)) throw new TypeError("Explicit receipt plan version required.");
         productPlan = getXsollaProductPlan(xsollaSku, productPlanVersion);
     } catch {
         throw new TypeError("Xsolla Diamond v2 plan version is invalid.");
