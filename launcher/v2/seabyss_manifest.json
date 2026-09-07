@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.52",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.52/SeabyssClient-Beta-0.1.7-beta.52.zip",
+  "gameVersion": "0.1.7-beta.53",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.53/SeabyssClient-Beta-0.1.7-beta.53.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "589,55 MB",
-  "releaseDate": "2026-09-06",
-  "notes": "Seabyss — Beta 0.1.7-beta.52\n\n- Updated the Guild, World Map, Minimap, Quest Tracker, Profile, Tavern, Logbook, Shop, Market and Ranking interfaces.\n- Quest tracking keeps compact progress with the required objective, target and location context.\n- Improved damaged-ship fire placement and rendering across the ship catalog.\n- Includes the approved quest Diamond rewards x3 and five Diamond packs. Purchases remain disabled during Beta.\n- Improved reward recovery after temporary service throttling and preserved reliable Cauldron Processing recovery.\n\nWindows x64: update through Seabyss Launcher 0.1.9, or extract the archive and start SeabyssClient.exe.",
+  "fileSizeText": "589,56 MB",
+  "releaseDate": "2026-09-07",
+  "notes": "Seabyss — Beta 0.1.7-beta.53\n\n- Improved recovery of Boss and Quest rewards after temporary service throttling, while preserving protection against duplicate rewards.\n- Reduced the World Map by 30%.\n- Updated the island collision on Map_1_3.\n\nWindows x64: update through Seabyss Launcher 0.1.9.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "7f5364ca56407d9bde0d67a21fe67ee458a7ce0c5700736e93ce21b2b92cc508",
-  "size": 618186467
+  "sha256": "2bb8b5cb8390487783ea61a5b0bb5837fc864f2badb77182d292bf304544101b",
+  "size": 618198445
 }
