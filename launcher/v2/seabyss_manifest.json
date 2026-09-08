@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.53",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.53/SeabyssClient-Beta-0.1.7-beta.53.zip",
+  "gameVersion": "0.1.7-beta.54",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.54/SeabyssClient-Beta-0.1.7-beta.54.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "589,56 MB",
-  "releaseDate": "2026-09-07",
-  "notes": "Seabyss — Beta 0.1.7-beta.53\n\n- Improved recovery of Boss and Quest rewards after temporary service throttling, while preserving protection against duplicate rewards.\n- Reduced the World Map by 30%.\n- Updated the island collision on Map_1_3.\n\nWindows x64: update through Seabyss Launcher 0.1.9.",
+  "fileSizeText": "589,61 MB",
+  "releaseDate": "2026-09-08",
+  "notes": "Seabyss Beta 0.1.7-beta.54\n\n- Updated the Login presentation with a compact layout, preserving the existing background, music, sign-in and account creation flow.\n- Reduced Guild, Tavern, Ranking, Cauldron, Market, Quest and Profile panels by 25% on each axis, with readable text and scrollable content.\n- Improved compact Quest reward/objective layout and Guild currency-row sizing.\n- Includes all Beta 53 changes, including Boss and Quest reward recovery, the compact World Map and the Map_1_3 collision update.\n\nWindows x64. Install or update through Seabyss Launcher 0.1.9.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "2bb8b5cb8390487783ea61a5b0bb5837fc864f2badb77182d292bf304544101b",
-  "size": 618198445
+  "sha256": "d04cb8f78e45ed21d1b2b26b6fab7da5b927c12a581997f2812e5ec8055b404c",
+  "size": 618253498
 }
