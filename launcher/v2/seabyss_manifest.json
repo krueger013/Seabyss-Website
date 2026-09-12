@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.55",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.55/SeabyssClient-Beta-0.1.7-beta.55.zip",
+  "gameVersion": "0.1.7-beta.56",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.56/SeabyssClient-Beta-0.1.7-beta.56.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "589,62 MB",
-  "releaseDate": "2026-09-08",
-  "notes": "Seabyss Beta 0.1.7-beta.55\n\n- Fixed Quest rewards remaining blocked after an explicit PlayFab rate-limit refusal.\n- Added durable automatic retries while preserving completed reward portions and duplicate-payment protection.\n- Allows subsequent independent Quest and Boss rewards to continue while a refused Quest reward waits for retry.\n- Preserves the previous Boss reward recovery fix and protections for genuinely unknown payment outcomes.\n\nWindows x64. Install or update through Seabyss Launcher 0.1.9.",
+  "fileSizeText": "611,39 MB",
+  "releaseDate": "2026-09-12",
+  "notes": "Seabyss Beta 0.1.7-beta.56\n\n- Earned currency becomes available after durable acceptance while PlayFab synchronization continues in the background.\n- Improved profile save scheduling and recovery of pending rewards across reconnects and server restarts.\n- Added Elite Ships 4-7, Elite portraits 1-7, and Idle animations for six sea monsters.\n- Added sharp reload/repair indicators and reload countdown; attacks resume when an engaged target returns to range.\n- Updated Login/Profile presentation, compact panels and World Map; main windows now cover ordinary HUD elements.\n- Captains: 1,250 Gold or Diamonds. Market ship designs: 10,000 Diamonds (9,000 Premium).\n- Plates and powders: 100 units for 100 Diamonds (90 Premium).\n- World Boss Siren's Tears: 3 / 5 / 7 / 9 / 11 / 13 by tier, retaining the existing last-hit rule.\n- Retired the MONEY promo code.\n\nWindows x64. Install or update through Seabyss Launcher 0.1.9.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "2684678e729fe2b006d114a77cdc942222791d0557ff407bb9e0ded1d960a170",
-  "size": 618257721
+  "sha256": "daf1b640746f90510b8873940b2d52ae9dbb518a0e006d4521522a511abfca5f",
+  "size": 641086793
 }
