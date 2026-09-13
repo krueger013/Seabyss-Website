@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.56",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.56/SeabyssClient-Beta-0.1.7-beta.56.zip",
+  "gameVersion": "0.1.7-beta.57",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.57/SeabyssClient-Beta-0.1.7-beta.57.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "611,39 MB",
-  "releaseDate": "2026-09-12",
-  "notes": "Seabyss Beta 0.1.7-beta.56\n\n- Earned currency becomes available after durable acceptance while PlayFab synchronization continues in the background.\n- Improved profile save scheduling and recovery of pending rewards across reconnects and server restarts.\n- Added Elite Ships 4-7, Elite portraits 1-7, and Idle animations for six sea monsters.\n- Added sharp reload/repair indicators and reload countdown; attacks resume when an engaged target returns to range.\n- Updated Login/Profile presentation, compact panels and World Map; main windows now cover ordinary HUD elements.\n- Captains: 1,250 Gold or Diamonds. Market ship designs: 10,000 Diamonds (9,000 Premium).\n- Plates and powders: 100 units for 100 Diamonds (90 Premium).\n- World Boss Siren's Tears: 3 / 5 / 7 / 9 / 11 / 13 by tier, retaining the existing last-hit rule.\n- Retired the MONEY promo code.\n\nWindows x64. Install or update through Seabyss Launcher 0.1.9.",
+  "fileSizeText": "611,43 MB",
+  "releaseDate": "2026-09-13",
+  "notes": "Seabyss 0.1.7-beta.57\r\n\r\n- Improves combat and reward reliability during long sessions.\r\n- Prevents growing reward history from blocking saved progress.\r\n- Strengthens persistence recovery and safe server restarts.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "daf1b640746f90510b8873940b2d52ae9dbb518a0e006d4521522a511abfca5f",
-  "size": 641086793
+  "sha256": "3d7502529500a268319925cb1f94269eb8c41849b1d011284adf1d98cf615bac",
+  "size": 641128517
 }
