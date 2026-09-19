@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.57",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.57/SeabyssClient-Beta-0.1.7-beta.57.zip",
+  "gameVersion": "0.1.7-beta.58",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.58/SeabyssClient-Beta-0.1.7-beta.58.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "611,43 MB",
-  "releaseDate": "2026-09-13",
-  "notes": "Seabyss 0.1.7-beta.57\r\n\r\n- Improves combat and reward reliability during long sessions.\r\n- Prevents growing reward history from blocking saved progress.\r\n- Strengthens persistence recovery and safe server restarts.",
+  "fileSizeText": "626,67 MB",
+  "releaseDate": "2026-09-19",
+  "notes": "Seabyss 0.1.7-beta.58\r\n\r\n- Refreshed top navigation, clearer menus and sharper interface icons.\r\n- Refined minimap with compact tooltips and an attached camera zoom control.\r\n- Improved Shipyard portraits, quest cards and Pirate Exam reward presentation.\r\n- Fixed Quest initialization that could interrupt profile loading.\r\n- Shellborn now has a 50% chance to drop 1–25 Diamonds; Vexar has a 25% chance to drop 1–10. Encyclopedia entries reflect these rewards.\r\n- Preserves the Beta 57 profile archive and durable reward protections.\r\n\r\nLauncher version remains 0.1.9.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "3d7502529500a268319925cb1f94269eb8c41849b1d011284adf1d98cf615bac",
-  "size": 641128517
+  "sha256": "b10bc797ecbd0da268f149e126e07c7078218b4f9c51b5d0f858e66ac53e1278",
+  "size": 657107044
 }
