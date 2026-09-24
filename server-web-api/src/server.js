@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { configureLocalMonetaryV2Payments } from "./monetary-v2-payment-bootstrap.js";
 import { randomUUID } from "node:crypto";
 import express from "express";
 import cors from "cors";
@@ -180,6 +181,7 @@ if (!allowedNodeEnvironments.has(config.nodeEnv)) {
 }
 
 const isProduction = config.nodeEnv === "production";
+const localMonetaryV2Payments = configureLocalMonetaryV2Payments({ env: process.env, config });
 const sessionCookieName = isProduction ? "__Host-seabyss.sid" : "seabyss.sid";
 
 if (isProduction && (
@@ -929,11 +931,14 @@ const gatedXsollaEventProcessor = createXsollaPurchaseGateProcessor({
     legacyProcessor: legacyXsollaEventProcessor,
     reversalProcessor: reversalXsollaEventProcessor
 });
+const routedXsollaEventProcessor = localMonetaryV2Payments
+    ? localMonetaryV2Payments.attach({ legacyProcessor: gatedXsollaEventProcessor, validateUser: validateXsollaUser, starterPaidCoordinator })
+    : gatedXsollaEventProcessor;
 const processXsollaEvent = async (event) => {
     paymentMetrics.record("webhook_received", {
         labels: { type: String(event?.notificationType || "unknown").toLowerCase() }
     });
-    const result = await gatedXsollaEventProcessor(event);
+    const result = await routedXsollaEventProcessor(event);
     paymentWorkerService?.wake();
     return result;
 };
