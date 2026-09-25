@@ -12,6 +12,7 @@ export async function startEmptyRespFixture(){
             buffer=buffer.slice(cursor);const command=args[0].toUpperCase();commands.push(command);
             if(command==="PING")socket.write("+PONG\r\n");
             else if(command==="CLIENT"&&["SETINFO","SETNAME"].includes(args[1]?.toUpperCase()))socket.write("+OK\r\n");
+            else if(command==="SCAN")socket.write("*2\r\n$1\r\n0\r\n*0\r\n");
             else if(command==="ZRANGE")socket.write("*0\r\n");
             else if(command==="GET")socket.write("$-1\r\n");
             else if(command==="QUIT")socket.end("+OK\r\n");

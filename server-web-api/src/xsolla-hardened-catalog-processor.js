@@ -100,6 +100,7 @@ export function createXsollaHardenedCatalogEventProcessor({
     starterSandboxTestPlayFabIds = [],
     allowStarterProductionGrants = false,
     capturePremiumProductionReceipts = false,
+    captureStarterProductionReceipts = false,
     validateUser,
     persistDiamondPackReceiptV2,
     persistStarterPackReceiptV2,
@@ -230,44 +231,51 @@ export function createXsollaHardenedCatalogEventProcessor({
         }
 
         if (product.productType === "starter_pack") {
-            if (!starterPaidCoordinator || typeof starterPaidCoordinator.settlePaid !== "function" ||
-                (typeof persistCatalogReceipt !== "function" &&
-                    typeof persistStarterPackReceiptV2 !== "function")) {
-                throw new Error("Hardened Starter payment processing is not configured.");
-            }
-            const settlement = await starterPaidCoordinator.settlePaid({
-                payload,
-                playFabId,
-                transactionId,
-                product,
-                source,
-                economicContract
-            });
-            if (settlement?.status === "manual_reconciliation") {
-                if (settlement.reason === "duplicate_paid" &&
-                    typeof recordFinancialException === "function") {
-                    await recordFinancialException({
-                        state: "DuplicatePaid",
-                        reason: "duplicate_paid",
-                        reconciliationCaseKey: settlement.caseKey,
-                        playFabId,
-                        transactionId,
-                        product,
-                        productPlan: plan,
-                        source,
-                        environment,
-                        createdAtUtc,
-                        notificationType
-                    });
+            // V2 custody is not a Starter grant. Economic/identity validation above
+            // remains mandatory; reservation/reconciliation V1 writes must not run
+            // before custody or while the cutover holds all legacy writers.
+            const captureOnly = !sandbox && captureStarterProductionReceipts === true &&
+                typeof persistCatalogReceipt === "function";
+            if (!captureOnly) {
+                if (!starterPaidCoordinator || typeof starterPaidCoordinator.settlePaid !== "function" ||
+                    (typeof persistCatalogReceipt !== "function" &&
+                        typeof persistStarterPackReceiptV2 !== "function")) {
+                    throw new Error("Hardened Starter payment processing is not configured.");
                 }
-                return "starter_pack_manual_reconciliation_required";
-            }
-            if (![
-                "accepted",
-                "accepted_unreserved",
-                "replayed"
-            ].includes(settlement?.status)) {
-                throw new Error("Starter paid coordinator returned an invalid result.");
+                const settlement = await starterPaidCoordinator.settlePaid({
+                    payload,
+                    playFabId,
+                    transactionId,
+                    product,
+                    source,
+                    economicContract
+                });
+                if (settlement?.status === "manual_reconciliation") {
+                    if (settlement.reason === "duplicate_paid" &&
+                        typeof recordFinancialException === "function") {
+                        await recordFinancialException({
+                            state: "DuplicatePaid",
+                            reason: "duplicate_paid",
+                            reconciliationCaseKey: settlement.caseKey,
+                            playFabId,
+                            transactionId,
+                            product,
+                            productPlan: plan,
+                            source,
+                            environment,
+                            createdAtUtc,
+                            notificationType
+                        });
+                    }
+                    return "starter_pack_manual_reconciliation_required";
+                }
+                if (![
+                    "accepted",
+                    "accepted_unreserved",
+                    "replayed"
+                ].includes(settlement?.status)) {
+                    throw new Error("Starter paid coordinator returned an invalid result.");
+                }
             }
             const rewardPlan = resolveStarterRewardPlan(product.xsollaSku);
             const receipt = {

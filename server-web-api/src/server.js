@@ -185,7 +185,7 @@ const isProduction = config.nodeEnv === "production";
 const localMonetaryV2Payments = configureLocalMonetaryV2Payments({ env: process.env, config });
 const productionMonetaryV2Payments = localMonetaryV2Payments?.productionAuthorityConfigured === true;
 // This replaces legacy-worker readiness only after the exact private DB/fence contract is verified.
-if (productionMonetaryV2Payments) await localMonetaryV2Payments.verifyAuthority();
+if (productionMonetaryV2Payments && !localMonetaryV2Payments.isCustodyOnly()) await localMonetaryV2Payments.verifyAuthority();
 const sessionCookieName = isProduction ? "__Host-seabyss.sid" : "seabyss.sid";
 
 if (isProduction && (
@@ -944,6 +944,8 @@ const routedXsollaEventProcessor = localMonetaryV2Payments
     ? localMonetaryV2Payments.attach({ legacyProcessor: gatedXsollaEventProcessor, legacyReceiptProcessor: persistLedgeredXsollaReceiptOnly, validateUser: validateXsollaUser, starterPaidCoordinator })
     : gatedXsollaEventProcessor;
 await routedXsollaEventProcessor.startRecovery?.();
+await localMonetaryV2Payments?.startCutoverControl({redis:sessionInfrastructure.redisClient,
+    route:routedXsollaEventProcessor,legacyWorkerRunning:()=>paymentWorkerService!==null&&paymentWorkerService!==undefined});
 const processXsollaEvent = async (event) => {
     paymentMetrics.record("webhook_received", {
         labels: { type: String(event?.notificationType || "unknown").toLowerCase() }
@@ -1710,10 +1712,10 @@ app.get("/health/ready", async (req, res) => {
     });
     if (productionMonetaryV2Payments) {
         try {
-            await localMonetaryV2Payments.verifyAuthority();
+            if (!localMonetaryV2Payments.isCustodyOnly()) await localMonetaryV2Payments.verifyAuthority();
             const custody = routedXsollaEventProcessor.recoveryHealth();
             checks.push({component:"monetary_v2_durable_authority",ok:custody.owned && custody.running,
-                reason:custody.quarantined > 0 ? "ready_with_independent_payment_quarantine" : "postgresql_provider_off",
+                reason:localMonetaryV2Payments.isCustodyOnly() ? "custody_only_no_monetary_dispatch" : custody.quarantined > 0 ? "ready_with_independent_payment_quarantine" : "postgresql_provider_off",
                 details:custody});
         } catch { checks.push({component:"monetary_v2_durable_authority",ok:false,reason:"private_authority_or_custody_unavailable"}); }
     }
@@ -1746,7 +1748,7 @@ app.get("/health", (req, res) => {
             globalEnabled: config.purchasesGlobalEnabled,
             custody: routedXsollaEventProcessor.recoveryHealth?.() ?? null,
             activationReady: Boolean(productionMonetaryV2Payments
-                ? routedXsollaEventProcessor.recoveryHealth().owned && routedXsollaEventProcessor.recoveryHealth().running
+                ? !localMonetaryV2Payments.isCustodyOnly() && routedXsollaEventProcessor.recoveryHealth().owned && routedXsollaEventProcessor.recoveryHealth().running
                 : config.playFabFinancialAuthorityCutoverEnabled &&
                 latestPlayFabFinancialReadinessEvidence?.ready === true &&
                 config.playFabFinancialProfileEnabled && config.paymentWorkerEnabled &&
@@ -1893,6 +1895,7 @@ async function shutdown(signal) {
     if (shutdownPromise) return shutdownPromise;
     shutdownPromise = (async () => {
         clearInterval(paymentScannerInterval);
+        await localMonetaryV2Payments?.stopCutoverControl();
         await routedXsollaEventProcessor.stopRecovery?.();
         await financialShadowPocInboxService?.stop();
         const workerStop = paymentWorkerService

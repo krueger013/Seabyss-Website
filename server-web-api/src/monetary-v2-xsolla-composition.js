@@ -56,15 +56,16 @@ export function createMonetaryV2EventRouter({enabled=false,resolveAuthority,fenc
 }
 // Compose inside the EXISTING signature-verified processEvent seam. No new listener.
 export function createMonetaryV2XsollaComposition({ client, fence, legacyProcessor,
-    legacyReceiptProcessor = null, holdInbox = null, hardenedOptions = {}, gateOptions = {}, legacyPremiumOptions = {} } = {}) {
+    legacyReceiptProcessor = null, holdInbox = null, hardenedOptions = {}, gateOptions = {}, legacyPremiumOptions = {}, deliveryAllowed = () => true } = {}) {
     if (!client || typeof client.authority !== "function" || typeof client.submit !== "function")
         throw new TypeError("Private payment service required.");
     validateMonetaryV2ExecutionContext(client.environment,client.titleId,client.productionAuthority ?? null);
     const otherEvents = createMonetaryV2EventRouter({ enabled: client.enabled,
-        resolveAuthority: recipient => client.authority(recipient), fence,
+        resolveAuthority: recipient => { if (!deliveryAllowed()) throw new Error("PAYMENT_CUTOVER_HOLDING"); return client.authority(recipient); }, fence,
         legacyProcessor: client.environment === "production"
             ? async () => { throw new Error("PRODUCTION_V1_PAYMENT_REQUIRES_MIGRATION"); } : legacyProcessor,
         async v2Processor(event) {
+            if (!deliveryAllowed()) throw new Error("PAYMENT_CUTOVER_HOLDING");
             if (["refund", "partial_refund", "order_canceled", "dispute"].includes(event.notificationType)) {
                 if (typeof client.review !== "function") throw new Error("MONETARY_V2_REVERSAL_REQUIRES_DURABLE_MANUAL_REVIEW");
                 await client.review(createMonetaryV2Review(parseXsollaReversalEvent(event), event.notificationType, client));
@@ -73,7 +74,7 @@ export function createMonetaryV2XsollaComposition({ client, fence, legacyProcess
             return "validated_no_grant";
         }
     });
-    const inFlight = new Map(); let timer = null, cycle = null, cursor = "", lastError = null, closing = false;
+    const inFlight = new Map(), otherInFlight = new Set(); let timer = null, cycle = null, cursor = "", lastError = null, closing = false;
     function outcome(entry) {
         if (entry.quarantine) return "monetary_v2_quarantined";
         if (!entry.handoff) return "monetary_v2_durably_queued";
@@ -85,7 +86,7 @@ export function createMonetaryV2XsollaComposition({ client, fence, legacyProcess
         // A scan snapshot can become stale while a prior receipt awaits transport.
         // Refresh under exclusive ownership before any state-dependent route or send.
         entry = holdInbox.get(entry.operationId);
-        if (entry.handoff || entry.quarantine) return Promise.resolve(outcome(entry));
+        if (entry.handoff || entry.quarantine || !deliveryAllowed()) return Promise.resolve(outcome(entry));
         if (inFlight.has(entry.operationId)) return inFlight.get(entry.operationId);
         const execution = (async () => {
             try {
@@ -95,10 +96,12 @@ export function createMonetaryV2XsollaComposition({ client, fence, legacyProcess
                 if (proof?.environment !== client.environment || proof.titleId !== client.titleId ||
                     proof.recipient !== entry.request.recipient || !["V1", "V2", "Migrating", "Blocked"].includes(proof.mode))
                     throw new Error("PAYMENT_AUTHORITY_UNKNOWN");
+                if (!deliveryAllowed()) return "monetary_v2_durably_queued";
                 let status, reviewReason = null;
                 if (proof.mode === "V1") {
                     if (client.environment === "production") throw new Error("PRODUCTION_V1_PAYMENT_REQUIRES_MIGRATION");
                     if (await fence.has(entry.request.recipient)) throw new Error("V2_ACCOUNT_NO_DOWNGRADE");
+                    if (!deliveryAllowed()) return "monetary_v2_durably_queued";
                     if (typeof legacyReceiptProcessor !== "function") throw new Error("LEGACY_DURABLE_RECEIPT_PROCESSOR_REQUIRED");
                     // A crash after this marker cannot authorize an unproven second V2 grant.
                     holdInbox.markLegacyAttempt(entry.operationId, entry.request.canonicalPayloadSha256);
@@ -117,6 +120,7 @@ export function createMonetaryV2XsollaComposition({ client, fence, legacyProcess
                         lastError = "PAYMENT_LEGACY_HANDOFF_REQUIRES_RECONCILIATION";
                         return outcome(quarantined);
                     }
+                    if (!deliveryAllowed()) return "monetary_v2_durably_queued";
                     // The actual client validates identity/hash and durable service status before returning.
                     const result = await client.submit(entry.request);
                     status = result?.status; reviewReason = result?.reviewReason ?? null;
@@ -138,7 +142,11 @@ export function createMonetaryV2XsollaComposition({ client, fence, legacyProcess
         return execution.finally(() => inFlight.delete(entry.operationId));
     }
     const processEvent = async event => {
-        if (!["payment", "order_paid"].includes(event?.notificationType)) return otherEvents(event);
+        if (!["payment", "order_paid"].includes(event?.notificationType)) {
+            if (closing || !deliveryAllowed()) throw new Error("PAYMENT_CUTOVER_HOLDING");
+            const execution=otherEvents(event);otherInFlight.add(execution);
+            try {return await execution;} finally {otherInFlight.delete(execution);}
+        }
         if (closing) throw new Error("PAYMENT_HOLD_CLOSED");
         if (!holdInbox || typeof holdInbox.admit !== "function") throw new Error("DURABLE_PAYMENT_HOLD_INBOX_REQUIRED");
         // A configured disabled adapter does not reopen legacy routing. Valid paid receipts can
@@ -164,6 +172,7 @@ export function createMonetaryV2XsollaComposition({ client, fence, legacyProcess
             allowDiamondProductionGrants: client.environment === "production",
             allowStarterProductionGrants: client.environment === "production",
             capturePremiumProductionReceipts: client.environment === "production",
+            captureStarterProductionReceipts: client.environment === "production",
             persistDiamondPackReceiptV2: null, persistStarterPackReceiptV2: null, fallbackProcessor: null,
             async persistCatalogReceipt(receipt) { admitted = holdInbox.admit(receipt); }
         });
@@ -199,8 +208,17 @@ export function createMonetaryV2XsollaComposition({ client, fence, legacyProcess
         // timeout; legacy receipt persistence retains its existing timeout contract.
         // Never unlock while a late legacy write may still be running.
         if (cycle) await cycle;
-        await Promise.allSettled([...inFlight.values()]);
+        await Promise.allSettled([...inFlight.values(),...otherInFlight]);
         await holdInbox?.close();
+    };
+    processEvent.monetaryInFlight = () => inFlight.size + otherInFlight.size;
+    processEvent.drainMonetaryDispatch = async () => {
+        // HOLDING must be persisted before this call. Do not unlock on a timeout:
+        // outstanding writes may still complete and must remain observable.
+        let timeout;
+        try {await Promise.race([Promise.allSettled([...inFlight.values(),...otherInFlight]),
+            new Promise((_,reject)=>{timeout=setTimeout(()=>reject(new Error("CUTOVER_DRAIN_TIMEOUT")),30000);timeout.unref?.();})]);}
+        finally {clearTimeout(timeout);}
     };
     processEvent.quarantinePage = (limit, after) => holdInbox?.quarantinePage(limit, after);
     processEvent.recoveryHealth = () => {

@@ -9,6 +9,7 @@ import path from "node:path";
 import {fork} from "node:child_process";
 import {fileURLToPath} from "node:url";
 import net from "node:net";
+import {privateLoopbackPort} from "./fixtures/private-loopback-port.mjs";
 import {setTimeout as delay} from "node:timers/promises";
 import {startEmptyRespFixture} from "./fixtures/empty-resp-startup-server.mjs";
 import {createHash} from "node:crypto";
@@ -216,4 +217,37 @@ for(const point of ["before_persist","after_persist"])test(`old subscription Pre
     await inbox.acquireOwnership();assert.throws(()=>inbox.admitLegacySubscription(receipt,p,baseConfig.xsollaPremiumPlanId,baseConfig.xsollaPremiumPlanExternalId,"2026-09-25T04:00:00.000Z"),/NAMED_FAILURE/);await inbox.close();
     const {route}=f.compose();assert.equal(route.recoveryHealth().receipts,point==="after_persist"?1:0);
     assert.equal(await callback(route,p),204);assert.equal(await callback(route,p),204);assert.equal(route.quarantinePage().total,1);assert.equal(route.recoveryHealth().receipts,1);assert.equal(f.state.requests.length,0);
+});
+
+async function setupCutover(f){
+    const {provisionPaymentCutover}=await import("../src/monetary-v2-payment-cutover-cli.js");
+    const settings={schema:1,configurationSha256:authorityHash,planSha256:"b".repeat(64),custodyFile:f.holdFile,fenceFile:f.fenceFile,inventoryDirectory:path.join(f.dir,"inventory"),stateFile:path.join(f.dir,"cutover.jsonl")};
+    provisionPaymentCutover(settings);
+    const port=await privateLoopbackPort();
+    const controlTokenFile=path.join(f.dir,"cutover-token");fs.writeFileSync(controlTokenFile,"Q".repeat(64),{mode:0o600});
+    const env={SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_STATE_FILE:settings.stateFile,SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_PLAN_SHA256:settings.planSha256,
+        SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_INVENTORY_DIRECTORY:settings.inventoryDirectory,SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_CONTROL_ORIGIN:`http://127.0.0.1:${port}/`,SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_CONTROL_TOKEN_FILE:controlTokenFile};
+    return {settings,env,headers:{"X-Seabyss-Cutover-Token":"Q".repeat(64),"Content-Type":"application/json"}};
+}
+test("real server custody-only cutover boots and restarts READY with PG unavailable and zero private authority calls",async t=>{
+    const f=await fixture(t),c=await setupCutover(f),redis=await startEmptyRespFixture();t.after(()=>redis.close());
+    f.state.mutateHealth=()=>{throw Error("PG_OFFLINE_FIXTURE");};
+    for(let iteration=0;iteration<2;iteration++){
+        const backend=await startBackend(f,redis,c.env);try{
+            const r=await fetch(backend.origin+"/health/ready"),body=await r.json();assert.equal(r.status,200,JSON.stringify(body));assert.equal(body.checks.find(x=>x.component==="monetary_v2_durable_authority").reason,"custody_only_no_monetary_dispatch");
+            const origin=c.env.SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_CONTROL_ORIGIN;
+            let status=await(await fetch(origin+"v1/payment-cutover/status",{headers:c.headers})).json();assert.equal(status.phase,iteration===0?"HOLDING":"READY_FOR_MIGRATION");assert.equal(status.inFlight,0);assert.equal(status.legacyWorkerRunning,false);assert.equal(status.custodyOwned,true);
+            if(iteration===0){
+                const bound=await fetch(origin+"v1/payment-cutover/bind",{method:"POST",headers:c.headers,body:JSON.stringify({expectedGeneration:0,maintenancePlanSha256:"b".repeat(64),planSha256:"d".repeat(64),rootFenceReceiptSha256:"c".repeat(64)})});assert.equal(bound.status,200);
+                const response=await fetch(origin+"v1/payment-cutover/prepare",{method:"POST",headers:c.headers,body:JSON.stringify({expectedGeneration:1,planSha256:"d".repeat(64),rootFenceReceiptSha256:"c".repeat(64)})});assert.equal(response.status,200);status=await response.json();assert.equal(status.readyForMigration,true);assert.equal(status.generation,2);}
+            assert.equal(f.state.requests.length,0);assert.equal((await(await fetch(backend.origin+"/health")).json()).payments.activationReady,false);
+        }finally{await backend.stop();}
+    }
+    assert.ok(redis.commands.includes("SCAN"));assert.ok(redis.commands.every(c=>["CLIENT","PING","ZRANGE","GET","QUIT","SCAN"].includes(c)));assert.equal(f.state.requests.length,0);
+});
+test("cutover bootstrap requires every exact binding, separate token/origin and no legacy background writers",async t=>{
+    const f=await fixture(t),c=await setupCutover(f),env={...f.env,...c.env};
+    for(const key of Object.keys(c.env)){const missing={...env};delete missing[key];assert.throws(()=>configureLocalMonetaryV2Payments({env:missing,config:baseConfig}));}
+    for(const overrides of [{SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_PLAN_SHA256:"d".repeat(64)},{SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_CONTROL_TOKEN_FILE:f.env.SEABYSS_MONETARY_V2_PAYMENT_TOKEN_FILE},{SEABYSS_MONETARY_V2_PAYMENT_CUTOVER_CONTROL_ORIGIN:f.origin}])assert.throws(()=>configureLocalMonetaryV2Payments({env:{...env,...overrides},config:baseConfig}));
+    for(const config of [{...baseConfig,financialShadowModeEnabled:true},{...baseConfig,playFabFinancialRefreshEnabled:true}])assert.throws(()=>configureLocalMonetaryV2Payments({env,config}));assert.equal(f.state.requests.length,0);
 });
