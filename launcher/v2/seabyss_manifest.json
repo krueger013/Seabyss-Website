@@ -6,7 +6,7 @@
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
   "fileSizeText": "703,77 MB",
   "releaseDate": "2026-09-25",
-  "notes": "Beta59 : économie PostgreSQL autoritaire, conservation durable des opérations, reprise des achats et migration Beta contrôlée. Interface et effets approuvés conservés. Synchronisation PlayFab Economy V2 temporairement désactivée ; nouveaux paiements fermés pendant la transition.",
+  "notes": "Beta 59 is now available. This update improves the reliability of in-game rewards and purchases. New real-money purchases are temporarily unavailable.",
   "minimumLauncherVersion": "0.1.7",
   "sha256": "04dbdf78ce324ae9d85e1bcc5422259f361223e4bf916dae84e1cf76253623b5",
   "size": 737956055
