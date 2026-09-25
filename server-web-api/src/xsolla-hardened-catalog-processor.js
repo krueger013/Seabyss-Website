@@ -4,6 +4,7 @@ import {
     resolveXsollaDiamondPack
 } from "./xsolla-diamond-packs.js";
 import { resolveXsollaStarterPack } from "./xsolla-starter-packs.js";
+import { resolveXsollaPremiumProduct } from "./xsolla-premium-products.js";
 import { getXsollaProductPlan } from "./xsolla-product-plan-registry.js";
 import { getStarterRewardPlan } from "./xsolla-starter-reward-plan-registry.js";
 import {
@@ -98,6 +99,7 @@ export function createXsollaHardenedCatalogEventProcessor({
     allowStarterSandboxGrants = false,
     starterSandboxTestPlayFabIds = [],
     allowStarterProductionGrants = false,
+    capturePremiumProductionReceipts = false,
     validateUser,
     persistDiamondPackReceiptV2,
     persistStarterPackReceiptV2,
@@ -140,7 +142,9 @@ export function createXsollaHardenedCatalogEventProcessor({
 
         const starterPack = resolveXsollaStarterPack(payload, notificationType);
         const diamondPack = resolveXsollaDiamondPack(payload, notificationType);
-        const products = [starterPack, diamondPack].filter(Boolean);
+        const premium = capturePremiumProductionReceipts === true
+            ? resolveXsollaPremiumProduct(payload, notificationType) : null;
+        const products = [starterPack, diamondPack, premium].filter(Boolean);
         if (products.length !== 1) {
             return typeof fallbackProcessor === "function"
                 ? fallbackProcessor(event)
@@ -156,7 +160,12 @@ export function createXsollaHardenedCatalogEventProcessor({
             throw new Error("Xsolla payment user identity is invalid.");
         }
         const sandbox = mode === "sandbox";
-        if (product.productType === "starter_pack") {
+        if (product.productType === "premium") {
+            // Custody only: legacy paid callbacks retain their immutable catalog contract
+            // even while new Premium sales are disabled. Never use a legacy grant fallback.
+            if (sandbox || capturePremiumProductionReceipts !== true ||
+                typeof persistCatalogReceipt !== "function") return "ignored_unrecognized_product";
+        } else if (product.productType === "starter_pack") {
             if ((sandbox && (!starterSandboxEnabled || !starterSandboxUsers.has(playFabId))) ||
                 (!sandbox && !starterProductionEnabled)) {
                 return sandbox ? "ignored_dry_run" : "ignored_unrecognized_product";
@@ -305,6 +314,7 @@ export function createXsollaHardenedCatalogEventProcessor({
         } else {
             await persistDiamondPackReceiptV2(receipt);
         }
+        if (product.productType === "premium") return "premium_receipt_captured";
         return sandbox ? "diamond_pack_sandbox_granted" : "diamond_pack_granted";
     };
 }

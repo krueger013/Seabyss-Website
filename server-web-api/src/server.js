@@ -183,6 +183,9 @@ if (!allowedNodeEnvironments.has(config.nodeEnv)) {
 
 const isProduction = config.nodeEnv === "production";
 const localMonetaryV2Payments = configureLocalMonetaryV2Payments({ env: process.env, config });
+const productionMonetaryV2Payments = localMonetaryV2Payments?.productionAuthorityConfigured === true;
+// This replaces legacy-worker readiness only after the exact private DB/fence contract is verified.
+if (productionMonetaryV2Payments) await localMonetaryV2Payments.verifyAuthority();
 const sessionCookieName = isProduction ? "__Host-seabyss.sid" : "seabyss.sid";
 
 if (isProduction && (
@@ -330,14 +333,14 @@ if (isProduction && anyPurchaseFamilyEnabled && !config.purchasesGlobalEnabled) 
 if (isProduction && config.purchasesGlobalEnabled && !anyPurchaseFamilyEnabled) {
     throw new Error("Production purchases require at least one explicit family gate.");
 }
-if (isProduction && config.purchasesGlobalEnabled &&
+if (isProduction && config.purchasesGlobalEnabled && !productionMonetaryV2Payments &&
     !config.playFabFinancialProfileEnabled) {
     throw new Error("Production purchases require PLAYFAB_FINANCIAL_PROFILE_ENABLED=true.");
 }
-if (isProduction && config.purchasesGlobalEnabled && !config.paymentWorkerEnabled) {
+if (isProduction && config.purchasesGlobalEnabled && !productionMonetaryV2Payments && !config.paymentWorkerEnabled) {
     throw new Error("Production purchases require PAYMENT_WORKER_ENABLED=true.");
 }
-if (isProduction && config.purchasesGlobalEnabled &&
+if (isProduction && config.purchasesGlobalEnabled && !productionMonetaryV2Payments &&
     !config.playFabFinancialAuthorityCutoverEnabled) {
     throw new Error("Production purchases require PLAYFAB_FINANCIAL_AUTHORITY_CUTOVER_ENABLED=true.");
 }
@@ -837,7 +840,7 @@ const paymentWorkerService = offlineProfileGrantWorker
         logger: paymentLogger
     })
     : null;
-if (isProduction && config.purchasesGlobalEnabled) {
+if (isProduction && config.purchasesGlobalEnabled && !productionMonetaryV2Payments) {
     await paymentLedger.ping();
     await playFabFinancialAuthorityGrantAdapter.probe();
     if (!paymentWorkerService) {
@@ -1659,8 +1662,8 @@ app.get("/health/ready", async (req, res) => {
     } else {
         checks.push({
             component: "playfab_financial_readiness_evidence",
-            ok: false,
-            reason: "cutover_disabled"
+            ok: productionMonetaryV2Payments,
+            reason: productionMonetaryV2Payments ? "disabled_postgresql_authoritative" : "cutover_disabled"
         });
     }
     if (playFabFinancialAuthorityGrantAdapter) {
@@ -1677,15 +1680,15 @@ app.get("/health/ready", async (req, res) => {
     } else {
         checks.push({
             component: "playfab_financial_adapter",
-            ok: false,
-            reason: "configuration_missing"
+            ok: productionMonetaryV2Payments,
+            reason: productionMonetaryV2Payments ? "disabled_postgresql_authoritative" : "configuration_missing"
         });
     }
     const workerHealth = paymentWorkerService?.health() || null;
     checks.push({
         component: "offline_grant_worker",
-        ok: workerHealth?.healthy === true,
-        reason: workerHealth?.healthy === true
+        ok: productionMonetaryV2Payments || workerHealth?.healthy === true,
+        reason: productionMonetaryV2Payments ? "disabled_postgresql_authoritative" : workerHealth?.healthy === true
             ? "running"
             : (config.purchasesGlobalEnabled
                 ? "production_profile_cas_adapter_not_configured"
@@ -1700,11 +1703,20 @@ app.get("/health/ready", async (req, res) => {
     });
     checks.push({
         component: "playfab_financial_authority_cutover",
-        ok: config.playFabFinancialAuthorityCutoverEnabled,
-        reason: config.playFabFinancialAuthorityCutoverEnabled
+        ok: productionMonetaryV2Payments || config.playFabFinancialAuthorityCutoverEnabled,
+        reason: productionMonetaryV2Payments ? "disabled_postgresql_authoritative" : config.playFabFinancialAuthorityCutoverEnabled
             ? "enabled"
             : "kill_switch_disabled"
     });
+    if (productionMonetaryV2Payments) {
+        try {
+            await localMonetaryV2Payments.verifyAuthority();
+            const custody = routedXsollaEventProcessor.recoveryHealth();
+            checks.push({component:"monetary_v2_durable_authority",ok:custody.owned && custody.running,
+                reason:custody.quarantined > 0 ? "ready_with_independent_payment_quarantine" : "postgresql_provider_off",
+                details:custody});
+        } catch { checks.push({component:"monetary_v2_durable_authority",ok:false,reason:"private_authority_or_custody_unavailable"}); }
+    }
     const scannerHealthy = latestPaymentScannerError === null &&
         latestPaymentScannerReport !== null &&
         latestPaymentScannerReport.truncated !== true;
@@ -1732,8 +1744,10 @@ app.get("/health", (req, res) => {
         version: "0.1.0",
         payments: {
             globalEnabled: config.purchasesGlobalEnabled,
-            activationReady: Boolean(
-                config.playFabFinancialAuthorityCutoverEnabled &&
+            custody: routedXsollaEventProcessor.recoveryHealth?.() ?? null,
+            activationReady: Boolean(productionMonetaryV2Payments
+                ? routedXsollaEventProcessor.recoveryHealth().owned && routedXsollaEventProcessor.recoveryHealth().running
+                : config.playFabFinancialAuthorityCutoverEnabled &&
                 latestPlayFabFinancialReadinessEvidence?.ready === true &&
                 config.playFabFinancialProfileEnabled && config.paymentWorkerEnabled &&
                 sessionInfrastructure.redisClient &&

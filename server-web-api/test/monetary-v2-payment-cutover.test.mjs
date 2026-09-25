@@ -159,3 +159,39 @@ for (const terminal of [false,true]) test(`stale recovery batch cannot bypass co
         await route.stopRecovery();
     } finally {await f.close();}
 });
+
+test("durable quarantine is auditable after restart and does not block another accepted purchase",async()=>{
+    const f=fixture();try {
+        const {route,state}=compose(f,{mode:"V1",legacyReceiptProcessor:async()=>{throw Error("RESPONSE_LOST");}});
+        assert.equal(await callback(route,payload("71")),204);state.mode="V2";await route.recoverPending();
+        const before=route.quarantinePage();assert.equal(before.total,1);assert.equal(before.entries[0].transactionId,"71");
+        assert.equal(before.entries[0].reason,"LEGACY_RECEIPT_OUTCOME_UNKNOWN");assert.equal(before.entries[0].recipient,recipient);
+        assert.equal(f.inbox.health().pending,1);assert.equal(f.inbox.health().retryable,0);assert.equal(f.inbox.health().quarantined,1);
+        assert.equal(await callback(route,payload("72")),204);assert.equal(state.grants.size,1);assert.equal(state.submits,1);
+        assert.equal(await callback(route,payload("71")),204);assert.equal(state.submits,1);
+        await route.stopRecovery();const reopened=createLocalPaymentHoldInbox(f.settings);f.inbox=reopened;
+        assert.deepEqual(reopened.quarantinePage(),before);const again=compose(f);await again.route.recoverPending();
+        assert.equal(again.state.submits,0);assert.equal(await callback(again.route,payload("71")),204);assert.equal(again.state.queries,0);
+        const original=reopened.get(before.entries[0].operationId);assert.equal(original.receipt.transactionId,"71");assert.equal(original.legacyAttempt,true);
+        assert.throws(()=>reopened.handoff(original.operationId,original.request.canonicalPayloadSha256,"V2","Completed"),/HANDOFF_CONFLICT/);
+        await again.route.stopRecovery();
+    }finally{await f.close();}
+});
+for(const phase of ["before_persist","after_persist"])test(`quarantine ${phase} failure retains original and never submits uncertain legacy payment`,async()=>{
+    let fail=true;const f=fixture({boundary(name,kind){if(fail&&kind==="quarantine"&&name===phase){fail=false;throw Error("QUARANTINE_CRASH");}}});
+    try{const {route,state}=compose(f,{mode:"V1",legacyReceiptProcessor:async()=>{throw Error("LEGACY_RESPONSE_LOST");}});
+        assert.equal(await callback(route),204);state.mode="V2";await route.recoverPending();assert.equal(state.submits,0);
+        await route.stopRecovery();const restarted=createLocalPaymentHoldInbox(f.settings);f.inbox=restarted;
+        const after=compose(f);await after.route.recoverPending();assert.equal(after.state.submits,0);assert.equal(restarted.quarantinePage().total,1);
+        assert.equal(restarted.health().receipts,1);assert.equal(restarted.health().retryable,0);await after.route.stopRecovery();
+    }finally{await f.close();}
+});
+test("quarantine diagnostic pagination is exact, bounded and has no mutation operation",async()=>{
+    const f=fixture();try{await f.inbox.acquireOwnership();for(const id of ["81","82","83"]){const e=f.inbox.admit(receipt(id));f.inbox.markLegacyAttempt(e.operationId,e.request.canonicalPayloadSha256);f.inbox.quarantineLegacyAttempt(e.operationId,proof("V2"),"2026-09-25T04:00:00.000Z");}
+        const a=f.inbox.quarantinePage(2);assert.equal(a.total,3);assert.equal(a.entries.length,2);assert.ok(a.next);
+        const b=f.inbox.quarantinePage(2,a.next);assert.equal(b.entries.length,1);assert.equal(b.next,null);
+        assert.deepEqual([...a.entries,...b.entries].map(e=>e.transactionId),["81","82","83"]);
+        assert.throws(()=>f.inbox.quarantinePage(101),/AUDIT_PAGE/);assert.throws(()=>f.inbox.quarantinePage(1,"missing"),/AUDIT_CURSOR/);
+        assert.equal(f.inbox.pending().length,0);assert.equal(f.inbox.health().pending,3);assert.equal(f.inbox.health().receipts,3);
+    }finally{await f.close();}
+});

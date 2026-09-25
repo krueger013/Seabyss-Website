@@ -4,9 +4,22 @@ import { getXsollaProductPlan } from "./xsolla-product-plan-registry.js";
 
 const hash = text => createHash("sha256").update(text, "utf8").digest("hex");
 const identifier = value => typeof value === "string" && /^[A-Za-z0-9_-]{1,160}$/u.test(value);
+export const isMonetaryV2PaymentRealm = (environment, titleId) =>
+    (environment === "local" && titleId === "LOCAL") ||
+    (environment === "sandbox" && titleId === "1D0C16") ||
+    (environment === "production" && titleId === "142853");
+export function validateMonetaryV2ExecutionContext(environment, titleId, productionAuthority = null) {
+    if (!isMonetaryV2PaymentRealm(environment, titleId)) throw new TypeError("Invalid monetary payment realm.");
+    if (environment === "production") {
+        if (!productionAuthority || Object.keys(productionAuthority).length !== 2 ||
+            productionAuthority.providerMode !== "disabled" ||
+            !/^[a-f0-9]{64}$/.test(productionAuthority.configurationSha256))
+            throw new TypeError("Production payments require explicit provider-OFF durable authority configuration.");
+    } else if (productionAuthority !== null) throw new TypeError("Production authority cannot be attached to another realm.");
+}
 export function monetaryV2PaymentCanonical(p) {
     if (p?.schemaVersion !== 1 || p.provider !== "xsolla" ||
-        !((p.environment === "local" && p.titleId === "LOCAL") || (p.environment === "sandbox" && p.titleId === "1D0C16")) ||
+        !isMonetaryV2PaymentRealm(p.environment, p.titleId) ||
         typeof p.transactionId !== "string" || !/^[1-9][0-9]{0,18}$/u.test(p.transactionId) || BigInt(p.transactionId) > 9223372036854775807n ||
         !identifier(p.recipient) || !identifier(p.productId) || !identifier(p.sku) ||
         !Number.isSafeInteger(p.productPlanVersion) || p.productPlanVersion < 1 || p.productPlanVersion > 100000 ||
@@ -17,11 +30,13 @@ export function monetaryV2PaymentCanonical(p) {
         p.productPlanVersion,p.productPlanHash,1,p.amountMinor,p.currency]);
 }
 export const monetaryV2PaymentOperationId = p => "xsolla_" + hash(`${p.environment}\n${p.titleId}\n${p.transactionId}`);
-export function createVerifiedMonetaryV2Payment(receipt, { environment, titleId, receiptAlias } = {}) {
+export function createVerifiedMonetaryV2Payment(receipt, { environment, titleId, receiptAlias, productionAuthority = null } = {}) {
+    validateMonetaryV2ExecutionContext(environment, titleId, productionAuthority);
+    const receiptEnvironment = environment === "production" ? "production" : "sandbox";
     const plan = getXsollaProductPlan(receipt?.xsollaSku, receipt?.productPlanVersion);
     if (receipt?.provider !== "xsolla" || receipt.providerTransactionId !== receipt.transactionId ||
-        receipt.userId !== receipt.playFabId || receipt.environment !== "sandbox" ||
-        receipt.source !== "xsolla_sandbox" || receipt.productId !== plan.productId ||
+        receipt.userId !== receipt.playFabId || receipt.environment !== receiptEnvironment ||
+        receipt.source !== `xsolla_${receiptEnvironment}` || receipt.productId !== plan.productId ||
         receipt.productType !== plan.productType || receipt.currency !== plan.currency ||
         receipt.unitAmountMinor !== plan.unitAmountMinor || receipt.totalAmountMinor !== plan.unitAmountMinor ||
         receipt.quantity !== 1 || receipt.promotionPolicy !== "disabled") throw new TypeError("Verified catalog receipt required.");
@@ -49,8 +64,9 @@ export function localPaymentHttpTransport({url, headers, body, signal}) {
         request.on("error",reject); request.end(body ?? undefined);
     });
 }
-export function createMonetaryV2PaymentClient({enabled=false,environment="local",titleId="LOCAL",origin="http://127.0.0.1:55160/",token="",transport=localPaymentHttpTransport,timeoutMs=10000}={}) {
-    if (!((environment === "local" && titleId === "LOCAL") || (environment === "sandbox" && titleId === "1D0C16"))) throw new TypeError("Payment context is not local/sandbox.");
+export function createMonetaryV2PaymentClient({enabled=false,environment="local",titleId="LOCAL",origin="http://127.0.0.1:55160/",token="",transport=localPaymentHttpTransport,timeoutMs=10000,productionAuthority=null}={}) {
+    validateMonetaryV2ExecutionContext(environment,titleId,productionAuthority);
+    productionAuthority = productionAuthority ? Object.freeze({...productionAuthority}) : null;
     const base=localOrigin(origin);
     if (!Number.isSafeInteger(timeoutMs)||timeoutMs<10||timeoutMs>30000 || typeof transport!=="function") throw new TypeError("Invalid bounded payment transport.");
     if (enabled && (typeof token!=="string" || !/^[\x21-\x7e]{64,256}$/u.test(token))) throw new TypeError("Private payment service token required.");
@@ -64,9 +80,18 @@ export function createMonetaryV2PaymentClient({enabled=false,environment="local"
             return {status:result.status,value:JSON.parse(result.body)};
         } catch { throw new Error("MONETARY_V2_RESPONSE_UNKNOWN"); } finally { clearTimeout(timer); }
     }
-    return Object.freeze({enabled,environment,titleId,
+    async function verifyProductionAuthority() {
+        if (environment !== "production") return;
+        const {status,value:p}=await call("/v1/health",null);
+        if(status!==200 || p?.environment!==environment || p.titleId!==titleId || p.protocolVersion!==1 ||
+            p.authority!=="postgresql" || p.providerMode!=="disabled" || p.providerDispatchAllowed!==false ||
+            p.allowV1Fallback!==false || p.unprovenPaymentPolicy!=="quarantine" || p.productionAuthorityHash!==productionAuthority.configurationSha256)
+            throw new Error("MONETARY_V2_PRODUCTION_AUTHORITY_MISMATCH");
+    }
+    return Object.freeze({enabled,environment,titleId,productionAuthority,verifyProductionAuthority,
         async authority(recipient) {
             if (!identifier(recipient)) throw new TypeError("Invalid payment recipient.");
+            await verifyProductionAuthority();
             const {status,value:p}=await call(`/v2/payments/authority/${recipient}`,null);
             if(status!==200||p?.environment!==environment||p.titleId!==titleId||p.recipient!==recipient||
                 !["V1","V2","Migrating","Blocked"].includes(p.mode)||!Number.isSafeInteger(p.epoch)||p.epoch<1||
@@ -75,6 +100,7 @@ export function createMonetaryV2PaymentClient({enabled=false,environment="local"
         },
         async review(p) {
             if(p.environment!==environment||p.titleId!==titleId||p.evidenceSha256!==monetaryV2ReviewProof(p))throw new TypeError("Reversal context/proof mismatch.");
+            await verifyProductionAuthority();
             const {status,value:r}=await call("/v2/payments/review",p);
             const operation="xsolla_"+hash(`${environment}\n${titleId}\n${p.transactionId}`);
             if(status!==200||r?.status!=="ManualReview"||r.operationId!==operation||r.reversalEventId!==p.reversalEventId||r.evidenceSha256!==p.evidenceSha256||r.policy!=="manual_review_no_automatic_clawback"||!["Matched","Unmatched"].includes(r.correlation))throw new Error("MONETARY_V2_RESPONSE_UNKNOWN");
@@ -82,6 +108,7 @@ export function createMonetaryV2PaymentClient({enabled=false,environment="local"
         },
         async submit(p) {
             if(p.environment!==environment||p.titleId!==titleId||p.canonicalPayloadSha256!==hash(monetaryV2PaymentCanonical(p))) throw new TypeError("Payment canonical/context mismatch.");
+            await verifyProductionAuthority();
             const {status,value:r}=await call("/v2/payments/verified",p);
             if(r?.operationId!==monetaryV2PaymentOperationId(p)||r.canonicalPayloadSha256!==p.canonicalPayloadSha256||
                 !["Pending","Completed","ManualReview"].includes(r.status)||
@@ -92,7 +119,7 @@ export function createMonetaryV2PaymentClient({enabled=false,environment="local"
     });
 }
 export function monetaryV2ReviewProof(p) {
-    if(p?.schemaVersion!==1||!((p.environment==="local"&&p.titleId==="LOCAL")||(p.environment==="sandbox"&&p.titleId==="1D0C16"))||
+    if(p?.schemaVersion!==1||!isMonetaryV2PaymentRealm(p.environment,p.titleId)||
         typeof p.transactionId!=="string"||!/^[1-9][0-9]{0,18}$/u.test(p.transactionId)||BigInt(p.transactionId)>9223372036854775807n||!identifier(p.recipient)||
         !["refund","partial_refund","order_canceled","dispute"].includes(p.kind)||typeof p.reversalEventId!=="string"||!new RegExp(`^xsolla:${p.kind}:[a-f0-9]{64}$`,"u").test(p.reversalEventId)||
         !Number.isSafeInteger(p.amountMinor)||p.amountMinor<1||p.amountMinor>2147483647||!/^[A-Z]{3}$/u.test(p.currency)||typeof p.normalizedJson!=="string"||Buffer.byteLength(p.normalizedJson)>8192)
@@ -101,7 +128,8 @@ export function monetaryV2ReviewProof(p) {
     if(body.providerTransactionId!==p.transactionId||body.expectedPlayFabId!==p.recipient||body.reversalEventId!==p.reversalEventId||body.amountMinor!==p.amountMinor||body.currency!==p.currency||body.type!==(p.kind==="dispute"?"chargeback":p.kind))throw new TypeError("Normalized reversal fields differ from proof.");
     return hash(JSON.stringify([1,p.environment,p.titleId,p.transactionId,p.recipient,p.kind,p.reversalEventId,p.amountMinor,p.currency,hash(p.normalizedJson)]));
 }
-export function createMonetaryV2Review(reversal,kind,{environment,titleId}) {
+export function createMonetaryV2Review(reversal,kind,{environment,titleId,productionAuthority=null}) {
+    validateMonetaryV2ExecutionContext(environment,titleId,productionAuthority);
     const p={schemaVersion:1,environment,titleId,transactionId:reversal.providerTransactionId,recipient:reversal.expectedPlayFabId,kind,
         reversalEventId:reversal.reversalEventId,amountMinor:reversal.amountMinor,currency:reversal.currency,normalizedJson:JSON.stringify(reversal)};
     return Object.freeze({...p,evidenceSha256:monetaryV2ReviewProof(p)});
