@@ -6,6 +6,7 @@ import path from "node:path";
 import {createHash} from "node:crypto";
 import {createMonetaryV2PaymentClient,createVerifiedMonetaryV2Payment,monetaryV2PaymentCanonical,monetaryV2PaymentOperationId,createMonetaryV2Review} from "../src/monetary-v2-payment-client.js";
 import {createLocalFilePaymentAuthorityFence,createMonetaryV2EventRouter,createMonetaryV2XsollaComposition} from "../src/monetary-v2-xsolla-composition.js";
+import {createLocalPaymentHoldInbox} from "../src/monetary-v2-payment-hold-inbox.js";
 import {configureLocalMonetaryV2Payments} from "../src/monetary-v2-payment-bootstrap.js";
 const digest=s=>createHash("sha256").update(s).digest("hex");
 const recipient="ABC123";
@@ -35,9 +36,9 @@ test("bootstrap rejects production and parallel legacy worker",()=>{for(const co
 import {createMemoryXsollaEventStore,createXsollaWebhookHandler} from "../src/xsolla-webhook.js";
 function paidEvent(){return{notification_type:"payment",settings:{project_id:310966},user:{id:recipient},transaction:{id:"9223372036854775807",dry_run:1,payment_date:"2026-09-24T00:00:00.000Z"},purchase:{total:{amount:"1.99",currency:"USD"},order:{lineitems:[{sku:"seabyss_diamond_pack_1",quantity:1,price:{amount:"1.99",currency:"USD"}}]}}};}
 for(const phase of ["Completed","Pending"])test(`signature/catalog ingress to ${phase} preserves existing handler contract`,async()=>{
-    const f=fixture();try{let calls=0,legacy=0;
+    const f=fixture();const holdInbox=createLocalPaymentHoldInbox({filePath:path.join(f.directory,"hold.jsonl"),environment:"sandbox",titleId:"1D0C16",initialize:true});try{let calls=0,legacy=0;
     const client=createMonetaryV2PaymentClient({...options,transport:async q=>{if(q.body===null)return{status:200,body:JSON.stringify(proof())};calls++;return response(JSON.parse(q.body),phase);}});
-    const router=createMonetaryV2XsollaComposition({client,fence:f.fence,legacyProcessor:async()=>{legacy++;return "legacy";},
+    const router=createMonetaryV2XsollaComposition({client,fence:f.fence,holdInbox,legacyProcessor:async()=>{legacy++;return "legacy";},
         hardenedOptions:{allowDiamondSandboxGrants:true,diamondSandboxTestPlayFabIds:[recipient],validateUser:async()=>true},
         gateOptions:{globalEnabled:true,familyGates:{diamond_pack:true},allowedSkus:["seabyss_diamond_pack_1"]}});
     const handler=createXsollaWebhookHandler({webhookSecret:"offline-test-secret",projectId:"310966",eventStore:createMemoryXsollaEventStore(),processEvent:router});
@@ -45,7 +46,7 @@ for(const phase of ["Completed","Pending"])test(`signature/catalog ingress to ${
     const res={code:0,status(c){this.code=c;return this;},json(){return this;},end(){return this;}};
     await handler({body,get:n=>n.toLowerCase()==="authorization"?`Signature ${signature}`:undefined},res);
     assert.equal(res.code,204);assert.equal(calls,1);assert.equal(legacy,0);
-    }finally{f.close();}
+    }finally{await holdInbox.close();f.close();}
 });
 test("invalid signature never reaches authority or fulfillment",async()=>{
     let calls=0;const handler=createXsollaWebhookHandler({webhookSecret:"offline-test-secret",projectId:"310966",eventStore:createMemoryXsollaEventStore(),processEvent:async()=>{calls++;return "invalid";}});

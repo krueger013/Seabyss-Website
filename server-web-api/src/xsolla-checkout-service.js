@@ -92,6 +92,8 @@ export class XsollaCheckoutError extends Error {
 
 export function createXsollaCheckoutService({
     enabled = false,
+    checkoutClosed = false,
+    canCreateCheckout = () => true,
     allowSandbox = false,
     mode = "sandbox",
     allowProduction = false,
@@ -109,7 +111,7 @@ export function createXsollaCheckoutService({
     const productionEnabled = allowProduction === true;
     const checkoutMode = mode === "sandbox" || mode === "production" ? mode : null;
     const skuAllowlist = configuredSkuSet(allowedSkus);
-    if (!checkoutMode || typeof createReservationId !== "function" ||
+    if (typeof checkoutClosed !== "boolean" || typeof canCreateCheckout !== "function" || !checkoutMode || typeof createReservationId !== "function" ||
         typeof resolveProductPlan !== "function") {
         throw new TypeError("Checkout service dependencies are invalid.");
     }
@@ -122,6 +124,9 @@ export function createXsollaCheckoutService({
     });
 
     return async function prepareXsollaCheckout({ session, request } = {}) {
+        if (checkoutClosed || !canCreateCheckout()) {
+            throw new XsollaCheckoutError("CHECKOUT_CLOSED", "New purchases are temporarily unavailable.", 503);
+        }
         if (!globalEnabled) {
             throw new XsollaCheckoutError(
                 "CHECKOUT_DISABLED",

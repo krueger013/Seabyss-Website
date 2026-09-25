@@ -118,6 +118,7 @@ const config = {
     purchasesPremiumEnabled: process.env.PURCHASES_PREMIUM_ENABLED === "true",
     purchasesDoublerEnabled: process.env.PURCHASES_DOUBLER_ENABLED === "true",
     xsollaHardenedCatalogEnabled: process.env.XSOLLA_HARDENED_CATALOG_ENABLED === "true",
+    xsollaCheckoutClosed: process.env.XSOLLA_CHECKOUT_CLOSED === "true",
     xsollaCheckoutMode: process.env.XSOLLA_CHECKOUT_MODE || "sandbox",
     xsollaCheckoutSandboxEnabled: process.env.XSOLLA_CHECKOUT_SANDBOX_ENABLED === "true",
     xsollaCheckoutProductionEnabled: process.env.XSOLLA_CHECKOUT_PRODUCTION_ENABLED === "true",
@@ -655,7 +656,12 @@ const checkoutRateLimiter = createCheckoutRateLimiter({
     userLimit: 4,
     ipLimit: 20
 });
+if (process.env.XSOLLA_CHECKOUT_CLOSED !== undefined && !["true", "false"].includes(process.env.XSOLLA_CHECKOUT_CLOSED)) {
+    throw new Error("XSOLLA_CHECKOUT_CLOSED must be true or false.");
+}
 const prepareXsollaCheckout = createXsollaCheckoutService({
+    checkoutClosed: config.xsollaCheckoutClosed,
+    canCreateCheckout: () => localMonetaryV2Payments?.canCreateCheckout() ?? true,
     enabled: config.purchasesGlobalEnabled,
     allowSandbox: config.xsollaCheckoutSandboxEnabled,
     mode: config.xsollaCheckoutMode,
@@ -932,8 +938,9 @@ const gatedXsollaEventProcessor = createXsollaPurchaseGateProcessor({
     reversalProcessor: reversalXsollaEventProcessor
 });
 const routedXsollaEventProcessor = localMonetaryV2Payments
-    ? localMonetaryV2Payments.attach({ legacyProcessor: gatedXsollaEventProcessor, validateUser: validateXsollaUser, starterPaidCoordinator })
+    ? localMonetaryV2Payments.attach({ legacyProcessor: gatedXsollaEventProcessor, legacyReceiptProcessor: persistLedgeredXsollaReceiptOnly, validateUser: validateXsollaUser, starterPaidCoordinator })
     : gatedXsollaEventProcessor;
+await routedXsollaEventProcessor.startRecovery?.();
 const processXsollaEvent = async (event) => {
     paymentMetrics.record("webhook_received", {
         labels: { type: String(event?.notificationType || "unknown").toLowerCase() }
@@ -1872,6 +1879,7 @@ async function shutdown(signal) {
     if (shutdownPromise) return shutdownPromise;
     shutdownPromise = (async () => {
         clearInterval(paymentScannerInterval);
+        await routedXsollaEventProcessor.stopRecovery?.();
         await financialShadowPocInboxService?.stop();
         const workerStop = paymentWorkerService
             ? await paymentWorkerService.stop({ drainTimeoutMilliseconds: 30_000 })

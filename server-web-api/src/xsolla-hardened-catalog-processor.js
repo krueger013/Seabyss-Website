@@ -167,7 +167,15 @@ export function createXsollaHardenedCatalogEventProcessor({
         }
 
         assertPaidOrderEnvelope(payload, notificationType);
-        const plan = resolveProductPlan(product.xsollaSku);
+        // Old, already-issued checkout tokens retain their server-authored plan version.
+        // Only registered immutable versions are accepted; conflicting copies fail closed.
+        const versions = [payload?.custom_parameters, payload?.order?.custom_parameters,
+            payload?.transaction?.custom_parameters, payload?.billing?.transaction?.custom_parameters]
+            .filter(value => value && Object.hasOwn(value, "seabyss_product_plan_version"))
+            .map(value => value.seabyss_product_plan_version);
+        if (versions.some(value => typeof value !== "string" || !/^[1-9][0-9]{0,5}$/.test(value)) ||
+            versions.some(value => value !== versions[0])) throw new Error("PAYMENT_PLAN_VERSION_INVALID");
+        const plan = resolveProductPlan(product.xsollaSku, versions.length ? Number(versions[0]) : undefined);
         const transactionId = canonicalTransactionId(
             notificationType === "payment"
                 ? payload?.transaction?.id

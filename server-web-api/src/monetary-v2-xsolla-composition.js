@@ -4,7 +4,7 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import { createXsollaHardenedCatalogEventProcessor } from "./xsolla-hardened-catalog-processor.js";
 import { createXsollaPurchaseGateProcessor } from "./xsolla-purchase-gate-processor.js";
-import { createVerifiedMonetaryV2Payment,createMonetaryV2Review } from "./monetary-v2-payment-client.js";
+import { createMonetaryV2Review } from "./monetary-v2-payment-client.js";
 
 const digest=s=>createHash("sha256").update(s,"utf8").digest("hex");
 const identifier=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{1,160}$/u.test(s);
@@ -51,30 +51,124 @@ export function createMonetaryV2EventRouter({enabled=false,resolveAuthority,fenc
         return v2Processor(event);
     };
 }
-// Compose inside the EXISTING signature-verified processEvent seam. No listener, authentication bypass, or legacy receipt writer.
-export function createMonetaryV2XsollaComposition({client,fence,legacyProcessor,hardenedOptions={},gateOptions={}}={}) {
-    if(!client||typeof client.authority!=="function"||typeof client.submit!=="function")throw new TypeError("Private payment service required.");
-    return createMonetaryV2EventRouter({enabled:client.enabled,resolveAuthority:r=>client.authority(r),fence,legacyProcessor,
+// Compose inside the EXISTING signature-verified processEvent seam. No new listener.
+export function createMonetaryV2XsollaComposition({ client, fence, legacyProcessor,
+    legacyReceiptProcessor = null, holdInbox = null, hardenedOptions = {}, gateOptions = {} } = {}) {
+    if (!client || typeof client.authority !== "function" || typeof client.submit !== "function")
+        throw new TypeError("Private payment service required.");
+    const otherEvents = createMonetaryV2EventRouter({ enabled: client.enabled,
+        resolveAuthority: recipient => client.authority(recipient), fence, legacyProcessor,
         async v2Processor(event) {
-            if(["refund","partial_refund","order_canceled","dispute"].includes(event.notificationType)) {
-                if(typeof client.review!=="function")throw new Error("MONETARY_V2_REVERSAL_REQUIRES_DURABLE_MANUAL_REVIEW");
-                const reversal=parseXsollaReversalEvent(event);
-                await client.review(createMonetaryV2Review(reversal,event.notificationType,client));
+            if (["refund", "partial_refund", "order_canceled", "dispute"].includes(event.notificationType)) {
+                if (typeof client.review !== "function") throw new Error("MONETARY_V2_REVERSAL_REQUIRES_DURABLE_MANUAL_REVIEW");
+                await client.review(createMonetaryV2Review(parseXsollaReversalEvent(event), event.notificationType, client));
                 return "monetary_v2_reversal_manual_review";
             }
-            if(!["payment","order_paid"].includes(event.notificationType))return "validated_no_grant";
-            let fulfillment=null;
-            const hardened=createXsollaHardenedCatalogEventProcessor({...hardenedOptions,
-                allowDiamondProductionGrants:false,allowStarterProductionGrants:false,
-                persistDiamondPackReceiptV2:null,persistStarterPackReceiptV2:null,fallbackProcessor:null,
-                async persistCatalogReceipt(receipt) {
-                    const request=createVerifiedMonetaryV2Payment(receipt,{environment:client.environment,titleId:client.titleId});
-                    fulfillment=await client.submit(request);
-                }});
-            const gate=createXsollaPurchaseGateProcessor({...gateOptions,hardenedEnabled:true,hardenedProcessor:hardened,legacyProcessor:null,reversalProcessor:null});
-            await gate(event);
-            if(!fulfillment)throw new Error("MONETARY_V2_NO_DURABLE_PAYMENT_RESULT");
-            return fulfillment.status === "Completed" ? "monetary_v2_completed" : fulfillment.status === "Pending" ? "monetary_v2_durably_queued" : "monetary_v2_manual_review";
+            return "validated_no_grant";
         }
     });
+    const inFlight = new Map(); let timer = null, cycle = null, cursor = "", lastError = null, closing = false;
+    function outcome(entry) {
+        if (!entry.handoff) return "monetary_v2_durably_queued";
+        if (entry.handoff.authority === "V1") return "legacy_payment_durably_queued";
+        return entry.handoff.status === "Completed" ? "monetary_v2_completed" :
+            entry.handoff.status === "ManualReview" ? "monetary_v2_manual_review" : "monetary_v2_durably_queued";
+    }
+    function deliver(entry) {
+        // A scan snapshot can become stale while a prior receipt awaits transport.
+        // Refresh under exclusive ownership before any state-dependent route or send.
+        entry = holdInbox.get(entry.operationId);
+        if (entry.handoff) return Promise.resolve(outcome(entry));
+        if (inFlight.has(entry.operationId)) return inFlight.get(entry.operationId);
+        const execution = (async () => {
+            try {
+                // Admission is already fsynced. Unavailable authority only defers the held receipt.
+                if (!client.enabled) throw new Error("V2_CONFIGURED_DISABLED_NO_LEGACY_FALLBACK");
+                const proof = await client.authority(entry.request.recipient);
+                if (proof?.environment !== client.environment || proof.titleId !== client.titleId ||
+                    proof.recipient !== entry.request.recipient || !["V1", "V2", "Migrating", "Blocked"].includes(proof.mode))
+                    throw new Error("PAYMENT_AUTHORITY_UNKNOWN");
+                let status;
+                if (proof.mode === "V1") {
+                    if (await fence.has(entry.request.recipient)) throw new Error("V2_ACCOUNT_NO_DOWNGRADE");
+                    if (typeof legacyReceiptProcessor !== "function") throw new Error("LEGACY_DURABLE_RECEIPT_PROCESSOR_REQUIRED");
+                    // A crash after this marker cannot authorize an unproven second V2 grant.
+                    holdInbox.markLegacyAttempt(entry.operationId, entry.request.canonicalPayloadSha256);
+                    const result = await legacyReceiptProcessor(entry.receipt);
+                    status = result?.status;
+                    if (!["checkpoints_pending", "already_completed"].includes(status) ||
+                        result?.transaction?.providerTransactionId !== entry.request.transactionId ||
+                        result.transaction.playFabId !== entry.request.recipient ||
+                        result.transaction.planHash !== entry.request.productPlanHash)
+                        throw new Error("LEGACY_DURABLE_RECEIPT_PROOF_INVALID");
+                } else {
+                    await fence.remember(proof);
+                    if (proof.mode !== "V2") throw new Error("PAYMENT_AUTHORITY_NOT_ACTIVE");
+                    if (entry.legacyAttempt) throw new Error("PAYMENT_LEGACY_HANDOFF_REQUIRES_RECONCILIATION");
+                    // The actual client validates identity/hash and durable service status before returning.
+                    const result = await client.submit(entry.request);
+                    status = result?.status;
+                    if (!["Pending", "Completed", "ManualReview"].includes(status) ||
+                        result.operationId !== entry.operationId ||
+                        result.canonicalPayloadSha256 !== entry.request.canonicalPayloadSha256)
+                        throw new Error("MONETARY_V2_DURABLE_RECEIPT_PROOF_INVALID");
+                }
+                holdInbox.handoff(entry.operationId, entry.request.canonicalPayloadSha256, proof.mode, status);
+                lastError = null;
+                return outcome({ ...entry, handoff: { authority: proof.mode, status } });
+            } catch (error) {
+                // A queued acknowledgment promises durable custody, never successful fulfillment.
+                lastError = /^[A-Z][A-Z0-9_]{1,100}$/.test(error?.message) ? error.message : "PAYMENT_HOLD_RECOVERY_FAILED";
+                return "monetary_v2_durably_queued";
+            }
+        })();
+        inFlight.set(entry.operationId, execution);
+        return execution.finally(() => inFlight.delete(entry.operationId));
+    }
+    const processEvent = async event => {
+        if (!["payment", "order_paid"].includes(event?.notificationType)) return otherEvents(event);
+        if (closing) throw new Error("PAYMENT_HOLD_CLOSED");
+        if (!holdInbox || typeof holdInbox.admit !== "function") throw new Error("DURABLE_PAYMENT_HOLD_INBOX_REQUIRED");
+        // A configured disabled adapter does not reopen legacy routing. Valid paid receipts can
+        // still enter durable custody; recovery waits for explicit configuration restoration.
+        await holdInbox.acquireOwnership();
+        let admitted = null;
+        const hardened = createXsollaHardenedCatalogEventProcessor({ ...hardenedOptions,
+            allowDiamondProductionGrants: false, allowStarterProductionGrants: false,
+            persistDiamondPackReceiptV2: null, persistStarterPackReceiptV2: null, fallbackProcessor: null,
+            async persistCatalogReceipt(receipt) { admitted = holdInbox.admit(receipt); }
+        });
+        const gate = createXsollaPurchaseGateProcessor({ ...gateOptions, hardenedEnabled: true,
+            hardenedProcessor: hardened, legacyProcessor: null, reversalProcessor: null });
+        await gate(event);
+        if (!admitted) throw new Error("MONETARY_V2_NO_DURABLE_PAYMENT_RESULT");
+        return deliver(admitted);
+    };
+    processEvent.recoverPending = () => {
+        if (cycle) return cycle;
+        cycle = (async () => {
+            if (!holdInbox || closing) return;
+            await holdInbox.acquireOwnership();
+            for (const entry of holdInbox.pending(8, cursor)) { cursor = entry.operationId; await deliver(entry); }
+        })().finally(() => { cycle = null; });
+        return cycle;
+    };
+    processEvent.startRecovery = async () => {
+        if (timer || !holdInbox) return;
+        await holdInbox.acquireOwnership();
+        if (closing) throw new Error("PAYMENT_HOLD_CLOSED");
+        const tick = () => { void processEvent.recoverPending().catch(() => { lastError = "PAYMENT_HOLD_SCAN_FAILED"; }); };
+        timer = setInterval(tick, 2000); timer.unref?.(); tick();
+    };
+    processEvent.stopRecovery = async () => {
+        closing = true; clearInterval(timer); timer = null;
+        // Keep ownership until every outstanding handoff settles. The V2 transport has a
+        // timeout; legacy receipt persistence retains its existing timeout contract.
+        // Never unlock while a late legacy write may still be running.
+        if (cycle) await cycle;
+        await Promise.allSettled([...inFlight.values()]);
+        await holdInbox?.close();
+    };
+    processEvent.recoveryHealth = () => ({ ...holdInbox?.health(), running: timer !== null, lastError });
+    return Object.freeze(processEvent);
 }

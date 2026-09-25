@@ -6,7 +6,7 @@ import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { after, before, describe, test } from "node:test";
 import {
     createMemoryXsollaEventStore,
@@ -66,10 +66,11 @@ async function startApi(options = {}) {
     const port = await unusedPort();
     let stdout = "";
     let stderr = "";
-    const child = spawn(process.execPath, [serverEntryPath], {
+    const child = spawn(process.execPath, ["--import", pathToFileURL(path.join(testDirectory, "fixtures", "local-network-only.mjs")).href, serverEntryPath], {
         cwd: apiDirectory,
         env: {
             ...process.env,
+            DOTENV_CONFIG_PATH: path.join(testDirectory, "fixtures", "empty-test-env.txt"),
             NODE_ENV: "test",
             HOST: host,
             PORT: String(port),
