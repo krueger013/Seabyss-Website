@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.59",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.59/SeabyssClient-Beta-0.1.7-beta.59.zip",
+  "gameVersion": "0.1.7-beta.60",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.60/SeabyssClient-Beta-0.1.7-beta.60.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "703,77 MB",
-  "releaseDate": "2026-09-25",
-  "notes": "Beta 59 is now available. This update improves the reliability of in-game rewards and purchases. New real-money purchases are temporarily unavailable.",
+  "fileSizeText": "703.77 MB",
+  "releaseDate": "2026-09-26",
+  "notes": "Beta 60 improves sailing smoothness and fixes a progression issue that could block shooting and floating loot collection. Launcher version remains 0.1.9.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "04dbdf78ce324ae9d85e1bcc5422259f361223e4bf916dae84e1cf76253623b5",
-  "size": 737956055
+  "sha256": "1b6f5135d56dbe5319ba16cd4e5f0b8f85d384a70a6536573c268da5c81c5c19",
+  "size": 737959587
 }
