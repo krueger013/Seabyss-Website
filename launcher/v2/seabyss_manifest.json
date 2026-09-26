@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.61",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.61/SeabyssClient-Beta-0.1.7-beta.61.zip",
+  "gameVersion": "0.1.7-beta.62",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.62/SeabyssClient-Beta-0.1.7-beta.62.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "703.77 MB",
+  "fileSizeText": "703,78 MB",
   "releaseDate": "2026-09-26",
-  "notes": "Beta 61 restores Ranking updates and catches up existing scores. Cannon target selection now requires an explicit Attack command. Attacks resume after temporary range loss, target changes preserve reload timing, and the reload timer shows tenths of a second. Known issue: occasional delayed damage feedback from Shellborn remains under investigation.",
+  "notes": "Beta62: Selecting another target now keeps your current attack active until you explicitly press Attack. Reload timing and decimal display are preserved. Quest cards show completed quests in dark, ready-to-claim quests in green and active quests in orange, with consistent sorting and automatic tracking after acceptance. Reload and Repair HUD indicators are 25% smaller. Known issue: occasional damage/health feedback delay remains under investigation for a future update.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "3c0cc81ecf6434d2699a28c63ab4179b1e92d07597bafc1a492eb89824b732d9",
-  "size": 737960083
+  "sha256": "3098d3b044b3110cb3480e1f80781618010814c0cd395a5519c89ca6012d032e",
+  "size": 737971744
 }
