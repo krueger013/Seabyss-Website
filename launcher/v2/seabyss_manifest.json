@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.60",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.60/SeabyssClient-Beta-0.1.7-beta.60.zip",
+  "gameVersion": "0.1.7-beta.61",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.61/SeabyssClient-Beta-0.1.7-beta.61.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
   "fileSizeText": "703.77 MB",
   "releaseDate": "2026-09-26",
-  "notes": "Beta 60 improves sailing smoothness and fixes a progression issue that could block shooting and floating loot collection. Launcher version remains 0.1.9.",
+  "notes": "Beta 61 restores Ranking updates and catches up existing scores. Cannon target selection now requires an explicit Attack command. Attacks resume after temporary range loss, target changes preserve reload timing, and the reload timer shows tenths of a second. Known issue: occasional delayed damage feedback from Shellborn remains under investigation.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "1b6f5135d56dbe5319ba16cd4e5f0b8f85d384a70a6536573c268da5c81c5c19",
-  "size": 737959587
+  "sha256": "3c0cc81ecf6434d2699a28c63ab4179b1e92d07597bafc1a492eb89824b732d9",
+  "size": 737960083
 }
