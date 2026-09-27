@@ -1,13 +1,13 @@
 {
   "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.64",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.64/SeabyssClient-Beta-0.1.7-beta.64.zip",
+  "gameVersion": "0.1.7-beta.65",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.65/SeabyssClient-Beta-0.1.7-beta.65.zip",
   "exePath": "SeabyssClient.exe",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
   "fileSizeText": "703,81 MB",
   "releaseDate": "2026-09-27",
-  "notes": "Beta64 fixes world entry for newly registered players and restores reliable login retries after a disconnected session. Existing progression, inventory and all Beta63 improvements are preserved.",
+  "notes": "New players now begin at full ship health. Existing player health and progression are preserved.",
   "minimumLauncherVersion": "0.1.7",
-  "sha256": "363fb23033a8df84a75839f36054fe95f7997ce17cf8d5a37462e72315a8fb3f",
-  "size": 738002188
+  "sha256": "31f18545800966b68b27587b2939c3e2595277f5fa143751a8fb8fc80ec96708",
+  "size": 738002416
 }
