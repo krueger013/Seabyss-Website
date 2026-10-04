@@ -1,17 +1,17 @@
 {
   "schemaVersion": 2,
-  "launcherVersion": "0.1.9",
-  "minimumLauncherVersion": "0.1.9",
+  "launcherVersion": "0.1.10",
+  "minimumLauncherVersion": "0.1.10",
   "mandatory": true,
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.9/SeabyssLauncher-0.1.9-Update.zip",
-  "size": 50184310,
-  "uncompressedSize": 124859535,
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.10/SeabyssLauncher-0.1.10-Update.zip",
+  "size": 50189116,
+  "uncompressedSize": 124872624,
   "entryCount": 187,
-  "sha256": "78779bc7d109bff7819b607da0c14781599b2a6771f846e2e851372c4c910b1d",
+  "sha256": "a211d0ac1c25bff4e051288e740647ca2f8035a93995dabd7813d2837fd21a8e",
   "executablePath": "SeabyssLauncher.exe",
   "updaterExecutablePath": "SeabyssLauncherUpdater.exe",
-  "releaseDate": "2026-09-05",
+  "releaseDate": "2026-10-04",
   "notes": [
-    "New clean dark interface, approved Seabyss artwork, clearer progress and accessible diagnostics. Signed, resilient automatic updates are preserved."
+    "Adds authenticated multipart game downloads with safe resume and legacy ZIP compatibility."
   ]
 }
