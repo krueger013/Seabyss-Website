@@ -1,17 +1,1 @@
-{
-  "schemaVersion": 2,
-  "launcherVersion": "0.1.10",
-  "minimumLauncherVersion": "0.1.10",
-  "mandatory": true,
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.10/SeabyssLauncher-0.1.10-Update.zip",
-  "size": 50189116,
-  "uncompressedSize": 124872624,
-  "entryCount": 187,
-  "sha256": "a211d0ac1c25bff4e051288e740647ca2f8035a93995dabd7813d2837fd21a8e",
-  "executablePath": "SeabyssLauncher.exe",
-  "updaterExecutablePath": "SeabyssLauncherUpdater.exe",
-  "releaseDate": "2026-10-04",
-  "notes": [
-    "Adds authenticated multipart game downloads with safe resume and legacy ZIP compatibility."
-  ]
-}
+{"downloadUrl":"https://github.com/krueger013/Seabyss-Website/releases/download/launcher-0.1.11/SeabyssLauncher-0.1.11-Update.zip","entryCount":185,"executablePath":"SeabyssLauncher.exe","launcherVersion":"0.1.11","mandatory":true,"minimumLauncherVersion":"0.1.11","notes":["Signed Beta66 to Beta65 client recovery; existing local data retained."],"releaseDate":"2026-10-07","schemaVersion":2,"sha256":"dc4243a00a9880293f6b26a5587b3b283511b4575d2bb3be004f9fb833ac05d2","size":49006870,"uncompressedSize":124875310,"updaterExecutablePath":"SeabyssLauncherUpdater.exe"}
