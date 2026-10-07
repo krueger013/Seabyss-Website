@@ -1,13 +1,43 @@
 {
-  "gameId": "seabyss",
-  "gameVersion": "0.1.7-beta.65",
-  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.65/SeabyssClient-Beta-0.1.7-beta.65.zip",
+  "downloadUrl": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.66/SeabyssClient-Beta-0.1.7-beta.66.zip",
   "exePath": "SeabyssClient.exe",
+  "fileSizeText": "3\u00a0812,11 MB",
+  "gameId": "seabyss",
+  "gameVersion": "0.1.7-beta.66",
   "launchArguments": "--environment beta --serverAddress 54.37.128.14 --port 7778 --transport tcp -force-d3d11",
-  "fileSizeText": "703,81 MB",
-  "releaseDate": "2026-09-27",
-  "notes": "New players now begin at full ship health. Existing player health and progression are preserved.",
-  "minimumLauncherVersion": "0.1.7",
-  "sha256": "31f18545800966b68b27587b2939c3e2595277f5fa143751a8fb8fc80ec96708",
-  "size": 738002416
+  "minimumLauncherVersion": "0.1.10",
+  "notes": "New 3D islands and improved rock, terrain and vegetation detail. Optional Tropical water and animated shoreline waves for both water styles. Reorganized Settings, synchronized cannon reload indicators, improved ship effects, updated water chest rewards and Shop presentation. Navigation, camera and island material fixes.",
+  "packageFormat": "multipart-v1",
+  "parts": [
+    {
+      "index": 1,
+      "name": "SeaByss-0.1.7-beta.66.part01",
+      "sha256": "91aacefda25544cd77e1e725e5fb8b7322abab0252de21d9eec3e750ef00f8b4",
+      "size": 1610612736,
+      "url": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.66/SeaByss-0.1.7-beta.66.part01"
+    },
+    {
+      "index": 2,
+      "name": "SeaByss-0.1.7-beta.66.part02",
+      "sha256": "90bcfa82032def9cac9e7de566960352eb392cc0506f3235f61e8186e836142a",
+      "size": 1610612736,
+      "url": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.66/SeaByss-0.1.7-beta.66.part02"
+    },
+    {
+      "index": 3,
+      "name": "SeaByss-0.1.7-beta.66.part03",
+      "sha256": "e5d5a1d0f36683c2e54ee686f26c9faf801904a7a45c4f1c52923fa517de7431",
+      "size": 776056706,
+      "url": "https://github.com/krueger013/Seabyss-Website/releases/download/beta-0.1.7-beta.66/SeaByss-0.1.7-beta.66.part03"
+    }
+  ],
+  "releaseDate": "2026-10-05",
+  "sha256": "0036de01bbafb3cae90eec16f4a39df87ba2c5b0b4af6da3c892ebfe30b37141",
+  "signatureMetadata": {
+    "algorithm": "Ed25519",
+    "detachedSignature": "seabyss_manifest.json.sig",
+    "keyId": "production-2026-08-07-primary",
+    "publicKeyFingerprintSha256": "96ddd8d87dfb19a6a78f7237094a86e7d97f861870d0971f57b628c3a3c3dc4c"
+  },
+  "size": 3997282178
 }
