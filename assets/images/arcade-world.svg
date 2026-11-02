@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="650" viewBox="0 0 1100 650" fill="none" role="img" aria-labelledby="abyss-title abyss-desc">
+  <title id="abyss-title">Un passage dans les profondeurs</title>
+  <desc id="abyss-desc">Un portail cyan et violet suspendu dans une obscurité bleue, entouré de roches flottantes et de trois îles portant un cristal, une lune et une étoile.</desc>
+  <defs>
+    <filter id="abyss-halo" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="20"/></filter>
+    <filter id="abyss-glimmer" x="-100%" y="-100%" width="300%" height="300%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="5"/></filter>
+    <clipPath id="portal-opening"><path d="M508 125H632L729 222V346L632 443H508L411 346V222Z"/></clipPath>
+    <g id="abyss-star"><path d="M0-7L1.6-1.6L7 0L1.6 1.6L0 7L-1.6 1.6L-7 0L-1.6-1.6Z" fill="currentColor"/></g>
+  </defs>
+  <!-- Low light hangs in an otherwise empty, deep-blue field. -->
+  <ellipse cx="577" cy="300" rx="247" ry="218" fill="#102B3A" fill-opacity=".28" filter="url(#abyss-halo)"/>
+  <ellipse cx="605" cy="350" rx="173" ry="220" fill="#283149" fill-opacity=".19" filter="url(#abyss-halo)"/>
+  <path d="M262 286C286 126 441 44 602 67C788 94 886 241 851 397" stroke="#59DCE9" stroke-opacity=".08"/>
+  <path d="M283 390C350 527 539 571 730 494" stroke="#7786FF" stroke-opacity=".11"/>
+  <path d="M319 234C361 105 519 56 667 119" stroke="#59DCE9" stroke-opacity=".1" stroke-dasharray="2 13"/>
+  <path d="M839 223C892 356 820 487 685 539" stroke="#59DCE9" stroke-opacity=".08" stroke-dasharray="2 14"/>
+  <!-- Distant fragments. -->
+  <path d="M185 239L214 216L232 228L226 259L201 277L183 259Z" fill="#0D1826"/><path d="M185 239L204 246L214 216Z" fill="#142437"/>
+  <path d="M882 177L914 164L929 192L911 209L888 201Z" fill="#0D1826"/><path d="M882 177L906 188L914 164Z" fill="#162739"/>
+  <path d="M296 492L312 483L325 497L317 520L304 516Z" fill="#101C2B"/><path d="M802 527L813 514L829 518L838 537L817 550Z" fill="#101C2B"/>
+  <path d="M766 95L778 88L790 100L782 117L771 112Z" fill="#132030"/>
+  <!-- A dimensional stone frame around the opening. -->
+  <path d="M482 92H656L763 199V373L656 480H482L375 373V199Z" stroke="#59DCE9" stroke-opacity=".18" stroke-width="15" filter="url(#abyss-halo)"/>
+  <path d="M498 82H666L783 199V367L666 484H498L381 367V199Z" fill="#0A101D" stroke="#172A3D" stroke-width="2"/>
+  <path d="M484 98H652L769 215V383L652 500H484L367 383V215Z" fill="#101E2E" stroke="#223B50" stroke-width="2"/>
+  <path d="M484 98L498 82H666L652 98ZM652 98L666 82L783 199L769 215ZM769 215L783 199V367L769 383Z" fill="#243349"/>
+  <path d="M484 98H652L769 215V383L652 500H484L367 383V215ZM508 125H632L729 222V346L632 443H508L411 346V222Z" fill="#122436" fill-rule="evenodd"/>
+  <path d="M484 98H652L769 215V383L652 500H484L367 383V215Z" stroke="#355064" stroke-width="1.5"/>
+  <!-- An opening into a quieter, stranger world. -->
+  <g clip-path="url(#portal-opening)">
+    <path d="M411 125H729V443H411Z" fill="#060B14"/>
+    <ellipse cx="577" cy="278" rx="108" ry="136" fill="#122E41" fill-opacity=".45" filter="url(#abyss-halo)"/>
+    <path d="M534 166H609L673 230V306L609 370H534L470 306V230Z" stroke="#59DCE9" stroke-opacity=".13"/>
+    <path d="M549 196H595L638 239V286L595 329H549L506 286V239Z" stroke="#7786FF" stroke-opacity=".23"/>
+    <path d="M561 225H582L608 251V272L582 298H561L535 272V251Z" fill="#132C3D" stroke="#59DCE9" stroke-opacity=".16"/>
+    <path d="M570 239L590 260L570 281L550 260Z" fill="#59DCE9" fill-opacity=".15"/>
+    <path d="M571 249L581 260L571 271L561 260Z" fill="#DCE8F5" fill-opacity=".9"/>
+    <path d="M418 356L455 320L485 345L514 310L547 354L585 330L624 361L667 315L737 361V445H411Z" fill="#0E1C2B"/>
+    <path d="M411 392L449 367L494 389L541 366L582 395L631 367L678 396L729 373V443H411Z" fill="#0A1420"/>
+    <path d="M459 346L485 345L514 310M624 361L667 315L691 337" stroke="#59DCE9" stroke-opacity=".24" stroke-width="1.5"/>
+    <path d="M538 443L552 405L573 384L563 368L573 344L571 281" stroke="#59DCE9" stroke-opacity=".55" stroke-width="2"/>
+    <path d="M546 443L560 407L581 385L571 367L579 346L575 281" stroke="#7786FF" stroke-opacity=".24" stroke-width="5"/>
+    <path d="M445 279H447V281H445ZM642 221H644V223H642ZM530 180H532V182H530ZM614 286H616V288H614ZM486 292H489V295H486Z" fill="#DCE8F5" fill-opacity=".5"/>
+  </g>
+  <path d="M508 125H632L729 222V346L632 443H508L411 346V222Z" stroke="#59DCE9" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M508 125H632L674 167M729 285V346L632 443H572M411 294V222L460 173" stroke="#59DCE9" stroke-width="3"/>
+  <path d="M500 115H638L739 216V352L638 453H502L401 352V216Z" stroke="#7786FF" stroke-opacity=".25"/>
+  <path d="M508 125H632L674 167M729 285V346L632 443H572M411 294V222L460 173" stroke="#59DCE9" stroke-opacity=".6" stroke-width="8" filter="url(#abyss-glimmer)"/>
+  <path d="M548 97L557 114M672 119L660 135M767 250L748 256M738 414L723 403M611 485L607 464M454 470L466 454M368 335L391 330M394 188L409 199" stroke="#59DCE9" stroke-opacity=".38" stroke-width="2"/>
+  <path d="M483 99L485 120L478 134M651 99L643 117M766 215L743 224M768 382L747 373L741 359M483 499L490 476L504 463M367 215L389 224" stroke="#060B14" stroke-width="4"/>
+  <!-- Three islands carry a crystal, a moon and a star. -->
+  <path d="M227 410L283 389L330 412L290 439L246 430Z" fill="#1C2D40"/><path d="M227 410L246 430L274 474L290 439Z" fill="#0D1725"/><path d="M290 439L330 412L307 455L274 474Z" fill="#142234"/>
+  <path d="M241 409L282 395L315 412" stroke="#59DCE9" stroke-opacity=".27"/>
+  <path d="M279 342L294 364L283 393L269 364Z" fill="#59DCE9" fill-opacity=".25" stroke="#59DCE9" stroke-opacity=".8"/>
+  <path d="M279 342L282 369L283 393M269 364L282 369L294 364" stroke="#DCE8F5" stroke-opacity=".55"/>
+  <path d="M272 366L279 355L283 367L279 380Z" fill="#59DCE9" fill-opacity=".3" filter="url(#abyss-glimmer)"/>
+  <path d="M834 398L880 374L929 393L892 423L854 418Z" fill="#1C2940"/><path d="M834 398L854 418L877 461L892 423Z" fill="#0C1524"/><path d="M892 423L929 393L912 436L877 461Z" fill="#142034"/>
+  <path d="M848 397L880 380L915 394" stroke="#7786FF" stroke-opacity=".4"/>
+  <path d="M889 323C870 321 858 338 864 354C870 370 888 375 902 364C887 368 877 359 877 347C877 337 883 330 889 323Z" fill="#7786FF" fill-opacity=".55" stroke="#AAB5FF" stroke-opacity=".7"/>
+  <path d="M889 323C870 321 858 338 864 354C870 370 888 375 902 364" stroke="#7786FF" stroke-opacity=".5" stroke-width="5" filter="url(#abyss-glimmer)"/>
+  <path d="M530 567L588 538L650 564L592 596Z" fill="#1B2A3B"/><path d="M530 567L592 596L576 634L552 603Z" fill="#0B1522"/><path d="M592 596L650 564L623 613L576 634Z" fill="#121F30"/>
+  <path d="M544 565L588 545L634 564" stroke="#59DCE9" stroke-opacity=".24"/>
+  <path d="M588 501L593 518L610 523L593 528L588 545L583 528L566 523L583 518Z" fill="#DCE8F5" fill-opacity=".7"/>
+  <path d="M588 501L593 518L610 523L593 528L588 545L583 528L566 523L583 518Z" fill="#59DCE9" fill-opacity=".5" filter="url(#abyss-glimmer)"/>
+  <!-- Sparse stars provide scale without filling the darkness. -->
+  <use href="#abyss-star" x="300" y="137" color="#59DCE9" opacity=".55"/><use href="#abyss-star" x="859" y="269" color="#DCE8F5" opacity=".55"/>
+  <use href="#abyss-star" x="742" y="551" color="#7786FF" opacity=".5"/><use href="#abyss-star" x="370" y="544" color="#59DCE9" opacity=".4"/>
+  <path d="M344 101H346V103H344ZM819 128H822V131H819ZM956 300H958V302H956ZM216 342H218V344H216ZM346 414H348V416H346ZM683 63H685V65H683ZM476 559H478V561H476ZM977 461H980V464H977ZM738 500H740V502H738Z" fill="#DCE8F5" fill-opacity=".3"/>
+  <path d="M281 292V285M278 289H285M795 465V458M792 462H799" stroke="#59DCE9" stroke-opacity=".35"/>
+</svg>

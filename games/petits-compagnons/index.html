@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eff3e8">
+  <meta name="description" content="Un petit jardin, quatre adorables compagnons et plein de tendresse. Un jeu Tamagotchi gratuit, en français, qui se sauvegarde sur cet appareil.">
+  <title>Petits Compagnons · ton jardin de poche</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="minigames.css">
+  <script src="engine.js" defer></script>
+  <script src="audio.js" defer></script>
+  <script src="minigames.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Petits Compagnons, accueil"><span class="brand-mark" aria-hidden="true">✿</span><span>petits compagnons<small>TON PETIT BONHEUR AU QUOTIDIEN</small></span></a>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <button class="nav-button active" data-nav="garden"><span aria-hidden="true">⌂</span> Mon jardin</button>
+        <button class="nav-button" data-nav="pets"><span aria-hidden="true">♡</span> Mes compagnons</button>
+        <button class="nav-button" data-nav="shop"><span aria-hidden="true">♧</span> La boutique</button>
+      </nav>
+      <div class="header-tools"><span class="wallet" title="Les étoiles se gagnent dans les mini-jeux"><span aria-hidden="true">✦</span><strong id="coins">80</strong><span class="wallet-label">étoiles</span></span><button id="sound-toggle" class="icon-button" aria-label="Couper la musique et les sons" title="Couper la musique et les sons" aria-pressed="true" data-sound-silent>♫</button><button id="settings-button" class="icon-button" aria-label="Options et sauvegarde" title="Options et sauvegarde">⚙</button></div>
+    </header>
+
+    <main>
+      <section class="welcome-row"><div><p class="eyebrow"><span class="tiny-leaf">❧</span> UN PEU DE DOUCEUR, CHAQUE JOUR</p><h1>La vie est plus douce <em>à deux.</em></h1><p class="welcome-copy" id="welcome-copy">Un petit compagnon, une grande histoire à commencer.</p></div><div class="today-tag"><span aria-hidden="true">☀</span><div>Un joli jour pour jouer<small>Prends le temps de grandir ensemble.</small></div></div></section>
+
+      <div class="game-layout">
+        <section class="garden-panel" aria-label="Le jardin de ton compagnon">
+          <div class="scene-toolbar"><div class="scene-tabs" role="group" aria-label="Ambiance du jardin"><button id="day-button" class="selected" aria-pressed="true">☀ Jardin</button><button id="night-button" aria-pressed="false">☾ Étoiles</button></div><button class="scene-expand" id="fullscreen-button" aria-label="Afficher le jardin en plein écran" title="Plein écran">⛶</button></div>
+          <div class="scene" id="scene">
+            <div class="scene-shade"></div><div class="night-stars" aria-hidden="true">✧ <span>✦</span> · <span>✧</span> · ✦</div>
+            <div class="scene-label"><span class="live-dot"></span> LE JARDIN DES RÊVES</div>
+            <div class="speech-bubble" id="pet-speech">Une petite rencontre t’attend…<span>Choisis ton tout premier compagnon.</span></div>
+            <div class="scene-decor decor-lantern" id="decor-lantern" hidden aria-hidden="true">🏮</div><div class="scene-decor decor-mushrooms" id="decor-mushrooms" hidden aria-hidden="true">🍄</div>
+            <div class="firefly fly-one"></div><div class="firefly fly-two"></div><div class="firefly fly-three"></div>
+            <div class="pet-zone" id="pet-zone"><div class="pet-shadow"></div><button id="pet-button" class="pet-button" aria-label="Caresser ton compagnon"><span class="egg" id="egg"><i></i><b>♡</b></span><img id="pet-image" class="pet-image" src="assets/cat.png" alt="Un adorable petit chat" draggable="false"><span class="pet-accessory" id="pet-accessory" aria-hidden="true"></span><span class="sleep-letters" id="sleep-letters" aria-hidden="true">z <i>z</i> <b>Z</b></span></button><div id="pet-nametag" class="pet-nametag">Ton futur compagnon <span>♡</span></div></div>
+            <div class="effects-layer" id="effects-layer" aria-hidden="true"></div>
+            <div class="scene-hint" id="scene-hint"><span>✧</span> Une aventure pleine de petits bonheurs</div>
+          </div>
+          <div class="care-bar" aria-label="Prendre soin de son compagnon">
+            <button data-care="feed"><span class="care-icon peach">🍓</span><strong>À table</strong><small>Un petit délice</small></button>
+            <button data-care="wash"><span class="care-icon blue">🫧</span><strong>Au bain</strong><small>Tout propre</small></button>
+            <button data-care="cuddle"><span class="care-icon pink">♡</span><strong>Un câlin</strong><small>Tout mon amour</small></button>
+            <button data-care="sleep"><span class="care-icon purple">☾</span><strong id="sleep-label">Au dodo</strong><small id="sleep-caption">De beaux rêves</small></button>
+            <button data-care="games"><span class="care-icon yellow">✦</span><strong>On joue ?</strong><small>À nous l’aventure</small></button>
+          </div>
+        </section>
+
+        <aside class="companion-panel" aria-label="Informations et besoins du compagnon">
+          <div class="profile-heading"><div><p class="eyebrow">MON PETIT COMPAGNON</p><h2 id="pet-name">Une belle rencontre</h2></div><button class="small-button" id="collection-button" aria-label="Choisir un compagnon" title="Mes compagnons">⇄</button></div>
+          <div class="pet-meta"><span class="stage-pill" id="stage-label">Un nouveau départ</span><span id="species-label">À adopter</span></div>
+          <div class="mood-line" id="mood-line"><span>♡</span> Une amitié à faire grandir</div>
+          <div class="needs-list" id="needs-list">
+            <div class="need" data-need="food"><div class="need-label"><span><i>🍓</i> Petit ventre</span><strong>100<small>%</small></strong></div><div class="need-track" role="progressbar" aria-label="Nourriture" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span></span></div></div>
+            <div class="need" data-need="happiness"><div class="need-label"><span><i>♡</i> Bonheur</span><strong>100<small>%</small></strong></div><div class="need-track" role="progressbar" aria-label="Bonheur" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span></span></div></div>
+            <div class="need" data-need="energy"><div class="need-label"><span><i>☀</i> Énergie</span><strong>100<small>%</small></strong></div><div class="need-track" role="progressbar" aria-label="Énergie" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span></span></div></div>
+            <div class="need" data-need="clean"><div class="need-label"><span><i>♧</i> Propreté</span><strong>100<small>%</small></strong></div><div class="need-track" role="progressbar" aria-label="Propreté" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span></span></div></div>
+          </div>
+          <div class="growth-card"><div class="growth-title"><span>✧ Grandir ensemble</span><strong id="growth-number">0 / 5</strong></div><div class="growth-track"><span id="growth-fill"></span></div><div class="growth-steps"><span data-stage="egg">Œuf</span><span data-stage="baby">Bébé</span><span data-stage="teen">Junior</span><span data-stage="adult">Adulte</span></div><p id="growth-tip">Quelques attentions suffisent pour commencer une belle histoire.</p></div>
+          <div class="little-note"><span aria-hidden="true">✿</span><p id="little-note">Les plus jolies amitiés commencent par de tout petits gestes.</p></div>
+        </aside>
+      </div>
+
+      <section class="games-section" id="games-section" aria-labelledby="games-heading"><div class="section-heading"><div><p class="eyebrow">DES SOUVENIRS À FABRIQUER</p><h2 id="games-heading">Une petite pause pour jouer</h2></div><span class="section-note">Du bonheur et des étoiles à gagner <span>✦</span></span></div><div class="game-cards">
+        <button class="mini-card berry-game" data-game="catch"><div class="mini-art"><span class="art-circle"></span><span class="art-main">🧺</span><i class="fruit-one">🍓</i><i class="fruit-two">✦</i><i class="fruit-three">🫐</i></div><div class="mini-copy"><span class="mini-category">RÉFLEXES · 30 SECONDES</span><h3>La cueillette magique</h3><p>Attrape les douceurs du jardin.</p><span class="play-link">C’est parti <b>↗</b></span></div></button>
+        <button class="mini-card memory-game" data-game="memory"><div class="mini-art"><span class="memory-tile tile-back">✿</span><span class="memory-tile tile-front">🍒</span><i class="sparkle">✧</i></div><div class="mini-copy"><span class="mini-category">MÉMOIRE · À TON RYTHME</span><h3>Les jolies paires</h3><p>Retrouve les petits trésors jumeaux.</p><span class="play-link">C’est parti <b>↗</b></span></div></button>
+        <button class="mini-card rhythm-game" data-game="rhythm"><div class="mini-art"><span class="art-circle"></span><span class="art-main">🥁</span><i class="note-one">♪</i><i class="note-two">♫</i></div><div class="mini-copy"><span class="mini-category">RYTHME · 8 PETITS TEMPOS</span><h3>La danse des lucioles</h3><p>Une touche au bon moment !</p><span class="play-link">C’est parti <b>↗</b></span></div></button>
+      </div></section>
+      <footer class="footer"><span>✿ Fait pour les petits moments heureux.</span><span id="save-status"><i></i> Ton aventure se sauvegarde toute seule</span><button id="help-button">Comment jouer ?</button></footer>
+    </main>
+  </div>
+
+  <dialog id="main-dialog" aria-labelledby="dialog-title"><div class="dialog-inner"><button class="dialog-close" id="dialog-close" aria-label="Fermer">×</button><div id="dialog-content"></div></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

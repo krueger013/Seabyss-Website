@@ -1,90 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.seabyss.com; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'self'">
-    <meta name="referrer" content="no-referrer">
-    <title>Privacy - Seabyss</title>
-    <meta name="description" content="Seabyss privacy and security information to validate before official launch.">
-    <link rel="stylesheet" href="css/style.css?v=3">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Comment le portail Seabyss et ses jeux utilisent les données enregistrées dans ton navigateur.">
+  <meta name="theme-color" content="#17191e">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Confidentialité — Seabyss</title>
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css?v=arcade1">
 </head>
 <body>
-
-<nav class="top-nav">
-    <div class="nav-container">
-        <a href="index.html" class="logo">SEABYSS</a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
-        <div class="nav-links" id="main-nav">
-            <a href="index.html">Home</a>
-            <a href="download.html">Download</a>
-            <a href="profile.html" data-auth-show="connected" hidden>My Profile</a>
-            <a href="login.html?v=2" data-auth-show="guest">Login</a>
-            <a href="market.html">Market</a>
-            <a href="support.html">Support</a>
-            <a href="privacy.html">Privacy</a>
-            <button class="nav-button" type="button" data-logout data-auth-show="connected" hidden>Logout</button>
-        </div>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="header-main shell">
+      <a class="brand" href="./index.html" aria-label="Seabyss, accueil"><span class="brand-symbol" aria-hidden="true">S<span>✦</span></span><span>SEABYSS<small>JEUX &amp; CRÉATIONS</small></span></a>
+      <a class="button button-outline" href="./index.html#catalogue">Retour au catalogue</a>
     </div>
-</nav>
-
-<main class="page-shell">
-    <section class="page-hero compact-hero">
-        <div class="container legal-container">
-            <p class="eyebrow">Privacy draft</p>
-            <h1>Privacy and security information</h1>
-            <p>
-                This page is a practical privacy summary for the Beta website. It is not a final
-                legal policy and must be reviewed before official launch.
-            </p>
-        </div>
-    </section>
-
-    <section class="section compact-section">
-        <article class="container legal-container legal-content">
-            <h2>Account data</h2>
-            <p>
-                Seabyss accounts are expected to use PlayFab for account identity. The website
-                should only receive sanitized account information from the Seabyss Web API.
-            </p>
-
-            <h2>Game data</h2>
-            <p>
-                Profile data can include display name, masked account identifiers, progression,
-                currencies, equipment, and Beta status. Missing fields should be shown as
-                "Not available yet" instead of being invented.
-            </p>
-
-            <h2>Security principles</h2>
-            <ul>
-                <li>No PlayFab SecretKey, payment secret, admin token, SSH credential, or password belongs in public HTML, CSS, or JavaScript.</li>
-                <li>Passwords must only be sent over HTTPS to the secured backend API.</li>
-                <li>Session cookies should be HttpOnly, Secure, and SameSite.</li>
-                <li>The public website must never modify currencies, inventory, or purchases directly.</li>
-            </ul>
-
-            <h2>Support contact</h2>
-            <p>
-                Players can contact <a href="mailto:support@seabyss.com">support@seabyss.com</a>.
-                Seabyss support will never ask for a password.
-            </p>
-
-            <h2>Legal validation pending</h2>
-            <p>
-                A complete privacy policy, data retention rules, regional compliance review,
-                payment provider language, and incident response wording must be validated before official launch.
-            </p>
-        </article>
-    </section>
-</main>
-
-<footer>
-    <p>© 2026 Seabyss - Official website</p>
-</footer>
-
-<script src="js/config.js?v=3"></script>
-<script src="js/api.js?v=3"></script>
-<script src="js/auth.js?v=3"></script>
-<script src="js/ui.js?v=3"></script>
+  </header>
+  <main class="shell prose-page" id="contenu">
+    <p class="eyebrow">LE PORTAIL DU STUDIO</p>
+    <h1>Confidentialité</h1>
+    <p>Cette page décrit le fonctionnement actuel du portail Seabyss et des trois jeux intégrés. Mise à jour : 1 novembre 2026.</p>
+    <h2>Explorer sans compte</h2>
+    <p>Le catalogue et les jeux sont accessibles sans créer de compte. Le portail ne propose pas de formulaire de connexion et n’intègre pas d’outil de mesure d’audience ni de publicité.</p>
+    <h2>Tes favoris, sur ton appareil</h2>
+    <p>Quand tu ajoutes un jeu aux favoris, son identifiant est enregistré dans le stockage local de ton navigateur, appelé localStorage. Cette liste n’est pas envoyée à un serveur par le portail. Elle reste disponible dans ce navigateur tant que tu ne la retires pas ou que tu n’effaces pas les données du site.</p>
+    <h2>Les sauvegardes des jeux</h2>
+    <p>Petits Compagnons, Mario’s Ghost et Les Heures Perdues enregistrent leur progression et certains réglages, comme les préférences audio, dans le stockage local du navigateur. Petits Compagnons peut aussi conserver le nom que tu donnes à ton animal. Ces données sont utilisées par le jeu sur ton appareil ; les versions intégrées ne les envoient pas à un service de sauvegarde en ligne.</p>
+    <p>Le stockage est propre au navigateur et à l’adresse du site. Une partie commencée depuis un fichier local, un autre appareil ou un autre domaine ne se retrouve donc pas automatiquement ici. La navigation privée ou un stockage indisponible peut empêcher de conserver la progression.</p>
+    <h2>Effacer ou conserver tes données</h2>
+    <p>Tu peux retirer individuellement tes favoris depuis le catalogue. Les jeux proposent leurs propres options de nouvelle partie ou de remise à zéro. Petits Compagnons permet également d’exporter et d’importer une sauvegarde ; le fichier exporté est enregistré sur ton appareil.</p>
+    <p>Les réglages de ton navigateur permettent d’effacer les données du site seabyss.com. Cette opération peut supprimer à la fois les favoris, les parties sauvegardées et les réglages des jeux. Le portail n’utilise pas de cookie pour enregistrer ces préférences.</p>
+    <h2>L’hébergement et les liens</h2>
+    <p>Le site est hébergé par GitHub Pages. GitHub indique que les adresses IP des visiteurs sont enregistrées et conservées à des fins de sécurité. Consulte <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">la documentation de GitHub Pages</a> et <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">la déclaration de confidentialité de GitHub</a> pour les traitements liés à cet hébergement.</p>
+    <p>Si tu suis un lien vers un autre site, son propre fonctionnement et ses informations de confidentialité s’appliquent. Les trois jeux actuellement présentés dans le catalogue sont hébergés avec le portail.</p>
+    <p><a href="./index.html#catalogue">Revenir aux jeux</a></p>
+  </main>
 </body>
 </html>

@@ -1,0 +1,37 @@
+PETITS COMPAGNONS — SOURCES ET LICENCES AUDIO
+Vérifiées le 1 novembre 2026
+
+BRUITAGES
+Collection : Interface Sounds 1.0 (2020)
+Auteur : Kenney
+Source officielle : https://kenney.nl/assets/interface-sounds
+Licence : Creative Commons CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+Texte fourni par l'auteur : sfx/License-Kenney.txt
+Archive originale : sources/kenney_interface-sounds.zip
+Les fichiers audio de sfx/ sont des copies inchangées des OGG du pack.
+Le jeu combine certains sons et ajuste le volume et la vitesse à la lecture.
+
+23 bruitages sélectionnés :
+click_001, select_001, open_001, close_001,
+glass_001, glass_003, glass_005, glass_006,
+pluck_001, pluck_002, drop_001, drop_002, drop_003, drop_004,
+minimize_007, maximize_007, confirmation_001, confirmation_002,
+confirmation_003, confirmation_004, error_004, switch_002, select_005.
+
+MUSIQUE
+Titre : Sherwood
+Auteur : Chris Murphy (zesona)
+Source officielle : https://opengameart.org/content/sherwood
+Fichier original : https://opengameart.org/sites/default/files/sherwood_0.ogg
+Licence : Creative Commons CC0 1.0 Universal
+Fichier : music/sherwood.ogg, original inchangé
+Crédit détaillé, durée et empreinte : music/CREDITS.txt
+
+Les deux publications déclarent la licence CC0. Les fichiers sont utilisables,
+modifiables et redistribuables gratuitement, y compris dans un jeu commercial.
+L'attribution n'est pas exigée par CC0 ; ces crédits remercient les créateurs
+et conservent la provenance de chaque ressource.
+
+Aucun service audio distant, compte, clé API ou abonnement n'est nécessaire
+pour jouer. Tous les sons sont lus depuis le dossier local du jeu.

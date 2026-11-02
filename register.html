@@ -1,85 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.seabyss.com; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'self'">
-    <meta name="referrer" content="no-referrer">
-    <title>Create account - Seabyss</title>
-    <meta name="description" content="Create a Seabyss player account for the website and game client.">
-    <link rel="stylesheet" href="css/style.css?v=3">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="refresh" content="0; url=./index.html#catalogue">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; object-src 'none'; base-uri 'self'">
+  <title>Le catalogue Seabyss</title>
+  <link rel="stylesheet" href="css/style.css?v=arcade1">
 </head>
 <body>
-
-<nav class="top-nav">
-    <div class="nav-container">
-        <a href="index.html" class="logo">SEABYSS</a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
-        <div class="nav-links" id="main-nav">
-            <a href="index.html">Home</a>
-            <a href="download.html">Download</a>
-            <a href="profile.html" data-auth-show="connected" hidden>My Profile</a>
-            <a href="login.html?v=2" data-auth-show="guest">Login</a>
-            <a href="market.html">Market</a>
-            <a href="support.html">Support</a>
-            <a href="privacy.html">Privacy</a>
-            <button class="nav-button" type="button" data-logout data-auth-show="connected" hidden>Logout</button>
-        </div>
-    </div>
-</nav>
-
-<main class="page-shell">
-    <section class="page-hero compact-hero">
-        <div class="container narrow-container">
-            <p class="eyebrow">Compte joueur</p>
-            <h1>Create your Seabyss account</h1>
-            <p>
-                Create a real Seabyss PlayFab account. The same email and password can be used
-                on the website and in the Seabyss game client.
-            </p>
-        </div>
-    </section>
-
-    <section class="section compact-section">
-        <div class="container narrow-container">
-            <form class="form-panel" id="register-form" method="post" novalidate>
-                <div class="form-message" id="register-message" role="status" aria-live="polite"></div>
-
-                <label for="register-email">Email</label>
-                <input id="register-email" type="email" autocomplete="email" placeholder="captain@seabyss.com" required>
-
-                <label for="register-display-name">Player name</label>
-                <input id="register-display-name" type="text" autocomplete="nickname" placeholder="Captain name" minlength="3" maxlength="25">
-
-                <label for="register-password">Mot de passe</label>
-                <input id="register-password" type="password" autocomplete="new-password" placeholder="Minimum 8 caracteres" minlength="8" required>
-
-                <label for="register-confirm-password">Confirmer le mot de passe</label>
-                <input id="register-confirm-password" type="password" autocomplete="new-password" placeholder="Repetez le mot de passe" minlength="8" required>
-
-                <button class="btn-primary" id="register-submit" type="submit">Creer mon compte</button>
-
-                <p class="security-note">
-                    Aucun secret PlayFab n'est expose dans le navigateur. La creation passe par
-                    l'API web Seabyss et ne donne aucun or, diamant, item ou progression.
-                </p>
-
-                <div class="text-links">
-                    <a href="login.html?v=2">J'ai deja un compte</a>
-                    <a href="support.html">Besoin d'aide ?</a>
-                </div>
-            </form>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <p>© 2026 Seabyss - Official website</p>
-</footer>
-
-<script src="js/config.js?v=3"></script>
-<script src="js/api.js?v=3"></script>
-<script src="js/auth.js?v=3"></script>
-<script src="js/ui.js?v=3"></script>
+  <main class="shell prose-page">
+    <p class="eyebrow">SEABYSS · JEUX &amp; CRÉATIONS</p>
+    <h1>Direction l’arcade.</h1>
+    <p>Les jeux du studio se retrouvent dans le catalogue.</p>
+    <p><a href="./index.html#catalogue">Ouvrir le catalogue Seabyss</a></p>
+  </main>
 </body>
 </html>

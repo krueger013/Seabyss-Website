@@ -1,0 +1,28 @@
+PETITS COMPAGNONS — MUSIQUE D'AMBIANCE
+
+Titre : Sherwood
+Compositeur : Chris Murphy (compte OpenGameArt : zesona)
+Page originale : https://opengameart.org/content/sherwood
+Profil auteur : https://opengameart.org/users/zesona
+Téléchargement original : https://opengameart.org/sites/default/files/sherwood_0.ogg
+Licence déclarée par l'auteur : Creative Commons CC0 1.0 Universal
+Licence : https://creativecommons.org/publicdomain/zero/1.0/
+Texte juridique : https://creativecommons.org/publicdomain/zero/1.0/legalcode
+Date de vérification et de téléchargement : 1 novembre 2026
+
+Fichier livré : sherwood.ogg (copie inchangée de l'original)
+Format : Ogg Vorbis, stéréo, 44 100 Hz
+Durée calculée à partir du conteneur Ogg : 34,9054 secondes
+Taille : 706 853 octets
+SHA-256 : a7796c847682f5fd00041ffc0b0d71b67d95a41b4d6d914cd8e11bc37fe29a88
+
+L'auteur décrit une boucle de musique de fond calme. Les mots-clés de sa
+publication sont notamment « chill », « relaxing », « soft » et « happy ».
+La piste est annoncée comme bouclable, à 110 BPM, réalisée avec LMMS.
+
+CC0 autorise la réutilisation et la redistribution, y compris commerciale,
+sans paiement ni attribution obligatoire. Ce crédit est conservé par courtoisie.
+L'auteur indique : « If you wish to credit me, use the name Chris Murphy. »
+
+La page de provenance est conservée sous SOURCE-sherwood.html.
+Le fichier audio n'a pas été synthétisé ni généré par le jeu.

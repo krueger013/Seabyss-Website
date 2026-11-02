@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1420">
+  <title>Mario’s Ghost — Les cinq sceaux de minuit</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="polish.css?v=5">
+  <link rel="stylesheet" href="exploration.css?v=5">
+  <link rel="stylesheet" href="heroes.css?v=5">
+  <link rel="stylesheet" href="adventure.css?v=5">
+</head>
+<body>
+<main id="app">
+  <canvas id="game" aria-label="Jeu de plateforme Mario’s Ghost"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <header id="topbar">
+    <button class="brand" id="home-button" aria-label="Accueil"><span class="moon-symbol">☾</span><span>MARIO’S GHOST<small>LES CINQ SCEAUX DE MINUIT</small></span></button>
+    <div class="top-actions"><button class="icon-button" id="sound-button" aria-label="Couper le son" title="Son">♫</button><button class="icon-button" id="settings-button" aria-label="Réglages" title="Réglages">⚙</button><button class="icon-button" id="fullscreen-button" aria-label="Plein écran" title="Plein écran (F)">⛶</button><button class="icon-button" id="help-button" aria-label="Comment jouer" title="Comment jouer">?</button></div>
+  </header>
+
+  <section id="home" class="screen">
+    <div class="home-content">
+      <div class="eyebrow"><span></span> UNE AVENTURE AU CLAIR DE LUNE</div>
+      <h1>MARIO’S<br><em>GHOST</em><span class="title-star">✧</span></h1>
+      <p class="home-tagline">La nuit cache un monde.<br>Ta lumière ouvre le chemin.</p>
+      <div class="home-buttons"><button id="play-button" class="button primary">Entrer dans la nuit <span>→</span></button><button id="how-button" class="button text-button">Comment jouer <span>↗</span></button></div>
+      <button id="characters-button" class="character-choice"><canvas id="home-hero-portrait" width="72" height="72" aria-hidden="true"></canvas><span><small>TON COMPAGNON</small><strong id="home-hero-name">Hailie</strong></span><span class="change-hero">Changer ↗</span></button>
+      <button id="journal-button" class="journal-link">✧ Carnet des découvertes <span>↗</span></button>
+      <div class="home-progress"><span class="tiny-orb"></span><span id="home-progress-label">Cinq royaumes. Cinq sceaux. Une seule lumière.</span></div>
+    </div>
+    <div class="scene-caption"><span>LE ROYAUME DES OMBRES</span><strong>Tout commence<br>à minuit.</strong><small>01 — LE CIMETIÈRE OUBLIÉ</small></div>
+    <footer class="home-footer"><span>IMAGINÉ POUR PAPA & HAILIE</span><span class="footer-line"></span><span>EXPLORER · SAUTER · ILLUMINER</span><button id="reset-button">Nouvelle aventure</button></footer>
+  </section>
+
+  <section id="map" class="screen hidden" aria-label="Carte des cinq niveaux">
+    <div class="map-heading"><div class="eyebrow">L’ATLAS DE MINUIT</div><h2>Un pas vers <em>la lumière.</em></h2><p>Traverse chaque royaume pour ouvrir le suivant.</p><button id="map-relics" class="journal-link"></button></div>
+    <div class="map-counter"><strong id="seal-count">0 / 5</strong><span>SCEAUX ÉVEILLÉS</span></div>
+    <div id="map-route"><svg viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true"><path class="route-shadow" d="M100 280 C160 290 160 90 295 115 S360 310 490 260 S575 55 685 80 S800 285 900 195"/><path class="route-line" d="M100 280 C160 290 160 90 295 115 S360 310 490 260 S575 55 685 80 S800 285 900 195"/></svg><div id="map-nodes"></div></div>
+    <div class="map-bottom"><div><span class="eyebrow" id="selected-kicker">CHAPITRE 01 · BRUME & LANTERNES</span><h3 id="selected-name">Le cimetière oublié</h3><p id="selected-description"></p><div id="selected-record"></div><div id="selected-secret"></div></div><div class="map-actions"><button id="map-character-button" class="map-character-choice"><canvas id="map-hero-portrait" width="72" height="72" aria-hidden="true"></canvas><span id="map-hero-name">Avec Hailie</span><span>Changer ↗</span></button><button id="enter-level" class="button primary">Explorer ce royaume <span>→</span></button><button id="restart-level" class="restart-link hidden">Recommencer ce niveau</button></div></div>
+  </section>
+
+  <section id="hud" class="hidden" aria-label="Informations de jeu">
+    <div class="health-panel"><div class="hero-medallion">☾</div><div><span class="hud-label" id="hero-name">HAILIE</span><div id="hearts" aria-label="3 points de vie">♥ ♥ ♥</div></div></div>
+    <div class="level-panel"><span id="level-number">CHAPITRE I</span><strong id="level-name">Le cimetière oublié</strong><div class="progress-track"><i id="level-progress"></i><div id="checkpoint-markers"></div></div><small id="relic-status"></small></div>
+    <div class="collection-panel"><div><span class="gold">✧</span><strong id="coin-counter">0</strong><small>LUMIÈRES</small></div><div><span class="silver">◈</span><strong id="shard-counter">0 / 3</strong><small>ÉCLATS</small></div><button id="pause-button" class="icon-button" aria-label="Pause">Ⅱ</button></div>
+    <div id="level-hint"><span>← → ou Q D <b>marcher</b></span><span>Espace <b>double saut</b></span><span>X <b>lanterne</b></span><span>C <b>épée</b></span><span>R <b>esquiver</b></span><span>E <b>interagir</b></span></div>
+    <div id="ability"><span>✦</span><div><strong>LANTERNE</strong><div class="ability-track"><i id="ability-fill"></i></div></div><kbd>X</kbd><div class="jump-meter" aria-label="Sauts disponibles"><i></i><i></i></div></div>
+    <div id="sword-ability"><span class="sword-symbol">⚔</span><div><strong id="sword-label">ÉPÉE LUNAIRE</strong><div class="ability-track"><i id="sword-fill"></i></div></div><kbd>C</kbd><div class="sword-combo" aria-label="Enchaînement de trois coups"><i></i><i></i><i></i></div></div>
+    <div id="dash-ability"><span>⇢</span><div><strong>ESQUIVE</strong><div class="ability-track"><i id="dash-fill"></i></div></div><kbd>R</kbd></div>
+    <div id="trial-hud" class="hidden"><div><strong id="trial-title"></strong><span id="trial-count"></span></div><b id="trial-time"></b><div class="trial-track"><i id="trial-fill"></i></div></div>
+    <div id="chapter-card"><span></span><strong></strong><small></small></div>
+    <div id="interaction"><kbd id="interaction-key">E</kbd><span id="interaction-label"></span></div>
+    <div id="damage-wash" aria-hidden="true"></div>
+    <div class="touch-controls"><div><button data-touch="left" aria-label="Aller à gauche">←</button><button data-touch="right" aria-label="Aller à droite">→</button></div><div><button id="touch-interact" data-touch="interact" aria-label="Interagir">E</button><button data-touch="dash" aria-label="Esquiver">⇢</button><button data-touch="sword" aria-label="Attaque à l’épée">⚔</button><button data-touch="attack" aria-label="Attaque de lanterne">✦</button><button data-touch="jump" aria-label="Sauter">↑</button></div></div>
+  </section>
+
+  <section id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-card"><span id="modal-symbol">☾</span><div id="modal-kicker" class="eyebrow"></div><h2 id="modal-title"></h2><div id="modal-content"></div><div id="modal-actions"></div></div></section>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="loading"><span class="loading-moon">☾</span><strong>La nuit prend vie…</strong><div><i id="loading-fill"></i></div><small>Préparation des cinq royaumes</small></div>
+</main>
+<script src="exploration.js?v=5"></script><script src="exploration-engine.js?v=5"></script><script src="atlas-data.js?v=5"></script><script src="exploration-view.js?v=5"></script><script src="levels.js?v=5"></script><script src="heroes.js?v=5"></script><script src="hero-atlas.js?v=5"></script><script src="hero-view.js?v=5"></script><script src="adventure.js?v=5"></script><script src="adventure-view.js?v=5"></script><script src="engine.js?v=5"></script><script src="game.js?v=5"></script>
+</body>
+</html>
