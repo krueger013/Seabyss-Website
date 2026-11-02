@@ -1,0 +1,38 @@
+[
+  {
+    "id": "petits-compagnons",
+    "title": "Petits Compagnons",
+    "description": "Adopte un compagnon, prends soin de lui et découvre trois mini-jeux dans ton jardin de poche.",
+    "genre": "simulation",
+    "tags": ["Tamagotchi", "animaux", "détente", "mini-jeux", "tactile"],
+    "url": "games/petits-compagnons/index.html",
+    "thumbnail": "games/petits-compagnons/assets/garden.png",
+    "controls": "Souris ou toucher. Flèches et Espace pour certains mini-jeux. Progression enregistrée sur cet appareil.",
+    "releaseDate": "2026-11-01",
+    "featured": true
+  },
+  {
+    "id": "marios-ghost",
+    "title": "Mario’s Ghost",
+    "description": "Explore cinq royaumes, affronte leurs créatures et retrouve les cinq sceaux de minuit avec quatre héros au choix.",
+    "genre": "action",
+    "tags": ["plateforme", "aventure", "fantômes", "tactile"],
+    "url": "games/marios-ghost/index.html",
+    "thumbnail": "games/marios-ghost/assets/graveyard.png",
+    "controls": "Flèches ou Q/D : marcher. Espace : saut. X : lanterne. C : épée. R : esquive. E : interaction. Commandes tactiles disponibles.",
+    "releaseDate": "2026-11-01",
+    "featured": true
+  },
+  {
+    "id": "les-heures-perdues",
+    "title": "Les Heures Perdues",
+    "description": "Enquête sur la disparition d’un astronome : objets cachés et énigmes t’attendent dans trois lieux mystérieux.",
+    "genre": "puzzle",
+    "tags": ["aventure", "enquête", "objets cachés", "énigmes", "tactile"],
+    "url": "games/les-heures-perdues/index.html",
+    "thumbnail": "games/les-heures-perdues/assets/study.jpg",
+    "controls": "Souris ou toucher. I : indice. J : journal. M : carte. B : bonus. Échap : fermer. Progression enregistrée sur cet appareil.",
+    "releaseDate": "2026-11-01",
+    "featured": true
+  }
+]

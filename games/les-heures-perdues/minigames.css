@@ -1,0 +1,216 @@
+/* Les Heures Perdues — mécanismes et récompenses facultatives. */
+.bonus-dock {
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  min-height:49px; margin-top:9px; padding:7px 10px 7px 13px;
+  border:1px solid #c8aa7235; border-radius:9px;
+  background:linear-gradient(110deg,#213126b3,#14221ed9);
+  box-shadow:inset 0 1px 0 #e8d09d08;
+}
+.bonus-dock-heading { display:flex; align-items:center; gap:10px; min-width:0; }
+.bonus-dock-heading>.ui-icon { width:22px; height:22px; color:#ccb17c; }
+.bonus-dock-heading .eyebrow { font-size:8px; letter-spacing:.12em; }
+.bonus-dock-heading h3 { margin:0; color:#e6d7b5; font:500 20px/1.08 var(--serif); }
+.bonus-dock-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:7px; }
+.bonus-dock-actions button {
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  min-height:33px; padding:7px 11px; border:1px solid #c8aa7249; border-radius:6px;
+  background:#c8aa720a; color:#d8c9a7; font-size:10px; line-height:1.3;
+}
+.bonus-dock-actions button:hover:not(:disabled) { color:#f0dfb9; background:#c8aa7218; border-color:#dfc38b80; }
+.bonus-dock-actions .ui-icon { width:14px; height:14px; }
+.bonus-dock-actions button[data-action="minigame"] { border-color:#c8aa7263; background:linear-gradient(130deg,#c8aa721e,#c8aa7208); }
+.charge-count { display:inline-grid; place-items:center; min-width:19px; height:19px; padding:0 5px; border:1px solid #d4bb7d59; border-radius:20px; background:#c8aa7220; color:#eed6a0; font:600 10px var(--sans); font-variant-numeric:tabular-nums; }
+.mini-badge { display:inline-flex; align-items:center; gap:5px; width:max-content; max-width:100%; padding:4px 7px; border:1px solid #c8aa7230; border-radius:30px; background:#c8aa7209; color:#a9b49a; font-size:9px; line-height:1.4; }
+.mini-badge .ui-icon { width:11px; height:11px; }
+.bonus-summary { display:flex; gap:9px; flex-wrap:wrap; margin:0 0 19px; }
+.bonus-summary>span,.bonus-summary>.bonus-chip { display:inline-flex; align-items:center; gap:7px; padding:7px 11px; border:1px solid #c8aa722b; border-radius:30px; background:#c8aa7208; color:#bfc7ad; font-size:11px; }
+.bonus-summary .ui-icon { width:14px; height:14px; color:#c8aa72; }
+.bonus-summary strong { color:#ead6a6; font-weight:600; }
+.bonus-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.bonus-card { position:relative; min-width:0; display:flex; flex-direction:column; align-items:flex-start; padding:20px; border:1px solid #c8aa7238; border-radius:11px; background:radial-gradient(ellipse at top left,#40503b30,transparent 75%),#13211b; box-shadow:inset 0 1px 0 #d8bd8108; }
+.bonus-card::before { content:''; position:absolute; top:0; left:20px; right:20px; height:1px; background:linear-gradient(90deg,transparent,#c8aa7269,transparent); }
+.bonus-card>.ui-icon,.bonus-card>.bonus-card-icon { width:31px; height:31px; color:#c9b17b; margin-bottom:12px; }
+.bonus-card h3 { font:500 27px/1.1 var(--serif); color:#e9ddc1; margin:10px 0 8px; }
+.bonus-card p { font-size:12px; line-height:1.8; color:#9ead96; margin:0 0 17px; }
+.bonus-card .mini-badge { margin-bottom:3px; }
+.bonus-card button { margin-top:auto; min-height:40px; width:100%; font-size:11px; }
+.bonus-card.locked,.bonus-card.is-locked { opacity:.56; background:#14201b; }
+.bonus-card.completed,.bonus-card.is-completed,.bonus-card.complete { border-color:#93b28b5e; background:radial-gradient(ellipse at top left,#839d5f16,transparent),#14221b; }
+.bonus-card.completed .mini-badge,.bonus-card.is-completed .mini-badge,.bonus-card.complete .mini-badge { border-color:#91b38540; color:#b8cba0; background:#9ab8790b; }
+.bonus-wallet { display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin:19px 0 0; padding:17px 18px; border:1px solid #c8aa723c; border-radius:10px; background:linear-gradient(120deg,#302f1e66,#19281d88); }
+.bonus-wallet>div { flex:1; min-width:180px; }
+.bonus-wallet h3 { font:500 25px/1.2 var(--serif); color:#decba0; margin:0 0 5px; }
+.bonus-wallet p { margin:4px 0 0; color:#a6b39a; font-size:11px; line-height:1.8; }
+.bonus-wallet button { min-height:42px; padding:10px 16px; font-size:11px; }
+.bonus-wallet strong { color:#e4c88d; }
+.bonus-medals { display:flex; flex-wrap:wrap; gap:7px; margin-top:15px; }
+.bonus-medals>span,.bonus-medal { display:inline-flex; align-items:center; gap:6px; padding:6px 9px; border:1px solid #c8aa7233; border-radius:6px; background:#c8aa7209; color:#c7bc99; font-size:10px; }
+.bonus-medals .ui-icon { width:14px; height:14px; color:#d0b17a; }
+.reward-display { position:relative; overflow:hidden; padding:27px 24px; border:1px solid #dbc28a66; border-radius:13px; background:radial-gradient(ellipse at 50% 15%,#a79a4636,transparent 72%),#15251c; text-align:center; box-shadow:inset 0 0 38px #c8aa720c; animation:reward-arrive .6s ease-out both; }
+.reward-display::before { content:''; position:absolute; inset:7px; pointer-events:none; border:1px solid #c8aa721e; border-radius:8px; }
+.reward-display>.ui-icon,.reward-display>.reward-icon { display:block; width:60px; height:60px; margin:0 auto 17px; color:#e2c382; filter:drop-shadow(0 0 16px #efd28b50); }
+.reward-display h3 { margin:8px 0 10px; font:500 34px/1.1 var(--serif); color:#efdfb9; }
+.reward-display p { color:#b6c2a3; font-size:13px; line-height:1.8; margin:8px auto 0; max-width:440px; }
+.reward-display strong { color:#e9ce93; }
+.reward-display .mini-badge { margin:12px auto 0; color:#d7c591; }
+.secret-entry { margin:14px 0; padding:19px 21px; border:1px solid #c8aa723d; border-left:2px solid #c7ac6e; border-radius:0 10px 10px 0; background:linear-gradient(110deg,#c8aa7210,#c8aa7203); }
+.secret-entry h3 { font:500 28px/1.15 var(--serif); color:#e2d3af; margin:8px 0; }
+.secret-entry p { color:#adbba0; font-size:12px; line-height:1.85; margin:7px 0; }
+.secret-entry .eyebrow { font-size:9px; }
+
+/* Common mechanism frame. */
+.mini-game { position:relative; min-width:0; padding:0; color:var(--pale); }
+.mini-instructions { padding:0 2px; color:#b9c5ae; font-size:13px; line-height:1.85; }
+.mini-instructions p { margin:0 0 12px; }
+.mini-instructions strong { color:#e4d7b5; }
+.mini-status { display:flex; align-items:center; justify-content:center; gap:7px; min-height:30px; margin:12px 0 16px; padding:7px 11px; border:1px solid #c8aa7228; border-radius:6px; background:#0e1b1559; color:#b6c6a8; font:11px/1.5 var(--sans); text-align:center; font-variant-numeric:tabular-nums; }
+.mini-status:empty { display:none; }
+.mini-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:18px; margin-top:18px; border-top:1px solid #c8aa7226; }
+.mini-toolbar button { min-height:44px; padding:10px 14px; font-size:11px; }
+.mini-toolbar .quiet { padding:8px 10px; }
+.mini-help { margin:16px 0 0; padding:13px 16px; border:1px solid #c8aa7243; border-radius:8px; background:#c8aa720b; color:#d4c59e; font-size:12px; line-height:1.85; }
+.mini-help p { margin:0; }
+.mini-success { text-align:center; border:1px solid #9db88b5e; border-radius:10px; background:#92ab6710; padding:18px; color:#d3debb; }
+.mini-success h3 { font:500 29px var(--serif); margin:0 0 9px; }
+.mini-success p { font-size:13px; line-height:1.8; margin:6px 0; }
+
+/* Six pairs of engraved seals. */
+.memory-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; max-width:530px; margin:20px auto 0; padding:14px; border:1px solid #c8aa722b; border-radius:12px; background:radial-gradient(ellipse at center,#29392a,#0c1915); box-shadow:inset 0 0 35px #0003; }
+.memory-card { position:relative; isolation:isolate; display:grid; place-items:center; min-width:0; min-height:94px; padding:10px 7px; overflow:hidden; border:1px solid #c7ad7266; border-radius:8px; background:linear-gradient(135deg,#34412b,#1b2a20 65%,#293926); color:#cbb47d; box-shadow:inset 0 0 0 4px #102016,inset 0 0 0 5px #c7ad722b,0 3px 8px #0003; transition:color .25s,background .25s,border-color .25s,box-shadow .25s; }
+.memory-card::before { content:''; position:absolute; inset:9px; border:1px solid #c8aa7220; border-radius:2px; background:repeating-linear-gradient(45deg,transparent,transparent 6px,#d0ba7b05 6px,#d0ba7b05 7px); z-index:-1; pointer-events:none; }
+.memory-card:hover:not(:disabled) { border-color:#e3cb8b; box-shadow:inset 0 0 0 4px #15261a,inset 0 0 0 5px #c7ad7250,0 0 17px #c8aa7212; color:#e9d49f; }
+.memory-card .seal-back { display:grid; place-items:center; width:49px; height:49px; border:1px solid #c7ac6d5c; border-radius:50%; box-shadow:0 0 0 5px #c8aa7205,inset 0 0 0 4px #c8aa7207; }
+.memory-card .seal-back svg { width:37px; height:37px; }
+.memory-card .seal-face { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; }
+.memory-card .seal-face svg { width:36px; height:36px; }
+.symbol-name { display:block; font-size:10px; line-height:1.3; color:inherit; }
+.memory-card.is-open { border-color:#dfc58c; background:radial-gradient(ellipse at top,#b7a16a2b,#253623); color:#f1dca6; box-shadow:inset 0 0 0 4px #1b2e20,inset 0 0 0 5px #d5bd7c44,0 4px 13px #0003; }
+.memory-card.is-matched,.memory-card.is-matched:disabled { opacity:1; border-color:#92b4888c; background:linear-gradient(135deg,#3c5130,#263d2b); color:#ccdeae; box-shadow:inset 0 0 0 4px #1c3022,inset 0 0 0 5px #a5c3894a,0 0 13px #91b56d13; }
+.memory-card.is-matched .seal-face { animation:seal-recognized .35s ease-out both; }
+
+/* The aqueduct: brass channels carrying a green-blue glow. */
+.pipe-board { display:grid; grid-template-columns:minmax(48px,1fr) minmax(0,324px) minmax(48px,1fr); align-items:center; gap:13px; margin:20px auto; }
+.pipe-source,.pipe-sink { position:relative; text-align:center; font-size:11px; line-height:1.6; color:#c7c3a0; padding:12px 0; }
+.pipe-source::after,.pipe-sink::before { content:''; display:block; height:3px; width:70%; max-width:56px; margin:9px auto 0; border-radius:5px; background:#b69e67; box-shadow:0 0 7px #d3bb7c2b; }
+.pipe-source { color:#bddbc1; }
+.pipe-source::after { background:#8bc5ab; box-shadow:0 0 9px #91c7aa80; }
+.pipe-source .ui-icon,.pipe-sink .ui-icon { display:block; width:23px; height:23px; margin:0 auto 6px; }
+.pipe-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; width:100%; padding:8px; border:1px solid #c8aa7252; border-radius:11px; background:#0c1713; box-shadow:0 8px 30px #0003,inset 0 0 18px #0004; }
+.pipe-tile { position:relative; display:grid; place-items:center; aspect-ratio:1; min-width:44px; min-height:44px; padding:0; overflow:hidden; border:1px solid #c8aa723c; border-radius:5px; background:radial-gradient(ellipse at 40% 30%,#34402c,#19271e); color:#bbaa79; box-shadow:inset 0 1px 0 #f2ddb60c; }
+.pipe-tile::after { content:''; position:absolute; inset:4px; pointer-events:none; background:radial-gradient(circle at 0 0,#d5bd7c80 0 1px,transparent 2px),radial-gradient(circle at 100% 0,#d5bd7c80 0 1px,transparent 2px),radial-gradient(circle at 100% 100%,#d5bd7c80 0 1px,transparent 2px),radial-gradient(circle at 0 100%,#d5bd7c80 0 1px,transparent 2px); }
+.pipe-tile svg { width:100%; height:100%; max-width:none; filter:drop-shadow(0 2px 1px #0009); transition:transform .2s ease,color .3s; }
+.pipe-tile:hover:not(:disabled) { border-color:#d6bf82a1; color:#e0ca92; background:#31412d; }
+.pipe-tile.connected { color:#a0d8ba; border-color:#87b99d8c; background:radial-gradient(ellipse,#62977526,#1a2d23 80%); }
+.pipe-tile.connected svg { filter:drop-shadow(0 0 3px #8ac7a56e) drop-shadow(0 1px 1px #0005); }
+
+/* A celestial chart, nine fragments in a narrow brass frame. */
+.mosaic-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:3px; width:min(100%,350px); margin:20px auto 0; padding:7px; border:1px solid #d1b87a99; border-radius:9px; background:#101a16; box-shadow:inset 0 0 0 3px #c8aa7212,0 8px 26px #0005; }
+.mosaic-tile { position:relative; aspect-ratio:1; min-width:44px; min-height:44px; padding:0; overflow:hidden; background-image:url('assets/observatory.jpg'); background-size:300% 300%; background-repeat:no-repeat; border:1px solid #e0c7843b; border-radius:2px; box-shadow:inset 0 0 15px #0002; }
+.mosaic-tile:hover:not(:disabled) { border-color:#edd3a2e6; box-shadow:inset 0 0 0 1px #edd3a280; }
+.mosaic-tile.selected { z-index:1; outline:2px solid #f1d89b; outline-offset:0; border-color:#fff0c9; box-shadow:inset 0 0 0 2px #f0d795,0 0 15px #f1d38a45; }
+.tile-number { position:absolute; top:5px; left:5px; display:grid; place-items:center; width:22px; height:22px; border:1px solid #f1d99d80; border-radius:4px; background:#15231bea; color:#f0d8a2; font:600 11px var(--sans); }
+.mosaic-reference { display:block; width:min(100%,350px); height:auto; margin:16px auto 0; border:1px solid #c8aa7263; border-radius:6px; box-shadow:0 5px 18px #0003; }
+
+/* The coded testament: a warm page against the green instrument desk. */
+.mini-game[data-game="cipher"] .mini-instructions { position:relative; margin:0 0 18px; padding:17px 20px; border:1px solid #e1c894; border-radius:8px; background:linear-gradient(120deg,#e6d6b6,#cbb891); color:#4b4934; box-shadow:inset 0 0 25px #886d4320,0 4px 15px #0002; font:500 18px/1.55 var(--serif); }
+.mini-game[data-game="cipher"] .mini-instructions::before { content:''; position:absolute; top:6px; bottom:6px; left:6px; right:6px; border:1px solid #8f805a33; border-radius:3px; pointer-events:none; }
+.mini-game[data-game="cipher"] .mini-instructions p { margin:0; }
+.mini-game[data-game="cipher"] .mini-instructions strong { color:#3c3f2b; }
+.cipher-answer { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:9px; padding:16px 12px; margin:12px 0 20px; border:1px solid #c8aa7238; border-radius:9px; background:#0b18137d; min-height:79px; }
+.cipher-slot { display:grid; place-items:center; width:48px; height:48px; border:1px dashed #c8aa7270; border-radius:7px; color:#e2c68e; background:radial-gradient(ellipse,#c8aa7216,transparent); font:23px var(--serif); }
+.cipher-slot svg { width:30px; height:30px; }
+.cipher-symbols { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; max-width:430px; margin:0 auto; }
+.cipher-symbols button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:9px; min-height:87px; min-width:44px; padding:12px; border:1px solid #c8aa724f; border-radius:8px; background:linear-gradient(140deg,#303d28,#1b2b21); color:#d6c088; box-shadow:inset 0 1px 0 #efdb9d0c; }
+.cipher-symbols button svg { width:32px; height:32px; }
+.cipher-symbols button span { font-size:11px; line-height:1.35; }
+.cipher-symbols button:hover:not(:disabled) { border-color:#e3cb8e; color:#f4e1b0; background:linear-gradient(140deg,#455034,#273c29); }
+.cipher-symbols button:disabled { opacity:.4; }
+
+@keyframes seal-recognized { from{transform:scale(.88);opacity:.7}to{transform:scale(1);opacity:1} }
+@keyframes reward-arrive { 0%{opacity:0;transform:translateY(8px);box-shadow:inset 0 0 60px #efd49140}100%{opacity:1;transform:translateY(0);box-shadow:inset 0 0 38px #c8aa720c} }
+@media(min-width:1050px) and (max-height:820px) {
+  .stage-column .scene-shell { max-width:calc((100dvh - 278px)*16/9); }
+  .bonus-dock { min-height:47px; padding-block:6px; margin-top:7px; }
+  .bonus-dock-heading .eyebrow { font-size:8px; }
+  .bonus-dock-heading h3 { font-size:18px; }
+  .bonus-dock-actions button { min-height:32px; padding:6px 10px; }
+}
+@media(max-width:1100px) {
+  .bonus-dock { gap:9px; padding:8px 10px; }
+  .bonus-dock-heading>.ui-icon { display:none; }
+  .bonus-dock-heading h3 { font-size:18px; }
+  .bonus-dock-actions { gap:5px; }
+  .bonus-dock-actions button { padding:7px 9px; font-size:9px; }
+  .bonus-dock-actions .mini-badge { display:none; }
+}
+@media(max-width:820px) {
+  .bonus-dock { min-height:52px; margin-bottom:3px; }
+  .bonus-dock-heading h3 { font-size:20px; }
+  .bonus-dock-actions button { min-height:36px; font-size:10px; }
+}
+@media(max-width:540px) {
+  .bonus-dock { align-items:flex-start; flex-direction:column; gap:9px; padding:12px; }
+  .bonus-dock-heading { gap:8px; }
+  .bonus-dock-heading>.ui-icon { display:block; width:18px; height:18px; }
+  .bonus-dock-heading h3 { font-size:21px; }
+  .bonus-dock-heading .eyebrow { font-size:9px; }
+  .bonus-dock-actions { width:100%; gap:7px; }
+  .bonus-dock-actions button { min-height:44px; font-size:11px; padding:9px 11px; }
+  .bonus-dock-actions button[data-action="minigame"] { flex:1; }
+  .bonus-summary { gap:6px; }
+  .bonus-summary>span,.bonus-summary>.bonus-chip { font-size:10px; padding:7px 9px; }
+  .bonus-grid { grid-template-columns:1fr; gap:11px; }
+  .bonus-card { padding:17px; }
+  .bonus-card h3 { font-size:27px; }
+  .bonus-card p { font-size:12px; }
+  .bonus-card button { min-height:44px; font-size:12px; }
+  .bonus-wallet { padding:15px; gap:12px; }
+  .bonus-wallet>div { min-width:0; flex-basis:100%; }
+  .bonus-wallet button { min-height:44px; width:100%; }
+  .reward-display { padding:23px 17px; }
+  .reward-display h3 { font-size:30px; }
+  .reward-display p { font-size:12px; }
+  .secret-entry { padding:16px; }
+  .secret-entry h3 { font-size:26px; }
+  .mini-instructions { font-size:12px; line-height:1.75; }
+  .mini-status { font-size:10px; margin:10px 0 13px; padding:7px 8px; }
+  .mini-toolbar { justify-content:center; gap:7px; padding-top:14px; margin-top:15px; }
+  .mini-toolbar button { font-size:10px; padding:9px 10px; }
+  .mini-help { font-size:11px; padding:11px 13px; }
+  .memory-grid { gap:6px; padding:8px; margin-top:15px; }
+  .memory-card { min-height:77px; padding:7px 4px; border-radius:6px; }
+  .memory-card::before { inset:7px; }
+  .memory-card .seal-back { width:34px; height:34px; }
+  .memory-card .seal-back svg { width:27px; height:27px; }
+  .memory-card .seal-face { gap:7px; }
+  .memory-card .seal-face svg { width:28px; height:28px; }
+  .symbol-name { font-size:8px; }
+  .pipe-board { grid-template-columns:1fr; gap:9px; max-width:300px; margin:16px auto; }
+  .pipe-source,.pipe-sink { padding:0; font-size:10px; display:flex; justify-content:center; align-items:center; gap:8px; }
+  .pipe-source::after,.pipe-sink::before { width:27px; margin:0; }
+  .pipe-source .ui-icon,.pipe-sink .ui-icon { width:17px; height:17px; margin:0; }
+  .pipe-grid { padding:6px; gap:4px; }
+  .mosaic-grid { padding:6px; gap:3px; margin-top:16px; }
+  .tile-number { top:4px; left:4px; width:20px; height:20px; font-size:10px; }
+  .mini-game[data-game="cipher"] .mini-instructions { padding:14px 16px; font-size:17px; }
+  .cipher-answer { gap:6px; padding:12px 8px; margin-bottom:16px; }
+  .cipher-slot { width:44px; height:44px; }
+  .cipher-slot svg { width:27px; height:27px; }
+  .cipher-symbols { gap:8px; }
+  .cipher-symbols button { min-height:82px; padding:10px 7px; }
+  .cipher-symbols button svg { width:29px; height:29px; }
+  .cipher-symbols button span { font-size:10px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .mini-game *, .mini-game *::before, .mini-game *::after,.reward-display { animation:none!important; transition:none!important; }
+}
+
+/* Final spacing and the original illustration proportions. */
+.bonus-wallet{margin-bottom:16px}
+.bonus-fineprint,.bonus-epilogue{color:#a6b49c;font-size:12px;line-height:1.8;margin:18px 0}
+.bonus-unlocked{padding:14px 17px;border:1px solid #c8aa7255;border-radius:9px;background:#c8aa7212;color:#e0c48c;font-size:13px;line-height:1.7}
+.bonus-card .bonus-gate{font-size:11px;margin-top:8px}
+.mosaic-grid,.mosaic-reference{width:min(100%,520px)}
+.mosaic-tile{aspect-ratio:16/9}
+@media(min-width:1050px) and (max-height:820px){.stage-column .scene-shell{max-width:calc((100dvh - 290px)*16/9)}}
+@media(max-width:540px){.bonus-dock-actions button{min-height:44px}.bonus-wallet{margin-bottom:12px}}

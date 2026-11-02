@@ -1,0 +1,14 @@
+/* Exploration, relics and contextual controls. */
+#map-relics{margin-top:9px;color:#dcc797;font-size:10px;letter-spacing:.6px}
+#selected-secret{margin-top:7px;color:#b7d8cb;font-size:10px;letter-spacing:.25px}
+.node-relic{position:absolute;right:-4px;top:-5px;z-index:3;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#182b31;border:1px solid #d2b97c;color:#f0d29a;font-size:16px;box-shadow:0 2px 15px #080e17}
+#relic-status{display:block;min-height:11px;font-size:9px;letter-spacing:.5px;color:#c4d9c6;margin-top:10px}
+#interaction{position:absolute;bottom:101px;left:50%;transform:translate(-50%,8px);display:flex;align-items:center;justify-content:center;gap:10px;max-width:min(90%,520px);padding:11px 17px;background:linear-gradient(120deg,#0a202bea,#182c32eb);border:1px solid #c0d1b752;border-radius:5px;box-shadow:0 5px 25px #020c1533;color:#e4d8b8;font-size:12px;line-height:1.5;opacity:0;transition:opacity .18s,transform .18s;text-align:center}
+#interaction.visible{opacity:1;transform:translate(-50%,0)}
+#interaction kbd{color:#e8d29c;border-color:#d8c39366;background:#d9be7810;font-size:12px;min-width:23px;flex-shrink:0}
+#touch-interact{display:none;font:20px Georgia,serif;color:#a7e8d6;border-color:#a7e8d688;background:#123539cc}
+#touch-interact.available{display:block}
+@media(max-width:900px){#interaction{bottom:139px;font-size:11px}#level-hint{gap:15px}.node-relic{width:21px;height:21px;font-size:13px}}
+@media(pointer:coarse){#interaction{bottom:108px;max-width:85%;padding:9px 13px}.touch-controls>div{gap:12px}.touch-controls button{width:53px;height:53px}#level-hint{display:none}}
+@media(max-width:600px) and (orientation:portrait){#map-relics{font-size:9px;margin-top:8px}#selected-secret{font-size:9px;margin-top:5px}.node-relic{width:18px;height:18px;font-size:12px;right:-3px}#relic-status{font-size:8px;margin-top:8px}.level-panel{min-width:260px}#interaction{width:max-content;max-width:87%;font-size:11px;bottom:108px}.touch-controls{left:3%;right:3%}.touch-controls>div{gap:8px}.touch-controls button{width:51px;height:51px}#chapter-card{top:32%}}
+@media(max-height:540px) and (orientation:landscape){#interaction{bottom:85px;font-size:10px;padding:7px 12px}#relic-status{font-size:8px;margin-top:7px}#map-relics{margin-top:5px;font-size:8px}#selected-secret{font-size:8px;margin-top:4px}.map-bottom p{max-width:470px}}
