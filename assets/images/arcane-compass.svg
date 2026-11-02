@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" fill="none" aria-labelledby="compass-title compass-desc" role="img">
+  <title id="compass-title">Rose des vents des mers obscures</title>
+  <desc id="compass-desc">Anneaux cartographiques et huit pointes de boussole en jade spectral et laiton, autour d’un centre transparent.</desc>
+  <defs>
+    <path id="compass-tick" d="M300 44V50"/>
+    <path id="compass-division" d="M300 42V58M296 51H304"/>
+    <g id="compass-quarter-ticks">
+      <use href="#compass-tick" transform="rotate(5 300 300)"/>
+      <use href="#compass-tick" transform="rotate(10 300 300)"/>
+      <use href="#compass-tick" transform="rotate(20 300 300)"/>
+      <use href="#compass-tick" transform="rotate(25 300 300)"/>
+      <use href="#compass-tick" transform="rotate(35 300 300)"/>
+      <use href="#compass-tick" transform="rotate(40 300 300)"/>
+      <use href="#compass-tick" transform="rotate(50 300 300)"/>
+      <use href="#compass-tick" transform="rotate(55 300 300)"/>
+      <use href="#compass-tick" transform="rotate(65 300 300)"/>
+      <use href="#compass-tick" transform="rotate(70 300 300)"/>
+      <use href="#compass-tick" transform="rotate(80 300 300)"/>
+      <use href="#compass-tick" transform="rotate(85 300 300)"/>
+      <use href="#compass-division" transform="rotate(15 300 300)"/>
+      <use href="#compass-division" transform="rotate(30 300 300)"/>
+      <use href="#compass-division" transform="rotate(60 300 300)"/>
+      <use href="#compass-division" transform="rotate(75 300 300)"/>
+    </g>
+    <g id="compass-cardinal">
+      <path d="M300 13L288 62L300 91L312 62Z" stroke="#79E6CA" stroke-opacity=".62"/>
+      <path d="M300 13V91L312 62Z" fill="#79E6CA" fill-opacity=".065"/>
+      <path d="M300 26V59M300 71V80M300 104V119" stroke="#BFA577" stroke-opacity=".68"/>
+      <path d="M290 103L300 94L310 103M294 113L300 107L306 113" stroke="#79E6CA" stroke-opacity=".32"/>
+      <path d="M281 81L284 95M319 81L316 95" stroke="#BFA577" stroke-opacity=".4"/>
+    </g>
+    <g id="compass-intercardinal">
+      <path d="M300 35L292 70L300 89L308 70Z" stroke="#BFA577" stroke-opacity=".48"/>
+      <path d="M300 35V89L308 70Z" fill="#BFA577" fill-opacity=".045"/>
+      <path d="M300 48V65M300 99V115" stroke="#79E6CA" stroke-opacity=".37"/>
+    </g>
+    <g id="compass-star-mark">
+      <path d="M300 71V81M295 76H305M297 73L303 79M303 73L297 79" stroke="#BFA577" stroke-opacity=".45"/>
+      <circle cx="300" cy="76" r="10" stroke="#79E6CA" stroke-opacity=".23"/>
+      <path d="M287 76H282M313 76H318" stroke="#79E6CA" stroke-opacity=".22"/>
+    </g>
+    <g id="compass-etching">
+      <path d="M296 63L300 60L304 63V68L300 71L296 68Z" stroke="#BFA577" stroke-opacity=".38"/>
+      <path d="M297 77H303M300 74V80M298 86H302" stroke="#79E6CA" stroke-opacity=".3"/>
+    </g>
+  </defs>
+
+  <!-- Fine, double engraved rings. The central field remains unpainted. -->
+  <circle cx="300" cy="300" r="260" stroke="#79E6CA" stroke-opacity=".21"/>
+  <circle cx="300" cy="300" r="252" stroke="#BFA577" stroke-opacity=".31" stroke-width=".75"/>
+  <circle cx="300" cy="300" r="239" stroke="#79E6CA" stroke-opacity=".13" stroke-width=".6"/>
+  <circle cx="300" cy="300" r="221" stroke="#BFA577" stroke-opacity=".26" stroke-width=".75"/>
+  <circle cx="300" cy="300" r="215" stroke="#79E6CA" stroke-opacity=".19" stroke-width=".65"/>
+  <circle cx="300" cy="300" r="194" stroke="#79E6CA" stroke-opacity=".075" stroke-dasharray="1 12"/>
+  <g stroke="#BFA577" stroke-opacity=".3" stroke-width=".7">
+    <use href="#compass-quarter-ticks"/>
+    <use href="#compass-quarter-ticks" transform="rotate(90 300 300)"/>
+    <use href="#compass-quarter-ticks" transform="rotate(180 300 300)"/>
+    <use href="#compass-quarter-ticks" transform="rotate(270 300 300)"/>
+  </g>
+
+  <!-- Eight compass directions, separated by an empty inner circle. -->
+  <use href="#compass-cardinal"/>
+  <use href="#compass-cardinal" transform="rotate(90 300 300)"/>
+  <use href="#compass-cardinal" transform="rotate(180 300 300)"/>
+  <use href="#compass-cardinal" transform="rotate(270 300 300)"/>
+  <use href="#compass-intercardinal" transform="rotate(45 300 300)"/>
+  <use href="#compass-intercardinal" transform="rotate(135 300 300)"/>
+  <use href="#compass-intercardinal" transform="rotate(225 300 300)"/>
+  <use href="#compass-intercardinal" transform="rotate(315 300 300)"/>
+
+  <!-- Small astronomical notches and broken rays. -->
+  <use href="#compass-star-mark" transform="rotate(22.5 300 300)"/>
+  <use href="#compass-star-mark" transform="rotate(202.5 300 300)"/>
+  <use href="#compass-etching" transform="rotate(67.5 300 300)"/>
+  <use href="#compass-etching" transform="rotate(112.5 300 300)"/>
+  <use href="#compass-etching" transform="rotate(247.5 300 300)"/>
+  <use href="#compass-etching" transform="rotate(292.5 300 300)"/>
+  <g stroke="#79E6CA" stroke-opacity=".23" stroke-width=".7">
+    <path d="M300 4V8M300 122V137M300 145V153"/>
+    <path d="M300 4V8M300 122V137M300 145V153" transform="rotate(90 300 300)"/>
+    <path d="M300 4V8M300 122V137M300 145V153" transform="rotate(180 300 300)"/>
+    <path d="M300 4V8M300 122V137M300 145V153" transform="rotate(270 300 300)"/>
+  </g>
+  <path d="M93 170A245 245 0 0 1 171 92M429 92A245 245 0 0 1 508 171M508 429A245 245 0 0 1 429 508M171 508A245 245 0 0 1 92 429" stroke="#79E6CA" stroke-opacity=".43" stroke-width="1.2"/>
+  <path d="M115 200A211 211 0 0 1 159 143M441 143A211 211 0 0 1 485 200M485 400A211 211 0 0 1 441 457M159 457A211 211 0 0 1 115 400" stroke="#BFA577" stroke-opacity=".28" stroke-width=".6"/>
+  <g fill="#79E6CA" fill-opacity=".43">
+    <circle cx="118" cy="118" r="1.6"/><circle cx="482" cy="118" r="1.6"/>
+    <circle cx="482" cy="482" r="1.6"/><circle cx="118" cy="482" r="1.6"/>
+  </g>
+  <g stroke="#BFA577" stroke-opacity=".38" stroke-width=".65">
+    <circle cx="300" cy="22" r="3"/><circle cx="578" cy="300" r="3"/>
+    <circle cx="300" cy="578" r="3"/><circle cx="22" cy="300" r="3"/>
+  </g>
+</svg>

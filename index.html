@@ -4,16 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Bienvenue dans l’arcade Seabyss : découvre les jeux du studio et joue directement dans ton navigateur.">
-  <meta name="theme-color" content="#050d12">
+  <meta name="theme-color" content="#030404">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'none'">
-  <meta property="og:title" content="Seabyss — Cap sur l’inconnu">
+  <meta property="og:title" content="Seabyss — L’inconnu t’appelle">
   <meta property="og:description" content="Des jeux à découvrir. Des parties à lancer. Entre dans l’arcade Seabyss.">
   <meta property="og:type" content="website">
-  <title>Seabyss — Cap sur l’inconnu</title>
+  <title>Seabyss — L’inconnu t’appelle</title>
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=pirate2">
+  <link rel="stylesheet" href="css/style.css?v=magic3">
   <script src="js/catalog.js?v=pirate2" defer></script>
+  <script src="js/atmosphere.js?v=magic3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#catalogue">Aller aux jeux</a>
@@ -29,19 +30,27 @@
   </header>
   <main class="shell">
     <section class="hero" aria-labelledby="hero-title">
-      <img class="hero-backdrop" src="assets/images/pirate-abyss-hero.png" alt="Un navire fantôme traverse une mer noire entre les falaises, sous une lune voilée. Ses lanternes brillent dans la brume turquoise." width="1660" height="948" fetchpriority="high">
+      <img class="hero-backdrop ambient-motion" src="assets/images/pirate-abyss-hero.png" alt="Un navire fantôme traverse une mer noire entre les falaises, sous une lune voilée. Ses lanternes brillent dans la brume turquoise." width="1660" height="948" fetchpriority="high">
       <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-atmosphere" aria-hidden="true">
+        <img class="arcane-orbit ambient-motion" src="assets/images/arcane-compass.svg" alt="" width="600" height="600">
+        <div class="spectral-glow ambient-motion"></div>
+        <div class="sea-mist mist-back ambient-motion"></div>
+        <div class="sea-mist mist-front ambient-motion"></div>
+        <div class="sea-sparks"><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i></div>
+      </div>
+      <button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="true" hidden><span class="motion-indicator" aria-hidden="true"></span><span data-motion-label>Ambiance animée</span></button>
       <div class="hero-copy">
-        <p class="eyebrow"><span class="ornament-line" aria-hidden="true"></span> L’APPEL DES PROFONDEURS</p>
-        <h1 id="hero-title">Cap sur<br><em>l’inconnu.</em></h1>
-        <p class="hero-intro">Des mondes à découvrir. Des histoires à vivre.<br>Embarque pour les créations Seabyss, directement dans ton navigateur.</p>
+        <p class="eyebrow"><span class="ornament-line" aria-hidden="true"></span> PAR-DELÀ LES MERS CONNUES</p>
+        <h1 id="hero-title">L’inconnu<br><em>t’appelle.</em></h1>
+        <p class="hero-intro">Des mondes étranges. Des aventures singulières.<br>Découvre les jeux du studio Seabyss et embarque, directement dans ton navigateur.</p>
         <div class="hero-actions"><a href="#catalogue" class="button button-primary">Explorer les <span data-game-count>3</span> jeux <span class="button-arrow" aria-hidden="true">→</span></a><a href="#studio" class="hero-secondary">Le studio <span aria-hidden="true">↗</span></a></div>
         <p class="hero-caption"><span class="status-dot"></span> Aucune installation. L’aventure commence ici.</p>
       </div>
-      <div class="hero-signature" aria-hidden="true"><img src="assets/images/compass-mark.svg" alt="" width="66" height="66"><span>SEABYSS ORIGINALS<small>SOUS UN MÊME PAVILLON</small></span></div>
+      <div class="hero-signature" aria-hidden="true"><img src="assets/images/compass-mark.svg" alt="" width="66" height="66"><span>CAP SUR L’IMAGINAIRE<small>SEABYSS · SOUS UN MÊME PAVILLON</small></span></div>
       <span class="hero-corner corner-one" aria-hidden="true"></span><span class="hero-corner corner-two" aria-hidden="true"></span>
     </section>
-    <div class="welcome-strip"><span class="strip-label"><span aria-hidden="true">✦</span> DES UNIVERS. UN MÊME PAVILLON.</span><p>Choisis ton escale. Le reste appartient à l’aventure.</p><a href="#catalogue" class="strip-link">Le catalogue <span aria-hidden="true">↓</span></a></div>
+    <div class="welcome-strip"><span class="strip-label"><span aria-hidden="true">✦</span> TROUVE TON PROCHAIN MONDE.</span><p>Des jeux indépendants. Un navigateur. Toute une aventure.</p><a href="#catalogue" class="strip-link">Descendre vers les jeux <span aria-hidden="true">↓</span></a></div>
     <section class="catalogue" id="catalogue" aria-labelledby="catalogue-title">
       <div class="section-top"><div><p class="eyebrow muted">TES PROCHAINES ESCALES</p><h2 id="catalogue-title">À l’horizon, <em>tes jeux.</em></h2></div><span class="catalogue-label"><span data-game-count>3</span> UNIVERS À EXPLORER</span></div>
       <div class="catalogue-layout">

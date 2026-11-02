@@ -1,8 +1,10 @@
 # Seabyss — Portail de jeux navigateur
 
-Seabyss est le portail du studio : catalogue de jeux, recherche, filtres, tri, favoris locaux et lecteur intégré avec ouverture dans un onglet. La direction visuelle Pirate Abyss associe une mer nocturne, un navire fantôme original, une boussole de laiton et des détails de cartographie marine. La palette mêle l’encre, le pétrole, le turquoise et le laiton vieilli.
+Seabyss est le portail du studio : catalogue de jeux, recherche, filtres, tri, favoris locaux et lecteur intégré avec ouverture dans un onglet. La direction visuelle pirate magique associe un noir profond, un navire fantôme, de l’or ancien et des lueurs vert spectral. Un cercle de navigation gravé, une brume mouvante et quelques particules lumineuses donnent vie au décor.
 
 La bannière est une illustration décorative du studio. Les vignettes représentent les jeux du catalogue. Les polices Cormorant Garamond et Manrope sont servies localement ; leurs licences sont conservées dans `assets/fonts/`. Les commandes du lecteur restent accessibles au-dessus du jeu, et les cartes passent sur une colonne sur les petits écrans.
+
+Les animations décoratives sont réalisées en CSS, sans bibliothèque ni boucle JavaScript. Le bouton d’ambiance mémorise un choix local sous `seabyss.motion.v1`. Les effets se mettent en pause hors écran, dans un onglet masqué et pendant la lecture d’un jeu. La préférence système de réduction des mouvements reste prioritaire ; le contenu reste accessible sans effets.
 
 ## Hébergement
 
@@ -15,6 +17,7 @@ Pour prévisualiser le catalogue, servir la racine avec un serveur HTTP statique
 - `index.html` : accueil, filtres, catalogue et lecteur.
 - `css/style.css` : présentation du portail et de la confidentialité.
 - `js/catalog.js` : chargement du catalogue et interactions.
+- `js/atmosphere.js` : préférences d’animation et pauses automatiques.
 - `data/games.json` : liste éditoriale des jeux réellement jouables.
 - `games/<identifiant>/index.html` : entrée de chaque jeu intégré.
 - `privacy.html` : informations sur le stockage local et l’hébergement.
