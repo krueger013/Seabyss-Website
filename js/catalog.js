@@ -94,7 +94,10 @@
 
   function cardFor(game) {
     const card = makeElement("article", "game-card");
-    const art = makeElement("div", "game-art");
+    const art = makeElement("button", "game-art");
+    art.type = "button";
+    art.dataset.play = game.id;
+    art.setAttribute("aria-label", `Découvrir ${game.title}`);
     if (game.thumbnail) {
       const image = makeElement("img", "game-thumbnail");
       image.src = game.thumbnail;
@@ -114,7 +117,7 @@
     const title = makeElement("h3", "game-title", game.title);
     const description = makeElement("p", "game-description", game.description);
     const actions = makeElement("div", "game-actions");
-    const play = makeElement("button", "game-play", "Jouer ↗");
+    const play = makeElement("button", "game-play", "Jouer →");
     play.type = "button";
     play.dataset.play = game.id;
     play.setAttribute("aria-label", `Jouer à ${game.title}`);
