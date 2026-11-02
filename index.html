@@ -4,41 +4,50 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Bienvenue dans l’arcade Seabyss : découvre les jeux du studio et joue directement dans ton navigateur.">
-  <meta name="theme-color" content="#060a12">
+  <meta name="theme-color" content="#050d12">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'none'">
-  <meta property="og:title" content="Seabyss — L’arcade du studio">
+  <meta property="og:title" content="Seabyss — Cap sur l’inconnu">
   <meta property="og:description" content="Des jeux à découvrir. Des parties à lancer. Entre dans l’arcade Seabyss.">
   <meta property="og:type" content="website">
-  <title>Seabyss — L’arcade du studio</title>
+  <title>Seabyss — Cap sur l’inconnu</title>
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=arcade1">
-  <script src="js/catalog.js?v=arcade1" defer></script>
+  <link rel="stylesheet" href="css/style.css?v=pirate2">
+  <script src="js/catalog.js?v=pirate2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#catalogue">Aller aux jeux</a>
   <header class="site-header">
     <div class="header-main shell">
-      <a class="brand" href="./" aria-label="Seabyss, accueil"><span class="brand-symbol" aria-hidden="true">S<span>✦</span></span><span>SEABYSS<small>JEUX &amp; CRÉATIONS</small></span></a>
-      <div class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><label class="sr-only" for="search-games">Rechercher un jeu</label><input id="search-games" type="search" placeholder="Trouve ta prochaine partie…" autocomplete="off" maxlength="100"><span class="search-hint" aria-hidden="true">JEUX</span></div>
-      <a class="header-cta" href="#catalogue">Entrer dans l’arcade <span aria-hidden="true">↗</span></a>
+      <a class="brand" href="./" aria-label="Seabyss, accueil"><img class="brand-symbol" src="assets/images/compass-mark.svg" alt="" width="48" height="48"><span>SEABYSS<small>STUDIO DE JEUX INDÉPENDANT</small></span></a>
+      <div class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><label class="sr-only" for="search-games">Rechercher un jeu</label><input id="search-games" type="search" placeholder="Quel univers cherches-tu ?" autocomplete="off" maxlength="100"><span class="search-hint" aria-hidden="true">EXPLORER</span></div>
+      <a class="header-cta" href="#catalogue">Choisir une aventure <span aria-hidden="true">↗</span></a>
     </div>
     <nav class="main-nav" aria-label="Navigation principale"><div class="shell nav-inner">
-      <a class="nav-home" href="#catalogue"><span aria-hidden="true">✚</span> Les jeux</a><a href="#studio">Le studio</a><a href="#actualites">Quoi de neuf ?</a><span class="nav-note"><span class="status-dot"></span> Jouables dans le navigateur</span>
+      <a class="nav-home" href="#catalogue"><span class="nav-diamond" aria-hidden="true">◇</span> Les jeux</a><a href="#studio">Le studio</a><a href="#actualites">Carnet de bord</a><span class="nav-note"><span class="status-dot"></span> Jouables dans le navigateur</span>
     </div></nav>
   </header>
   <main class="shell">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-copy"><p class="eyebrow"><span class="tiny-square"></span> SEABYSS / DARK ABYSS</p><h1 id="hero-title">Joue au-delà<br><span>de la surface.</span></h1><p class="hero-intro">Des univers à découvrir dans les profondeurs du web. Explore les jeux du studio et trouve ta prochaine aventure.</p><a href="#catalogue" class="button button-orange">Découvrir les jeux <span aria-hidden="true">↘</span></a><p class="hero-caption"><span aria-hidden="true">▸</span> Entre dans les profondeurs. Joue dans ton navigateur.</p></div>
-      <div class="hero-art"><img src="assets/images/arcade-world.svg" alt="Un portail de lumière cyan suspendu au-dessus des profondeurs abyssales" width="1100" height="650"><span class="art-stamp">EXPLORE<br><strong>THE UNKNOWN</strong><span aria-hidden="true">✦</span></span><span class="art-label">DARK ABYSS / SEABYSS ORIGINALS</span></div>
+      <img class="hero-backdrop" src="assets/images/pirate-abyss-hero.png" alt="Un navire fantôme traverse une mer noire entre les falaises, sous une lune voilée. Ses lanternes brillent dans la brume turquoise." width="1660" height="948" fetchpriority="high">
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="ornament-line" aria-hidden="true"></span> L’APPEL DES PROFONDEURS</p>
+        <h1 id="hero-title">Cap sur<br><em>l’inconnu.</em></h1>
+        <p class="hero-intro">Des mondes à découvrir. Des histoires à vivre.<br>Embarque pour les créations Seabyss, directement dans ton navigateur.</p>
+        <div class="hero-actions"><a href="#catalogue" class="button button-primary">Explorer les <span data-game-count>3</span> jeux <span class="button-arrow" aria-hidden="true">→</span></a><a href="#studio" class="hero-secondary">Le studio <span aria-hidden="true">↗</span></a></div>
+        <p class="hero-caption"><span class="status-dot"></span> Aucune installation. L’aventure commence ici.</p>
+      </div>
+      <div class="hero-signature" aria-hidden="true"><img src="assets/images/compass-mark.svg" alt="" width="66" height="66"><span>SEABYSS ORIGINALS<small>SOUS UN MÊME PAVILLON</small></span></div>
+      <span class="hero-corner corner-one" aria-hidden="true"></span><span class="hero-corner corner-two" aria-hidden="true"></span>
     </section>
-    <div class="welcome-strip"><span class="strip-label">LE PORTAIL DU STUDIO</span><p>Des idées qui deviennent des jeux. Et des jeux qui n’attendent que toi.</p><span aria-hidden="true">✦</span></div>
+    <div class="welcome-strip"><span class="strip-label"><span aria-hidden="true">✦</span> DES UNIVERS. UN MÊME PAVILLON.</span><p>Choisis ton escale. Le reste appartient à l’aventure.</p><a href="#catalogue" class="strip-link">Le catalogue <span aria-hidden="true">↓</span></a></div>
     <section class="catalogue" id="catalogue" aria-labelledby="catalogue-title">
-      <div class="section-top"><div><p class="eyebrow muted">LA SÉLECTION SEABYSS</p><h2 id="catalogue-title">À quoi on joue<span class="heading-dot"> ?</span></h2></div><span class="catalogue-label">EXPLORER / JOUER / RECOMMENCER</span></div>
+      <div class="section-top"><div><p class="eyebrow muted">TES PROCHAINES ESCALES</p><h2 id="catalogue-title">À l’horizon, <em>tes jeux.</em></h2></div><span class="catalogue-label"><span data-game-count>3</span> UNIVERS À EXPLORER</span></div>
       <div class="catalogue-layout">
-        <aside class="catalogue-sidebar" aria-label="Filtres du catalogue"><div class="sidebar-title"><span aria-hidden="true">⊞</span> PAR CATÉGORIE</div><div id="category-filters" class="category-list">
+        <aside class="catalogue-sidebar" aria-label="Filtres du catalogue"><div class="sidebar-title"><span aria-hidden="true">◇</span> EXPLORER</div><div id="category-filters" class="category-list">
           <button type="button" data-category="all" class="is-active" aria-pressed="true"><span aria-hidden="true">✦</span> Tous les jeux</button><button type="button" data-category="action" aria-pressed="false"><span aria-hidden="true">ϟ</span> Action</button><button type="button" data-category="adventure" aria-pressed="false"><span aria-hidden="true">⚑</span> Aventure</button><button type="button" data-category="arcade" aria-pressed="false"><span aria-hidden="true">✚</span> Arcade</button><button type="button" data-category="puzzle" aria-pressed="false"><span aria-hidden="true">◇</span> Réflexion</button><button type="button" data-category="strategy" aria-pressed="false"><span aria-hidden="true">♜</span> Stratégie</button><button type="button" data-category="simulation" aria-pressed="false"><span aria-hidden="true">◎</span> Simulation</button>
-        </div><div class="sidebar-note"><span aria-hidden="true">♡</span><h3>Ta petite collection.</h3><p>Garde tes jeux préférés à portée de clic avec les favoris.</p><small>Enregistrés sur cet appareil.</small></div></aside>
+        </div><div class="sidebar-note"><img src="assets/images/compass-mark.svg" alt="" width="40" height="40"><h3>Garde le cap.</h3><p>Ajoute tes découvertes aux favoris pour retrouver tes prochaines escales.</p><small>Enregistrés sur cet appareil.</small></div></aside>
         <div class="catalogue-content">
           <div class="catalogue-toolbar"><div class="view-tabs" role="group" aria-label="Affichage des jeux"><button type="button" data-view="all" class="is-active" aria-pressed="true">Tous les jeux</button><button type="button" data-view="recent" aria-pressed="false">Nouveautés</button><button type="button" data-view="favorites" aria-pressed="false">Favoris <span data-bookmark-count>0</span></button></div><div class="sort-wrap"><label class="sr-only" for="sort-games">Trier les jeux</label><select id="sort-games"><option value="featured">La sélection</option><option value="newest">Les plus récents</option><option value="title">De A à Z</option></select></div></div>
           <p id="results-count" class="results-count" aria-live="polite">Chargement du catalogue…</p><p id="catalog-status" class="catalog-status" role="status" hidden></p><div id="game-grid" class="game-grid"></div>
@@ -46,10 +55,10 @@
         </div>
       </div>
     </section>
-    <section class="studio-section" id="studio" aria-labelledby="studio-title"><div class="studio-heading"><p class="eyebrow">DERRIÈRE LES JEUX</p><h2 id="studio-title">Un studio.<br>D’autres mondes.</h2><div class="studio-mark" aria-hidden="true">S✦</div></div><div class="studio-copy"><span class="section-index">01 / LE STUDIO</span><h3>Seabyss, c’est ici<br>que les idées prennent vie.</h3><p>Bienvenue sur le portail de nos créations. Ce lieu rassemble les jeux Seabyss pour leur donner une maison commune, accessible depuis ton navigateur.</p><p>Des aventures, des expériences et de nouvelles façons de jouer : chaque jeu a son univers. À toi de trouver le tien.</p><a href="#catalogue" class="text-link">Explorer le catalogue <span aria-hidden="true">↗</span></a></div></section>
-    <section id="actualites" class="news-section" aria-labelledby="news-title"><div><p class="eyebrow muted">DANS LES COULISSES</p><h2 id="news-title">Du neuf chez Seabyss.</h2></div><article class="news-card"><span class="news-tag">LE PORTAIL</span><h3>Une nouvelle maison pour nos jeux.</h3><p>Seabyss devient la bannière du studio. Retrouve ses créations dans un même catalogue et garde tes coups de cœur en favoris.</p><a class="text-link" href="#catalogue">Direction l’arcade <span aria-hidden="true">→</span></a></article></section>
+    <section class="studio-section" id="studio" aria-labelledby="studio-title"><div class="studio-heading"><p class="eyebrow">LE STUDIO SEABYSS</p><h2 id="studio-title">À chaque création,<br><em>un nouvel horizon.</em></h2><img class="studio-mark" src="assets/images/compass-mark.svg" alt="" width="180" height="180"></div><div class="studio-copy"><span class="section-index">01 / LE STUDIO</span><h3>L’esprit d’aventure.<br>La liberté de créer.</h3><p>Seabyss réunit des jeux aux univers singuliers. Un jardin à faire grandir, une nuit pleine de mystères, une enquête hors du temps… Chaque création ouvre une nouvelle voie.</p><p>Notre point de ralliement, c’est ici. Quelques clics, un navigateur, et toute la liberté d’explorer à ton rythme.</p><a href="#catalogue" class="text-link">Explorer le catalogue <span aria-hidden="true">↗</span></a></div></section>
+    <section id="actualites" class="news-section" aria-labelledby="news-title"><div><p class="eyebrow muted">NOUVELLES DU STUDIO</p><h2 id="news-title">Le carnet de bord.</h2></div><article class="news-card"><span class="news-tag">PREMIÈRE ESCALE</span><h3>Une nouvelle maison pour nos jeux.</h3><p>Seabyss devient la bannière du studio. Retrouve ses créations dans un même catalogue et garde tes coups de cœur en favoris.</p><a class="text-link" href="#catalogue">Retrouver les jeux <span aria-hidden="true">→</span></a></article></section>
   </main>
-  <footer class="site-footer"><div class="shell footer-inner"><a class="footer-brand" href="./">SEABYSS<span>✦</span></a><p>Des jeux. Des idées. À toi de jouer.</p><div><a href="#studio">Le studio</a><a href="privacy.html">Confidentialité</a><span>© 2026 Seabyss</span></div></div></footer>
-  <dialog id="game-dialog" class="game-dialog" aria-labelledby="player-title"><div class="player-heading"><div><p class="eyebrow muted">SEABYSS / À TOI DE JOUER</p><h2 id="player-title"></h2></div><button id="close-player" class="icon-button" type="button" aria-label="Fermer le jeu">✕</button></div><div id="player-stage" class="player-stage"><iframe id="game-frame" title="Jeu navigateur" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms" allow="fullscreen; autoplay; gamepad" allowfullscreen hidden></iframe><button id="start-game" type="button" class="button button-orange">Lancer le jeu <span aria-hidden="true">▶</span></button></div><div class="player-details"><p id="player-description"></p><p id="player-controls"></p><p id="player-note" role="status"></p><div class="player-actions"><a id="open-game" class="text-link" target="_blank" rel="noopener noreferrer">Ouvrir dans un onglet <span aria-hidden="true">↗</span></a><button id="fullscreen-game" class="button button-outline" type="button">Plein écran</button></div></div></dialog>
+  <footer class="site-footer"><div class="shell footer-inner"><a class="footer-brand" href="./"><img src="assets/images/compass-mark.svg" alt="" width="32" height="32">SEABYSS</a><p>L’aventure appartient aux curieux.</p><div><a href="#studio">Le studio</a><a href="privacy.html">Confidentialité</a><span>© 2026 Seabyss</span></div></div></footer>
+  <dialog id="game-dialog" class="game-dialog" aria-labelledby="player-title"><div class="player-heading"><div><p class="eyebrow muted">SEABYSS / À TOI DE JOUER</p><h2 id="player-title"></h2></div><button id="close-player" class="icon-button" type="button" aria-label="Fermer le jeu">✕</button></div><div class="player-quick-actions"><a id="open-game" class="text-link" target="_blank" rel="noopener noreferrer">Ouvrir dans un onglet <span aria-hidden="true">↗</span></a><button id="fullscreen-game" class="button button-outline" type="button" hidden>Plein écran</button></div><div id="player-stage" class="player-stage"><iframe id="game-frame" title="Jeu navigateur" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms" allow="fullscreen; autoplay; gamepad" allowfullscreen hidden></iframe><button id="start-game" type="button" class="button button-primary">Lancer le jeu <span aria-hidden="true">▶</span></button></div><div class="player-details"><p id="player-description"></p><p id="player-controls"></p><p id="player-note" role="status"></p></div></dialog>
 </body>
 </html>

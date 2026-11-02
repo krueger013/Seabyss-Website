@@ -1,6 +1,8 @@
 # Seabyss — Portail de jeux navigateur
 
-Seabyss est le portail du studio : catalogue de jeux, recherche, filtres, tri, favoris locaux et lecteur intégré avec ouverture dans un onglet. La direction visuelle Dark Abyss utilise un fond noir et bleu profond, des accents cyan et un portail abyssal original.
+Seabyss est le portail du studio : catalogue de jeux, recherche, filtres, tri, favoris locaux et lecteur intégré avec ouverture dans un onglet. La direction visuelle Pirate Abyss associe une mer nocturne, un navire fantôme original, une boussole de laiton et des détails de cartographie marine. La palette mêle l’encre, le pétrole, le turquoise et le laiton vieilli.
+
+La bannière est une illustration décorative du studio. Les vignettes représentent les jeux du catalogue. Les polices Cormorant Garamond et Manrope sont servies localement ; leurs licences sont conservées dans `assets/fonts/`. Les commandes du lecteur restent accessibles au-dessus du jeu, et les cartes passent sur une colonne sur les petits écrans.
 
 ## Hébergement
 
