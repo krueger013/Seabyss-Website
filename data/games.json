@@ -4,7 +4,13 @@
     "title": "Petits Compagnons",
     "description": "Adopte un compagnon, prends soin de lui et découvre trois mini-jeux dans ton jardin de poche.",
     "genre": "simulation",
-    "tags": ["Tamagotchi", "animaux", "détente", "mini-jeux", "tactile"],
+    "tags": [
+      "Tamagotchi",
+      "animaux",
+      "détente",
+      "mini-jeux",
+      "tactile"
+    ],
     "url": "games/petits-compagnons/index.html",
     "thumbnail": "games/petits-compagnons/assets/garden.png",
     "controls": "Souris ou toucher. Flèches et Espace pour certains mini-jeux. Progression enregistrée sur cet appareil.",
@@ -16,7 +22,12 @@
     "title": "Mario’s Ghost",
     "description": "Explore cinq royaumes, affronte leurs créatures et retrouve les cinq sceaux de minuit avec quatre héros au choix.",
     "genre": "action",
-    "tags": ["plateforme", "aventure", "fantômes", "tactile"],
+    "tags": [
+      "plateforme",
+      "aventure",
+      "fantômes",
+      "tactile"
+    ],
     "url": "games/marios-ghost/index.html",
     "thumbnail": "games/marios-ghost/assets/graveyard.png",
     "controls": "Flèches ou Q/D : marcher. Espace : saut. X : lanterne. C : épée. R : esquive. E : interaction. Commandes tactiles disponibles.",
@@ -28,11 +39,68 @@
     "title": "Les Heures Perdues",
     "description": "Enquête sur la disparition d’un astronome : objets cachés et énigmes t’attendent dans trois lieux mystérieux.",
     "genre": "puzzle",
-    "tags": ["aventure", "enquête", "objets cachés", "énigmes", "tactile"],
+    "tags": [
+      "aventure",
+      "enquête",
+      "objets cachés",
+      "énigmes",
+      "tactile"
+    ],
     "url": "games/les-heures-perdues/index.html",
     "thumbnail": "games/les-heures-perdues/assets/study.jpg",
     "controls": "Souris ou toucher. I : indice. J : journal. M : carte. B : bonus. Échap : fermer. Progression enregistrée sur cet appareil.",
     "releaseDate": "2026-11-01",
+    "featured": true
+  },
+  {
+    "id": "tresor-des-abysses",
+    "title": "Le Trésor des Abysses",
+    "description": "Une machine pirate avec le capitaine fantôme, le kraken et des jokers persistants. Jeu avec argent fictif.",
+    "genre": "casino",
+    "tags": [
+      "casino",
+      "machine à sous",
+      "argent fictif",
+      "tactile"
+    ],
+    "url": "games/seabyss-casino/pirate.html",
+    "thumbnail": "games/seabyss-casino/assets/abyss-background.png",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif partagé entre les trois machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "releaseDate": "2026-11-06",
+    "featured": true
+  },
+  {
+    "id": "pacte-de-minuit",
+    "title": "Le Pacte de Minuit",
+    "description": "Vampires, loups-garous et sorts de la sorcière sur cinq rouleaux. Jeu avec argent fictif.",
+    "genre": "casino",
+    "tags": [
+      "casino",
+      "machine à sous",
+      "argent fictif",
+      "tactile"
+    ],
+    "url": "games/seabyss-casino/moon.html",
+    "thumbnail": "games/seabyss-casino/assets/moon/background.png",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif partagé entre les trois machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "releaseDate": "2026-11-06",
+    "featured": true
+  },
+  {
+    "id": "supernova",
+    "title": "SUPERNOVA",
+    "description": "Explore Station 77 : groupes de symboles connectés et bonus de cagnottes orbitales. Jeu avec argent fictif.",
+    "genre": "casino",
+    "tags": [
+      "casino",
+      "machine à sous",
+      "argent fictif",
+      "tactile"
+    ],
+    "url": "games/seabyss-casino/nova.html",
+    "thumbnail": "games/seabyss-casino/assets/nova/background.png",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif partagé entre les trois machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "releaseDate": "2026-11-06",
     "featured": true
   }
 ]

@@ -1,0 +1,264 @@
+SEABYSS CASINO — TROIS MACHINES, TROIS UNIVERS
+
+JOUER
+Le hall index.html permet de choisir votre machine :
+- pirate.html : Le Trésor des Abysses, pirates et kraken ;
+- moon.html : Le Pacte de Minuit, vampires, loups-garous et sorcière ;
+- nova.html : SUPERNOVA / Station 77, groupes gagnants et cagnottes orbitales.
+Lancement recommandé pour le casino complet : node server.cjs,
+puis ouvrez http://127.0.0.1:4173 dans votre navigateur.
+Le serveur ne nécessite aucun paquet à installer, seulement Node.js.
+Il est aussi possible d'ouvrir index.html directement par double-clic.
+Utilisez le même navigateur et la même adresse pour retrouver votre casino.
+Les jeux fonctionnent uniquement avec des dollars fictifs.
+
+COMMANDES
+LANCER ou la barre Espace : lance un tour.
+Boutons − et + : choisissent la mise.
+RAPIDE : accélère les rouleaux.
+Haut-parleur : active ou désactive les effets sonores.
+AUTO : sélectionne 10, 25, 50 ou 100 tours automatiques.
+Le bouton AUTO devient un bouton d'arrêt pendant une série.
+Le grimoire / ? / RÈGLES : règles et table des gains.
+Nouvelle session : remet la machine à zéro et le portefeuille commun à 100,00 $
+après confirmation. Sur SUPERNOVA, la réserve progressive revient aussi à zéro.
+« Les machines » ou « Le hall » retourne au hall de sélection.
+
+SOLDE ET MISES
+Solde de départ : 100,00 $, partagé entre les trois machines et le hall.
+L'ancien solde de la machine pirate est conservé lors de la première migration.
+Mises : 0,25 / 0,50 / 0,75 / 1 / 1,50 / 2 / 2,50 / 5 / 10 / 20 $.
+Mise par défaut : 1,00 $.
+Les montants sont calculés en cents. La mise est débitée une seule fois par tour.
+Un solde insuffisant bloque le lancement. Il est possible de réduire la mise.
+Les sessions et bonus de chaque machine se sauvegardent séparément ; le solde
+commun est mis à jour à chaque tour. Une démonstration ne modifie pas ce solde.
+La sauvegarde locale dépend du stockage autorisé par le navigateur.
+
+LE TRÉSOR DES ABYSSES — JEU ET BONUS
+5 rouleaux, 3 rangées et 20 lignes fixes.
+Les combinaisons payantes commencent à gauche et comptent au moins 3 symboles.
+Le joker remplace les symboles ordinaires ; il ne remplace pas le bateau Scatter.
+Chaque ligne gagnante paie sa meilleure combinaison selon la table visible en jeu.
+Les multiplicateurs s'appliquent à la mise par ligne (mise totale / 20).
+
+3 bateaux Scatter donnent 10 tours gratuits.
+4 bateaux Scatter donnent 15 tours gratuits (rare).
+5 bateaux Scatter donnent 20 tours gratuits (très rare).
+Chaque rouleau peut porter au maximum un Scatter lors d'un tirage naturel.
+Avec les poids actuels : environ un tirage naturel à 4 Scatters sur 1 281,
+et un tirage à 5 Scatters sur 49 151. Ce sont des moyennes, pas une garantie.
+Pendant le bonus, un joker de givre apparaissant sur le rouleau 2, 3 ou 4
+transforme immédiatement tout ce rouleau en jokers. Il reste figé jusqu'à
+la fin des tours gratuits. Les rouleaux 1 et 5 ne se figent pas.
+La mise du déclenchement reste fixe et aucun tour gratuit n'est débité.
+Le bonus ne se redéclenche pas pendant les tours gratuits.
+
+LE PACTE DU CAPITAINE
+Le capitaine fantôme peut intervenir après l'arrêt des rouleaux d'un tour payé.
+Il frappe avec son sabre les rouleaux centraux sans Scatter et y place un bateau,
+jusqu'à atteindre exactement 3 Scatters au total. Le bonus de 10 tours commence.
+Les Scatters déjà présents sont conservés. Le capitaine ne provoque pas de bonus
+à 4 ou 5 Scatters : ceux-ci restent réservés aux tirages naturels.
+Chance de 4 % par tour admissible, à partir du 4e tour payé, avec au moins 4 tours
+payés entre deux interventions. Aucun déclenchement pendant le bonus ou lorsqu'un
+bonus naturel est déjà obtenu. La mise n'est débitée qu'une fois et les gains
+sont calculés sur la grille finale, après les coups d'épée.
+Le bouton « Passer l'animation » accélère la scène sans changer le résultat.
+
+Le kraken remue autour de la machine et s'éveille pendant les bonus.
+Les sons de sabre sont activés avec le bouton haut-parleur.
+Les animations respectent la préférence système de réduction des mouvements.
+
+LE TRÉSOR DES ABYSSES — DÉMONSTRATIONS
+Une démonstration de 10, 15 ou 20 tours gratuits, séparée de votre session locale.
+Choisissez le niveau 3, 4 ou 5 Scatters avant d'entrer dans le bonus de démo.
+Le premier tour démarre à l'entrée, les suivants se lancent avec LANCER / Espace.
+Des jokers sont introduits aux tours 1, 3 et 5 pour montrer la mécanique.
+Votre solde initial est restauré lorsque vous quittez le récapitulatif.
+Fermer ou recharger la page pendant la démo retrouve aussi la session sauvegardée.
+« Voir l'attaque » montre une intervention garantie du capitaine, puis son bonus.
+« Quitter la démo » restaure à tout moment la session d'origine entre deux tours.
+Les deux démonstrations conservent le solde réel de la session locale.
+
+LE PACTE DE MINUIT — SUITES SUR 3 ROULEAUX MINIMUM
+5 rouleaux, 3 rangées, 243 chemins possibles et aucune ligne imposée.
+Un même symbole doit apparaître sur au moins 3 rouleaux consécutifs depuis
+le rouleau 1, de gauche à droite. Sa rangée peut changer à chaque rouleau.
+Un rouleau sans ce symbole ou joker coupe la suite. Une suite démarrant
+seulement au rouleau 2, ou des symboles sur les rouleaux 1, 3 et 5, ne paient pas.
+Plusieurs symboles sur un seul rouleau ne remplacent pas plusieurs rouleaux.
+Symboles payants : vampire, loup-garou, grimoire, potion, lune et anneau.
+Le gain est la mise TOTALE multipliée par le coefficient de la table pour
+3, 4 ou 5 rouleaux, puis par le nombre de chemins gagnants. Par exemple,
+2 symboles au premier rouleau, 1 au deuxième et 3 au troisième donnent
+2 x 1 x 3 = 6 chemins. Seule la plus longue suite de chaque symbole paie ;
+ses préfixes de 3 ou 4 rouleaux ne sont pas payés une deuxième fois.
+Le gain de chaque symbole est arrondi au cent avant leur addition.
+
+Le cristal est un joker : il remplace le symbole recherché sur un rouleau.
+Il peut participer à plusieurs chemins distincts. Chaque chemin gagnant doit
+contenir au moins un symbole naturel ; les chemins entièrement jokers sont
+exclus. Les sceaux Scatter déclenchent le bonus sans contrainte d'alignement,
+mais ne forment pas de suites payantes.
+
+LES DEUX SORTS DE NYX EN PARTIE NORMALE
+Après l'arrêt des rouleaux, la sorcière peut lancer l'un de ces deux sorts :
+- Givre : 1 à 3 cases deviennent des cristaux jokers pour le tour en cours.
+  Elles participent immédiatement au calcul des gains, puis sont libérées
+  au tour suivant. Les Scatters présents ne sont pas remplacés.
+- Pacte : assez de Scatters sont ajoutés pour atteindre exactement 3 au total.
+  Cela déclenche 10 tours gratuits. Les Scatters existants sont conservés.
+
+Les deux sorts sont exclusifs : une seule intervention par tour normal.
+Chance du givre en base : 7 % par tour sans bonus naturel déjà obtenu.
+Chance du pacte : 3 % par tour admissible, à partir du 4e tour payé, avec
+au moins 4 tours payés entre deux pactes. Un sort de givre ne remet pas
+ce délai à zéro. Aucun sort de base n'intervient si 3 Scatters ou plus
+apparaissent naturellement. Les gains se calculent après le sort, sur la
+grille finale ; la mise du tour n'est débitée qu'une seule fois.
+
+LE PACTE DE MINUIT — BONUS ET GIVRE PERSISTANT
+3 Scatters : 10 tours gratuits ; 4 : 15 tours ; 5 : 20 tours.
+Les bonus de 4 et 5 Scatters restent rares et réservés aux tirages naturels.
+Les poids naturels des Scatters et leur maximum d'un par rouleau donnent
+les mêmes fréquences théoriques de 4 et 5 Scatters que la machine pirate.
+La mise est celle du déclenchement. Aucun débit pendant les tours gratuits,
+et aucun redéclenchement du bonus.
+
+Pendant le bonus, Nyx a 32 % de chance de lancer un sort de givre par tour
+tant que des cases peuvent encore être figées. Elle fige 1 à 3 nouvelles
+cases distinctes sur n'importe quel rouleau. Elles deviennent des jokers
+dès ce tour et le restent jusqu'au dernier tour gratuit, inclus.
+Le nombre de nouvelles cases est limité par les places disponibles :
+maximum 12 cases figées simultanément, pour conserver 3 cases libres.
+Les cristaux apparaissant naturellement ne se figent pas tout seuls.
+Les Scatters du bonus ne redéclenchent rien et peuvent être remplacés par
+le sort. Après le bonus, le gel persistant est libéré.
+
+LE PACTE DE MINUIT — ESSAYER LES SORTS
+« Voir ses sorts » propose trois démonstrations séparées de votre session :
+une case gelée, trois cases gelées, ou les trois Scatters suivis du bonus.
+Le bonus de démonstration montre de nouveaux gels aux tours 1, 3 et 6.
+« Terminer la démo » ou « Quitter la démonstration » retrouve votre session.
+Les gains et mises de démonstration ne touchent jamais le portefeuille commun.
+Une session avec un bonus en cours peut être reprise après un retour au hall.
+
+SUPERNOVA / STATION 77 — GROUPES DE 5 SYMBOLES OU PLUS
+6 rouleaux, 4 rangées et 24 cases. Les symboles ordinaires sont la fusée,
+la planète, le robot, le cristal cosmique, la comète et l'étoile.
+Un groupe d'au moins 5 symboles identiques reliés horizontalement ou verticalement
+paie. Les voisins peuvent former une chaîne ou un bloc ; les diagonales seules
+ne relient pas les cases. Chaque groupe distinct paie une fois, même si un autre
+groupe du même symbole existe ailleurs. Pas de ligne imposée, de joker ni de
+cascade : les symboles gagnants ne disparaissent pas pour un second tirage.
+Le gain de chaque groupe est la mise totale multipliée par le coefficient de
+la table des gains pour 5, 6–7, 8–11 ou 12+ cases, puis arrondi au cent.
+Les orbes d'énergie ne font pas partie des groupes payants.
+
+SUPERNOVA — BONUS ORBITAL ET RELANCES
+Au moins 6 orbes sur le même tour ouvrent le bonus, quelle que soit leur position.
+Les orbes reçoivent une valeur et restent verrouillés ; les autres cases deviennent
+vides. Vous obtenez 3 relances gratuites. Seules les cases libres sont relancées.
+Un ou plusieurs nouveaux orbes remettent le compteur à 3 relances ; une relance
+sans nouvel orbe retire 1. Les valeurs et positions déjà obtenues restent fixes.
+Le bonus finit quand le compteur atteint zéro ou dès que les 24 cases sont remplies.
+La somme des valeurs retenues est alors payée une seule fois au portefeuille.
+La mise du déclenchement est conservée pendant le bonus ; les relances ne coûtent rien.
+
+Les orbes ordinaires valent 0,5 / 1 / 2 / 3 / 5 / 10 fois cette mise.
+Des orbes rares portent une cagnotte : MINI = 10×, MINOR = 50×, MAJOR = 250×.
+Leur valeur est ajoutée à la collecte finale, comme celle des autres orbes.
+Les montants affichés changent avec la mise ; ils restent fixes durant le bonus.
+
+SUPERNOVA — GRAND ET RÉSERVE PROGRESSIVE LOCALE
+Remplir les 24 cases donne, en plus de tous les orbes, le GRAND :
+1 000 fois la mise du bonus + la réserve progressive locale.
+Chaque tour payé de SUPERNOVA ajoute 1 % de sa mise à cette réserve, sans débit
+supplémentaire. Une mise de 0,25 $ ajoute 0,0025 $ ; quatre de ces tours ajoutent 0,01 $.
+Les fractions de cent sont conservées d'un tour à l'autre. Le montant versé et
+affiché est exprimé en cents entiers ; la réserve entière revient à zéro après
+un GRAND. Un bonus sans GRAND ne vide pas la réserve.
+Cette cagnotte est fictive et locale à SUPERNOVA sur ce navigateur : elle n'est
+pas partagée en réseau avec d'autres joueurs, ni alimentée par les autres machines.
+
+SUPERNOVA — DÉMONSTRATIONS ET REPRISE
+« Voir les démos » propose trois simulations : les groupes gagnants, le bonus
+orbital avec une MINI, ou une grille presque pleine pour découvrir le GRAND.
+Le portefeuille commun et la réserve de votre partie restent protégés.
+Quitter une démonstration, fermer la page ou la recharger retrouve la session
+sauvegardée. Les gains de démonstration ne sont jamais versés au portefeuille.
+Un bonus normal en cours reste disponible après un retour au hall ; la carte
+SUPERNOVA affiche alors « Un bonus vous attend ».
+
+TOURS AUTOMATIQUES
+Choisissez 10, 25, 50 ou 100 tours payants dans le menu AUTO.
+La mise reste fixe pendant toute la série ; chaque tour est débité séparément.
+Les tours gratuits gagnés et les relances SUPERNOVA ne diminuent pas le nombre
+de tours payants restants.
+La série attend votre clic à l'entrée d'un bonus, joue ses tours ou relances gratuits,
+puis attend le bilan avant de reprendre les tours payants restants.
+Arrêter termine le tour déjà lancé et empêche tout nouveau lancement.
+Une série s'arrête lorsque le nombre prévu est atteint, si le solde ne permet
+plus la mise, ou si vous quittez l'onglet. Elle ne reprend pas après rechargement.
+
+SONS GRATUITS
+Huit effets enregistrés de Kenney, sous licence CC0 : clic, rotation, arrêt,
+pièces, cristal, bonus, coup de sabre et dégainement. Activez le haut-parleur.
+L'arrêt des rouleaux utilise un impact de bois assourdi, court et grave.
+Minuit ajoute deux effets de sort et de givre, adoucis et joués à faible volume.
+SUPERNOVA ajoute quatre effets électroniques originaux, synthétisés pour le
+projet : charge, collecte, jackpot et rotation. Son arrêt reprend le bois feutré.
+Les fichiers sont inclus localement. Les sources et licences originales sont
+conservées dans SOURCES-AUDIO.txt et assets/audio/LICENSE-kenney-*.txt.
+Les adaptations de Minuit sont détaillées dans assets/moon/SCENE-SOURCES.txt.
+Le décor et les sons originaux de SUPERNOVA sont documentés dans
+assets/nova/SCENE-SOURCES.txt, ses sept symboles dans assets/nova/ART-SOURCES.txt.
+
+FICHIERS
+index.html, lobby.js et lobby.css : hall de sélection des trois machines.
+pirate.html : interface pirate.
+moon.html, moon-app.js et moon.css : interface de Minuit, sorts et animations.
+moon-engine.js : suites sur rouleaux consécutifs, chemins gagnants et règles de Minuit.
+nova.html, nova-app.js et nova.css : interface SUPERNOVA et bonus orbital.
+nova-engine.js : groupes connectés, orbes persistants, relances et cagnottes.
+casino-wallet.js : portefeuille fictif partagé, migration de l'ancien solde et sauvegarde atomique de la session SUPERNOVA.
+styles.css : présentation et animations adaptées aux écrans mobiles.
+app.js : interaction, animation, audio et sauvegarde.
+game-engine.js : règles, tirages et calcul des gains.
+symbols.js : catalogue des huit nouvelles illustrations transparentes.
+assets/icon-*-v2.png : symboles détaillés originaux générés pour Seabyss.
+assets/captain-v2.png : capitaine fantôme au sabre spectral.
+atmosphere.js et atmosphere.css : tentacules, brume et bulles animées.
+enhancements.css : présentation des nouveaux symboles et scène du capitaine.
+assets/abyss-background.png : décor pirate abyssal généré pour ce jeu.
+game-engine.test.cjs : vérification du moteur (node --test game-engine.test.cjs).
+autoplay.js et autoplay.test.cjs : compteur et tests des séries automatiques.
+moon-engine.test.cjs : suites consécutives de Minuit, gels, Scatters et chemins avec jokers.
+nova-engine.test.cjs : groupes, conservation des orbes, relances et réserve progressive.
+casino-wallet.test.cjs : migration, solde partagé, crédits atomiques et erreurs de stockage.
+sound-bank.js : lecture et mélange des sons téléchargés.
+assets/moon/ : illustrations, décor, sorcière et sons de Minuit.
+assets/nova/ : sept symboles, décor spatial et sons originaux de SUPERNOVA.
+
+VÉRIFICATION
+npm test lance les cinq suites sans dépendances supplémentaires.
+Équivalent avec Node.js directement :
+node --test game-engine.test.cjs autoplay.test.cjs moon-engine.test.cjs casino-wallet.test.cjs nova-engine.test.cjs
+
+Prototype local de divertissement. Aucun argent réel, dépôt ni retrait.
+Les probabilités sont celles d'un prototype, sans RTP certifié.
+Les polices web sont facultatives ; des polices locales prennent le relais hors ligne.
+
+FINITIONS SUPERNOVA
+Le montant de mise ouvre un sélecteur direct de 0,25 $ à 20 $.
+Les gains cliquables éclairent les groupes correspondants. Les orbes du bonus
+rejoignent la collecte en animation, avec leur valeur et un cadenas visibles.
+Le compteur de relances et la collecte restent visibles au-dessus de la grille.
+La réserve progressive figure sous le GRAND. Les bilans détaillent les orbes
+et les cagnottes incluses. La réduction des mouvements est respectée.
+« Voir les démos » permet de tester les groupes, le bonus orbital ou le GRAND.
+La simulation peut être quittée dès son introduction, par le bouton ou Échap.
+Les démos préservent le portefeuille et la réserve de la partie normale.
+Une sauvegarde SUPERNOVA invalide est réparée en conservant le solde partagé.
+nova-effects.js et nova-polish.css : retours visuels et confort de jeu.

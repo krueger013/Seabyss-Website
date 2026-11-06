@@ -1,0 +1,56 @@
+SCÈNE ET SONS — SEABYSS
+Décor et personnage : illustrations originales créées pour Seabyss.
+
+AUDIO ORIGINAL DU PROJET
+-----------------------
+Crédit proposé : « Création sonore originale pour Seabyss Casino / Station 77 ».
+Les quatre effets sont entièrement synthétisés par programme pour ce projet.
+Aucun échantillon, enregistrement, fichier musical, pack payant ou son tiers
+n’est incorporé à ces quatre fichiers. Ils ne sont pas des adaptations Kenney.
+Le son d’arrêt feutré commun, s’il est utilisé par l’interface, conserve sa
+provenance séparée dans ../../SOURCES-AUDIO.txt.
+
+Format commun : WAV PCM 16 bits signé, mono, 44 100 Hz.
+Tous les sons utilisent des enveloppes à attaque et relâchement progressifs
+en sinus carré. Premier et dernier échantillons à zéro.
+Pas de percussion claquante, de bruit impulsif ou de saturation numérique.
+
+nova-charge.wav
+  Usage : charge et montée d’énergie.
+  Durée : 0,520 s ; taille : 45 908 octets ; pic : 0,35.
+  Synthèse : phase 2*pi*(164,814*t + 170*t²), fondamentale sinusoïdale
+  et harmoniques 2× / 3× à 0,17 / 0,06 ; modulation lente 5,5 Hz ;
+  attaque 35 ms et relâchement 150 ms.
+
+nova-lock.wav
+  Usage : collecte, verrouillage ou validation d’un élément.
+  Durée : 0,240 s ; taille : 21 212 octets ; pic : 0,32.
+  Synthèse : corps sinusoïdal autour de 329,628 Hz, très légère inflexion
+  descendante, second ton à 493,883 Hz au gain 0,28, décroissances
+  exponentielles ; attaque 18 ms et relâchement 80 ms.
+
+nova-jackpot.wav
+  Usage : courte célébration du jackpot.
+  Durée : 1,480 s ; taille : 130 580 octets ; pic : 0,42.
+  Composition originale : arpège C4, E4, G4, C5, G4, C5 aux instants
+  0 / 130 / 260 / 390 / 560 / 720 ms ; sinusoïdes avec harmonique 2×
+  au gain 0,13, notes à attaque douce et décroissance.
+  Accord final grave à 130,813 / 195,998 / 329,628 Hz à partir de 780 ms.
+  Fondu final de 170 ms. Aucune mélodie externe copiée.
+
+nova-spin.wav
+  Usage : lancement/rotation, souffle de moteur électrique doux.
+  Durée : 0,620 s ; taille : 54 728 octets ; pic : 0,27.
+  Synthèse : phase 2*pi*(76*t + 24*t²), fondamentale et harmoniques
+  2× / 3× aux gains 0,24 / 0,08 ; pulsation lente de type rotor ;
+  attaque 55 ms et relâchement 160 ms.
+
+Poids total des quatre sons : 252 428 octets, environ 246,5 Kio.
+
+VÉRIFICATION
+------------
+Tous les fichiers WAV ont été relus avec le module wave après export.
+Durée, nombre de trames et fréquence d’échantillonnage vérifiés.
+Niveaux maximaux mesurés sous 0,43 ; aucune saturation.
+L’analyse est technique ; aucune écoute humaine n’est revendiquée.
+Ajuster le niveau final dans le mixage du jeu.

@@ -8,7 +8,9 @@ Les animations décoratives sont réalisées en CSS, sans bibliothèque ni boucl
 
 ## Hébergement
 
-Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `main`. Le fichier `CNAME` conserve `www.seabyss.com`. Aucun serveur applicatif ni étape de compilation n’est nécessaire pour le portail ou les trois jeux actuels. Une modification publiée sur `main` déclenche le déploiement Pages ; vérifier le résultat dans les actions GitHub avant de considérer une publication terminée.
+Le catalogue comprend aussi les trois machines de Seabyss Casino : Le Trésor des Abysses, Le Pacte de Minuit et SUPERNOVA. Elles sont regroupées sous `games/seabyss-casino/`, avec leur hall et leur portefeuille fictif partagé. Les fichiers d’exécution proviennent de `C:\KRUEGER\Main Folder\Seabyss Game\Seabyss Casino` ; les tests et le serveur local ne sont pas publiés. Les crédits publics et les licences audio accompagnent les actifs. Les polices du casino sont chargées depuis Google Fonts.
+
+Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `main`. Le fichier `CNAME` conserve `www.seabyss.com`. Aucun serveur applicatif ni étape de compilation n’est nécessaire pour le portail ou les six jeux actuels. Une modification publiée sur `main` déclenche le déploiement Pages ; vérifier le résultat dans les actions GitHub avant de considérer une publication terminée.
 
 Pour prévisualiser le catalogue, servir la racine avec un serveur HTTP statique, puis ouvrir son adresse locale. L’ouverture directe de `index.html` avec `file://` ne suffit pas au chargement de `data/games.json`.
 

@@ -1,0 +1,100 @@
+SEABYSS CASINO — SOURCES DES SONS
+Date de téléchargement : 2026-11-01
+
+Les sons proviennent des téléchargements officiels de Kenney. Le jeu utilise
+huit effets : sept fichiers Ogg Vorbis et un impact de bois adapté en WAV.
+Un ancien son d’arrêt et un aperçu de cinq arrêts sont également conservés.
+Auteur : Kenney / Kenney Vleugels — https://kenney.nl
+Licence des quatre packs : Creative Commons Zero 1.0 (CC0).
+Licence : https://creativecommons.org/publicdomain/zero/1.0/
+Utilisation personnelle et commerciale autorisée. Attribution facultative.
+Crédit recommandé : « Effets sonores : Kenney.nl (CC0), adaptés pour Seabyss ».
+
+Les fichiers Ogg Vorbis sont copiés sans modification sonore et renommés selon
+leur usage prévu. Le nouvel arrêt WAV est une adaptation décrite ci-dessous.
+Les durées sont vérifiées par les métadonnées Ogg ou par décodage. La sélection
+n’a pas fait l’objet d’une écoute humaine ; vérifier le mixage dans le jeu.
+
+PACK : Interface Sounds (1.0)
+Source officielle : https://kenney.nl/assets/interface-sounds
+Licence originale conservée : assets/audio/LICENSE-kenney-interface-sounds.txt
+
+assets/audio/button-click.ogg
+  Original : Audio/click_001.ogg
+  Usage : bouton et changement de mise
+  Durée : 0,100 s — 4 876 octets — mono, 44 100 Hz
+
+assets/audio/reel-tick.ogg
+  Original : Audio/tick_002.ogg
+  Usage : clic mécanique pendant la rotation
+  Durée : 0,023 s — 4 514 octets — mono, 44 100 Hz
+
+assets/audio/freeze-chime.ogg
+  Original : Audio/glass_003.ogg
+  Usage : accent cristallin du gel ; il s’agit d’un son de verre,
+          réutilisé pour cet effet, et non d’un enregistrement de glace.
+  Durée : 0,124 s — 5 732 octets — mono, 44 100 Hz
+
+PACK : RPG Audio
+Source officielle : https://kenney.nl/assets/rpg-audio
+Licence originale conservée : assets/audio/LICENSE-kenney-rpg-audio.txt
+
+assets/audio/reel-stop.ogg
+  Original : Audio/metalLatch.ogg
+  Ancien arrêt métallique : désormais inutilisé dans le jeu, conservé pour référence.
+  Durée : 0,261 s — 10 208 octets — stéréo, 48 000 Hz
+
+assets/audio/coin-win.ogg
+  Original : Audio/handleCoins2.ogg
+  Usage : pièces pendant le décompte d’un gain
+  Durée : 0,338 s — 13 094 octets — stéréo, 48 000 Hz
+
+assets/audio/sword-slash.ogg
+  Original : Audio/knifeSlice2.ogg
+  Usage : coup de sabre du capitaine
+  Durée : 0,569 s — 15 099 octets — stéréo, 48 000 Hz
+
+assets/audio/sword-draw.ogg
+  Original : Audio/drawKnife1.ogg
+  Usage : préparation du sabre ou apparition du capitaine
+  Durée : 0,400 s — 11 134 octets — stéréo, 48 000 Hz
+
+PACK : Music Jingles
+Source officielle : https://kenney.nl/assets/music-jingles
+Licence originale conservée : assets/audio/LICENSE-kenney-music-jingles.txt
+
+assets/audio/bonus-fanfare.ogg
+  Original : Audio/Hit jingles/jingles_HIT15.ogg
+  Usage : courte annonce musicale du bonus ou d’un gain important
+  Durée : environ 1,16 s — 19 626 octets — stéréo, 44 100 Hz
+
+PACK : Impact Sounds (1.0)
+Source officielle : https://kenney.nl/assets/impact-sounds
+Licence originale conservée : assets/audio/LICENSE-kenney-impact-sounds.txt
+
+assets/audio/reel-stop-soft.wav
+  Original : Audio/impactWood_heavy_000.ogg
+  Usage : nouvel arrêt mat et grave des rouleaux
+  Durée : 0,160 s — 14 156 octets — mono, 44 100 Hz, PCM 16 bits
+  Adaptation : conversion mono, retrait du décalage continu, vitesse abaissée
+  à 0,85 par rééchantillonnage linéaire, deux passes de filtre passe-bas à un
+  pôle à 1 200 Hz, durée limitée à 160 ms, attaque en sinus carré sur 8 ms,
+  fondu de sortie en cosinus carré sur 45 ms, pic fixé à 0,55.
+
+  Comparaison technique de trois candidats décodés :
+  - impactSoft_medium_000.ogg : 118 ms, centre spectral 83,7 Hz ;
+  - impactSoft_heavy_000.ogg : 505 ms, centre spectral 94,0 Hz ;
+  - impactWood_heavy_000.ogg : 313 ms, centre spectral 57,9 Hz.
+  Le dernier a été choisi pour son contenu grave et sa matière de bois.
+
+assets/audio/reel-stop-preview.wav
+  Aperçu distinct, non chargé par le jeu : cinq occurrences du nouvel arrêt
+  espacées de 190 ms, avec un volume multiplié par 0,22 pour chaque occurrence.
+  Durée : 1,070 s — 94 418 octets — mono, 44 100 Hz, PCM 16 bits.
+
+Poids des huit effets utilisés : 88 231 octets (environ 86,2 Kio).
+Poids des dix fichiers audio conservés, aperçu et ancien arrêt compris :
+192 857 octets (environ 188,3 Kio), hors fichiers texte de licence.
+Les licences originales sont conservées intégralement dans assets/audio/.
+Les packs complets et les liens temporaires de téléchargement ne sont pas
+nécessaires au fonctionnement du jeu.
