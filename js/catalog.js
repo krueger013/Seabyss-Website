@@ -10,6 +10,7 @@
     puzzle: "Réflexion",
     strategy: "Stratégie",
     simulation: "Simulation",
+    casino: "Casino fictif",
   };
   const storageKey = "seabyss.favoriteGames.v1";
   const $ = (id) => document.getElementById(id);

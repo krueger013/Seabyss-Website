@@ -1,0 +1,49 @@
+SCÈNE ET SONS — SEABYSS
+Décor et personnage : illustrations originales créées pour Seabyss.
+
+SONS
+----
+Les deux sons sont des adaptations de fichiers Kenney déjà présents dans le
+projet, complétées par des harmoniques synthétisées. Les sources originales
+Kenney sont sous Creative Commons Zero 1.0 (CC0).
+Licence : https://creativecommons.org/publicdomain/zero/1.0/
+Auteur : Kenney / Kenney Vleugels — https://kenney.nl
+Usage personnel et commercial autorisé, attribution facultative.
+Crédit proposé : « Sons : Kenney.nl (CC0), adaptés pour Seabyss ».
+
+spell.wav
+- 0,500 s ; WAV PCM 16 bits ; mono ; 44 100 Hz ; 44 144 octets.
+- Source locale : ../audio/reel-stop-soft.wav.
+- Source originale : pack Impact Sounds (1.0),
+  Audio/impactWood_heavy_000.ogg.
+- Page officielle : https://kenney.nl/assets/impact-sounds
+- Licence originale : ../audio/LICENSE-kenney-impact-sounds.txt
+- L’adaptation préalable reel-stop-soft.wav est documentée dans
+  ../../SOURCES-AUDIO.txt : ralentissement à 0,85, passe-bas, durée de 160 ms.
+- Traitement supplémentaire : corps de bois diffusé par cinq occurrences
+  aux instants 0 / 41 / 87 / 143 / 221 ms, gains 0,9 / 0,58 / 0,39 / 0,24 / 0,12.
+  Ajout d’un souffle à bruit déterministe filtré à 1250 Hz (deux passes),
+  et d’une vibration douce ascendante autour de 174,61 Hz, avec partiels
+  1,5× et 2× et modulation de phase de 5 Hz.
+  Enveloppe en sinus de puissance 1,7, double passe-bas final à 1900 Hz.
+  Attaque de 35 ms, fondu de fin de 120 ms, pic final 0,40.
+
+freeze.wav
+- 0,34998 s ; WAV PCM 16 bits ; mono ; 44 100 Hz ; 30 912 octets.
+- Source locale : ../audio/freeze-chime.ogg.
+- Source originale : pack Interface Sounds (1.0), Audio/glass_003.ogg.
+- Page officielle : https://kenney.nl/assets/interface-sounds
+- Licence originale : ../audio/LICENSE-kenney-interface-sounds.txt
+- Traitement : conversion mono, vitesse abaissée à 0,62 par interpolation,
+  double passe-bas à 1700 Hz, échos à 0 / 52 / 116 ms avec gains 0,62 / 0,28 / 0,12.
+  Ajout d’un carillon doux à 293,665 / 440 / 587,33 Hz, enveloppe à attaque
+  douce et décroissance exponentielle, double passe-bas final à 2000 Hz.
+  Attaque de 18 ms, fondu de fin de 90 ms, pic final 0,42.
+
+VÉRIFICATION
+------------
+Les WAV ont été décodés après export : fréquence, durée et niveaux contrôlés.
+Début et fin de chaque WAV à zéro ; pics sous 0,43 ; aucune saturation numérique.
+Les traitements visent une attaque feutrée et peu d’aigus.
+Aucune écoute humaine n’est revendiquée ; ajuster le volume au mixage du jeu.
+Poids total des deux effets : 75 056 octets.

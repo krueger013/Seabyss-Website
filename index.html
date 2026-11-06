@@ -13,7 +13,7 @@
   <title>Seabyss — L’inconnu t’appelle</title>
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css?v=magic3">
-  <script src="js/catalog.js?v=pirate2" defer></script>
+  <script src="js/catalog.js?v=casino1" defer></script>
   <script src="js/atmosphere.js?v=magic3" defer></script>
 </head>
 <body>
@@ -44,7 +44,7 @@
         <p class="eyebrow"><span class="ornament-line" aria-hidden="true"></span> PAR-DELÀ LES MERS CONNUES</p>
         <h1 id="hero-title">L’inconnu<br><em>t’appelle.</em></h1>
         <p class="hero-intro">Des mondes étranges. Des aventures singulières.<br>Découvre les jeux du studio Seabyss et embarque, directement dans ton navigateur.</p>
-        <div class="hero-actions"><a href="#catalogue" class="button button-primary">Explorer les <span data-game-count>3</span> jeux <span class="button-arrow" aria-hidden="true">→</span></a><a href="#studio" class="hero-secondary">Le studio <span aria-hidden="true">↗</span></a></div>
+        <div class="hero-actions"><a href="#catalogue" class="button button-primary">Explorer les <span data-game-count>6</span> jeux <span class="button-arrow" aria-hidden="true">→</span></a><a href="#studio" class="hero-secondary">Le studio <span aria-hidden="true">↗</span></a></div>
         <p class="hero-caption"><span class="status-dot"></span> Aucune installation. L’aventure commence ici.</p>
       </div>
       <div class="hero-signature" aria-hidden="true"><img src="assets/images/compass-mark.svg" alt="" width="66" height="66"><span>CAP SUR L’IMAGINAIRE<small>SEABYSS · SOUS UN MÊME PAVILLON</small></span></div>
@@ -52,11 +52,11 @@
     </section>
     <div class="welcome-strip"><span class="strip-label"><span aria-hidden="true">✦</span> TROUVE TON PROCHAIN MONDE.</span><p>Des jeux indépendants. Un navigateur. Toute une aventure.</p><a href="#catalogue" class="strip-link">Descendre vers les jeux <span aria-hidden="true">↓</span></a></div>
     <section class="catalogue" id="catalogue" aria-labelledby="catalogue-title">
-      <div class="section-top"><div><p class="eyebrow muted">TES PROCHAINES ESCALES</p><h2 id="catalogue-title">À l’horizon, <em>tes jeux.</em></h2></div><span class="catalogue-label"><span data-game-count>3</span> UNIVERS À EXPLORER</span></div>
+      <div class="section-top"><div><p class="eyebrow muted">TES PROCHAINES ESCALES</p><h2 id="catalogue-title">À l’horizon, <em>tes jeux.</em></h2></div><span class="catalogue-label"><span data-game-count>6</span> UNIVERS À EXPLORER</span></div>
       <div class="catalogue-layout">
         <aside class="catalogue-sidebar" aria-label="Filtres du catalogue"><div class="sidebar-title"><span aria-hidden="true">◇</span> EXPLORER</div><div id="category-filters" class="category-list">
           <button type="button" data-category="all" class="is-active" aria-pressed="true"><span aria-hidden="true">✦</span> Tous les jeux</button><button type="button" data-category="action" aria-pressed="false"><span aria-hidden="true">ϟ</span> Action</button><button type="button" data-category="adventure" aria-pressed="false"><span aria-hidden="true">⚑</span> Aventure</button><button type="button" data-category="arcade" aria-pressed="false"><span aria-hidden="true">✚</span> Arcade</button><button type="button" data-category="puzzle" aria-pressed="false"><span aria-hidden="true">◇</span> Réflexion</button><button type="button" data-category="strategy" aria-pressed="false"><span aria-hidden="true">♜</span> Stratégie</button><button type="button" data-category="simulation" aria-pressed="false"><span aria-hidden="true">◎</span> Simulation</button>
-        </div><div class="sidebar-note"><img src="assets/images/compass-mark.svg" alt="" width="40" height="40"><h3>Garde le cap.</h3><p>Ajoute tes découvertes aux favoris pour retrouver tes prochaines escales.</p><small>Enregistrés sur cet appareil.</small></div></aside>
+        <button type="button" data-category="casino" aria-pressed="false"><span aria-hidden="true">♧</span> Casino fictif</button></div><div class="sidebar-note"><img src="assets/images/compass-mark.svg" alt="" width="40" height="40"><h3>Garde le cap.</h3><p>Ajoute tes découvertes aux favoris pour retrouver tes prochaines escales.</p><small>Enregistrés sur cet appareil.</small></div></aside>
         <div class="catalogue-content">
           <div class="catalogue-toolbar"><div class="view-tabs" role="group" aria-label="Affichage des jeux"><button type="button" data-view="all" class="is-active" aria-pressed="true">Tous les jeux</button><button type="button" data-view="recent" aria-pressed="false">Nouveautés</button><button type="button" data-view="favorites" aria-pressed="false">Favoris <span data-bookmark-count>0</span></button></div><div class="sort-wrap"><label class="sr-only" for="sort-games">Trier les jeux</label><select id="sort-games"><option value="featured">La sélection</option><option value="newest">Les plus récents</option><option value="title">De A à Z</option></select></div></div>
           <p id="results-count" class="results-count" aria-live="polite">Chargement du catalogue…</p><p id="catalog-status" class="catalog-status" role="status" hidden></p><div id="game-grid" class="game-grid"></div>
