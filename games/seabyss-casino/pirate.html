@@ -1,24 +1,25 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"><link rel="stylesheet" href="../../css/i18n.css?v=seabyss-i18n-20261106"><link rel="stylesheet" href="translations.css?v=seabyss-i18n-20261106"><script src="../../js/i18n.js?v=seabyss-i18n-20261106"></script><script src="translations.js?v=seabyss-i18n-20261106"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#061315">
   <meta name="description" content="Seabyss Casino — une machine à sous pirate à cinq rouleaux, avec des jokers figés et un bonus dans les profondeurs.">
   <title>Seabyss Casino — Le Trésor des Abysses</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=casino-20261106b">
-  <link rel="stylesheet" href="atmosphere.css?v=casino-20261106b">
-  <link rel="stylesheet" href="enhancements.css?v=casino-20261106b">
-  <link rel="stylesheet" href="autoplay.css?v=casino-20261106b">
-  <script src="casino-wallet.js?v=casino-20261106b" defer></script><script src="casino-rewards.js?v=jungle-20261106" defer></script>
-  <script src="game-engine.js?v=casino-20261106b" defer></script>
-  <script src="autoplay.js?v=casino-20261106b" defer></script>
-  <script src="sound-bank.js?v=casino-20261106b" defer></script>
-  <script src="symbols.js?v=casino-20261106b" defer></script>
-  <script src="atmosphere.js?v=casino-20261106b" defer></script>
-  <script src="app.js?v=casino-20261106b" defer></script>
-<link rel="stylesheet" href="casino-rewards.css?v=casino-20261106b"></head>
+  <link rel="stylesheet" href="styles.css?v=seabyss-i18n-20261106">
+  <link rel="stylesheet" href="atmosphere.css?v=seabyss-i18n-20261106">
+  <link rel="stylesheet" href="enhancements.css?v=seabyss-i18n-20261106">
+  <link rel="stylesheet" href="autoplay.css?v=seabyss-i18n-20261106">
+  <script src="casino-wallet.js?v=seabyss-i18n-20261106" defer></script><script src="casino-rewards.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="game-engine.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="autoplay.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="sound-bank.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="symbols.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="atmosphere.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="app.js?v=seabyss-i18n-20261106" defer></script>
+<link rel="stylesheet" href="casino-rewards.css?v=seabyss-i18n-20261106"></head>
 <body>
   <div class="ocean-backdrop" aria-hidden="true"></div>
   <div class="sea-dust" aria-hidden="true"></div>
@@ -31,7 +32,7 @@
   <main>
     <section class="game-intro" aria-labelledby="game-title">
       <div class="eyebrow"><span></span> LES LÉGENDES ENGLOUTIES <span></span></div>
-      <h1 id="game-title">Le Trésor <em>des Abysses</em></h1>
+      <h1 data-i18n-ignore id="game-title">Le Trésor <em>des Abysses</em></h1>
       <p>Certains trésors auraient dû rester sous l’eau.</p>
       <div class="edition-tag"><span></span> L’ÉVEIL DU KRAKEN <span></span></div>
     </section>
@@ -74,7 +75,7 @@
   </main>
   <footer class="site-footer"><span>SEABYSS <span>© 2026</span></span><p>Le frisson des profondeurs. De l’argent fictif, uniquement.</p><button id="reset-button">Nouvelle session ↺</button></footer>
 
-  <dialog id="rules-dialog" class="modal rules-modal" aria-labelledby="rules-title"><button class="close-modal" data-close aria-label="Fermer">×</button><div class="eyebrow">LE GRIMOIRE DU CAPITAINE</div><h2 id="rules-title">Les règles des profondeurs</h2><div class="dialog-tabs" role="tablist"><button id="rules-tab" role="tab" aria-selected="true" aria-controls="rules-panel">Comment jouer</button><button id="payouts-tab" role="tab" aria-selected="false" aria-controls="payouts-panel">Table des gains</button></div><div id="rules-panel" role="tabpanel" aria-labelledby="rules-tab"><div class="rule-item"><span>01</span><div><h3>Préparez votre mise</h3><p>Vous commencez avec 100,00 $ fictifs. Choisissez une mise de 0,25 $ à 20,00 $, puis lancez les cinq rouleaux.</p></div></div><div class="rule-item"><span>02</span><div><h3>Suivez les 20 lignes</h3><p>Alignez au moins trois symboles identiques de gauche à droite, en commençant par le premier rouleau. Le joker remplace tous les symboles sauf le bateau Scatter.</p></div></div><div class="rule-item"><span>03</span><div><h3>Éveillez la malédiction</h3><p>3 bateaux Scatter donnent 10 tours gratuits ; 4 donnent 15 tours, et 5 donnent 20 tours. Les bonus à 4 et 5 Scatters sont rares et proviennent du tirage naturel. Le symbole de givre WILD sur les rouleaux 2, 3 ou 4 transforme tout le rouleau en jokers. Il reste figé jusqu’au dernier tour du bonus, y compris pour le calcul des gains du tour où il apparaît.</p></div></div><p class="rules-note">La mise reste celle du déclenchement. Aucun coût pendant les tours gratuits, aucun redéclenchement. Le mode « Essayer le bonus » est une démonstration séparée : votre solde est restauré à la sortie.</p></div><div id="payouts-panel" role="tabpanel" aria-labelledby="payouts-tab" hidden><p class="paytable-note">Multiplicateurs de la mise par ligne (mise totale ÷ 20). Les gains de chaque ligne sont arrondis au cent et additionnés.</p><div id="paytable"></div><details class="paylines-details"><summary>Voir les 20 lignes de gain</summary><div id="paylines-grid"></div></details></div><p class="dialog-footnote">Prototype de divertissement · Aucun dépôt ni retrait · Probabilités non certifiées</p></dialog>
+  <dialog id="rules-dialog" class="modal rules-modal" aria-labelledby="rules-title"><div class="casino-language-row"><span data-language-picker data-casino-language></span></div><button class="close-modal" data-close aria-label="Fermer">×</button><div class="eyebrow">LE GRIMOIRE DU CAPITAINE</div><h2 id="rules-title">Les règles des profondeurs</h2><div class="dialog-tabs" role="tablist"><button id="rules-tab" role="tab" aria-selected="true" aria-controls="rules-panel">Comment jouer</button><button id="payouts-tab" role="tab" aria-selected="false" aria-controls="payouts-panel">Table des gains</button></div><div id="rules-panel" role="tabpanel" aria-labelledby="rules-tab"><div class="rule-item"><span>01</span><div><h3>Préparez votre mise</h3><p>Vous commencez avec 100,00 $ fictifs. Choisissez une mise de 0,25 $ à 20,00 $, puis lancez les cinq rouleaux.</p></div></div><div class="rule-item"><span>02</span><div><h3>Suivez les 20 lignes</h3><p>Alignez au moins trois symboles identiques de gauche à droite, en commençant par le premier rouleau. Le joker remplace tous les symboles sauf le bateau Scatter.</p></div></div><div class="rule-item"><span>03</span><div><h3>Éveillez la malédiction</h3><p>3 bateaux Scatter donnent 10 tours gratuits ; 4 donnent 15 tours, et 5 donnent 20 tours. Les bonus à 4 et 5 Scatters sont rares et proviennent du tirage naturel. Le symbole de givre WILD sur les rouleaux 2, 3 ou 4 transforme tout le rouleau en jokers. Il reste figé jusqu’au dernier tour du bonus, y compris pour le calcul des gains du tour où il apparaît.</p></div></div><p class="rules-note">La mise reste celle du déclenchement. Aucun coût pendant les tours gratuits, aucun redéclenchement. Le mode « Essayer le bonus » est une démonstration séparée : votre solde est restauré à la sortie.</p></div><div id="payouts-panel" role="tabpanel" aria-labelledby="payouts-tab" hidden><p class="paytable-note">Multiplicateurs de la mise par ligne (mise totale ÷ 20). Les gains de chaque ligne sont arrondis au cent et additionnés.</p><div id="paytable"></div><details class="paylines-details"><summary>Voir les 20 lignes de gain</summary><div id="paylines-grid"></div></details></div><p class="dialog-footnote">Prototype de divertissement · Aucun dépôt ni retrait · Probabilités non certifiées</p></dialog>
 
   <dialog id="bonus-dialog" class="modal bonus-modal" aria-labelledby="bonus-dialog-title"><div class="bonus-dialog-art" id="bonus-dialog-art" aria-hidden="true"></div><div class="eyebrow" id="bonus-dialog-overline">LA MALÉDICTION S’ÉVEILLE</div><h2 id="bonus-dialog-title">Les profondeurs<br>vous appellent.</h2><div class="free-spins-display"><strong id="awarded-free-spins">10</strong><span>TOURS GRATUITS</span></div><p id="bonus-tier-note" class="bonus-tier-note">3 SCATTERS</p><div id="demo-levels" class="demo-levels" role="group" aria-label="Choisir le bonus de démonstration" hidden><button data-demo-scatters="3" aria-pressed="true">3 SCATTERS<span>10 tours</span></button><button data-demo-scatters="4" aria-pressed="false">4 SCATTERS<span>15 tours</span></button><button data-demo-scatters="5" aria-pressed="false">5 SCATTERS<span>20 tours</span></button></div><p>Sur les rouleaux <b>2, 3 et 4</b>, un joker suffit pour figer le rouleau entier jusqu’à la fin du bonus.</p><p id="demo-note" class="demo-note" hidden>Démo séparée · Votre solde sera restauré à la sortie.</p><p id="auto-bonus-note" class="demo-note" hidden>La série attend votre entrée. Les tours gratuits se joueront automatiquement, puis les tours payants restants reprendront après le bilan.</p><button id="enter-bonus-button" class="gold-button">ENTRER DANS LES ABYSSES <span>→</span></button><button id="cancel-demo-button" class="quiet-button" hidden>Revenir à la machine</button></dialog>
 

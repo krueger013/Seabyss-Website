@@ -540,3 +540,6 @@ dialog::backdrop { background:#040c0bd9; backdrop-filter:blur(10px); }
  .chapter-preview{min-height:82px}
  .home-foot{padding-block:12px}
 }
+
+/* Language controls follow the menu and settings flow on small screens. */
+.mystery-language{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0;max-width:100%}.mystery-language select{max-width:100%;min-height:44px;font-size:16px}

@@ -3,7 +3,7 @@
   const E = globalThis.SeabyssEngine;
   const art = globalThis.SeabyssSymbols;
   const $ = id => document.getElementById(id);
-  const money = cents => (cents / 100).toLocaleString('fr-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' $';
+  const money = cents => (cents / 100).toLocaleString(globalThis.SeabyssI18n?.locale || 'fr-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' $';
   const moneyHTML = cents => money(cents).replace(' $', ' <small>$</small>');
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
   const storageKey = 'seabyss-casino-session-v1';
@@ -621,4 +621,11 @@
   updateUI();
   if (state.inBonus) status(`Voyage repris : ${state.freeSpins} tours gratuits restants, ${state.lockedReels.length} rouleau(x) figé(s).`);
   else if (state.balance < state.bet) status('Diminuez la mise ou commencez une nouvelle session pour jouer.');
+
+  // Locale-only refresh: keep the same wagers, saved session and wallet values.
+  window.addEventListener('seabyss:languagechange', () => {
+    if (busy) return;
+    updateUI(); updateAutoSelection();
+    document.querySelectorAll('#bet-options [data-bet]').forEach(button => { button.textContent = money(Number(button.dataset.bet)); });
+  });
 })();

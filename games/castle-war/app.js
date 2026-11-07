@@ -1,5 +1,7 @@
 (() => {
   'use strict';
+  const tr = text => window.SeabyssI18n?.t(text) ?? text;
+  const searchText = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
   const E = window.CastleEngine, R = window.CastleRenderer, P = window.CastleProgression, $ = id => document.getElementById(id);
   const MAPS = {
     abyss: { name: 'The Cursed Reef', subtitle: 'BIOLUMINESCENT TIDES', number: '01' },
@@ -63,12 +65,12 @@
     catch (_) {profileUnsaved=true;if(!silent)notify('Progress could not be saved. Keep this tab open to retain your rewards.');return false;}
   }
   function updateProfileHud() {
-    $('gold-value').textContent=profile.gold.toLocaleString('en');
+    $('gold-value').textContent=profile.gold.toLocaleString(window.SeabyssI18n?.locale || 'en');
     $('armory').setAttribute('aria-label',`Open the Armory. ${profile.gold} gold. ${profile.unlocked.length} of ${E.CARD_DEFS.length} cards unlocked.`);
     $('collection-count').textContent=`${profile.unlocked.length} / ${E.CARD_DEFS.length} cards`;
     $('first-win-note').textContent=profile.firstVictory?'Win battles. Gain XP. Earn a new card at every level.':'Your first victory earns a free card, gold and XP.';
     const level=P.levelInfo(profile),battles=profile.wins+profile.losses,deck=profile.deck.map(cardById).filter(Boolean);
-    $('profile-name').textContent=profile.name;$('profile-avatar-art').textContent=AVATAR_SYMBOLS[profile.avatar]||'♛';$('profile-avatar-button').dataset.avatar=profile.avatar;
+    $('profile-name').toggleAttribute('data-i18n-ignore',profile.name!=='Commander');$('profile-name').textContent=profile.name;$('profile-avatar-art').textContent=AVATAR_SYMBOLS[profile.avatar]||'♛';$('profile-avatar-button').dataset.avatar=profile.avatar;
     $('profile-level-badge').textContent=level.level;$('profile-level').textContent=`LEVEL ${level.level}`;
     $('profile-title').textContent=level.level>=20?'Sovereign of the depths':level.level>=10?'A legend in the making':level.level>=5?'Commander of the tides':'A new reign begins.';
     $('profile-wins').textContent=profile.wins;$('profile-losses').textContent=profile.losses;$('profile-battles').textContent=profile.totalBattles;
@@ -260,7 +262,7 @@
   function showArmory(filter=null) {
     refreshProfile();updateProfileHud();
     if(['all','owned','shop','equipped'].includes(filter)){collectionFilter=filter;collectionSearch='';collectionElement='all';}
-    showModal('The Armory',`<div class="collection-intro"><div><p>41 cards. Eight slots. Your strategy.</p><small>Buy cards with battle gold or earn them by leveling up. Owning a card does not equip it.</small></div><div class="gold-balance"><span>YOUR GOLD</span><strong id="catalog-gold">◆ ${profile.gold.toLocaleString('en')}</strong></div></div><section class="loadout-panel" aria-label="Your eight deck slots"><div class="loadout-heading"><strong>${deckLocked()?'BATTLE DECK':'YOUR DECK'} <span id="loadout-count">${collectionDeck().length} / 8</span></strong><span id="loadout-average"></span></div><div id="loadout-slots" class="loadout-slots">${deckSlotsMarkup()}</div><p>${deckLocked()?'This battle’s deck is locked. New purchases can be equipped from the main menu for your next battle.':'Tap an equipped card to remove it, or use Swap in to replace a slot. The Relic Runner uses one slot. Continued battles keep their original deck.'}</p></section><div id="shop-status" class="shop-status" role="status" tabindex="-1">${profile.firstVictory?'Every new level earns a card. Build the army that suits you.':'Your first victory earns an elemental card. Every new level earns another.'}</div><div class="collection-tools"><div class="collection-tabs" role="group" aria-label="Filter collection"><button data-collection-filter="all">All cards</button><button data-collection-filter="owned">Owned</button><button data-collection-filter="shop">Shop</button><button data-collection-filter="equipped">Equipped</button></div><div class="collection-search"><label><span>Find a card</span><input id="card-search" type="search" placeholder="Name, role or ability…" maxlength="60" value="${escapeHtml(collectionSearch)}"></label><label><span>Element</span><select id="card-element"><option value="all">All elements</option><option value="physical">Physical</option><option value="fire">Fire</option><option value="ice">Ice</option><option value="water">Water</option></select></label></div></div><div id="catalog-count" class="catalog-count"></div><div id="catalog-grid" class="catalog-grid"></div><p class="catalog-note">Your profile, collection and deck are saved in this browser on this device. You can equip up to eight cards, including your collector.</p>`,'COLLECTION · '+profile.unlocked.length+' / '+E.CARD_DEFS.length);
+    showModal('The Armory',`<div class="collection-intro"><div><p>41 cards. Eight slots. Your strategy.</p><small>Buy cards with battle gold or earn them by leveling up. Owning a card does not equip it.</small></div><div class="gold-balance"><span>YOUR GOLD</span><strong id="catalog-gold">◆ ${profile.gold.toLocaleString(window.SeabyssI18n?.locale || 'en')}</strong></div></div><section class="loadout-panel" aria-label="Your eight deck slots"><div class="loadout-heading"><strong>${deckLocked()?'BATTLE DECK':'YOUR DECK'} <span id="loadout-count">${collectionDeck().length} / 8</span></strong><span id="loadout-average"></span></div><div id="loadout-slots" class="loadout-slots">${deckSlotsMarkup()}</div><p>${deckLocked()?'This battle’s deck is locked. New purchases can be equipped from the main menu for your next battle.':'Tap an equipped card to remove it, or use Swap in to replace a slot. The Relic Runner uses one slot. Continued battles keep their original deck.'}</p></section><div id="shop-status" class="shop-status" role="status" tabindex="-1">${profile.firstVictory?'Every new level earns a card. Build the army that suits you.':'Your first victory earns an elemental card. Every new level earns another.'}</div><div class="collection-tools"><div class="collection-tabs" role="group" aria-label="Filter collection"><button data-collection-filter="all">All cards</button><button data-collection-filter="owned">Owned</button><button data-collection-filter="shop">Shop</button><button data-collection-filter="equipped">Equipped</button></div><div class="collection-search"><label><span>Find a card</span><input id="card-search" type="search" placeholder="Name, role or ability…" maxlength="60" value="${escapeHtml(collectionSearch)}"></label><label><span>Element</span><select id="card-element"><option value="all">All elements</option><option value="physical">Physical</option><option value="fire">Fire</option><option value="ice">Ice</option><option value="water">Water</option></select></label></div></div><div id="catalog-count" class="catalog-count"></div><div id="catalog-grid" class="catalog-grid"></div><p class="catalog-note">Your profile, collection and deck are saved in this browser on this device. You can equip up to eight cards, including your collector.</p>`,'COLLECTION · '+profile.unlocked.length+' / '+E.CARD_DEFS.length);
     modal.classList.add('armory-modal','collection-modal');
     $('card-element').value=collectionElement;
     $('card-search').oninput=event=>{collectionSearch=event.target.value;renderCollection();};
@@ -269,14 +271,14 @@
   }
   function renderCollection() {
     if(!$('catalog-grid'))return;
-    const deck=collectionDeck(),query=collectionSearch.trim().toLowerCase();
-    $('catalog-gold').textContent='◆ '+profile.gold.toLocaleString('en');$('loadout-count').textContent=`${deck.length} / 8`;
+    const deck=collectionDeck(),query=searchText(collectionSearch.trim());
+    $('catalog-gold').textContent='◆ '+profile.gold.toLocaleString(window.SeabyssI18n?.locale || 'en');$('loadout-count').textContent=`${deck.length} / 8`;
     $('loadout-slots').innerHTML=deckSlotsMarkup();
     $('loadout-average').textContent=deck.length?`${(deck.map(cardById).reduce((n,c)=>n+c.cost,0)/deck.length).toFixed(1)} avg. aether`:'Choose at least one card';
     document.querySelectorAll('[data-collection-filter]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.collectionFilter===collectionFilter));
     const cards=E.CARD_DEFS.filter(c=>{
       const owned=profile.unlocked.includes(c.id),equipped=deck.includes(c.id);
-      return (collectionFilter==='all'||collectionFilter==='owned'&&owned||collectionFilter==='shop'&&!owned||collectionFilter==='equipped'&&equipped)&&(collectionElement==='all'||c.element===collectionElement)&&(!query||`${c.name} ${c.description} ${c.kind} ${c.element}`.toLowerCase().includes(query));
+      return (collectionFilter==='all'||collectionFilter==='owned'&&owned||collectionFilter==='shop'&&!owned||collectionFilter==='equipped'&&equipped)&&(collectionElement==='all'||c.element===collectionElement)&&(!query||searchText([c.name,c.description,c.kind,c.element,tr(c.name),tr(c.description),tr(TYPE_NAMES[c.kind]),tr(ELEMENT_LABELS[c.element])].join(" ")).includes(query));
     });
     $('catalog-count').textContent=`${cards.length} ${cards.length===1?'card':'cards'} · ${profile.unlocked.length} owned · ${deck.length} / 8 equipped`;
     $('catalog-grid').innerHTML=cards.map(c=>{
@@ -431,6 +433,7 @@
     if(!document.hidden&&now-lastRender>=frameBudget-1){draw();lastRender=now;}
     requestAnimationFrame(frame);
   }
+  window.addEventListener('seabyss:languagechange',()=>{updateProfileHud();if($('catalog-grid'))renderCollection();if(playing)updateHud();});
   updateProfileHud();buildHand();preview();
   if(saved)settleDeliveries(saved,false);
   if(saved&&saved.status!=='playing'){const reward=settleBattle(saved);saved=null;$('resume').hidden=true;if(reward.gold)notify(`Battle rewards recovered: +${reward.gold} gold.`);}

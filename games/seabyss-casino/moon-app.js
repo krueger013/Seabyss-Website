@@ -2,7 +2,7 @@
   'use strict';
   const E = MoonEngine, wallet = CasinoWallet, bank = SeabyssSounds;
   const $ = id => document.getElementById(id);
-  const money = cents => (cents / 100).toLocaleString('fr-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' $';
+  const money = cents => (cents / 100).toLocaleString(globalThis.SeabyssI18n?.locale || 'fr-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' $';
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
   const copy = value => JSON.parse(JSON.stringify(value));
   const cellKey = ({ reel, row }) => reel * 3 + row;
@@ -329,4 +329,11 @@
   $('paytable').innerHTML = `<table><thead><tr><th>SYMBOLE</th>${columns.map(count => `<th>${count}<small>ROULEAUX</small></th>`).join('')}</tr></thead><tbody>${E.SYMBOLS.filter(symbol => symbol.pays[3]).map(symbol => `<tr><td>${imageMarkup(symbol.id)}${({ vampire: 'Vampire', wolf: 'Loup-garou', grimoire: 'Grimoire', potion: 'Potion', moon: 'Lune', ring: 'Anneau' })[symbol.id]}</td>${columns.map(count => `<td>×${String(symbol.pays[count]).replace('.', ',')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
   restore(); state.balance = wallet.read(); bank.setEnabled(sound); drawGrid(); ui();
   if (state.inBonus) showBonus(true);
+
+  // Locale-only refresh: keep the same wagers, saved session and wallet values.
+  window.addEventListener('seabyss:languagechange', () => {
+    if (busy) return;
+    ui(); autoSelection();
+    document.querySelectorAll('#bet-options [data-bet]').forEach(button => { button.textContent = money(Number(button.dataset.bet)); });
+  });
 })();

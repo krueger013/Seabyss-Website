@@ -1,0 +1,9 @@
+{
+  "name": "seabyss-portal",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/i18n.test.cjs",
+    "check:locales": "node scripts/check-i18n.cjs"
+  },
+  "devDependencies": { "jsdom": "31.0.0" }
+}

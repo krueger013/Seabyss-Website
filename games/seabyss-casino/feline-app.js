@@ -2,7 +2,7 @@
   'use strict';
   const E = FelineEngine, wallet = CasinoWallet;
   const $ = id => document.getElementById(id), copy = value => JSON.parse(JSON.stringify(value));
-  const money = cents => (cents / 100).toLocaleString('fr-CA', {minimumFractionDigits:2,maximumFractionDigits:2}) + ' $';
+  const money = cents => (cents / 100).toLocaleString(globalThis.SeabyssI18n?.locale || 'fr-CA', {minimumFractionDigits:2,maximumFractionDigits:2}) + ' $';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const ids = ['lion','tiger','leopard','panther','cheetah','ruby','flower','wild','scatter'];
@@ -229,7 +229,7 @@
   }
   for (let col = 0; col < 5; col++) {const reel = document.createElement('div');reel.className = 'feline-reel';reel.setAttribute('role','group');reel.setAttribute('aria-label',`Rouleau ${col+1}`);$('reels').append(reel);}
   $('paytable').innerHTML = `<table><thead><tr><th>SYMBOLE</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody>${E.SYMBOLS.filter(s => s.pays[3]).map(s => `<tr><td>${art(s.id)}${s.name}</td>${[3,4,5].map(n => `<td>×${s.pays[n]}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-  const percent = probability => (probability*100).toLocaleString('fr-CA',{maximumFractionDigits:2}) + ' %';
+  const percent = probability => (probability*100).toLocaleString(globalThis.SeabyssI18n?.locale || 'fr-CA',{maximumFractionDigits:2}) + ' %';
   const freeChance = E.WHEEL_SEGMENTS.filter(segment => segment.type === 'free').reduce((sum,segment) => sum+segment.probability,0);
   $('wheel-prizes').innerHTML = E.WHEEL_SEGMENTS.filter(segment => segment.type === 'cash').map(segment => `<div data-wheel-prize="${segment.index}">${art(segment.symbol)}<strong>${symbols[segment.symbol].name}</strong><br>×${segment.multiplier} la mise · ${percent(segment.probability)}</div>`).join('') + `<div data-wheel-prize="free"><strong>10 tours gratuits</strong><br>${percent(freeChance)} au total</div>`;
   $('wheel-disc').innerHTML = E.WHEEL_SEGMENTS.map((segment,index) => {
@@ -262,4 +262,11 @@
   ['focus','pageshow','casino-wallet-changed'].forEach(event => window.addEventListener(event,sync));window.addEventListener('storage',event => {if (event.key===wallet.key) sync();});
   try {await wallet.runExclusive(loadLatest);} catch (_) {state.balance = wallet.read();status('La sauvegarde est momentanément indisponible.');}
   busy = false;audio.setEnabled(sound);draw();ui();showPending();
+
+  // Locale-only refresh: keep the same wagers, saved session and wallet values.
+  window.addEventListener('seabyss:languagechange', () => {
+    if (busy) return;
+    ui(); autoBudget();
+    document.querySelectorAll('#bet-options [data-bet]').forEach(button => { button.textContent = money(Number(button.dataset.bet)); });
+  });
 })();
