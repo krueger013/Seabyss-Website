@@ -1,0 +1,54 @@
+JUNGLE FELINS — AUDIO SOURCES
+Source pages and licenses checked on 2026-11-06.
+
+License for all four sounds: Creative Commons CC0 1.0 Universal.
+https://creativecommons.org/publicdomain/zero/1.0/
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+These are the public high-quality MP3 previews served by Freesound. They were downloaded without an account, renamed for the game, and otherwise left byte-for-byte unchanged. They are not the original WAV masters. The named creators do not endorse Seabyss Casino. Credits are provided for provenance; CC0 does not require attribution.
+
+jungle-ambience.mp3
+Title: More Jungle Sounds Background Ambience
+Creator: paulprit
+Source: https://freesound.org/people/paulprit/sounds/724055/
+Downloaded file: https://cdn.freesound.org/previews/724/724055_8682843-hq.mp3
+Description: field recording from Royal Belum National Park, West Malaysia; insects, birds and monkeys.
+Source duration: 32.726 seconds. MP3 frame duration: 32.784 seconds including encoding padding.
+Format: MPEG Layer III, 48000 Hz, stereo, VBR. Size: 764544 bytes.
+SHA-256: fcf9b234cc465aaff4aa416ae8a312c484ed7d49db67c7a2dd11de2a14a87e14
+
+jungle-birds.mp3
+Title: Jungle 1.wav
+Creator: paulprit
+Source: https://freesound.org/people/paulprit/sounds/507445/
+Downloaded file: https://cdn.freesound.org/previews/507/507445_8682843-hq.mp3
+Description: Amazonian jungle field recording beside the Secure River, Bolivia; birds, monkeys and insects, not an isolated bird call.
+Source duration: 8.813 seconds. MP3 frame duration: 8.880 seconds including encoding padding.
+Format: MPEG Layer III, 48000 Hz, stereo, VBR. Size: 197928 bytes.
+SHA-256: d808d3ad3b1d2c150a7f119bb5af950534b5581085f944aa2c0920f8a0a7897e
+
+lion-growl.mp3
+Title: lion_growls.wav
+Creator: stratcat322
+Source: https://freesound.org/people/stratcat322/sounds/270383/
+Downloaded file: https://cdn.freesound.org/previews/270/270383_1808829-hq.mp3
+Description: edited and enhanced lion growls; the creator identifies the underlying recording as Lion lament by roman_cgr.
+Underlying recording: https://freesound.org/people/roman_cgr/sounds/223978/
+The source page and underlying recording both state CC0.
+Source duration: 4.969 seconds. MP3 frame duration: 5.040 seconds including encoding padding.
+Format: MPEG Layer III, 48000 Hz, stereo, VBR. Size: 89424 bytes.
+SHA-256: 651b17a4886fdfd3f1f774b5ba002c394193bad8fe2339b130ac9607722f7086
+
+tiger-call.mp3
+Title: Tiger.mp3
+Creator: Bidone
+Source: https://freesound.org/people/Bidone/sounds/67357/
+Downloaded file: https://cdn.freesound.org/previews/67/67357_706955-hq.mp3
+Description: a short tiger cry, field recording.
+Source duration: 1.503 seconds. MP3 frame duration: 1.567347 seconds including encoding padding.
+Format: MPEG Layer III, 44100 Hz, stereo, VBR. Size: 35794 bytes.
+SHA-256: 0a40606d9331eab0342183100d3087a514b8d1570f2f7831474697a82219875c
+
+Validation: all downloads returned HTTP 200 and Content-Type audio/mpeg. Every MPEG Layer III frame was parsed to the end without an invalid byte between frames or a truncated frame. No HTML/error document was saved as audio. This file-level validation does not replace listening or device playback tests.
+
+Total runtime MP3 payload: 1087690 bytes (1.0373 MiB).

@@ -74,7 +74,7 @@
         coverKind: item.coverKind === "gameplay" ? "gameplay" : "artwork",
         coverLabel: typeof item.coverLabel === "string" ? item.coverLabel.trim() : "",
         coverCharacter: safeUrl(item.coverCharacter),
-        coverSprite: ["flowers", "monsters"].includes(item.coverSprite) ? item.coverSprite : null,
+        coverSprite: ["flowers", "monsters", "feline"].includes(item.coverSprite) ? item.coverSprite : null,
         rank: Number.isFinite(item.rank) ? item.rank : 100,
         controls: Array.isArray(item.controls) ? item.controls.filter((control) => typeof control === "string").join(" · ") : typeof item.controls === "string" ? item.controls.trim() : "",
         timestamp: Number.isFinite(timestamp) ? timestamp : 0,
@@ -203,7 +203,7 @@
     if (grouped) {
       const sections = [
         { games: visible.filter((game) => game.genre !== "casino"), title: "Des mondes à explorer", copy: "Des compagnons à adopter, des mystères à résoudre et des royaumes à conquérir." },
-        { games: visible.filter((game) => game.genre === "casino"), title: "Les machines de Seabyss", copy: "Six univers. Un solde fictif partagé. Aucun argent réel." },
+        { games: visible.filter((game) => game.genre === "casino"), title: "Les machines de Seabyss", copy: "Sept univers. Un solde fictif partagé. Aucun argent réel." },
       ];
       grid.replaceChildren(...sections.flatMap((section) => {
         if (!section.games.length) return [];

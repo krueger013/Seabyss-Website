@@ -1,4 +1,4 @@
-SEABYSS CASINO — SIX UNIVERS — CRÉDITS
+SEABYSS CASINO — SEPT UNIVERS — CRÉDITS
 
 ILLUSTRATIONS
 Illustrations originales générées pour Seabyss Casino. Les copies WebP destinées au navigateur
@@ -32,3 +32,11 @@ sans échantillon sonore tiers.
 LE TRÔNE DU DRAGON
 Atlas des neuf symboles royaux, dragon et décor médiéval : illustrations originales du projet.
 Crédits publics détaillés : assets/medieval/CREDITS.txt.
+
+JUNGLE FÉLINS
+Atlas des neuf symboles, cinq gardiens félins et décor de jungle : illustrations originales.
+Crédits publics détaillés : assets/feline/CREDITS.txt.
+Les griffes, rotations et fanfares combinent des effets originaux synthétisés avec Web Audio
+et quatre enregistrements sous licence Creative Commons Zero 1.0 :
+ambiances de jungle par paulprit, lion par stratcat322 d’après roman_cgr, tigre par Bidone (Freesound).
+Sources et licences détaillées : assets/feline/audio/AUDIO-SOURCES.txt.
