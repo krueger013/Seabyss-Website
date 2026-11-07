@@ -3,7 +3,7 @@ const fs = require('node:fs'), path = require('node:path'), vm = require('node:v
 const root = path.resolve(__dirname,'..');
 const games = JSON.parse(fs.readFileSync(path.join(root,'data/games.json'),'utf8'));
 const pages = ['index.html','privacy.html',...new Set(games.map(game => game.url)), 'games/seabyss-casino/index.html'];
-const packs = ['js/portal-translations.js','js/privacy-translations.js',...['castle-war','petits-compagnons','marios-ghost','les-heures-perdues','seabyss-casino'].map(name => 'games/'+name+'/translations.js')];
+const packs = ['js/portal-translations.js','js/privacy-translations.js',...['dames','castle-war','petits-compagnons','marios-ghost','les-heures-perdues','seabyss-casino'].map(name => 'games/'+name+'/translations.js')];
 let strings = 0, templates = 0;
 for (const pack of packs) {
   let registrations = 0;
@@ -38,6 +38,6 @@ for (const page of pages) {
     assert(fs.existsSync(path.resolve(path.dirname(file),ref.split(/[?#]/)[0])),page+': missing '+ref);
   }
 }
-assert.equal(games.length,11);
-assert.equal(new Set(games.map(game=>game.id)).size,11);
+assert.equal(games.length,12);
+assert.equal(new Set(games.map(game=>game.id)).size,12);
 console.log('Validated '+pages.length+' pages, '+packs.length+' dictionaries, '+strings+' phrases and '+templates+' dynamic templates in FR / EN / ES.');

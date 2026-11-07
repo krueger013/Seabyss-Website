@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../css/i18n.css?v=dames1">
+  <script src="../../js/i18n.js?v=dames1"></script>
+  <script src="translations.js?v=dames1"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#091f23">
+  <meta name="description" content="Un duel de dames dans les eaux pirates de Seabyss. Affrontez le capitaine ou un ami sur un somptueux damier de corsaire.">
+  <title>SEABYSS — Les Dames du Corsaire</title>
+  <link rel="stylesheet" href="styles.css?v=dames1">
+  <script src="engine.js?v=dames1" defer></script>
+  <script src="app.js?v=dames1" defer></script>
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="brand" id="brand" aria-label="Seabyss, retour à la taverne"><span class="sprite emblem" style="--x:100%;--y:66.6667%" aria-hidden="true"></span><span><strong>SEABYSS</strong><small>LES DAMES DU CORSAIRE</small></span></button>
+      <nav aria-label="Navigation principale"><button class="nav-link" id="home-nav">La taverne</button><button class="nav-link" data-rules>Les règles</button><a class="nav-link universe" href="../../index.html#catalogue">L’univers Seabyss <span aria-hidden="true">↗</span></a></nav>
+      <button class="sound-button" id="sound" aria-label="Activer les sons" aria-pressed="false"><span aria-hidden="true">♫</span><span class="sound-label">Son coupé</span></button>
+    </header>
+
+    <main id="home" class="home-screen">
+      <section class="hero-copy">
+        <p class="eyebrow"><span></span> STRATÉGIE EN HAUTE MER</p>
+        <h1>La loi des<br><em>corsaires.</em></h1>
+        <p class="intro">Un damier. Deux équipages.<br>Et une seule place à la barre.</p>
+        <div class="setup" aria-label="Préparer une partie">
+          <div class="mode-picker" role="group" aria-label="Mode de jeu"><button class="mode active" data-mode="ai" aria-pressed="true"><span class="sprite small-icon" style="--x:0%;--y:33.3333%" aria-hidden="true"></span>Face au capitaine<small>Solo · contre l’ordinateur</small></button><button class="mode" data-mode="local" aria-pressed="false"><span class="sprite small-icon" style="--x:33.3333%;--y:33.3333%" aria-hidden="true"></span>Duel d’équipages<small>2 joueurs · sur cet écran</small></button></div>
+          <div class="difficulty-line" id="difficulty-line"><span>Votre adversaire</span><div class="difficulty-picker" role="group" aria-label="Difficulté"><button data-level="facile" aria-pressed="false">Mousse</button><button class="active" data-level="moyen" aria-pressed="true">Corsaire</button><button data-level="difficile" aria-pressed="false">Légende</button></div></div>
+          <button class="plaque primary" id="start"><span>À L’ABORDAGE</span><span aria-hidden="true">⟶</span></button>
+          <button class="resume" id="resume" hidden>Reprendre le duel en cours <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="home-language"><span data-language-picker></span></div><div class="home-notes"><span>100 CASES</span><i>✦</i><span>RÈGLES INTERNATIONALES</span><i>✦</i><span>SANS COMPTE</span></div>
+      </section>
+      <section class="hero-art" aria-label="Aperçu du damier pirate">
+        <div class="art-topline"><span class="fine-line"></span><span>LE DUEL DES DEUX MARÉES</span><span class="fine-line"></span></div>
+        <div class="preview-board-wrap"><div class="preview-board" id="preview-board" aria-hidden="true"></div></div>
+        <div class="art-caption"><span class="sprite caption-coin" style="--x:0%;--y:0%" aria-hidden="true"></span><div><strong>L’or des corsaires</strong><span>contre les ombres du Kraken</span></div><span class="sprite caption-coin" style="--x:33.3333%;--y:0%" aria-hidden="true"></span></div>
+      </section>
+      <footer class="home-footer"><span>UNE ESCALE DANS L’UNIVERS SEABYSS</span><button data-rules>Comment prendre la mer <span aria-hidden="true">⟶</span></button><span>TACTILE & ORDINATEUR</span></footer>
+    </main>
+
+    <main id="game" class="game-screen" hidden>
+      <aside class="crew-panel gold-panel"><div class="sprite portrait" style="--x:66.6667%;--y:100%" aria-hidden="true"></div><p class="eyebrow">L’ÉQUIPAGE DU SOLEIL</p><h2>Les Corsaires</h2><div class="crew-count"><strong id="gold-count">20</strong><span>pièces à bord</span></div><p class="king-count" id="gold-kings">Aucune dame couronnée</p><div class="crew-turn" id="gold-turn">À vous de jouer</div><div class="panel-flavor">« Le trésor appartient<br>aux audacieux. »</div></aside>
+      <section class="battle-center" aria-label="Damier">
+        <div class="battle-heading"><div><p class="eyebrow">LE DUEL DES DEUX MARÉES</p><h1 id="turn-title">À vous, capitaine</h1></div><span class="turn-number" id="turn-number">TOUR 01</span></div>
+        <div class="board-frame"><div class="board-coords top-coords" aria-hidden="true">a b c d e f g h i j</div><div class="board" id="board" role="group" aria-label="Damier de 100 cases"></div><span class="board-signature" aria-hidden="true">✦ SEABYSS ✦</span></div>
+        <p class="status" id="status" role="status" aria-live="polite">Sélectionnez un pion doré, puis une case lumineuse.</p>
+        <div class="game-actions"><button id="undo" class="action-button"><span aria-hidden="true">↶</span> Annuler</button><button id="hint" class="action-button"><span aria-hidden="true">✧</span> Conseil</button><button id="game-rules" class="action-button" data-rules><span aria-hidden="true">?</span> Règles</button><button id="pause" class="action-button"><span aria-hidden="true">Ⅱ</span> Menu</button></div>
+      </section>
+      <aside class="crew-panel teal-panel"><div class="sprite portrait" style="--x:100%;--y:100%" aria-hidden="true"></div><p class="eyebrow">L’ÉQUIPAGE DES ABYSSES</p><h2>Le Kraken</h2><div class="crew-count"><strong id="teal-count">20</strong><span>pièces à bord</span></div><p class="king-count" id="teal-kings">Aucune dame couronnée</p><div class="crew-turn" id="teal-turn">Guette la marée</div><div class="logbook"><h3>JOURNAL DE BORD</h3><ol id="move-log"><li>Les équipages prennent place.</li></ol></div></aside>
+    </main>
+  </div>
+
+  <dialog id="modal" aria-labelledby="modal-title"><div class="modal-inner"><button id="modal-close" class="close-button" aria-label="Fermer">×</button><span class="sprite modal-emblem" style="--x:100%;--y:66.6667%" aria-hidden="true"></span><p class="eyebrow" id="modal-kicker">LE CODE DES CORSAIRES</p><h2 id="modal-title">Les règles du duel</h2><div id="modal-content"></div></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
