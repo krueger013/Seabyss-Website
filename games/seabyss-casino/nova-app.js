@@ -3,7 +3,7 @@
   const E = NovaEngine, wallet = CasinoWallet, bank = SeabyssSounds, FX = NovaEffects;
   const $ = id => document.getElementById(id);
   const copy = value => JSON.parse(JSON.stringify(value));
-  const money = cents => (cents / 100).toLocaleString('fr-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' $';
+  const money = cents => (cents / 100).toLocaleString(globalThis.SeabyssI18n?.locale || 'fr-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' $';
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
   const key = cell => cell.reel * E.ROWS + cell.row;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -509,4 +509,11 @@
   if (summaryPending) showSummary(); else if (introPending) showBonus(); else if (state.inBonus) status('Bonus retrouvé. Vos orbes sont conservés ; poursuivez les relances gratuites.');
   else if (state.totalSpins > 0) status(state.lastWin ? `Dernier gain : ${money(state.lastWin)}. Prêt pour une nouvelle mission.` : 'Session retrouvée. Prêt pour une nouvelle mission.');
   if (repairedSave) status('Sauvegarde réparée. Votre solde partagé est conservé.');
+
+  // Locale-only refresh: keep the same wagers, saved session and wallet values.
+  window.addEventListener('seabyss:languagechange', () => {
+    if (busy) return;
+    ui(); autoBudget();
+    document.querySelectorAll('#bet-options [data-bet]').forEach(button => { button.textContent = money(Number(button.dataset.bet)); });
+  });
 })();

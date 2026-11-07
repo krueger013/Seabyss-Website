@@ -2,17 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#10121c">
   <meta name="description" content="Summon your army, build your defenses and conquer rival castles. Three living dark fantasy worlds. Duel or four-kingdom conquest.">
   <title>SEABYSS — Castle War</title>
   <link rel="icon" href="emblem.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=4.0">
-  <script src="engine.js?v=4.0" defer></script>
-  <script src="progression.js?v=4.0" defer></script>
-  <script src="environment.js?v=4.0" defer></script>
-  <script src="renderer.js?v=4.0" defer></script>
-  <script src="app.js?v=4.0" defer></script>
+  <link rel="stylesheet" href="styles.css?v=seabyss-i18n-20261106">
+  <link rel="stylesheet" href="../../css/i18n.css?v=seabyss-i18n-20261106">
+  <script src="../../js/i18n.js?v=seabyss-i18n-20261106"></script>
+  <script src="translations.js?v=seabyss-i18n-20261106"></script>
+  <script src="engine.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="progression.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="environment.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="renderer.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="app.js?v=seabyss-i18n-20261106" defer></script>
 </head>
 <body class="is-home" data-map="abyss">
   <header class="topbar">
@@ -26,6 +30,7 @@
       <div class="profile-banner"><div class="profile-identity"><button id="profile-avatar-button" class="profile-avatar" aria-label="Customize your profile"><span id="profile-avatar-art"></span><b id="profile-level-badge">1</b></button><div><span class="eyebrow">YOUR KINGDOM. YOUR LEGACY.</span><h1 id="profile-name">Commander</h1><p id="profile-title">A new reign begins.</p></div></div><div class="profile-stats"><div><strong id="profile-wins">0</strong><span>Victories</span></div><div><strong id="profile-losses">0</strong><span>Defeats</span></div><div><strong id="profile-winrate">—</strong><span>Win rate</span></div><div><strong id="profile-battles">0</strong><span>Battles</span></div></div></div>
       <div class="profile-progress"><div class="xp-copy"><strong id="profile-level">LEVEL 1</strong><span id="profile-xp">0 / 100 XP</span></div><div id="profile-xp-track" class="xp-track" role="progressbar" aria-label="Progress to next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="profile-xp-fill"></i></div><p id="profile-next-reward">Level up to earn a new card.</p></div>
       <nav class="home-actions" aria-label="Commander actions"><button id="open-deck" class="primary">Build your deck <span id="home-deck-count">8 / 8</span></button><button id="open-catalog" class="quiet">Card collection <span id="home-owned-count">9 / 41</span></button><button id="edit-profile" class="quiet">Edit profile <span>✎</span></button></nav>
+      <div class="home-language" data-language-picker></div>
       <div class="home-deck-heading"><span>YOUR BATTLE DECK</span><small id="home-deck-average">8 cards equipped</small></div><div id="home-deck" class="home-deck" aria-label="Equipped cards"></div>
     </section>
     <div class="section-heading"><div><span class="eyebrow">CHOOSE YOUR NEXT CHAPTER</span><h2>One throne. <em>No mercy.</em></h2></div></div>
@@ -78,6 +83,6 @@
     <footer class="footer"><span>SMALL WORLDS. LEGENDARY WARS.</span><span>3 LIVING WORLDS <i>◆</i> 41 SUMMONING CARDS <i>◆</i> 8 DECK SLOTS</span></footer>
   </main>
   <div id="toast" class="toast" role="status" hidden></div>
-  <dialog id="modal" aria-labelledby="modal-title"><div class="modal-heading"><p class="eyebrow" id="modal-kicker">THE CONQUEROR’S HANDBOOK</p><button id="close-modal" class="icon-button" aria-label="Close">×</button></div><h2 id="modal-title">The art of the siege</h2><div id="modal-body"></div></dialog>
+  <dialog id="modal" aria-labelledby="modal-title"><div class="modal-heading"><p class="eyebrow" id="modal-kicker">THE CONQUEROR’S HANDBOOK</p><span data-language-picker></span><button id="close-modal" class="icon-button" aria-label="Close">×</button></div><h2 id="modal-title">The art of the siege</h2><div id="modal-body"></div></dialog>
 </body>
 </html>

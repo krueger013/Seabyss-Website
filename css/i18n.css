@@ -1,0 +1,14 @@
+/* Shared language picker, in normal document flow to preserve game controls. */
+[data-language-picker]{display:inline-flex;align-items:center;max-width:100%;flex-shrink:0}
+.seabyss-language{display:inline-flex!important;align-items:center;gap:6px;min-height:44px;max-width:100%;padding:0 9px;border:1px solid #6d8c7970;border-radius:5px;background:#111c16;color:#e5f4e7;font:12px/1.4 Manrope,Arial,sans-serif;white-space:nowrap;box-sizing:border-box}
+.seabyss-language>span{font-size:18px;color:#c8e5c7}
+.seabyss-language select{display:block;width:100px!important;min-width:0!important;max-width:100%;height:44px;min-height:44px;padding:6px 2px!important;border:0!important;background:#111c16!important;color:#e5f4e7!important;font:inherit!important;cursor:pointer;box-sizing:border-box}
+.seabyss-language select:focus-visible{outline:2px solid #ade8c1;outline-offset:1px}
+@media(max-width:620px){.seabyss-language{font-size:12px;padding-inline:7px}.seabyss-language select{width:91px!important}}
+
+@media(min-width:851px) and (max-width:1080px){.site-header .header-main{flex-wrap:wrap;padding-block:15px;gap:15px 24px}.site-header .search-box{flex:1;min-width:220px}.site-header .main-nav a{padding-block:12px}.site-header .nav-home:after{bottom:0}}
+@media(max-width:850px){.site-header [data-language-picker]{margin-top:12px}.site-header .header-main{gap:0 14px}.site-header .search-box{flex-basis:100%}}
+.site-header .brand{order:0}.site-header .main-nav{order:1}.site-header .search-box{order:2}.site-header [data-language-picker]{order:3}
+html[lang=en] .hero h1 em,html[lang=es] .hero h1 em{white-space:normal}
+@media(max-width:620px){.site-header [data-language-picker]{order:1;margin-left:auto;margin-top:0}.site-header .main-nav{order:2;margin:8px 0 0;gap:25px;width:100%}.site-header .search-box{order:3;margin-top:10px}.site-header .header-main{padding-block:12px;row-gap:4px}.hero h1 em{font-size:1.05em!important}.category-list button{max-width:none}.game-title,.cover-name{overflow-wrap:anywhere}}
+@media(max-width:620px){.seabyss-language select{font-size:16px!important;width:105px!important}.site-header .brand{font-size:23px;letter-spacing:2px}.site-header .brand-symbol{width:31px;height:31px}}

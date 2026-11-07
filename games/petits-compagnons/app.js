@@ -101,7 +101,7 @@
     const pet = active();
     audio.configure(state.settings, { sleeping: !!pet?.sleeping, miniGame: miniGameRunning });
     refreshAudioUI();
-    $('coins').textContent = state.coins.toLocaleString('fr-CA');
+    $('coins').textContent = state.coins.toLocaleString(window.SeabyssI18n?.locale || 'fr-CA');
     $('save-status').innerHTML = state.saveAvailable ? '<i></i> Ton aventure se sauvegarde toute seule' : '<i></i> Sauvegarde indisponible · exporte ton aventure dans les options';
     $('decor-lantern').hidden = !state.inventory.includes('lantern');
     $('decor-mushrooms').hidden = !state.inventory.includes('mushrooms');
@@ -116,6 +116,8 @@
     }
     const info = infoFor(pet);
     const isEgg = pet.stage === 'egg';
+    $('pet-name').setAttribute('data-i18n-ignore', '');
+    $('pet-nametag').setAttribute('data-i18n-ignore', '');
     $('pet-name').textContent = pet.name;
     $('welcome-copy').textContent = isEgg ? `${pet.name} attend de te rencontrer. Une belle amitié se prépare !` : `${pet.name} est chez lui, et toi aussi. Fais comme chez toi.`;
     $('stage-label').textContent = stages[pet.stage];
@@ -219,7 +221,7 @@
   function collection() {
     if (!state.pets.length) return adoption();
     openDialog('collection', heading('UNE FAMILLE TOUTE DOUCE', 'Mes petits compagnons', 'Chacun grandit à son rythme et garde ses petits souvenirs.') +
-      `<div class="collection-list">${state.pets.map(pet => `<button class="collection-pet" data-pet="${pet.id}"><img src="${infoFor(pet).asset}" alt=""><span><strong>${escape(pet.name)}</strong><small>${stages[pet.stage]} · ${infoFor(pet).label}${pet.sleeping ? ' · Au dodo' : ''}</small></span><span>${pet.id === state.activePetId ? 'Avec toi ♡' : 'Retrouver ↗'}</span></button>`).join('')}</div>${state.pets.length < 4 ? '<button class="primary-button" id="new-pet-button">Accueillir un nouvel ami ＋</button>' : '<p class="adoption-footer">Les quatre petits cœurs sont réunis. Ta famille est au complet ♡</p>'}`);
+      `<div class="collection-list">${state.pets.map(pet => `<button class="collection-pet" data-pet="${pet.id}"><img src="${infoFor(pet).asset}" alt=""><span><strong data-i18n-ignore>${escape(pet.name)}</strong><small>${stages[pet.stage]} · ${infoFor(pet).label}${pet.sleeping ? ' · Au dodo' : ''}</small></span><span>${pet.id === state.activePetId ? 'Avec toi ♡' : 'Retrouver ↗'}</span></button>`).join('')}</div>${state.pets.length < 4 ? '<button class="primary-button" id="new-pet-button">Accueillir un nouvel ami ＋</button>' : '<p class="adoption-footer">Les quatre petits cœurs sont réunis. Ta famille est au complet ♡</p>'}`);
     content.querySelectorAll('[data-pet]').forEach(button => button.addEventListener('click', () => {
       speechUntil = 0;
       store.selectPet(button.dataset.pet);

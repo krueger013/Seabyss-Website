@@ -25,7 +25,7 @@
   const launchLink = $("launch-game");
   const startButton = $("start-game");
   const fullscreenButton = $("fullscreen-game");
-  const collator = new Intl.Collator("fr", { sensitivity: "base", numeric: true });
+  let collator = new Intl.Collator(window.SeabyssI18n?.locale || "fr", { sensitivity: "base", numeric: true });
   const state = { games: [], category: "all", view: "all", query: "", sort: sort?.value || "featured", failed: false };
   let activeGame = null;
   let previousFocus = null;
@@ -84,6 +84,8 @@
     });
   }
 
+  const tr = value => window.SeabyssI18n?.t(value) || value;
+  const localizedUrl = value => window.SeabyssI18n?.url(value) || value;
   const normalizedText = (value) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
   const makeElement = (tag, className, text) => {
     const element = document.createElement(tag);
@@ -192,11 +194,11 @@
     const visible = state.games.filter((game) =>
       (state.category === "all" || game.genre === state.category)
       && (state.view !== "favorites" || favoriteIds.has(game.id))
-      && (!query || normalizedText([game.title, game.description, ...game.tags].join(" ")).includes(query))
+      && (!query || normalizedText([game.title, game.description, tr(game.title), tr(game.description), tr(genres[game.genre]), ...game.tags, ...game.tags.map(tr)].join(" ")).includes(query))
     );
     const sortMode = state.view === "recent" ? "newest" : state.sort;
     visible.sort((a, b) => sortMode === "title"
-      ? collator.compare(a.title, b.title)
+      ? collator.compare(tr(a.title), tr(b.title))
       : (sortMode === "featured" ? a.rank - b.rank || Number(b.featured) - Number(a.featured) : 0) || b.timestamp - a.timestamp || collator.compare(a.title, b.title));
     const grouped = state.category === "all" && state.view === "all" && !query && sortMode === "featured";
     grid.classList.toggle("is-grouped", grouped);
@@ -268,7 +270,7 @@
 
   function openPlayer(game) {
     if (!dialog || typeof dialog.showModal !== "function") {
-      window.open(game.url, "_blank", "noopener,noreferrer");
+      window.open(localizedUrl(game.url), "_blank", "noopener,noreferrer");
       return;
     }
     stopFrame();
@@ -281,7 +283,7 @@
       ? "Si le jeu ne s’affiche pas, utilise le lien pour l’ouvrir dans un nouvel onglet."
       : "Ce jeu s’ouvre dans un nouvel onglet.";
     if ($("open-game")) {
-      $("open-game").href = game.url;
+      $("open-game").href = localizedUrl(game.url);
       $("open-game").target = "_blank";
       $("open-game").rel = "noopener noreferrer";
     }
@@ -291,7 +293,7 @@
       poster.hidden = false;
     }
     if (launchLink) {
-      launchLink.href = game.url;
+      launchLink.href = localizedUrl(game.url);
       launchLink.target = "_blank";
       launchLink.rel = "noopener noreferrer";
       launchLink.hidden = game.embed;
@@ -390,7 +392,7 @@
   });
   startButton?.addEventListener("click", () => {
     if (!activeGame || !activeGame.embed || !frame) return;
-    frame.src = activeGame.url;
+    frame.src = localizedUrl(activeGame.url);
     frame.hidden = false;
     startButton.hidden = true;
     if (poster) poster.hidden = true;
@@ -427,6 +429,12 @@
       favoriteIds = new Set(Array.isArray(stored) ? stored.filter((id) => typeof id === "string") : []);
       render();
     } catch { /* Ignore malformed data from another tab. */ }
+  });
+
+  window.addEventListener("seabyss:languagechange", () => {
+    collator = new Intl.Collator(window.SeabyssI18n?.locale || "fr", { sensitivity:"base", numeric:true });
+    render();
+    if (activeGame) { if (launchLink) launchLink.href = localizedUrl(activeGame.url); if ($("open-game")) $("open-game").href = localizedUrl(activeGame.url); }
   });
 
   grid.setAttribute("aria-busy", "true");

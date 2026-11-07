@@ -1,18 +1,22 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#eff3e8">
   <meta name="description" content="Un petit jardin, quatre adorables compagnons et plein de tendresse. Un jeu Tamagotchi gratuit, en français, qui se sauvegarde sur cet appareil.">
   <title>Petits Compagnons · ton jardin de poche</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="minigames.css">
-  <script src="engine.js" defer></script>
-  <script src="audio.js" defer></script>
-  <script src="minigames.js" defer></script>
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=seabyss-i18n-20261106">
+  <link rel="stylesheet" href="minigames.css?v=seabyss-i18n-20261106">
+  <link rel="stylesheet" href="../../css/i18n.css?v=seabyss-i18n-20261106">
+  <script src="../../js/i18n.js?v=seabyss-i18n-20261106"></script>
+  <script src="translations.js?v=seabyss-i18n-20261106"></script>
+  <script src="engine.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="audio.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="minigames.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="app.js?v=seabyss-i18n-20261106" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -71,7 +75,7 @@
         <button class="mini-card memory-game" data-game="memory"><div class="mini-art"><span class="memory-tile tile-back">✿</span><span class="memory-tile tile-front">🍒</span><i class="sparkle">✧</i></div><div class="mini-copy"><span class="mini-category">MÉMOIRE · À TON RYTHME</span><h3>Les jolies paires</h3><p>Retrouve les petits trésors jumeaux.</p><span class="play-link">C’est parti <b>↗</b></span></div></button>
         <button class="mini-card rhythm-game" data-game="rhythm"><div class="mini-art"><span class="art-circle"></span><span class="art-main">🥁</span><i class="note-one">♪</i><i class="note-two">♫</i></div><div class="mini-copy"><span class="mini-category">RYTHME · 8 PETITS TEMPOS</span><h3>La danse des lucioles</h3><p>Une touche au bon moment !</p><span class="play-link">C’est parti <b>↗</b></span></div></button>
       </div></section>
-      <footer class="footer"><span>✿ Fait pour les petits moments heureux.</span><span id="save-status"><i></i> Ton aventure se sauvegarde toute seule</span><button id="help-button">Comment jouer ?</button></footer>
+      <footer class="footer"><span>✿ Fait pour les petits moments heureux.</span><span id="save-status"><i></i> Ton aventure se sauvegarde toute seule</span><span data-language-picker></span><button id="help-button">Comment jouer ?</button></footer>
     </main>
   </div>
 

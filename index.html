@@ -2,11 +2,15 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Explore les jeux Seabyss : aventures, objets cachés, stratégie et casino fictif. Choisis ton univers et joue gratuitement dans ton navigateur.">
   <meta name="theme-color" content="#060808">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="stylesheet" href="css/i18n.css?v=seabyss-i18n-20261106">
+  <script src="js/i18n.js?v=seabyss-i18n-20261106"></script>
+  <script src="js/portal-translations.js?v=seabyss-i18n-20261106"></script>
   <meta property="og:title" content="Seabyss — L’aventure n’attend que toi">
   <meta property="og:description" content="Onze jeux, des univers singuliers. Embarque dans l’arcade Seabyss, directement dans ton navigateur.">
   <meta property="og:type" content="website">
@@ -14,14 +18,15 @@
   <meta property="og:url" content="https://www.seabyss.com/">
   <title>Seabyss — L’aventure n’attend que toi</title>
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=portal-art2">
-  <script src="js/catalog.js?v=portal-art2" defer></script>
-  <script src="js/atmosphere.js?v=magic3" defer></script>
+  <link rel="stylesheet" href="css/style.css?v=seabyss-i18n-20261106">
+  <script src="js/catalog.js?v=seabyss-i18n-20261106" defer></script>
+  <script src="js/atmosphere.js?v=seabyss-i18n-20261106" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#catalogue">Aller aux jeux</a>
   <header class="site-header">
     <div class="header-main shell">
+      <span data-language-picker></span>
       <a class="brand" href="./" aria-label="Seabyss, accueil"><img class="brand-symbol" src="assets/images/compass-mark.svg" alt="" width="44" height="44"><span>SEABYSS<small>INDIE GAME STUDIO</small></span></a>
       <nav class="main-nav" aria-label="Navigation principale"><a class="nav-home" href="#catalogue" data-browse-category="all">Les jeux</a><a href="#casino">Le casino</a><a href="#studio">Le studio</a></nav>
       <div class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><label class="sr-only" for="search-games">Rechercher un jeu</label><input id="search-games" type="search" placeholder="Trouver mon prochain jeu…" autocomplete="off" maxlength="100"><a id="search-jump" class="search-jump" href="#catalogue" hidden>Voir les résultats →</a></div>

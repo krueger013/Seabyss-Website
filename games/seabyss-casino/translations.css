@@ -1,0 +1,9 @@
+/* Keep language choice in normal flow, away from reels and touch controls. */
+.casino-language-row{display:flex;justify-content:flex-end;clear:both;margin:10px 38px 18px 0}
+.lobby-header{flex-wrap:wrap;gap:12px}
+.lobby-header [data-language-picker]{margin-left:auto}
+html[lang=en] .feature-tags,html[lang=es] .feature-tags{flex-wrap:wrap}
+html[lang=en] .card-bottom,html[lang=es] .card-bottom{flex-wrap:wrap}
+html[lang=en] .fine-print,html[lang=es] .fine-print{overflow-wrap:anywhere}
+html[lang=en] .choice-grid button,html[lang=es] .choice-grid button{white-space:normal}
+@media(max-width:760px){.lobby-header .header-word{display:none}.lobby-header [data-language-picker]{order:3;margin-left:0}.lobby-header .wallet{margin-left:auto}.casino-language-row{margin-top:12px;margin-right:32px}}

@@ -3,7 +3,7 @@
   const kind = document.body.dataset.machine, flower = kind === 'flowers';
   const E = flower ? FlowerEngine : MonsterEngine, wallet = CasinoWallet;
   const $ = id => document.getElementById(id), copy = value => JSON.parse(JSON.stringify(value));
-  const money = cents => (cents/100).toLocaleString('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2})+' $';
+  const money = cents => (cents/100).toLocaleString(globalThis.SeabyssI18n?.locale || 'fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2})+' $';
   const sleep = ms => new Promise(resolve=>setTimeout(resolve,ms));
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ids = flower ? ['rose','orchid','peony','tulip','daisy','sunflower','wild','scatter'] : ['mochi','puff','bubbles','sprout','zippy','luna','wild','scatter'];
@@ -272,4 +272,11 @@
   ['focus','pageshow','casino-wallet-changed'].forEach(event=>window.addEventListener(event,sync));window.addEventListener('storage',e=>{if(e.key===wallet.key)sync();});
   try{await wallet.runExclusive(()=>{const saved=wallet.readSession(key);if(saved){revision=-1;loadLatest();}else{state.balance=wallet.read();commit();}});}catch(_){state.balance=wallet.read();}
   busy=false;audio.setEnabled(sound);draw();ui();showPending();
+
+  // Locale-only refresh: keep the same wagers, saved session and wallet values.
+  window.addEventListener('seabyss:languagechange', () => {
+    if (busy) return;
+    ui(); autoBudget();
+    document.querySelectorAll('#bet-options [data-bet]').forEach(button => { button.textContent = money(Number(button.dataset.bet)); });
+  });
 })();
