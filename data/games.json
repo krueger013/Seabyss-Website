@@ -234,5 +234,29 @@
     "coverKind": "artwork",
     "coverLabel": "Les gardiens du temple",
     "coverSprite": "feline"
+  },
+  {
+    "id": "dames-du-corsaire",
+    "title": "Les Dames du Corsaire",
+    "description": "Défie le capitaine ou un ami aux dames internationales : 100 cases, prises obligatoires et dames volantes dans un univers pirate.",
+    "genre": "strategy",
+    "tags": [
+      "dames",
+      "checkers",
+      "draughts",
+      "damas",
+      "stratégie",
+      "2 joueurs",
+      "pirate",
+      "tactile"
+    ],
+    "url": "games/dames/index.html",
+    "thumbnail": "assets/images/covers/dames.webp",
+    "controls": "Souris ou toucher : choisir une pièce puis sa destination. Flèches : parcourir le damier. Entrée ou Espace : jouer. Duel enregistré sur cet appareil.",
+    "releaseDate": "2026-11-06",
+    "featured": true,
+    "rank": 1.5,
+    "coverKind": "gameplay",
+    "embed": false
   }
 ]

@@ -8,7 +8,7 @@ Les animations décoratives sont réalisées en CSS, sans bibliothèque ni boucl
 
 ## Langues du portail et des jeux
 
-Le sélecteur Français / English / Español traduit l’accueil, le catalogue, la confidentialité et les onze jeux. Le choix est conservé dans `seabyss.language.v1` et propagé aux onglets et au lecteur intégré. Un lien `?lang=fr`, `?lang=en` ou `?lang=es` permet aussi d’ouvrir directement une langue. Le changement ne recharge pas une partie et ne réécrit aucun identifiant ni aucune sauvegarde.
+Le sélecteur Français / English / Español traduit l’accueil, le catalogue, la confidentialité et les douze jeux. Le choix est conservé dans `seabyss.language.v1` et propagé aux onglets et au lecteur intégré. Un lien `?lang=fr`, `?lang=en` ou `?lang=es` permet aussi d’ouvrir directement une langue. Le changement ne recharge pas une partie et ne réécrit aucun identifiant ni aucune sauvegarde.
 
 `js/i18n.js` applique les dictionnaires aux textes et attributs accessibles, aux messages dynamiques et aux libellés dessinés dans les canvas. Chaque dossier de jeu contient son `translations.js`. Les packs de l’accueil et de la confidentialité sont dans `js/portal-translations.js` et `js/privacy-translations.js`. Aucune requête à un service de traduction externe n’est nécessaire.
 
@@ -22,7 +22,7 @@ Vérifications : `npm install`, puis `npm test` pour les cas de changement de la
 
 Le catalogue comprend aussi les sept machines de Seabyss Casino : Le Trésor des Abysses, Le Pacte de Minuit, SUPERNOVA, Le Jardin Sauvage, Monstres & Merveilles, Le Trône du Dragon et Jungle Félins. Elles sont regroupées sous `games/seabyss-casino/`, avec leur hall et leur portefeuille fictif partagé. Les fichiers d’exécution proviennent de `C:\KRUEGER\Main Folder\Seabyss Game\Seabyss Casino` ; les tests et le serveur local ne sont pas publiés. Les crédits publics et les licences audio accompagnent les actifs. Les polices du casino sont chargées depuis Google Fonts.
 
-Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `main`. Le fichier `CNAME` conserve `www.seabyss.com`. Aucun serveur applicatif ni étape de compilation n’est nécessaire pour le portail ou les onze jeux actuels. Une modification publiée sur `main` déclenche le déploiement Pages ; vérifier le résultat dans les actions GitHub avant de considérer une publication terminée.
+Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `main`. Le fichier `CNAME` conserve `www.seabyss.com`. Aucun serveur applicatif ni étape de compilation n’est nécessaire pour le portail ou les douze jeux actuels. Une modification publiée sur `main` déclenche le déploiement Pages ; vérifier le résultat dans les actions GitHub avant de considérer une publication terminée.
 
 Pour prévisualiser le catalogue, servir la racine avec un serveur HTTP statique, puis ouvrir son adresse locale. L’ouverture directe de `index.html` avec `file://` ne suffit pas au chargement de `data/games.json`.
 
