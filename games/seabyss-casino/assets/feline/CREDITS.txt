@@ -1,0 +1,16 @@
+Jungle Félins — Seabyss Casino
+
+Illustrations originales des symboles et gardiens créées avec OpenAI ImageGen pour Seabyss Casino.
+Les félins, la fleur, le rubis et les médaillons sont des illustrations numériques originales.
+
+Audio — CC0 1.0 Universal
+Ambiances de jungle : paulprit (Freesound).
+Grondement de lion : stratcat322, d'après « Lion lament » de roman_cgr (Freesound).
+Cri de tigre : Bidone (Freesound).
+Sources et licences détaillées : audio/AUDIO-SOURCES.txt
+Licence : https://creativecommons.org/publicdomain/zero/1.0/
+
+DÉCOR ET CRÉATION SONORE
+background.webp : décor de jungle original généré pour Seabyss, inspiré de la référence fournie par le créateur du jeu. L'original est conservé ; seule une copie WebP optimisée est servie.
+Les griffures, résonances de jokers, arrêts doux, boutons, mises, roue et fanfares sont synthétisés dans le navigateur avec Web Audio. Les cinq gardiens emploient aussi des variations de hauteur des enregistrements CC0 de lion et de tigre.
+

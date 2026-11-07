@@ -4,7 +4,7 @@
   const panel = document.createElement('section');
   panel.className = 'hourly-gift';
   panel.setAttribute('aria-label', 'Cadeau horaire du casino');
-  panel.innerHTML = `<span class="gift-emblem" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 13h22v6H5zM8 19v10h16V19M16 13v16M16 13c-11 0-10-10-5-9 4 0 5 9 5 9Zm0 0c11 0 10-10 5-9-4 0-5 9-5 9Z"/></svg></span><div class="gift-copy"><span class="gift-eyebrow">LE CADEAU DU CASINO</span><strong>50 $ chaque heure</strong><span id="gift-message" role="status">Un cadeau commun aux six machines.</span></div><div class="gift-action"><button type="button" id="claim-hourly-gift">RÉCUPÉRER 50 $ <span aria-hidden="true">↗</span></button><span id="gift-countdown" aria-live="off"></span></div>`;
+  panel.innerHTML = `<span class="gift-emblem" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 13h22v6H5zM8 19v10h16V19M16 13v16M16 13c-11 0-10-10-5-9 4 0 5 9 5 9Zm0 0c11 0 10-10 5-9-4 0-5 9-5 9Z"/></svg></span><div class="gift-copy"><span class="gift-eyebrow">LE CADEAU DU CASINO</span><strong>50 $ chaque heure</strong><span id="gift-message" role="status">Un cadeau commun aux sept machines.</span></div><div class="gift-action"><button type="button" id="claim-hourly-gift">RÉCUPÉRER 50 $ <span aria-hidden="true">↗</span></button><span id="gift-countdown" aria-live="off"></span></div>`;
   document.querySelector('header').after(panel);
   const button = document.getElementById('claim-hourly-gift');
   const timer = document.getElementById('gift-countdown');
