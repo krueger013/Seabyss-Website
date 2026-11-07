@@ -21,6 +21,8 @@
   const sort = $("sort-games");
   const dialog = $("game-dialog");
   const frame = $("game-frame");
+  const poster = $("player-poster");
+  const launchLink = $("launch-game");
   const startButton = $("start-game");
   const fullscreenButton = $("fullscreen-game");
   const collator = new Intl.Collator("fr", { sensitivity: "base", numeric: true });
@@ -69,6 +71,11 @@
         genre: Object.hasOwn(genres, item.genre) ? item.genre : "arcade",
         tags: Array.isArray(item.tags) ? item.tags.filter((tag) => typeof tag === "string") : [],
         thumbnail: safeUrl(item.thumbnail),
+        coverKind: item.coverKind === "gameplay" ? "gameplay" : "artwork",
+        coverLabel: typeof item.coverLabel === "string" ? item.coverLabel.trim() : "",
+        coverCharacter: safeUrl(item.coverCharacter),
+        coverSprite: ["flowers", "monsters"].includes(item.coverSprite) ? item.coverSprite : null,
+        rank: Number.isFinite(item.rank) ? item.rank : 100,
         controls: Array.isArray(item.controls) ? item.controls.filter((control) => typeof control === "string").join(" · ") : typeof item.controls === "string" ? item.controls.trim() : "",
         timestamp: Number.isFinite(timestamp) ? timestamp : 0,
         featured: item.featured === true,
@@ -95,6 +102,9 @@
 
   function cardFor(game) {
     const card = makeElement("article", "game-card");
+    card.dataset.game = game.id;
+    card.dataset.genre = game.genre;
+    card.dataset.coverKind = game.coverKind;
     const art = makeElement("button", "game-art");
     art.type = "button";
     art.dataset.play = game.id;
@@ -102,7 +112,9 @@
     if (game.thumbnail) {
       const image = makeElement("img", "game-thumbnail");
       image.src = game.thumbnail;
-      image.alt = game.title;
+      image.alt = "";
+      image.width = 960;
+      image.height = 600;
       image.loading = "lazy";
       image.decoding = "async";
       image.addEventListener("error", () => {
@@ -113,6 +125,32 @@
     } else {
       art.append(makeElement("span", "game-monogram", game.title.slice(0, 2).toLocaleUpperCase("fr")));
     }
+    const kind = makeElement("span", "cover-kind", game.coverKind === "gameplay" ? "Gameplay" : "Illustration");
+    kind.setAttribute("aria-hidden", "true");
+    art.append(kind);
+    if (game.coverKind === "artwork") {
+      if (game.coverCharacter) {
+        const character = makeElement("img", "cover-character");
+        character.src = game.coverCharacter;
+        character.alt = "";
+        character.loading = "lazy";
+        character.decoding = "async";
+        character.addEventListener("error", () => character.remove(), { once: true });
+        art.append(character);
+      } else if (game.coverSprite) {
+        const sprite = makeElement("span", `cover-sprite sprite-${game.coverSprite}`);
+        sprite.setAttribute("aria-hidden", "true");
+        art.append(sprite);
+      }
+      const logo = makeElement("span", "cover-logo");
+      logo.setAttribute("aria-hidden", "true");
+      if (game.coverLabel) logo.append(makeElement("span", "cover-kicker", game.coverLabel));
+      logo.append(makeElement("span", "cover-name", game.title));
+      art.append(logo);
+    }
+    const coverPlay = makeElement("span", "cover-play", "▶");
+    coverPlay.setAttribute("aria-hidden", "true");
+    art.append(coverPlay);
     const info = makeElement("div", "game-info");
     const tag = makeElement("span", "game-tag", genres[game.genre]);
     const title = makeElement("h3", "game-title", game.title);
@@ -159,10 +197,30 @@
     const sortMode = state.view === "recent" ? "newest" : state.sort;
     visible.sort((a, b) => sortMode === "title"
       ? collator.compare(a.title, b.title)
-      : (sortMode === "featured" ? Number(b.featured) - Number(a.featured) : 0) || b.timestamp - a.timestamp || collator.compare(a.title, b.title));
-    grid.replaceChildren(...visible.map(cardFor));
+      : (sortMode === "featured" ? a.rank - b.rank || Number(b.featured) - Number(a.featured) : 0) || b.timestamp - a.timestamp || collator.compare(a.title, b.title));
+    const grouped = state.category === "all" && state.view === "all" && !query && sortMode === "featured";
+    grid.classList.toggle("is-grouped", grouped);
+    if (grouped) {
+      const sections = [
+        { games: visible.filter((game) => game.genre !== "casino"), title: "Des mondes à explorer", copy: "Des compagnons à adopter, des mystères à résoudre et des royaumes à conquérir." },
+        { games: visible.filter((game) => game.genre === "casino"), title: "Les machines de Seabyss", copy: "Six univers. Un solde fictif partagé. Aucun argent réel." },
+      ];
+      grid.replaceChildren(...sections.flatMap((section) => {
+        if (!section.games.length) return [];
+        const heading = makeElement("div", "collection-heading");
+        heading.append(makeElement("h3", "", section.title), makeElement("p", "", section.copy));
+        return [heading, ...section.games.map(cardFor)];
+      }));
+    } else {
+      grid.replaceChildren(...visible.map(cardFor));
+    }
     grid.hidden = visible.length === 0;
     if ($("results-count")) $("results-count").textContent = `${visible.length} jeu${visible.length === 1 ? "" : "x"}`;
+    const searchJump = $("search-jump");
+    if (searchJump) {
+      searchJump.hidden = !state.query.trim();
+      searchJump.textContent = `${visible.length} résultat${visible.length > 1 ? "s" : ""} →`;
+    }
     const empty = $("empty-state");
     if (empty) empty.hidden = visible.length > 0;
     if ($("reset-filters")) $("reset-filters").hidden = state.games.length === 0;
@@ -200,6 +258,11 @@
     frame?.removeAttribute("src");
     if (frame) frame.hidden = true;
     if (fullscreenButton) fullscreenButton.hidden = true;
+    if (poster) {
+      poster.hidden = true;
+      poster.removeAttribute("src");
+    }
+    if (launchLink) launchLink.hidden = true;
     if ($("player-stage")) $("player-stage").classList.remove("is-playing");
   }
 
@@ -222,6 +285,17 @@
       $("open-game").target = "_blank";
       $("open-game").rel = "noopener noreferrer";
     }
+    if (poster && game.thumbnail) {
+      poster.src = game.thumbnail;
+      poster.alt = `${game.coverKind === "gameplay" ? "Gameplay" : "Illustration"} de ${game.title}`;
+      poster.hidden = false;
+    }
+    if (launchLink) {
+      launchLink.href = game.url;
+      launchLink.target = "_blank";
+      launchLink.rel = "noopener noreferrer";
+      launchLink.hidden = game.embed;
+    }
     if (startButton) {
       startButton.hidden = !game.embed;
       startButton.disabled = false;
@@ -241,6 +315,17 @@
   search?.addEventListener("input", () => {
     state.query = search.value;
     render();
+  });
+  search?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      $("catalogue")?.scrollIntoView({ block: "start" });
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      search.value = "";
+      state.query = "";
+      render();
+    }
   });
   sort?.addEventListener("change", () => {
     state.sort = sort.value;
@@ -265,13 +350,31 @@
     });
   });
   $("reset-filters")?.addEventListener("click", resetFilters);
-  grid.addEventListener("click", (event) => {
+  document.addEventListener("click", (event) => {
     const play = event.target.closest("button[data-play]");
     if (play) {
       const game = state.games.find((item) => item.id === play.dataset.play);
       if (game) openPlayer(game);
       return;
     }
+    const browse = event.target.closest("[data-browse-category]");
+    if (!browse || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const category = browse.dataset.browseCategory;
+    if (category !== "all" && !Object.hasOwn(genres, category)) return;
+    event.preventDefault();
+    state.category = category;
+    state.view = "all";
+    state.query = "";
+    state.sort = "featured";
+    if (search) search.value = "";
+    if (sort) sort.value = "featured";
+    render();
+    $("catalogue")?.scrollIntoView({ block: "start" });
+    const categoryButton = [...($("category-filters")?.querySelectorAll("[data-category]") || [])]
+      .find((button) => button.dataset.category === category);
+    categoryButton?.focus({ preventScroll: true });
+  });
+  grid.addEventListener("click", (event) => {
     const favorite = event.target.closest("button[data-favorite]");
     if (!favorite) return;
     const id = favorite.dataset.favorite;
@@ -282,6 +385,7 @@
     render();
     const replacement = [...grid.querySelectorAll("[data-favorite]")].find((button) => button.dataset.favorite === id);
     if (replacement) replacement.focus();
+    else if (!grid.hidden) grid.querySelector("[data-favorite]")?.focus();
     else $("reset-filters")?.focus();
   });
   startButton?.addEventListener("click", () => {
@@ -289,10 +393,12 @@
     frame.src = activeGame.url;
     frame.hidden = false;
     startButton.hidden = true;
+    if (poster) poster.hidden = true;
     $("player-stage")?.classList.add("is-playing");
     if (fullscreenButton) fullscreenButton.hidden = !$("player-stage")?.requestFullscreen;
     frame.focus({ preventScroll: true });
   });
+  poster?.addEventListener("error", () => { poster.hidden = true; });
   $("close-player")?.addEventListener("click", () => dialog?.close());
   dialog?.addEventListener("close", () => {
     stopFrame();

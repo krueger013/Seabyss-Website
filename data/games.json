@@ -12,10 +12,12 @@
       "tactile"
     ],
     "url": "games/petits-compagnons/index.html",
-    "thumbnail": "games/petits-compagnons/assets/garden.png",
+    "thumbnail": "assets/images/covers/petits-compagnons.webp",
     "controls": "Souris ou toucher. Flèches et Espace pour certains mini-jeux. Progression enregistrée sur cet appareil.",
     "releaseDate": "2026-11-01",
-    "featured": true
+    "featured": true,
+    "rank": 4,
+    "coverKind": "gameplay"
   },
   {
     "id": "marios-ghost",
@@ -29,10 +31,12 @@
       "tactile"
     ],
     "url": "games/marios-ghost/index.html",
-    "thumbnail": "games/marios-ghost/assets/graveyard.png",
+    "thumbnail": "assets/images/covers/marios-ghost.webp",
     "controls": "Flèches ou Q/D : marcher. Espace : saut. X : lanterne. C : épée. R : esquive. E : interaction. Commandes tactiles disponibles.",
     "releaseDate": "2026-11-01",
-    "featured": true
+    "featured": true,
+    "rank": 3,
+    "coverKind": "gameplay"
   },
   {
     "id": "les-heures-perdues",
@@ -47,10 +51,12 @@
       "tactile"
     ],
     "url": "games/les-heures-perdues/index.html",
-    "thumbnail": "games/les-heures-perdues/assets/study.jpg",
+    "thumbnail": "assets/images/covers/les-heures-perdues.webp",
     "controls": "Souris ou toucher. I : indice. J : journal. M : carte. B : bonus. Échap : fermer. Progression enregistrée sur cet appareil.",
     "releaseDate": "2026-11-01",
-    "featured": true
+    "featured": true,
+    "rank": 2,
+    "coverKind": "gameplay"
   },
   {
     "id": "tresor-des-abysses",
@@ -67,7 +73,11 @@
     "thumbnail": "games/seabyss-casino/assets/abyss-background.webp",
     "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
-    "featured": true
+    "featured": true,
+    "rank": 5,
+    "coverKind": "artwork",
+    "coverLabel": "La fortune des pirates",
+    "coverCharacter": "games/seabyss-casino/assets/captain-v2.webp"
   },
   {
     "id": "pacte-de-minuit",
@@ -84,7 +94,11 @@
     "thumbnail": "games/seabyss-casino/assets/moon/background.webp",
     "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
-    "featured": true
+    "featured": true,
+    "rank": 6,
+    "coverKind": "artwork",
+    "coverLabel": "Magie nocturne",
+    "coverCharacter": "games/seabyss-casino/assets/moon/witch.webp"
   },
   {
     "id": "supernova",
@@ -101,7 +115,11 @@
     "thumbnail": "games/seabyss-casino/assets/nova/background.webp",
     "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
-    "featured": true
+    "featured": true,
+    "rank": 7,
+    "coverKind": "artwork",
+    "coverLabel": "Station 77",
+    "coverCharacter": "games/seabyss-casino/assets/nova/rocket.webp"
   },
   {
     "id": "jardin-sauvage",
@@ -118,7 +136,11 @@
     "thumbnail": "games/seabyss-casino/assets/flowers/background.webp",
     "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
-    "featured": true
+    "featured": true,
+    "rank": 8,
+    "coverKind": "artwork",
+    "coverLabel": "La féerie des fleurs",
+    "coverSprite": "flowers"
   },
   {
     "id": "monstres-merveilles",
@@ -135,7 +157,11 @@
     "thumbnail": "games/seabyss-casino/assets/monsters/background.webp",
     "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
-    "featured": true
+    "featured": true,
+    "rank": 9,
+    "coverKind": "artwork",
+    "coverLabel": "Des monstres de chance",
+    "coverSprite": "monsters"
   },
   {
     "id": "trone-du-dragon",
@@ -152,7 +178,11 @@
     "thumbnail": "games/seabyss-casino/assets/medieval/background.webp",
     "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
-    "featured": true
+    "featured": true,
+    "rank": 10,
+    "coverKind": "artwork",
+    "coverLabel": "Une fortune légendaire",
+    "coverCharacter": "games/seabyss-casino/assets/medieval/dragon.webp"
   },
   {
     "id": "castle-war",
@@ -168,10 +198,12 @@
       "tactile"
     ],
     "url": "games/castle-war/index.html",
-    "thumbnail": "assets/images/castle-war.jpg",
+    "thumbnail": "assets/images/covers/castle-war.webp",
     "controls": "Souris ou toucher : choisir une carte puis déployer. 1–8 : cartes. P : pause. Deux ou quatre châteaux. Progression enregistrée sur cet appareil.",
     "releaseDate": "2026-11-06",
     "featured": true,
-    "embed": false
+    "embed": false,
+    "rank": 1,
+    "coverKind": "gameplay"
   }
 ]
