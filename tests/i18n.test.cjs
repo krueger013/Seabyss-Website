@@ -57,5 +57,5 @@ test('shared language runtime and portal preserve presentation state across Fren
  assert.deepEqual(important,[]);assertions++;
  dictionaryDom.window.close();portal.window.close();
  assert(assertions >= 74);
- 
+
 });
