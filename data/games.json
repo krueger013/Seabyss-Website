@@ -187,7 +187,7 @@
   {
     "id": "castle-war",
     "title": "Seabyss Castle War",
-    "description": "Défends ta citadelle, invoque tes troupes et conquiers les châteaux rivaux dans trois mondes de fantasy. Interface en anglais.",
+    "description": "Construis ton deck parmi 41 cartes, défends ta citadelle et conquiers trois mondes de fantasy. Profil, niveaux et collection. Interface en anglais.",
     "genre": "strategy",
     "tags": [
       "stratégie",
@@ -195,11 +195,15 @@
       "châteaux",
       "cartes",
       "temps réel",
-      "tactile"
+      "tactile",
+      "deck",
+      "collection",
+      "41 cartes",
+      "profil"
     ],
     "url": "games/castle-war/index.html",
     "thumbnail": "assets/images/covers/castle-war.webp",
-    "controls": "Souris ou toucher : choisir une carte puis déployer. 1–8 : cartes. P : pause. Deux ou quatre châteaux. Progression enregistrée sur cet appareil.",
+    "controls": "Souris ou toucher : choisir une carte puis déployer. 1–8 : cartes. P : pause. Deck de 8 cartes maximum. Profil et progression enregistrés sur cet appareil.",
     "releaseDate": "2026-11-06",
     "featured": true,
     "embed": false,

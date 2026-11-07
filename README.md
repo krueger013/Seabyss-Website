@@ -14,7 +14,7 @@ Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `ma
 
 Pour prévisualiser le catalogue, servir la racine avec un serveur HTTP statique, puis ouvrir son adresse locale. L’ouverture directe de `index.html` avec `file://` ne suffit pas au chargement de `data/games.json`.
 
-Castle War est publié sous `games/castle-war/` depuis les huit fichiers d’exécution de son dossier source. Son lien d’accueil est adapté au portail. Le jeu s’ouvre dans un onglet pour garder tout le terrain et ses commandes visibles. Le casino utilise les copies WebP produites par le script de construction du projet source ; les illustrations originales sont préservées.
+Castle War 4.0 est publié sous `games/castle-war/` depuis les huit fichiers d’exécution de son dossier source. Son lien d’accueil est adapté au portail. La version 4.0 comprend 41 cartes, un deck de huit cartes maximum et le profil version 2 (nom, blason, XP, niveaux et historique). Les migrations conservent l’or, les cartes et les registres de récompenses des anciennes sauvegardes. Le jeu s’ouvre dans un onglet pour garder tout le terrain et ses commandes visibles. Le casino utilise les copies WebP produites par le script de construction du projet source ; les illustrations originales sont préservées.
 
 ## Fichiers principaux
 
