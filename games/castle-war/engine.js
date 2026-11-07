@@ -31,7 +31,7 @@
     { id: 'blizzard', name: 'Blizzard', cost: 4, kind: 'spell', element: 'ice', description: 'Deals 65 ice damage, or 30 to castles. Slows enemy movement and attacks by 45% for 4 seconds.', hp: 0, damage: 65, castleDamage: 30, range: 125, speed: 0, cooldown: 1, slowDuration: 4, slowFactor: 0.55 },
     { id: 'tidalwave', name: 'Tidal Wave', cost: 5, kind: 'spell', element: 'water', description: 'Deals 105 water damage across a wide area, or 40 to castles. Extinguishes burning allies in the area.', hp: 0, damage: 105, castleDamage: 40, range: 145, speed: 0, cooldown: 1 },
     { id: 'aegis', name: 'Abyssal Aegis', cost: 4, kind: 'spell', description: 'Grants your troops and buildings in the area a ward that reduces all incoming damage by 40% for 8 seconds.', hp: 0, damage: 0, range: 145, speed: 0, cooldown: 1, wardDuration: 8 },
-    { id: 'runner', name: 'Relic Runner', cost: 2, kind: 'unit', role: 'collector', description: 'Deploy for 2 aether. This fragile, unarmed collector walks to the central relic, picks it up, and must return alive to your castle: double aether regeneration for 60 seconds, or 40 permanent gold. One runner at a time; 20-second dispatch cooldown.', hp: 28, damage: 0, range: 0, speed: 70, carryingSpeed: 58, cooldown: 20 },
+    { id: 'runner', name: 'Relic Runner', cost: 2, kind: 'unit', role: 'collector', description: 'Deploy for 2 aether. This fragile, unarmed collector walks to the central relic, picks it up, and must return alive to your castle: double aether regeneration for 15 seconds, or 40 permanent gold. One runner at a time; 20-second dispatch cooldown.', hp: 28, damage: 0, range: 0, speed: 70, carryingSpeed: 58, cooldown: 20 },
     { id: 'ashknight', name: 'Ash Knight', cost: 4, kind: 'unit', element: 'fire', affinity: 'fire', artBase: 'sentinel', visualTheme: 'fire', description: 'A fiery frontline knight. Each strike burns troops for 3 damage per second for 2 seconds.', hp: 210, damage: 25, range: 32, speed: 40, cooldown: 1.25, burnDps: 3, burnDuration: 2 },
     { id: 'cinderimp', name: 'Cinder Imps', cost: 3, kind: 'unit', element: 'fire', affinity: 'fire', artBase: 'swarm', visualTheme: 'fire', description: 'Three fragile imps throw burning cinders from short range. Their burns deal 2 damage per second for 2 seconds.', hp: 42, damage: 8, range: 110, speed: 52, cooldown: 1.3, count: 3, burnDps: 2, burnDuration: 2, projectile: 'fire' },
     { id: 'magmabrute', name: 'Magma Brute', cost: 6, kind: 'unit', element: 'fire', affinity: 'fire', artBase: 'golem', visualTheme: 'fire', description: 'A slow siege giant. Heavy strikes splash nearby foes and deal 70% more damage to buildings.', hp: 540, damage: 36, range: 40, speed: 22, cooldown: 1.8, splash: 35, siegeMultiplier: 1.7, bodyRadius: 22 },
@@ -475,7 +475,7 @@
     if (!state.deliveries.some(receipt => receipt.id === relic.id)) {
       const gold = relic.kind === 'gold' ? 40 : 0;
       state.deliveries.push({ id: relic.id, battleId: state.battleId, team: unit.team, kind: relic.kind, gold, delivered: true, deliveredAt: state.elapsed });
-      if (relic.kind === 'aether') home.aetherBoostTime = 60;
+      if (relic.kind === 'aether') home.aetherBoostTime = 15;
       else home.goldDelivered += gold;
       if (unit.team === 0) {
         state.stats.relicsDelivered++;
@@ -771,7 +771,7 @@
           targetTeam: Number.isInteger(castle.targetTeam) ? castle.targetTeam : (i === 0 ? 1 : 0),
           attackTimer: clamp(Number(castle.attackTimer) || 0, 0, 10), aiTimer: clamp(Number(castle.aiTimer) || 0, 0, 10),
           decisionCount: Math.max(0, Math.floor(Number(castle.decisionCount) || 0)), ...restoreStatuses(castle),
-          aetherBoostTime: clamp(Number(castle.aetherBoostTime) || 0, 0, 60),
+          aetherBoostTime: clamp(Number(castle.aetherBoostTime) || 0, 0, 15),
           runnerCooldown: clamp(Number(castle.runnerCooldown) || 0, 0, 20),
           goldDelivered: Math.max(0, Math.floor(Number(castle.goldDelivered) || 0))
         });
