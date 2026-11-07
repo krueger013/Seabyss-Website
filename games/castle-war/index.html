@@ -7,12 +7,12 @@
   <meta name="description" content="Summon your army, build your defenses and conquer rival castles. Three living dark fantasy worlds. Duel or four-kingdom conquest.">
   <title>SEABYSS — Castle War</title>
   <link rel="icon" href="emblem.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=3.3">
-  <script src="engine.js?v=3.3" defer></script>
-  <script src="progression.js?v=3.3" defer></script>
-  <script src="environment.js?v=3.3" defer></script>
-  <script src="renderer.js?v=3.3" defer></script>
-  <script src="app.js?v=3.3" defer></script>
+  <link rel="stylesheet" href="styles.css?v=4.0">
+  <script src="engine.js?v=4.0" defer></script>
+  <script src="progression.js?v=4.0" defer></script>
+  <script src="environment.js?v=4.0" defer></script>
+  <script src="renderer.js?v=4.0" defer></script>
+  <script src="app.js?v=4.0" defer></script>
 </head>
 <body class="is-home" data-map="abyss">
   <header class="topbar">
@@ -22,7 +22,13 @@
     <nav aria-label="Game options"><button id="armory" class="quiet armory-button" aria-label="Open the Armory"><span class="coin" aria-hidden="true">◆</span><strong id="gold-value">0</strong><span class="armory-label">Armory</span></button><button id="fullscreen" class="icon-button" aria-label="Enter fullscreen" aria-pressed="false" title="Fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/></svg></button><button id="sound" class="icon-button" aria-label="Enable sound" aria-pressed="false">♪<span class="sound-slash">/</span></button><button id="help" class="quiet" aria-label="How to play"><span class="help-label">How to play</span><span>?</span></button></nav>
   </header>
   <main class="shell">
-    <div class="section-heading"><div><span class="eyebrow">REAL-TIME CASTLE SIEGE</span><h1>One throne. <em>No mercy.</em></h1></div></div>
+    <section id="main-menu" class="main-menu" aria-label="Commander profile and main menu">
+      <div class="profile-banner"><div class="profile-identity"><button id="profile-avatar-button" class="profile-avatar" aria-label="Customize your profile"><span id="profile-avatar-art"></span><b id="profile-level-badge">1</b></button><div><span class="eyebrow">YOUR KINGDOM. YOUR LEGACY.</span><h1 id="profile-name">Commander</h1><p id="profile-title">A new reign begins.</p></div></div><div class="profile-stats"><div><strong id="profile-wins">0</strong><span>Victories</span></div><div><strong id="profile-losses">0</strong><span>Defeats</span></div><div><strong id="profile-winrate">—</strong><span>Win rate</span></div><div><strong id="profile-battles">0</strong><span>Battles</span></div></div></div>
+      <div class="profile-progress"><div class="xp-copy"><strong id="profile-level">LEVEL 1</strong><span id="profile-xp">0 / 100 XP</span></div><div id="profile-xp-track" class="xp-track" role="progressbar" aria-label="Progress to next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="profile-xp-fill"></i></div><p id="profile-next-reward">Level up to earn a new card.</p></div>
+      <nav class="home-actions" aria-label="Commander actions"><button id="open-deck" class="primary">Build your deck <span id="home-deck-count">8 / 8</span></button><button id="open-catalog" class="quiet">Card collection <span id="home-owned-count">9 / 41</span></button><button id="edit-profile" class="quiet">Edit profile <span>✎</span></button></nav>
+      <div class="home-deck-heading"><span>YOUR BATTLE DECK</span><small id="home-deck-average">8 cards equipped</small></div><div id="home-deck" class="home-deck" aria-label="Equipped cards"></div>
+    </section>
+    <div class="section-heading"><div><span class="eyebrow">CHOOSE YOUR NEXT CHAPTER</span><h2>One throne. <em>No mercy.</em></h2></div></div>
     <div class="layout">
       <aside class="sidebar">
         <section id="setup" class="setup">
@@ -37,7 +43,7 @@
           <label class="difficulty-label" for="difficulty">Difficulty <select id="difficulty"><option value="easy">Casual</option><option value="normal" selected>Balanced</option><option value="hard">Ruthless</option></select></label>
           <button id="start" class="primary start">Declare war <span>➜</span></button>
           <button id="resume" class="quiet resume" hidden>Continue battle</button>
-          <button id="collection" class="collection-link"><span>✦ Build your collection</span><small id="collection-count">9 / 16 cards</small></button>
+          <button id="collection" class="collection-link"><span>✦ Build your collection</span><small id="collection-count">9 / 41 cards</small></button>
           <p class="first-win-note" id="first-win-note">Win your first battle to earn a free elemental card.</p>
           <p class="save-note">Solo vs AI · Autosaved on this device</p>
         </section>
@@ -62,13 +68,14 @@
           <section id="relic-panel" class="relic-panel" aria-label="Relic race"><div class="relic-heading"><span class="relic-symbol" id="relic-symbol" aria-hidden="true">✦</span><div><span class="relic-kicker">RACE FOR THE RELIC</span><strong id="relic-status">Relic incoming</strong></div><button id="relic-help" class="quiet" aria-label="How relic collection works">?</button></div><p id="relic-description">Escort your fragile runner home to claim the reward.</p><div class="runner-row"><span id="runner-status">2 AETHER · 28 HP · UNARMED</span><button id="send-runner" class="runner-button" disabled>Send · 2 aether</button></div><div id="runner-journey" class="runner-journey" data-phase="outbound" hidden aria-label="Runner journey"><span>1. Walk out</span><i>›</i><span>2. Pick up</span><i>›</i><span>3. Bring home</span></div></section>
           <div class="resource-row"><div class="mana-label"><span class="mana-icon">◆</span><strong id="mana-value">7</strong><small>/ 10</small><span>AETHER</span></div><div id="mana-bar" class="mana-bar" aria-hidden="true"></div><span class="mana-regen">REGENERATING</span><div id="boost-indicator" class="boost-indicator" hidden><strong>×2 AETHER</strong><span id="boost-time">01:00</span><small>Double regeneration</small></div><button id="details" class="quiet details" disabled>Details</button></div>
 
-          <div class="hand-heading"><span>YOUR SUMMONING CARDS</span><span id="hand-count">9 READY</span></div><div id="hand" class="hand" aria-label="Summoning cards"></div>
+          <div class="hand-heading"><span>YOUR BATTLE DECK</span><span id="hand-count">8 / 8 EQUIPPED</span></div><div id="hand" class="hand" aria-label="Summoning cards"></div>
           <div class="action-row"><p id="selection-hint" aria-live="polite">Choose a card. Prepare your next move.</p><button id="cast" class="primary" disabled>Deploy <span>➜</span></button></div>
         </section>
         <div class="home-legend" id="home-legend"><span><i>01</i> Summon your army</span><span><i>02</i> Build your defenses</span><span><i>03</i> Shatter their castles</span></div>
       </section>
     </div>
-    <footer class="footer"><span>SMALL WORLDS. LEGENDARY WARS.</span><span>3 LIVING WORLDS <i>◆</i> 16 SUMMONING CARDS <i>◆</i> 1 CROWN</span></footer>
+    <section id="campaign-history" class="campaign-history" aria-label="Recent battles"><div class="history-heading"><div><span class="eyebrow">THE CHRONICLES</span><h2>Recent battles</h2></div><span>Saved on this device</span></div><div id="history-list"></div></section>
+    <footer class="footer"><span>SMALL WORLDS. LEGENDARY WARS.</span><span>3 LIVING WORLDS <i>◆</i> 41 SUMMONING CARDS <i>◆</i> 8 DECK SLOTS</span></footer>
   </main>
   <div id="toast" class="toast" role="status" hidden></div>
   <dialog id="modal" aria-labelledby="modal-title"><div class="modal-heading"><p class="eyebrow" id="modal-kicker">THE CONQUEROR’S HANDBOOK</p><button id="close-modal" class="icon-button" aria-label="Close">×</button></div><h2 id="modal-title">The art of the siege</h2><div id="modal-body"></div></dialog>
