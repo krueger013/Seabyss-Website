@@ -1,8 +1,8 @@
 # Seabyss — Portail de jeux navigateur
 
-Seabyss est le portail du studio : catalogue de jeux, recherche, filtres, tri, favoris locaux et lecteur intégré avec ouverture dans un onglet. La direction visuelle pirate magique associe un noir profond, un navire fantôme, de l’or ancien et des lueurs vert spectral. Un cercle de navigation gravé, une brume mouvante et quelques particules lumineuses donnent vie au décor.
+Seabyss est le portail du studio : catalogue de jeux, recherche, filtres, tri, favoris locaux et lecteur intégré avec ouverture dans un onglet. La direction visuelle pirate magique associe un noir profond, un navire fantôme, de l’or ancien et des lueurs vert spectral. Une brume mouvante et quelques particules lumineuses donnent vie au décor. L’accueil présente trois découvertes, puis le catalogue regroupe les quatre jeux d’aventure, stratégie et simulation avant les six machines de casino fictif. La recherche, les favoris et les tris affichent une liste globale sans regroupement.
 
-La bannière est une illustration décorative du studio. Les vignettes représentent les jeux du catalogue. Les polices Cormorant Garamond et Manrope sont servies localement ; leurs licences sont conservées dans `assets/fonts/`. Les commandes du lecteur restent accessibles au-dessus du jeu, et les cartes passent sur une colonne sur les petits écrans.
+Les deux bannières sont des illustrations décoratives générées pour le studio : un navire devant un portail abyssal et une salle au trésor. Les quatre jeux hors casino utilisent des captures de gameplay existantes, optimisées en WebP. Les six machines utilisent leurs décors et personnages authentiques, avec un titre de couverture lisible ; ces cartes portent la mention « Illustration ». Les images ne sont plus désaturées ni assombries par un filtre global. Les polices Cormorant Garamond et Manrope sont servies localement ; leurs licences sont conservées dans `assets/fonts/`. Les commandes du lecteur restent accessibles au-dessus du jeu, et les cartes passent sur une colonne sur les petits écrans.
 
 Les animations décoratives sont réalisées en CSS, sans bibliothèque ni boucle JavaScript. Le bouton d’ambiance mémorise un choix local sous `seabyss.motion.v1`. Les effets se mettent en pause hors écran, dans un onglet masqué et pendant la lecture d’un jeu. La préférence système de réduction des mouvements reste prioritaire ; le contenu reste accessible sans effets.
 
@@ -42,7 +42,9 @@ Exemple fondé sur un jeu effectivement intégré, à adapter sans créer de dou
   "description": "Adopte un compagnon, prends soin de lui et découvre trois mini-jeux dans ton jardin.",
   "genre": "simulation",
   "tags": ["Animaux", "Détente"],
-  "thumbnail": "games/petits-compagnons/assets/garden.png",
+  "thumbnail": "assets/images/covers/petits-compagnons.webp",
+  "coverKind": "gameplay",
+  "rank": 4,
   "url": "games/petits-compagnons/index.html",
   "controls": ["Souris ou toucher", "Flèches et Espace dans certains mini-jeux"],
   "featured": true,
@@ -58,9 +60,14 @@ Le fichier complet doit être un tableau JSON, même s’il ne contient qu’un 
 | `title` | Titre réel non vide ; obligatoire. |
 | `url` | Entrée jouable ; obligatoire. Chemin relatif du site ou URL HTTPS. |
 | `description` | Courte description fidèle au jeu ; chaîne facultative. |
-| `genre` | `action`, `adventure`, `arcade`, `puzzle`, `strategy` ou `simulation`. Une valeur absente ou inconnue est classée `arcade`. |
+| `genre` | `action`, `adventure`, `arcade`, `puzzle`, `strategy` `simulation` ou `casino`. Une valeur absente ou inconnue est classée `arcade`. |
 | `tags` | Tableau facultatif de chaînes, utilisé notamment par la recherche. |
 | `thumbnail` | Chemin ou URL HTTPS d’une image autorisée ; facultatif. |
+| `coverKind` | `gameplay` pour une capture réelle, `artwork` pour une couverture illustrée. |
+| `coverLabel` | Courte accroche au-dessus du titre dans une couverture illustrée. |
+| `coverCharacter` | Image transparente du personnage, chemin local ou HTTPS ; facultatif. |
+| `coverSprite` | Sprite existant `flowers` ou `monsters`, affiché depuis son atlas ; facultatif. |
+| `rank` | Nombre déterminant l’ordre éditorial dans La sélection ; 100 par défaut. |
 | `controls` | Chaîne ou tableau de chaînes décrivant les commandes. |
 | `releaseDate` | Date de publication au catalogue au format ISO `AAAA-MM-JJ`, facultative ; sert au tri des nouveautés. Les trois jeux initiaux ont été ajoutés le 1er novembre 2026. |
 | `featured` | Booléen ; `true` met le jeu en avant dans la sélection. |
