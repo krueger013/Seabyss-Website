@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10121c">
+  <meta name="description" content="Summon your army, build your defenses and conquer rival castles. Three living dark fantasy worlds. Duel or four-kingdom conquest.">
+  <title>SEABYSS — Castle War</title>
+  <link rel="icon" href="emblem.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=3.3">
+  <script src="engine.js?v=3.3" defer></script>
+  <script src="progression.js?v=3.3" defer></script>
+  <script src="environment.js?v=3.3" defer></script>
+  <script src="renderer.js?v=3.3" defer></script>
+  <script src="app.js?v=3.3" defer></script>
+</head>
+<body class="is-home" data-map="abyss">
+  <header class="topbar">
+    <a class="brand" href="../../index.html#catalogue" aria-label="Back to Seabyss"><img src="emblem.svg" alt="" width="40" height="40"><span>SEABYSS<small>CASTLE WAR</small></span></a>
+    <span class="header-note"><i></i> KINGDOMS NEVER SLEEP.</span>
+    <div class="battle-meta"><button id="battle-menu" class="quiet" aria-label="Battle menu">Menu</button><span id="mode-label">DUEL · 2 CASTLES</span><span id="timer">00:00</span><button id="pause" class="quiet" hidden>Pause</button></div>
+    <nav aria-label="Game options"><button id="armory" class="quiet armory-button" aria-label="Open the Armory"><span class="coin" aria-hidden="true">◆</span><strong id="gold-value">0</strong><span class="armory-label">Armory</span></button><button id="fullscreen" class="icon-button" aria-label="Enter fullscreen" aria-pressed="false" title="Fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/></svg></button><button id="sound" class="icon-button" aria-label="Enable sound" aria-pressed="false">♪<span class="sound-slash">/</span></button><button id="help" class="quiet" aria-label="How to play"><span class="help-label">How to play</span><span>?</span></button></nav>
+  </header>
+  <main class="shell">
+    <div class="section-heading"><div><span class="eyebrow">REAL-TIME CASTLE SIEGE</span><h1>One throne. <em>No mercy.</em></h1></div></div>
+    <div class="layout">
+      <aside class="sidebar">
+        <section id="setup" class="setup">
+          <div class="panel-title"><span class="step">01</span><h2>Choose your battleground</h2></div>
+          <div id="map-picker" class="map-picker" role="group" aria-label="Choose a map">
+            <button class="map-option selected" data-map="abyss" aria-pressed="true"><span class="map-art reef"><i></i><b>♜</b><i></i></span><span><strong>The Cursed Reef</strong><small>The deep awakens</small></span><span class="map-check">✓</span></button>
+            <button class="map-option" data-map="ember" aria-pressed="false"><span class="map-art volcano"><i></i><b>♜</b><i></i></span><span><strong>Shadowforge</strong><small>Where stone becomes fire</small></span><span class="map-check">✓</span></button>
+            <button class="map-option" data-map="frost" aria-pressed="false"><span class="map-art ice"><i></i><b>♜</b><i></i></span><span><strong>Frostgrave</strong><small>Silence before the storm</small></span><span class="map-check">✓</span></button>
+          </div>
+          <div class="panel-title"><span class="step">02</span><h2>Choose your war</h2></div>
+          <div id="mode-picker" class="segmented" role="group" aria-label="Number of castles"><button data-mode="2" aria-pressed="true"><b>⚔</b> Duel<small>2 castles</small></button><button data-mode="4" aria-pressed="false"><b>✣</b> Conquest<small>4 kingdoms · free-for-all</small></button></div>
+          <label class="difficulty-label" for="difficulty">Difficulty <select id="difficulty"><option value="easy">Casual</option><option value="normal" selected>Balanced</option><option value="hard">Ruthless</option></select></label>
+          <button id="start" class="primary start">Declare war <span>➜</span></button>
+          <button id="resume" class="quiet resume" hidden>Continue battle</button>
+          <button id="collection" class="collection-link"><span>✦ Build your collection</span><small id="collection-count">9 / 16 cards</small></button>
+          <p class="first-win-note" id="first-win-note">Win your first battle to earn a free elemental card.</p>
+          <p class="save-note">Solo vs AI · Autosaved on this device</p>
+        </section>
+        <section id="commander" class="commander" hidden>
+          <p class="eyebrow">YOUR KINGDOM</p><h2>The Abyssal Crown</h2><p class="commander-copy">Summon. Fortify.<br>Leave nothing but ruins.</p>
+          <div class="commander-crest" aria-hidden="true"><img src="emblem.svg" alt=""></div>
+          <div class="war-stats"><div><span id="army-count">0</span><small>allied units</small></div><div><span id="tower-count">0 / 3</span><small>weapons built</small></div></div>
+          <div class="strategy-note"><span>COMMANDER’S TIP</span><p id="strategy-tip">Lead with a golem to shield your archers. A siege mortar will break enemy defenses.</p></div>
+          <button id="menu" class="quiet">Maps & modes</button>
+          <p class="save-note" id="save-state">Battle saved on this device</p>
+        </section>
+        <div class="sidebar-footer"><span>FORTIFY. SUMMON. CONQUER.</span><span class="tiny-diamonds">◆ ◆ ◆</span></div>
+      </aside>
+      <section class="arena-column" aria-label="Battlefield">
+        <div class="arena-frame">
+          <div class="arena-topline"><span><i class="map-dot"></i><strong id="map-name">THE CURSED REEF</strong></span><span id="arena-condition">BIOLUMINESCENT TIDES</span></div>
+          <div id="fortresses" class="fortresses" aria-label="Castles and targets" hidden></div>
+          <div class="canvas-wrap" id="canvas-wrap"><canvas id="battlefield" width="1000" height="700" tabindex="0" role="img" aria-label="Battlefield. Select a card, then tap your territory or use the Deploy button."></canvas><div id="pause-banner" class="pause-banner" hidden><span>Ⅱ</span><strong>Battle paused</strong><button id="unpause" class="primary">Resume</button></div><span class="map-coordinate">SEABYSS / TERRITORY <b id="map-number">01</b></span></div>
+          <div id="arena-hint" class="arena-hint"><span>◆</span> One kingdom to defend. Every other kingdom to conquer.</div>
+        </div>
+        <section id="controls" class="controls" aria-label="Cards and summoning" hidden>
+          <section id="relic-panel" class="relic-panel" aria-label="Relic race"><div class="relic-heading"><span class="relic-symbol" id="relic-symbol" aria-hidden="true">✦</span><div><span class="relic-kicker">RACE FOR THE RELIC</span><strong id="relic-status">Relic incoming</strong></div><button id="relic-help" class="quiet" aria-label="How relic collection works">?</button></div><p id="relic-description">Escort your fragile runner home to claim the reward.</p><div class="runner-row"><span id="runner-status">2 AETHER · 28 HP · UNARMED</span><button id="send-runner" class="runner-button" disabled>Send · 2 aether</button></div><div id="runner-journey" class="runner-journey" data-phase="outbound" hidden aria-label="Runner journey"><span>1. Walk out</span><i>›</i><span>2. Pick up</span><i>›</i><span>3. Bring home</span></div></section>
+          <div class="resource-row"><div class="mana-label"><span class="mana-icon">◆</span><strong id="mana-value">7</strong><small>/ 10</small><span>AETHER</span></div><div id="mana-bar" class="mana-bar" aria-hidden="true"></div><span class="mana-regen">REGENERATING</span><div id="boost-indicator" class="boost-indicator" hidden><strong>×2 AETHER</strong><span id="boost-time">01:00</span><small>Double regeneration</small></div><button id="details" class="quiet details" disabled>Details</button></div>
+
+          <div class="hand-heading"><span>YOUR SUMMONING CARDS</span><span id="hand-count">9 READY</span></div><div id="hand" class="hand" aria-label="Summoning cards"></div>
+          <div class="action-row"><p id="selection-hint" aria-live="polite">Choose a card. Prepare your next move.</p><button id="cast" class="primary" disabled>Deploy <span>➜</span></button></div>
+        </section>
+        <div class="home-legend" id="home-legend"><span><i>01</i> Summon your army</span><span><i>02</i> Build your defenses</span><span><i>03</i> Shatter their castles</span></div>
+      </section>
+    </div>
+    <footer class="footer"><span>SMALL WORLDS. LEGENDARY WARS.</span><span>3 LIVING WORLDS <i>◆</i> 16 SUMMONING CARDS <i>◆</i> 1 CROWN</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="modal" aria-labelledby="modal-title"><div class="modal-heading"><p class="eyebrow" id="modal-kicker">THE CONQUEROR’S HANDBOOK</p><button id="close-modal" class="icon-button" aria-label="Close">×</button></div><h2 id="modal-title">The art of the siege</h2><div id="modal-body"></div></dialog>
+</body>
+</html>

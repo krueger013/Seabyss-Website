@@ -1,0 +1,11 @@
+SEABYSS CASINO — ILLUSTRATIONS MÉDIÉVALES
+
+Illustrations réalisées pour cette machine avec l'outil intégré de génération d'images.
+Atlas de neuf symboles : roi, reine, chevalier, château, coupe, blason, épée, sceau du dragon et coffre.
+Dragon bordeaux et or, détouré, sans flamme intégrée.
+Les copies destinées au navigateur conservent les proportions et la transparence des PNG sources.
+
+
+Décor original de forteresse inspiré de la référence visuelle fournie pour le projet.
+Effets sonores originaux synthétisés avec Web Audio : feu, souffle, clés, portes et fanfare.
+Aucun échantillon audio tiers utilisé pour cette machine.

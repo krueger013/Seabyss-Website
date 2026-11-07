@@ -73,6 +73,7 @@
   }
 
   function updateUI() {
+    CasinoRewards.setBusy(busy || !!demoOriginal || autoRun.getState().active);
     const auto = autoRun.getState();
     const showingBonus = animationResult ? animationResult.wasBonus : state.inBonus;
     const shownLocks = animationResult ? animationResult.oldLocks : state.lockedReels;
@@ -330,7 +331,7 @@
   }
 
   async function spin(options = {}) {
-    if (busy || summaryPending || document.querySelector('dialog[open]')) return;
+    if (busy || CasinoRewards.isClaiming() || summaryPending || document.querySelector('dialog[open]')) return;
     const automatic = options.automatic === true;
     if (autoRun.getState().active && !automatic) return;
     if (automatic && !autoRun.canSpin({ inBonus: state.inBonus, balance: state.balance, bet: state.bet })) return;
@@ -342,12 +343,17 @@
     const engineOptions = options.surpriseDemo === true && demoOriginal?.kind === 'captain'
       ? { forcedGrid: initialGrid.map(column => column.map(id => id === 'scatter' ? 'compass' : id)), forceSurprise: true }
       : demoOriginal && wasBonus ? { forcedGrid: demoGrid() } : {};
+    busy = true; updateUI();
     try {
-      if (!demoOriginal) state.balance = globalThis.CasinoWallet.read();
-      result = E.spin(state, engineOptions);
-      if (!demoOriginal) result.state.balance = globalThis.CasinoWallet.adjust(result.state.balance - state.balance);
+      const settle = () => {
+        if (!demoOriginal) state.balance = CasinoWallet.read();
+        result = E.spin(state, engineOptions);
+        if (!demoOriginal) result.state.balance = CasinoWallet.adjust(result.state.balance - state.balance);
+      };
+      if (demoOriginal) settle(); else await CasinoWallet.runExclusive(settle);
     }
     catch (error) {
+      busy = false; updateUI();
       if (automatic) stopAuto(error.code === 'INSUFFICIENT_BALANCE' ? 'funds' : 'error');
       status(error.code === 'INSUFFICIENT_BALANCE' ? 'Solde insuffisant. Diminuez la mise ou commencez une nouvelle session.' : 'Ce tour n’a pas pu démarrer. Réessayez.');
       return;
@@ -544,12 +550,14 @@
   $('finish-bonus-button').addEventListener('click', finishBonus);
   $('summary-dialog').addEventListener('cancel', event => { event.preventDefault(); finishBonus(); });
   $('reset-button').addEventListener('click', () => $('reset-dialog').showModal());
-  $('confirm-reset').addEventListener('click', () => {
-    if (busy) return;
+  $('confirm-reset').addEventListener('click', async () => {
+    if (busy || CasinoRewards.isClaiming()) return;
+    busy = true; updateUI();
     stopAuto('user');
     showAutoStatus = false;
-    state = E.createState();
-    state.balance = globalThis.CasinoWallet.reset();
+    try { await CasinoWallet.runExclusive(() => { state = E.createState(); state.balance = CasinoWallet.reset(); }); }
+    catch (_) { busy = false; updateUI(); status("La session ne peut pas être réinitialisée. Réessayez."); return; }
+    busy = false;
     grid = initialGrid.map(column => [...column]);
     visualLocks = [];
     summaryPending = false;
@@ -577,6 +585,7 @@
   const reconcileWallet = () => {
     if (!busy && !demoOriginal) { state.balance = globalThis.CasinoWallet.read(); updateUI(); }
   };
+  window.addEventListener('casino-wallet-changed', reconcileWallet);
   window.addEventListener('focus', reconcileWallet);
   window.addEventListener('pageshow', reconcileWallet);
   window.addEventListener('storage', event => {
@@ -597,7 +606,7 @@
   globalThis.SeabyssAtmosphere?.mount(document.querySelector('.game-area'));
   const captainRules = document.createElement('div');
   captainRules.className = 'rule-item';
-  captainRules.innerHTML = '<span>04</span><div><h3>Le pacte du capitaine</h3><p>Après l’arrêt des rouleaux, le capitaine peut planter des bateaux sur les rouleaux centraux jusqu’à atteindre exactement 3 Scatters : 10 tours gratuits vous sont alors offerts. Probabilité de 4 % par tour payé admissible, dès le 4e tour et après au moins 4 tours payés entre deux interventions. Aucun déclenchement pendant un bonus, ni si 3 Scatters sont déjà présents. Les gains sont calculés sur la grille finale après les coups d’épée.</p></div>';
+  captainRules.innerHTML = '<span>04</span><div><h3>Le pacte du capitaine</h3><p>Après l’arrêt des rouleaux, le capitaine peut planter des bateaux sur les rouleaux centraux jusqu’à atteindre exactement 3 Scatters : 10 tours gratuits vous sont alors offerts. Probabilité de ' + String(E.SURPRISE_CHANCE * 100).replace('.', ',') + ' % par tour payé admissible, dès le 4e tour et après au moins 4 tours payés entre deux interventions. Aucun déclenchement pendant un bonus, ni si 3 Scatters sont déjà présents. Les gains sont calculés sur la grille finale après les coups d’épée.</p></div>';
   $('rules-panel').insertBefore(captainRules, $('rules-panel').querySelector('.rules-note'));
   const scatterAwards = document.createElement('div');
   scatterAwards.className = 'scatter-awards';

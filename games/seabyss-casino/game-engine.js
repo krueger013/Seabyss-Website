@@ -33,7 +33,9 @@
   const BONUS_SPINS = 10;
   const BONUS_AWARDS = Object.freeze({ 3: 10, 4: 15, 5: 20 });
   const STICKY_REELS = Object.freeze([1, 2, 3]);
-  const SURPRISE_CHANCE = 0.04;
+  // Fixed chance after the existing cooldown; never adjusted to balance/losses.
+  // Natural Scatters remain unchanged. See balance-audit.cjs for full-cycle RTP.
+  const SURPRISE_CHANCE = 0.0024;
   const SURPRISE_COOLDOWN = 4;
 
   function fail(code, message) {

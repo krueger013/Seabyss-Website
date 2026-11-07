@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#290e0c">
+  <title>Le Trône du Dragon — Seabyss Casino</title>
+  <meta name="description" content="Une machine royale à cinq rouleaux. Le dragon embrase les jokers et ouvre la voie au Siège des Trois Portes.">
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Cinzel+Decorative:wght@700&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="medieval.css?v=casino-20261106b">
+  <link rel="stylesheet" href="casino-rewards.css?v=casino-20261106b">
+  <script src="casino-wallet.js?v=casino-20261106b" defer></script>
+  <script src="casino-rewards.js?v=casino-20261106b" defer></script>
+  <script src="medieval-engine.js?v=casino-20261106b" defer></script>
+  <script src="autoplay.js?v=casino-20261106b" defer></script>
+  <script src="medieval-audio.js?v=casino-20261106b" defer></script>
+  <script src="medieval-app.js?v=casino-20261106b" defer></script>
+</head>
+<body data-machine="medieval">
+  <header class="royal-header">
+    <a class="casino-mark" href="index.html" aria-label="Seabyss Casino, toutes les machines">♜ <span>SEABYSS<small>CASINO</small></span></a>
+    <a class="hall-link" href="index.html">← LE HALL</a>
+    <button id="sound-button" class="icon-button" aria-label="Activer le son" aria-pressed="false">♪</button>
+    <button id="rules-button" class="icon-button" aria-label="Règles et table des gains">?</button>
+  </header>
+  <main class="royal-main">
+    <div class="royal-heading">
+      <span class="chapter">CHAPITRE VI · LA LÉGENDE PREND FEU</span>
+      <div class="title-plaque"><span aria-hidden="true">✦</span><h1>Le Trône du Dragon</h1><span aria-hidden="true">✦</span></div>
+      <p>Cinq rouleaux. Un royaume. Le souffle du dragon.</p>
+    </div>
+    <section class="castle-machine" aria-label="Machine médiévale, cinq rouleaux et trois rangées">
+      <div class="machine-caption"><span id="mode-label">20 LIGNES · DE GAUCHE À DROITE</span><button id="paytable-button">TABLE DES GAINS <span aria-hidden="true">↗</span></button></div>
+      <div class="castle-frame" id="castle-frame">
+        <span class="frame-corner top-left" aria-hidden="true">✦</span><span class="frame-corner top-right" aria-hidden="true">✦</span><span class="frame-corner bottom-left" aria-hidden="true">✦</span><span class="frame-corner bottom-right" aria-hidden="true">✦</span>
+        <div class="torch torch-left" aria-hidden="true"><i></i><b></b></div><div class="torch torch-right" aria-hidden="true"><i></i><b></b></div>
+        <div class="reel-numbers" aria-hidden="true"><span>I</span><span>II</span><span>III</span><span>IV</span><span>V</span></div>
+        <div id="reels" class="royal-reels" role="group" aria-label="Les cinq rouleaux"></div>
+        <svg class="dragon-fire" id="dragon-fire" aria-hidden="true" preserveAspectRatio="none"><defs><linearGradient id="fire-color"><stop stop-color="#fff4a6"/><stop offset=".4" stop-color="#ffc355"/><stop offset="1" stop-color="#ff5622"/></linearGradient></defs><path class="fire-glow"/><path class="fire-core"/><path class="fire-tongues"/><path class="fire-sparks"/></svg>
+        <div id="dragon-actor" class="dragon-actor" aria-hidden="true"><img src="assets/medieval/dragon.webp" alt=""><span class="dragon-breath-origin"></span></div>
+        <div class="royal-status" role="status"><span aria-hidden="true">✧</span><span id="status-text">Choisissez votre mise. Le royaume vous attend.</span></div>
+      </div>
+
+      <div class="royal-controls">
+        <div class="value-block bet-block"><span>MISE</span><div><button id="bet-down" aria-label="Diminuer la mise">−</button><button id="bet-picker" aria-label="Choisir la mise" aria-haspopup="dialog"><span id="bet-value">1,00 $</span><small>CHOISIR</small></button><button id="bet-up" aria-label="Augmenter la mise">+</button></div></div>
+        <div class="value-block win-block"><span id="win-label">GAIN</span><strong id="last-win">0,00 $</strong></div>
+        <div class="value-block balance-block"><span>SOLDE</span><strong id="balance">100,00 $</strong></div>
+        <div class="launch-controls"><button id="rapid-button" class="small-control" aria-label="Mode rapide" aria-pressed="false">ϟ<small>RAPIDE</small></button><button id="spin-button" class="spin-button" aria-label="Lancer les rouleaux"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M50 28A19 19 0 0 0 17 19L9 11v23h23l-8-8a10 10 0 0 1 18 5ZM14 36a19 19 0 0 0 33 9l8 8V30H32l8 8a10 10 0 0 1-18-5Z"/></svg><span id="spin-label">LANCER</span></button><button id="auto-button" class="small-control" aria-label="Tours automatiques" aria-pressed="false">↻<small id="auto-label">AUTO</small></button></div>
+      </div>
+      <section class="siege-track" id="siege-track" aria-label="Le Siège des Trois Portes">
+        <div class="siege-heading"><div><span>LE SIÈGE DES TROIS PORTES</span><strong id="siege-description">3 coffres ouvrent le siège</strong></div><div class="assault-counter" id="free-counter" hidden><strong id="free-count">6</strong><span>ASSAUTS<br>RESTANTS</span></div><button id="demo-button" class="demo-button">DÉCOUVRIR <span aria-hidden="true">↗</span></button></div>
+        <div class="gates" id="gates">
+          <div class="castle-gate" data-gate="1"><span class="gate-icon" aria-hidden="true"><i></i></span><span class="gate-name">LE REMPART<small>3 clés</small></span><strong class="gate-prize" id="gate-prize-1">×2</strong><span class="gate-keys" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div class="castle-gate" data-gate="2"><span class="gate-icon" aria-hidden="true"><i></i></span><span class="gate-name">LE DONJON<small>6 clés</small></span><strong class="gate-prize" id="gate-prize-2">×4</strong><span class="gate-keys" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div class="castle-gate" data-gate="3"><span class="gate-icon" aria-hidden="true"><i></i></span><span class="gate-name">LE TRÉSOR<small>9 clés</small></span><strong class="gate-prize" id="gate-prize-3">×8</strong><span class="gate-keys" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        </div>
+        <div class="siege-announcement" id="siege-announcement" role="status" hidden></div>
+      </section>
+      <div class="wins-list" id="wins-list" aria-label="Combinaisons gagnantes"></div>
+    </section>
+    <div class="auto-progress" id="auto-progress" hidden><span id="auto-progress-text"></span><button id="stop-auto">ARRÊTER LA SÉRIE ×</button></div>
+    <div class="demo-bar" id="demo-bar" hidden><span>DÉMONSTRATION · Votre portefeuille est protégé.</span><button id="exit-demo">QUITTER ×</button></div>
+    <footer><span>SEABYSS / LE TRÔNE DU DRAGON</span><span>Argent fictif · Aucun dépôt ni retrait.</span><a href="assets/medieval/CREDITS.txt" target="_blank">Crédits ↗</a></footer>
+  </main>
+  <dialog class="royal-dialog" id="rules-dialog" aria-labelledby="rules-title"><button class="close-dialog" data-close aria-label="Fermer">×</button><span class="eyebrow">LE LIVRE DU ROYAUME</span><h2 id="rules-title">Le Trône du Dragon</h2><h3>Les combinaisons royales</h3><p>20 lignes fixes, de gauche à droite depuis le premier rouleau. Au moins trois symboles identiques sur une ligne gagnent. Le sceau du dragon est un joker : il remplace les symboles ordinaires, jamais les coffres Bonus.</p><h3>Le souffle du dragon</h3><p>Parfois, le dragon crache du feu sur un rouleau, plus rarement sur deux. Il les remplit de jokers pour le tour en cours. Les rouleaux se libèrent au tour suivant. En partie normale, les rouleaux portant des coffres sont protégés et un bonus déjà obtenu est conservé.</p><h3>Un bonus différent : le Siège des Trois Portes</h3><p>3 coffres donnent 6 assauts gratuits, 4 coffres donnent 8 assauts et 5 coffres donnent 10 assauts. Quatre et cinq coffres restent rares. Chaque coffre tiré pendant le siège apporte une clé, même si le dragon embrase ensuite son rouleau.</p><p>À 3, 6 puis 9 clés, vous ouvrez le Rempart, le Donjon puis le Trésor. Chaque porte verse une récompense une seule fois : <span id="gate-rules-prizes">×2, ×4 et ×8</span> la mise du déclenchement. Ces prix s’ajoutent aux gains des lignes. Les clés restent acquises jusqu’à la fin du siège ; les rouleaux embrasés, eux, se libèrent après chaque assaut. Aucun redéclenchement.</p><h3>Table des gains</h3><p>Multiplicateurs de la mise par ligne, soit la mise totale divisée par 20. Seule la meilleure combinaison de chaque ligne est payée.</p><div class="table-wrap" id="paytable"></div><p class="fine-print">Portefeuille commun aux six machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants ; les assauts gratuits s’y ajoutent. Les démonstrations utilisent des crédits séparés.</p></dialog>
+  <dialog class="royal-dialog" id="bet-dialog" aria-labelledby="bet-title"><button class="close-dialog" data-close aria-label="Fermer">×</button><span class="eyebrow">VOTRE MISE</span><h2 id="bet-title">À vous de choisir.</h2><p>La mise reste fixe durant le siège.</p><div class="choice-grid" id="bet-options"></div></dialog>
+  <dialog class="royal-dialog" id="demo-dialog" aria-labelledby="demo-title"><button class="close-dialog" data-close aria-label="Fermer">×</button><span class="eyebrow">LES LÉGENDES DU ROYAUME</span><h2 id="demo-title">Rencontrez le dragon.</h2><p>Deux démonstrations sans effet sur votre portefeuille ni sur le cadeau horaire.</p><div class="demo-options"><button id="demo-feature"><strong>LE SOUFFLE DE FEU</strong><small>Le dragon embrase deux rouleaux et les transforme en jokers.</small></button><button id="demo-bonus"><strong>LE SIÈGE DES TROIS PORTES</strong><small>Six assauts pour récolter des clés et ouvrir les trois portes.</small></button></div></dialog>
+  <dialog class="royal-dialog" id="bonus-dialog" aria-labelledby="bonus-title"><button id="cancel-demo-bonus" class="close-dialog" aria-label="Quitter la démonstration" hidden>×</button><span class="eyebrow">LES COFFRES ONT RÉVÉLÉ LE PASSAGE</span><h2 id="bonus-title">Le Siège des Trois Portes</h2><strong class="free-award" id="awarded-free-spins">6</strong><p class="centered">ASSAUTS GRATUITS<br>Chaque coffre ajoute une clé.<br>3, 6, 9 clés : trois portes, trois trésors.</p><button id="enter-bonus" class="gold-button">LANCER LE SIÈGE <span aria-hidden="true">⚔</span></button></dialog>
+  <dialog class="royal-dialog" id="summary-dialog" aria-labelledby="summary-title"><span class="eyebrow">VOTRE EXPÉDITION EST TERMINÉE</span><h2 id="summary-title">Le butin du royaume</h2><p class="centered" id="summary-gates"></p><strong class="summary-amount" id="summary-amount">0,00 $</strong><p id="summary-note"></p><button id="finish-bonus" class="gold-button">RETOUR AU ROYAUME <span aria-hidden="true">↗</span></button></dialog>
+  <dialog class="royal-dialog" id="auto-dialog" aria-labelledby="auto-title"><button class="close-dialog" data-close aria-label="Fermer">×</button><span class="eyebrow">TOURS AUTOMATIQUES</span><h2 id="auto-title">Choisissez votre série.</h2><div class="choice-grid" id="auto-choices"><button data-count="10" aria-pressed="true">10 tours</button><button data-count="25" aria-pressed="false">25 tours</button><button data-count="50" aria-pressed="false">50 tours</button><button data-count="100" aria-pressed="false">100 tours</button></div><p id="auto-budget"></p><button id="start-auto" class="gold-button">COMMENCER LA SÉRIE <span aria-hidden="true">↗</span></button></dialog>
+</body>
+</html>

@@ -22,9 +22,11 @@
   const BONUS_SPINS = 10;
   const MIN_MATCH = 3;
   const MAX_WAYS = 243;
-  const FREEZE_CHANCE = .32;
+  // Persistent wilds compound across ways: a fixed, rarer spell keeps their
+  // full advertised payouts without adapting odds to a player's balance.
+  const FREEZE_CHANCE = .095;
   const BASE_FREEZE_CHANCE = .07;
-  const SURPRISE_CHANCE = .03;
+  const SURPRISE_CHANCE = .002;
   const SURPRISE_COOLDOWN = 4;
   // Leave three unfrozen positions so the witch cannot force an all-wild board.
   const MAX_FROZEN_CELLS = 12;

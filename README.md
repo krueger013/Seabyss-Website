@@ -8,11 +8,13 @@ Les animations décoratives sont réalisées en CSS, sans bibliothèque ni boucl
 
 ## Hébergement
 
-Le catalogue comprend aussi les trois machines de Seabyss Casino : Le Trésor des Abysses, Le Pacte de Minuit et SUPERNOVA. Elles sont regroupées sous `games/seabyss-casino/`, avec leur hall et leur portefeuille fictif partagé. Les fichiers d’exécution proviennent de `C:\KRUEGER\Main Folder\Seabyss Game\Seabyss Casino` ; les tests et le serveur local ne sont pas publiés. Les crédits publics et les licences audio accompagnent les actifs. Les polices du casino sont chargées depuis Google Fonts.
+Le catalogue comprend aussi les six machines de Seabyss Casino : Le Trésor des Abysses, Le Pacte de Minuit, SUPERNOVA, Le Jardin Sauvage, Monstres & Merveilles et Le Trône du Dragon. Elles sont regroupées sous `games/seabyss-casino/`, avec leur hall et leur portefeuille fictif partagé. Les fichiers d’exécution proviennent de `C:\KRUEGER\Main Folder\Seabyss Game\Seabyss Casino` ; les tests et le serveur local ne sont pas publiés. Les crédits publics et les licences audio accompagnent les actifs. Les polices du casino sont chargées depuis Google Fonts.
 
-Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `main`. Le fichier `CNAME` conserve `www.seabyss.com`. Aucun serveur applicatif ni étape de compilation n’est nécessaire pour le portail ou les six jeux actuels. Une modification publiée sur `main` déclenche le déploiement Pages ; vérifier le résultat dans les actions GitHub avant de considérer une publication terminée.
+Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `main`. Le fichier `CNAME` conserve `www.seabyss.com`. Aucun serveur applicatif ni étape de compilation n’est nécessaire pour le portail ou les dix jeux actuels. Une modification publiée sur `main` déclenche le déploiement Pages ; vérifier le résultat dans les actions GitHub avant de considérer une publication terminée.
 
 Pour prévisualiser le catalogue, servir la racine avec un serveur HTTP statique, puis ouvrir son adresse locale. L’ouverture directe de `index.html` avec `file://` ne suffit pas au chargement de `data/games.json`.
+
+Castle War est publié sous `games/castle-war/` depuis les huit fichiers d’exécution de son dossier source. Son lien d’accueil est adapté au portail. Le jeu s’ouvre dans un onglet pour garder tout le terrain et ses commandes visibles. Le casino utilise les copies WebP produites par le script de construction du projet source ; les illustrations originales sont préservées.
 
 ## Fichiers principaux
 
@@ -68,7 +70,7 @@ Pour un jeu externe, vérifier que son propriétaire autorise l’intégration, 
 
 ## Versions intégrées et sauvegardes
 
-Les trois dossiers de jeux sont des copies de publication des projets locaux, avec leurs fichiers HTML/CSS/JavaScript et leurs ressources ; ils ne modifient pas les dossiers de travail originaux. Aucun moteur Unity ou Godot ni export supplémentaire n’est requis pour ces versions.
+Les dossiers de jeux sont des copies de publication des projets locaux, avec leurs fichiers HTML/CSS/JavaScript et leurs ressources ; ils ne modifient pas les dossiers de travail originaux. Aucun moteur Unity ou Godot ni export supplémentaire n’est requis pour ces versions.
 
 - `petits-compagnons` : Petits Compagnons, avec musique et bruitages locaux ; crédits et licences audio conservés.
 - `marios-ghost` : Mario’s Ghost — Les cinq sceaux de minuit, version 5.
@@ -86,7 +88,7 @@ Les anciens écrans compte, connexion, inscription, profil, téléchargement, bo
 
 ## Vérifications manuelles avant publication
 
-- Sur ordinateur et sur mobile : vérifier les trois cartes, les images, l’absence de débordement et la navigation au clavier.
+- Sur ordinateur et sur mobile : vérifier les cartes, les images, l’absence de débordement et la navigation au clavier.
 - Rechercher un titre et un mot de description, changer de catégorie, trier et réinitialiser une recherche sans résultat.
 - Ajouter puis retirer un favori ; recharger la page et vérifier sa conservation dans le même navigateur.
 - Ouvrir chaque jeu dans le lecteur, cliquer sur Lancer, utiliser ses commandes et tester l’ouverture dans un onglet. Tester le plein écran lorsque le navigateur le permet.
