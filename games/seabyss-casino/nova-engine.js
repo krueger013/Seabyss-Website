@@ -18,13 +18,13 @@
     return [count, values[count >= 12 ? 3 : count >= 8 ? 2 : count >= 6 ? 1 : 0]];
   })));
   const SYMBOLS = Object.freeze([
-    { id: 'rocket', name: 'Fusée', weight: 12, pays: pays([.8, 1.2, 3, 10]) },
-    { id: 'planet', name: 'Planète', weight: 14, pays: pays([.65, 1, 2.5, 8]) },
-    { id: 'robot', name: 'Robot', weight: 15, pays: pays([.5, .8, 2, 6]) },
-    { id: 'crystal', name: 'Cristal cosmique', weight: 17, pays: pays([.4, .65, 1.6, 5]) },
-    { id: 'comet', name: 'Comète', weight: 17, pays: pays([.3, .5, 1.3, 4]) },
-    { id: 'star', name: 'Étoile', weight: 17, pays: pays([.2, .4, 1, 3]) },
-    { id: 'orb', name: 'Orbe d’énergie', weight: 8, pays: Object.freeze({}) }
+    { id: 'rocket', name: 'Fusée', weight: 12, pays: pays([2.56, 3.84, 9.6, 32]) },
+    { id: 'planet', name: 'Planète', weight: 14, pays: pays([2.08, 3.2, 8, 25.6]) },
+    { id: 'robot', name: 'Robot', weight: 15, pays: pays([1.6, 2.56, 6.4, 19.2]) },
+    { id: 'crystal', name: 'Cristal cosmique', weight: 17, pays: pays([1.28, 2.08, 5.12, 16]) },
+    { id: 'comet', name: 'Comète', weight: 17, pays: pays([.96, 1.6, 4.16, 12.8]) },
+    { id: 'star', name: 'Étoile', weight: 17, pays: pays([.64, 1.28, 3.2, 9.6]) },
+    { id: 'orb', name: 'Orbe d’énergie', weight: 10.5, pays: Object.freeze({}) }
   ].map(Object.freeze));
   const CASH_MULTIPLIERS = Object.freeze([.5, 1, 2, 3, 5, 10]);
   const JACKPOT_MULTIPLIERS = Object.freeze({ mini: 10, minor: 50, major: 250, grand: 1000 });

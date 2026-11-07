@@ -59,7 +59,7 @@
       const source = $('reels').children[orb.reel]?.children[orb.row];
       if (!source) return;
       const rect = source.getBoundingClientRect();
-      const image = document.createElement('img'); image.src='assets/nova/orb.png'; image.alt=''; image.className='orb-flight'; image.setAttribute('aria-hidden','true');
+      const image = document.createElement('img'); image.src='assets/nova/orb.webp'; image.alt=''; image.className='orb-flight'; image.setAttribute('aria-hidden','true');
       image.style.left=`${rect.left+rect.width/2-16}px`; image.style.top=`${rect.top+rect.height/2-16}px`;
       document.body.append(image); transient.add(image);
       const dx=target.left+target.width/2-(rect.left+rect.width/2), dy=target.top+target.height/2-(rect.top+rect.height/2);

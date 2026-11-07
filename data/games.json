@@ -64,8 +64,8 @@
       "tactile"
     ],
     "url": "games/seabyss-casino/pirate.html",
-    "thumbnail": "games/seabyss-casino/assets/abyss-background.png",
-    "controls": "Souris ou toucher. Espace : lancer. Solde fictif partagé entre les trois machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "thumbnail": "games/seabyss-casino/assets/abyss-background.webp",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
     "featured": true
   },
@@ -81,8 +81,8 @@
       "tactile"
     ],
     "url": "games/seabyss-casino/moon.html",
-    "thumbnail": "games/seabyss-casino/assets/moon/background.png",
-    "controls": "Souris ou toucher. Espace : lancer. Solde fictif partagé entre les trois machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "thumbnail": "games/seabyss-casino/assets/moon/background.webp",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
     "featured": true
   },
@@ -98,9 +98,80 @@
       "tactile"
     ],
     "url": "games/seabyss-casino/nova.html",
-    "thumbnail": "games/seabyss-casino/assets/nova/background.png",
-    "controls": "Souris ou toucher. Espace : lancer. Solde fictif partagé entre les trois machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "thumbnail": "games/seabyss-casino/assets/nova/background.webp",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
     "releaseDate": "2026-11-06",
     "featured": true
+  },
+  {
+    "id": "jardin-sauvage",
+    "title": "Le Jardin Sauvage",
+    "description": "Des fleurs précieuses et des rouleaux envahis de lianes. Une nouvelle machine avec argent fictif.",
+    "genre": "casino",
+    "tags": [
+      "casino",
+      "machine à sous",
+      "argent fictif",
+      "tactile"
+    ],
+    "url": "games/seabyss-casino/flowers.html",
+    "thumbnail": "games/seabyss-casino/assets/flowers/background.webp",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "releaseDate": "2026-11-06",
+    "featured": true
+  },
+  {
+    "id": "monstres-merveilles",
+    "title": "Monstres & Merveilles",
+    "description": "De petits monstres animés et des fêtes multiplicatrices. Une machine avec argent fictif.",
+    "genre": "casino",
+    "tags": [
+      "casino",
+      "machine à sous",
+      "argent fictif",
+      "tactile"
+    ],
+    "url": "games/seabyss-casino/monsters.html",
+    "thumbnail": "games/seabyss-casino/assets/monsters/background.webp",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "releaseDate": "2026-11-06",
+    "featured": true
+  },
+  {
+    "id": "trone-du-dragon",
+    "title": "Le Trône du Dragon",
+    "description": "Des combinaisons royales et le siège des trois portes dans un royaume médiéval. Jeu avec argent fictif.",
+    "genre": "casino",
+    "tags": [
+      "casino",
+      "machine à sous",
+      "argent fictif",
+      "tactile"
+    ],
+    "url": "games/seabyss-casino/medieval.html",
+    "thumbnail": "games/seabyss-casino/assets/medieval/background.webp",
+    "controls": "Souris ou toucher. Espace : lancer. Solde fictif commun aux six machines, enregistré sur cet appareil. Aucun dépôt ni retrait.",
+    "releaseDate": "2026-11-06",
+    "featured": true
+  },
+  {
+    "id": "castle-war",
+    "title": "Seabyss Castle War",
+    "description": "Défends ta citadelle, invoque tes troupes et conquiers les châteaux rivaux dans trois mondes de fantasy. Interface en anglais.",
+    "genre": "strategy",
+    "tags": [
+      "stratégie",
+      "siège",
+      "châteaux",
+      "cartes",
+      "temps réel",
+      "tactile"
+    ],
+    "url": "games/castle-war/index.html",
+    "thumbnail": "assets/images/castle-war.jpg",
+    "controls": "Souris ou toucher : choisir une carte puis déployer. 1–8 : cartes. P : pause. Deux ou quatre châteaux. Progression enregistrée sur cet appareil.",
+    "releaseDate": "2026-11-06",
+    "featured": true,
+    "embed": false
   }
 ]

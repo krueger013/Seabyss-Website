@@ -40,7 +40,7 @@
       rapid = saved.rapid === true; sound = saved.sound === true;
     } catch (_) { /* Ignore corrupt local saves. */ }
   }
-  function imageMarkup(id) { return `<img src="assets/moon/${id}.png" alt="" draggable="false">`; }
+  function imageMarkup(id) { return `<img src="assets/moon/${id}.webp" alt="" draggable="false">`; }
   function cell(reel, row) { return $('reels').children[reel].children[row]; }
   function drawCell(reel, row, id, frozen = false) {
     const element = cell(reel, row);
@@ -55,6 +55,7 @@
   }
   function status(text) { $('status-text').textContent = text; }
   function ui() {
+    CasinoRewards.setBusy(busy || !!demoOriginal || auto.getState().active);
     const run = auto.getState();
     const bonus = animation ? animation.wasBonus : state.inBonus || summaryPending;
     const locks = animation ? animation.oldFrozen : visualFrozen;
@@ -182,7 +183,7 @@
     return { forcedGrid: copy(demoGrid), forceFreezeCells: targets, forceSurprise: false };
   }
   async function spin(automatic = false, forcedOptions = null) {
-    if (busy || summaryPending || document.querySelector('dialog[open]')) return;
+    if (busy || CasinoRewards.isClaiming() || summaryPending || document.querySelector('dialog[open]')) return;
     const run = auto.getState();
     if (run.active && !automatic) return;
     if (automatic && !auto.canSpin({ inBonus: state.inBonus, balance: wallet.read(), bet: state.bet })) {
@@ -193,11 +194,16 @@
     if (!automatic) showAutoStatus = false;
     const wasBonus = state.inBonus, oldFrozen = copy(state.frozenCells), oldFreeSpins = state.freeSpins;
     let result;
+    busy = true; ui();
     try {
-      if (!demoOriginal) state.balance = wallet.read();
-      result = E.spin(state, forcedOptions || (demoOriginal && wasBonus ? demoOptions() : {}));
-      if (!demoOriginal) result.state.balance = wallet.adjust(result.state.balance - state.balance);
+      const settle = () => {
+        if (!demoOriginal) state.balance = wallet.read();
+        result = E.spin(state, forcedOptions || (demoOriginal && wasBonus ? demoOptions() : {}));
+        if (!demoOriginal) result.state.balance = wallet.adjust(result.state.balance - state.balance);
+      };
+      if (demoOriginal) settle(); else await wallet.runExclusive(settle);
     } catch (error) {
+      busy = false;
       if (automatic) stopAuto(error.code === 'INSUFFICIENT_BALANCE' ? 'funds' : 'error');
       status(error.code === 'INSUFFICIENT_BALANCE' ? 'Solde insuffisant. Diminuez la mise pour continuer.' : 'Le tour ne peut pas démarrer. Réessayez.'); ui(); return;
     }
@@ -306,14 +312,18 @@
   $('finish-bonus').addEventListener('click', finishBonus);
   $('summary-dialog').addEventListener('cancel', event => { event.preventDefault(); finishBonus(); });
   $('reset-button').addEventListener('click', () => $('reset-dialog').showModal());
-  $('confirm-reset').addEventListener('click', () => {
-    if (busy) return; stopAuto(); showAutoStatus = false; $('reset-dialog').close();
-    state = E.createState(); state.balance = wallet.reset(); grid = copy(initialGrid); visualFrozen = []; summaryPending = false;
+  $('confirm-reset').addEventListener('click', async () => {
+    if (busy || CasinoRewards.isClaiming()) return;
+    busy = true; ui(); stopAuto(); showAutoStatus = false; $('reset-dialog').close();
+    try { await wallet.runExclusive(() => { state = E.createState(); state.balance = wallet.reset(); }); }
+    catch (_) { busy = false; ui(); status("La session ne peut pas être réinitialisée. Réessayez."); return; }
+    busy = false; grid = copy(initialGrid); visualFrozen = []; summaryPending = false;
     $('wins-list').innerHTML = ''; drawGrid(); status('Une nouvelle nuit commence avec 100,00 $ fictifs.'); persist(); ui();
   });
   document.addEventListener('visibilitychange', () => { if (document.hidden) { if (auto.getState().active) stopAuto('hidden'); silenceMagic(); } });
   window.addEventListener('pagehide', () => { clearTimeout(timer); auto.stop('hidden'); silenceMagic(); });
   function reconcile() { if (!busy && !demoOriginal) { state.balance = wallet.read(); ui(); } }
+  window.addEventListener('casino-wallet-changed', reconcile);
   window.addEventListener('focus', reconcile); window.addEventListener('pageshow', reconcile); window.addEventListener('storage', event => { if (event.key === wallet.key) reconcile(); });
   const columns = [3, 4, 5];
   $('paytable').innerHTML = `<table><thead><tr><th>SYMBOLE</th>${columns.map(count => `<th>${count}<small>ROULEAUX</small></th>`).join('')}</tr></thead><tbody>${E.SYMBOLS.filter(symbol => symbol.pays[3]).map(symbol => `<tr><td>${imageMarkup(symbol.id)}${({ vampire: 'Vampire', wolf: 'Loup-garou', grimoire: 'Grimoire', potion: 'Potion', moon: 'Lune', ring: 'Anneau' })[symbol.id]}</td>${columns.map(count => `<td>×${String(symbol.pays[count]).replace('.', ',')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;

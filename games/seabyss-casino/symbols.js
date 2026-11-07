@@ -6,10 +6,10 @@
   const artwork = {};
   for (const id of ids) {
     const label = id === 'wild' ? 'WILD' : id === 'scatter' ? 'SCATTER' : '';
-    artwork[id] = `<span class="symbol-art symbol-${id}" aria-hidden="true"><img class="symbol-image" src="assets/icon-${id}-v2.png" alt="" draggable="false" decoding="async">${label ? `<span class="symbol-tag">${label}</span>` : ''}</span>`;
+    artwork[id] = `<span class="symbol-art symbol-${id}" aria-hidden="true"><img class="symbol-image" src="assets/icon-${id}-v2.webp" alt="" draggable="false" decoding="async">${label ? `<span class="symbol-tag">${label}</span>` : ''}</span>`;
     if (typeof Image !== 'undefined') {
       const image = new Image();
-      image.src = `assets/icon-${id}-v2.png`;
+      image.src = `assets/icon-${id}-v2.webp`;
       image.decode?.().catch(() => {});
     }
   }

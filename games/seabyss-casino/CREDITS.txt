@@ -1,0 +1,34 @@
+SEABYSS CASINO — SIX UNIVERS — CRÉDITS
+
+ILLUSTRATIONS
+Illustrations originales générées pour Seabyss Casino. Les copies WebP destinées au navigateur
+conservent le cadrage, les proportions et la transparence des illustrations sources.
+Aucune licence CC0 sur ces illustrations générées n’est revendiquée.
+
+EFFETS SONORES COMMUNS
+Auteur : Kenney / Kenney Vleugels — https://kenney.nl
+Licence : Creative Commons Zero 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Packs officiels :
+https://kenney.nl/assets/interface-sounds
+https://kenney.nl/assets/rpg-audio
+https://kenney.nl/assets/music-jingles
+https://kenney.nl/assets/impact-sounds
+Le son d’arrêt a été adapté pour une attaque plus douce et une tonalité plus grave.
+Les licences originales des quatre packs sont conservées dans assets/audio/.
+
+LE PACTE DE MINUIT
+Les deux effets de sort et de givre adaptent des sons Kenney CC0 avec des harmoniques originales.
+
+SUPERNOVA / STATION 77
+Création sonore originale pour Seabyss Casino : charge, collecte, jackpot et rotation.
+Ces quatre effets sont synthétisés pour le projet, sans échantillon sonore tiers.
+
+LE JARDIN SAUVAGE / MONSTRES & MERVEILLES
+Deux planches de symboles et deux décors originaux, avec leurs crédits publics détaillés :
+assets/flowers/CREDITS.txt et assets/monsters/CREDITS.txt.
+Les sons du jardin et des petits monstres sont synthétisés dans le navigateur avec Web Audio,
+sans échantillon sonore tiers.
+
+LE TRÔNE DU DRAGON
+Atlas des neuf symboles royaux, dragon et décor médiéval : illustrations originales du projet.
+Crédits publics détaillés : assets/medieval/CREDITS.txt.

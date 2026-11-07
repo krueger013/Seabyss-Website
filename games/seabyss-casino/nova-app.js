@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   'use strict';
   const E = NovaEngine, wallet = CasinoWallet, bank = SeabyssSounds, FX = NovaEffects;
   const $ = id => document.getElementById(id);
@@ -15,7 +15,7 @@
   let state = E.createState(), grid = copy(initialGrid), visualOrbs = [];
   let busy = false, rapid = false, sound = false, animation = null, introPending = false, summaryPending = null;
   let demoOriginal = null, demoStep = 0, timer = null, selectedCount = 10, showAutoStatus = false, revision = 0;
-  let visibleWins = [], repairedSave = false;
+  let visibleWins = [], repairedSave = false, repairPending = false, repairRevision;
   const tracks = Object.fromEntries(['charge','lock','jackpot','spin'].map(name => [name, new Audio(`assets/nova/nova-${name}.wav`)]));
   const voices = new Set();
   function play(name, level = 1) {
@@ -39,18 +39,26 @@
   function payload(nextState = state, nextGrid = grid, nextOrbs = visualOrbs, nextIntro = introPending, nextSummary = summaryPending) {
     return { state:nextState, grid:nextGrid, visualOrbs:nextOrbs, rapid, sound, introPending:nextIntro, summaryPending:nextSummary, revision:revision+1 };
   }
-  function persist() {
-    if (demoOriginal || busy) return true;
+  async function persist(allowBusy = false) {
+    if (demoOriginal || (busy && !allowBusy)) return true;
     try {
-      state.balance = wallet.commitSession(saveKey, payload(), 0, revision);
-      revision++;
+      // Even a zero-delta save rewrites the shared wallet, so preferences and
+      // progress use the same lock as spins, resets and hourly gifts.
+      await wallet.runExclusive(() => {
+        if (demoOriginal || (busy && !allowBusy)) return;
+        repairSavedSession();
+        state.balance = wallet.commitSession(saveKey, payload(), 0, revision);
+        revision++;
+      });
+      if (!busy && !demoOriginal) ui();
       return true;
     } catch (error) {
-      if (error.code === 'STALE_SESSION') reconcile();
+      if (error.code === 'STALE_SESSION' && !busy) await reconcile();
       return false;
     }
   }
   function restore(source) {
+    repairPending = false;
     let saved = null;
     try {
       saved = source || wallet.readSession(saveKey) || JSON.parse(localStorage.getItem(saveKey));
@@ -80,13 +88,19 @@
       // Repair display/session data together while retaining the shared balance.
       state = E.createState({balance:wallet.read()}); grid=copy(initialGrid); visualOrbs=[];
       introPending=false; summaryPending=null; repairedSave=true;
-      try {
-        const expected = Number.isSafeInteger(saved?.revision) && saved.revision >= 0 ? saved.revision : undefined;
-        state.balance=wallet.commitSession(saveKey,payload(),0,expected); revision++;
-      } catch (_) { /* A newer valid session can be adopted on the next refresh. */ }
+      repairRevision = Number.isSafeInteger(saved?.revision) && saved.revision >= 0 ? saved.revision : undefined;
+      repairPending = true;
     }
   }
-  const imageMarkup = id => `<img src="assets/nova/${id}.png" alt="" draggable="false">`;
+  // Call only inside the caller's existing wallet transaction. Restoration
+  // itself never opens a nested lock or writes an unprotected repair.
+  function repairSavedSession() {
+    if (!repairPending) return;
+    state.balance = wallet.commitSession(saveKey, payload(), 0, repairRevision);
+    revision++;
+    repairPending = false;
+  }
+  const imageMarkup = id => `<img src="assets/nova/${id}.webp" alt="" draggable="false">`;
   const cell = (reel, row) => $('reels').children[reel].children[row];
   function drawCell(reel, row, id, orb = null) {
     const element = cell(reel, row);
@@ -112,6 +126,7 @@
   }
   function status(text) { $('status-text').textContent = text; }
   function ui() {
+    CasinoRewards.setBusy(busy || !!demoOriginal || auto.getState().active);
     const run = auto.getState(), display = animation?.before || state;
     const bonus = display.inBonus || (!animation && !!summaryPending);
     const displayedOrbs = animation ? animation.oldOrbs : visualOrbs;
@@ -245,7 +260,7 @@
     FX.count($('summary-amount'),summaryPending.amount,rapid?350:650);
   }
   async function spin(automatic = false) {
-    if (busy || introPending || summaryPending || document.querySelector('dialog[open]')) return;
+    if (busy || CasinoRewards.isClaiming() || introPending || summaryPending || document.querySelector('dialog[open]')) return;
     const run = auto.getState();
     if (run.active && !automatic) return;
     if (automatic && !auto.canSpin({ inBonus:state.inBonus, balance:wallet.read(), bet:state.bet })) {
@@ -262,6 +277,7 @@
         if (!demoOriginal) {
           const latest = wallet.readSession(saveKey);
           if (latest && latest.revision !== revision) restore(latest);
+          repairSavedSession();
           state.balance = wallet.read();
           if (introPending || summaryPending) return;
         }
@@ -275,11 +291,11 @@
         }
         if (automatic && !before.inBonus) auto.consumePaidSpin();
       };
-      if (!demoOriginal && navigator.locks?.request) await navigator.locks.request('seabyss-nova-session', settle);
+      if (!demoOriginal) await wallet.runExclusive(settle);
       else settle();
     } catch (error) {
       busy = false;
-      if (error.code === 'STALE_SESSION') { reconcile(); status('Session mise à jour depuis un autre onglet.'); return; }
+      if (error.code === 'STALE_SESSION') { await reconcile(); status('Session mise à jour depuis un autre onglet.'); return; }
       if (automatic) stopAuto(error.code === 'INSUFFICIENT_BALANCE' ? 'funds' : 'error');
       status(error.code === 'INSUFFICIENT_BALANCE' ? 'Solde insuffisant. Diminuez votre mise pour continuer.' : 'Le tour ne peut pas démarrer. Réessayez.'); ui(); return;
     }
@@ -295,6 +311,7 @@
     if (introPending || summaryPending) auto.pause('bonus');
     $('wins-list').innerHTML = ''; ui();
     status(before.inBonus ? 'Le radar explore les cases libres…' : 'Transmission en cours…');
+    let saved = true;
     try {
       await roll(result, animation.oldOrbs, before.inBonus);
       for (const win of result.wins) for (const { reel,row } of win.positions) cell(reel,row).classList.add('winning');
@@ -309,10 +326,15 @@
       else if (result.bonusTriggered) play('charge');
       else if (result.newOrbs.some(orb => orb.kind !== 'cash')) play('charge', .7);
     } finally {
-      busy = false; animation = null; drawGrid(); ui();
+      animation = null;
+      saved = await persist(true);
+      busy = false;
+      if (!demoOriginal) state.balance = wallet.read();
+      drawGrid(); ui();
+      if (!saved) await reconcile();
     }
     if (before.inBonus) FX.bumpRespins(before.respins,state.respins,result.newOrbs.length>0);
-    if (!persist()) return;
+    if (!saved) return;
     if (summaryPending) { status(`${money(result.bonusAward)} collectés. Mission terminée.`); showSummary(); }
     else if (introPending) { status(`${result.orbCount} orbes détectés. Le bonus orbital est ouvert !`); showBonus(); }
     else if (before.inBonus) status(result.newOrbs.length ? `${result.newOrbs.length} ${result.newOrbs.length > 1 ? 'nouveaux orbes' : 'nouvel orbe'} · compteur rechargé à 3 · ${money(state.bonusTotal)} à collecter` : `Aucun nouvel orbe · ${state.respins} relance${state.respins > 1 ? 's' : ''} restante${state.respins > 1 ? 's' : ''}`);
@@ -338,22 +360,36 @@
     visualOrbs = copy(state.bonusCells); grid = orbGrid(visualOrbs); introPending = true; summaryPending = null;
     $('wins-list').innerHTML = ''; document.querySelectorAll('.nova-cell').forEach(element => element.classList.remove('winning','new-orb','landing')); drawGrid(); ui(); status('Simulateur de vol actif. Votre portefeuille et votre cagnotte sont protégés.'); showBonus();
   }
-  function exitDemo() {
+  async function exitDemo() {
     if (!demoOriginal || busy) return;
     FX.reset(); visibleWins=[];
     for (const dialog of document.querySelectorAll('dialog[open]')) dialog.close();
     state = demoOriginal.state; grid = demoOriginal.grid; visualOrbs = demoOriginal.visualOrbs;
     demoOriginal = null; introPending = false; summaryPending = null; state.balance = wallet.read();
     $('wins-list').innerHTML = ''; document.querySelectorAll('.nova-cell').forEach(element => element.classList.remove('winning','new-orb','landing'));
-    reconcile(); drawGrid(); ui(); persist(); status('Simulation terminée. Votre portefeuille et votre réserve sont intacts.');
+    await reconcile(); drawGrid(); ui(); await persist(); status('Simulation terminée. Votre portefeuille et votre réserve sont intacts.');
   }
   function showRules() { if (!busy && !auto.getState().active && !summaryPending) $('rules-dialog').showModal(); }
   function autoBudget() { $('auto-budget').textContent = `${selectedCount} tours à ${money(state.bet)} · mises prévues : ${money(selectedCount * state.bet)}. Arrêt si le solde devient insuffisant.`; }
-  function reconcile() {
+  async function reconcile() {
     if (busy || demoOriginal) return;
-    const latest = wallet.readSession(saveKey);
-    if (latest && latest.revision !== revision) {
-      stopAuto('user'); restore(latest);
+    let changed = false;
+    busy = true; ui();
+    try {
+      await wallet.runExclusive(() => {
+        const latest = wallet.readSession(saveKey);
+        if (latest && latest.revision !== revision) {
+          clearTimeout(timer); timer = null;
+          if (auto.getState().active) auto.stop('user');
+          restore(latest); changed = true;
+        }
+        repairSavedSession();
+        state.balance = wallet.read();
+      });
+    } catch (_) {
+      status('Le portefeuille ne peut pas être synchronisé. Réessayez.');
+    } finally { busy = false; }
+    if (changed) {
       FX.reset(); visibleWins=[];
       for (const dialog of document.querySelectorAll('dialog[open]')) dialog.close();
       $('wins-list').innerHTML = '';
@@ -362,9 +398,16 @@
       if (summaryPending) showSummary(); else if (introPending) showBonus();
       status('Session synchronisée. Votre progression est conservée.');
     }
-    state.balance = wallet.read(); ui();
+    state.balance = wallet.read(); ui(); queueAuto();
   }
-  restore(); state.balance = wallet.read();
+  try {
+    await wallet.runExclusive(() => { restore(); repairSavedSession(); state.balance = wallet.read(); });
+  } catch (_) {
+    // A temporarily unavailable lock leaves play recoverable; the next spin
+    // retries the pending repair inside its own transaction.
+    restore(); state.balance = wallet.read();
+  }
+  state.balance = wallet.read();
   for (let reel=0; reel<E.REELS; reel++) {
     const column = document.createElement('div'); column.className='nova-reel'; column.setAttribute('role','group'); column.setAttribute('aria-label',`Rouleau ${reel+1}`);
     for (let row=0; row<E.ROWS; row++) { const element=document.createElement('div'); element.className='nova-cell'; element.setAttribute('role','img'); column.append(element); }
@@ -427,21 +470,40 @@
   });
   $('stop-auto').addEventListener('click', () => stopAuto()); document.querySelectorAll('[data-stop-auto]').forEach(button => button.addEventListener('click', () => stopAuto()));
   $('reset-button').addEventListener('click', () => { if (!busy && !state.inBonus && !demoOriginal && !auto.getState().active && !summaryPending) $('reset-dialog').showModal(); });
-  $('confirm-reset').addEventListener('click', () => {
-    $('reset-dialog').close(); reconcile();
+  $('confirm-reset').addEventListener('click', async () => {
+    if (busy || CasinoRewards.isClaiming()) return;
+    $('reset-dialog').close(); await reconcile();
     if (state.inBonus || summaryPending) return;
-    const previousBalance = wallet.read();
-    FX.reset(); visibleWins=[];
-    state=E.createState(); grid=copy(initialGrid); visualOrbs=[]; introPending=false; summaryPending=null; showAutoStatus=false;
-    try { state.balance=wallet.commitSession(saveKey,payload(),10000-previousBalance,revision); revision++; }
-    catch (_) { reconcile(); return; }
-    $('wins-list').innerHTML=''; document.querySelectorAll('.nova-cell').forEach(element => element.classList.remove('winning','new-orb','landing')); drawGrid(); persist(); ui(); status('Nouvelle mission. Votre portefeuille partagé repart à 100 $.');
+    busy = true; ui();
+    let didReset = false;
+    try { didReset = await wallet.runExclusive(() => {
+      const latest = wallet.readSession(saveKey);
+      if (latest && latest.revision !== revision) restore(latest);
+      repairSavedSession();
+      if (state.inBonus || summaryPending) return false;
+      const previousBalance = wallet.read();
+      FX.reset(); visibleWins=[];
+      state=E.createState(); grid=copy(initialGrid); visualOrbs=[]; introPending=false; summaryPending=null; showAutoStatus=false;
+      state.balance=wallet.commitSession(saveKey,payload(),10000-previousBalance,revision); revision++;
+      return true;
+    }); }
+    catch (_) { busy = false; await reconcile(); status('La session ne peut pas être réinitialisée. Réessayez.'); return; }
+    busy = false;
+    state.balance = wallet.read();
+    if (!didReset) {
+      drawGrid(); ui();
+      if (summaryPending) showSummary(); else if (introPending) showBonus();
+      status('Bonus retrouvé dans un autre onglet. Votre progression est conservée.');
+      return;
+    }
+    $('wins-list').innerHTML=''; document.querySelectorAll('.nova-cell').forEach(element => element.classList.remove('winning','new-orb','landing')); drawGrid(); ui(); status('Nouvelle mission. Votre portefeuille partagé repart à 100 $.');
   });
   document.addEventListener('keydown', event => {
     if (event.code !== 'Space' || event.repeat || document.querySelector('dialog[open]') || /INPUT|TEXTAREA|SELECT|BUTTON|A/.test(event.target.tagName)) return;
     event.preventDefault(); if (auto.getState().active) stopAuto(); else spin();
   });
   document.addEventListener('visibilitychange', () => { if (document.hidden) { stopAuto('hidden'); silence(); } else reconcile(); });
+  window.addEventListener('casino-wallet-changed', reconcile);
   window.addEventListener('focus', reconcile); window.addEventListener('pageshow', reconcile); window.addEventListener('storage', reconcile);
   drawGrid(); bank.setEnabled(sound); ui();
   if (summaryPending) showSummary(); else if (introPending) showBonus(); else if (state.inBonus) status('Bonus retrouvé. Vos orbes sont conservés ; poursuivez les relances gratuites.');
