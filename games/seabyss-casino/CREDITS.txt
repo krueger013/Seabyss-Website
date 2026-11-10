@@ -1,4 +1,4 @@
-SEABYSS CASINO — SEPT UNIVERS — CRÉDITS
+SEABYSS CASINO — HUIT UNIVERS — CRÉDITS
 
 ILLUSTRATIONS
 Illustrations originales générées pour Seabyss Casino. Les copies WebP destinées au navigateur
@@ -40,3 +40,7 @@ Les griffes, rotations et fanfares combinent des effets originaux synthétisés 
 et quatre enregistrements sous licence Creative Commons Zero 1.0 :
 ambiances de jungle par paulprit, lion par stratcat322 d’après roman_cgr, tigre par Bidone (Freesound).
 Sources et licences détaillées : assets/feline/audio/AUDIO-SOURCES.txt.
+
+COSMIC MEUH
+Illustrations originales et son de vache CC0 : assets/alien/CREDITS.txt.
+Sources audio et licence : assets/alien/audio/AUDIO-SOURCES.txt.

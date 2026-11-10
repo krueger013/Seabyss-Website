@@ -205,7 +205,7 @@
     if (grouped) {
       const sections = [
         { games: visible.filter((game) => game.genre !== "casino"), title: "Des mondes à explorer", copy: "Des compagnons à adopter, des mystères à résoudre et des royaumes à conquérir." },
-        { games: visible.filter((game) => game.genre === "casino"), title: "Les machines de Seabyss", copy: "Sept univers. Un solde fictif partagé. Aucun argent réel." },
+        { games: visible.filter((game) => game.genre === "casino"), title: "Les machines de Seabyss", copy: "Huit univers. Un solde fictif partagé. Aucun argent réel." },
       ];
       grid.replaceChildren(...sections.flatMap((section) => {
         if (!section.games.length) return [];

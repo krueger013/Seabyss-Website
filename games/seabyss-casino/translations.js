@@ -357,10 +357,10 @@ window.SeabyssI18n.register({
       "en": "Multipliers apply to the line bet: the total bet divided by 20. Only the best combination on each line pays.",
       "es": "Los multiplicadores se aplican a la apuesta por línea: la apuesta total dividida entre 20. Solo paga la mejor combinación de cada línea."
     },
-    "Portefeuille commun aux sept machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants. Les tours gratuits s’y ajoutent ; la série s’arrête à l’ouverture de la roue. Les démos utilisent des crédits séparés.": {
-      "fr": "Portefeuille commun aux sept machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants. Les tours gratuits s’y ajoutent ; la série s’arrête à l’ouverture de la roue. Les démos utilisent des crédits séparés.",
-      "en": "One wallet shared by seven machines. Start with $100. Bets from $0.25 to $20. Claim a $50 gift every hour. AUTO: 10, 25, 50 or 100 paid spins, plus any free spins. The series pauses when the wheel opens. Demos use separate credits.",
-      "es": "Una cartera compartida entre siete máquinas. Empiezas con 100 $. Apuestas de 0,25 $ a 20 $. Reclama 50 $ cada hora. AUTO: 10, 25, 50 o 100 giros pagados, más los giros gratis. La serie se detiene al abrirse la rueda. Las demos usan créditos separados."
+    "Portefeuille commun aux huit machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants. Les tours gratuits s’y ajoutent ; la série s’arrête à l’ouverture de la roue. Les démos utilisent des crédits séparés.": {
+      "fr": "Portefeuille commun aux huit machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants. Les tours gratuits s’y ajoutent ; la série s’arrête à l’ouverture de la roue. Les démos utilisent des crédits séparés.",
+      "en": "One wallet shared by eight machines. Start with $100. Bets from $0.25 to $20. Claim a $50 gift every hour. AUTO: 10, 25, 50 or 100 paid spins, plus any free spins. The series pauses when the wheel opens. Demos use separate credits.",
+      "es": "Una cartera compartida entre ocho máquinas. Empiezas con 100 $. Apuestas de 0,25 $ a 20 $. Reclama 50 $ cada hora. AUTO: 10, 25, 50 o 100 giros pagados, más los giros gratis. La serie se detiene al abrirse la rueda. Las demos usan créditos separados."
     },
     "VOTRE MISE": {
       "fr": "VOTRE MISE",
@@ -692,10 +692,10 @@ window.SeabyssI18n.register({
       "en": "Multipliers apply to the line bet (total bet divided by 20). Each winning line pays once.",
       "es": "Los multiplicadores se aplican a la apuesta por línea (apuesta total dividida entre 20). Cada línea ganadora paga una vez."
     },
-    "Portefeuille commun aux sept machines. 100 $ au premier lancement, mises de 0,25 $ à 20 $. Le cadeau horaire ajoute 50 $ après récupération. Les démos utilisent des crédits séparés. AUTO : 10, 25, 50 ou 100 tours payants ; les tours gratuits s’ajoutent à la série.": {
-      "fr": "Portefeuille commun aux sept machines. 100 $ au premier lancement, mises de 0,25 $ à 20 $. Le cadeau horaire ajoute 50 $ après récupération. Les démos utilisent des crédits séparés. AUTO : 10, 25, 50 ou 100 tours payants ; les tours gratuits s’ajoutent à la série.",
-      "en": "One wallet shared by seven machines. Start with $100; bets from $0.25 to $20. Claim the hourly gift to add $50. Demos use separate credits. AUTO: 10, 25, 50 or 100 paid spins; free spins are added to the series.",
-      "es": "Cartera compartida entre siete máquinas. Empiezas con 100 $; apuestas de 0,25 $ a 20 $. El regalo por hora añade 50 $ al reclamarlo. Las demos usan créditos separados. AUTO: 10, 25, 50 o 100 giros pagados; los gratis se añaden a la serie."
+    "Portefeuille commun aux huit machines. 100 $ au premier lancement, mises de 0,25 $ à 20 $. Le cadeau horaire ajoute 50 $ après récupération. Les démos utilisent des crédits séparés. AUTO : 10, 25, 50 ou 100 tours payants ; les tours gratuits s’ajoutent à la série.": {
+      "fr": "Portefeuille commun aux huit machines. 100 $ au premier lancement, mises de 0,25 $ à 20 $. Le cadeau horaire ajoute 50 $ après récupération. Les démos utilisent des crédits séparés. AUTO : 10, 25, 50 ou 100 tours payants ; les tours gratuits s’ajoutent à la série.",
+      "en": "One wallet shared by eight machines. Start with $100; bets from $0.25 to $20. Claim the hourly gift to add $50. Demos use separate credits. AUTO: 10, 25, 50 or 100 paid spins; free spins are added to the series.",
+      "es": "Cartera compartida entre ocho máquinas. Empiezas con 100 $; apuestas de 0,25 $ a 20 $. El regalo por hora añade 50 $ al reclamarlo. Las demos usan créditos separados. AUTO: 10, 25, 50 o 100 giros pagados; los gratis se añaden a la serie."
     },
     "VOTRE RYTHME": {
       "fr": "VOTRE RYTHME",
@@ -792,10 +792,10 @@ window.SeabyssI18n.register({
       "en": "Seabyss Casino — Choose your world",
       "es": "Seabyss Casino — Elige tu universo"
     },
-    "Sept machines : pirates, Minuit, SUPERNOVA, fleurs, petits monstres, dragon et félins. Un portefeuille fictif commun et un cadeau de 50 $ chaque heure.": {
-      "fr": "Sept machines : pirates, Minuit, SUPERNOVA, fleurs, petits monstres, dragon et félins. Un portefeuille fictif commun et un cadeau de 50 $ chaque heure.",
-      "en": "Seven machines: pirates, Midnight, SUPERNOVA, flowers, little monsters, a dragon and cats. One shared fictitious wallet and a $50 hourly gift.",
-      "es": "Siete máquinas: piratas, Medianoche, SUPERNOVA, flores, pequeños monstruos, un dragón y felinos. Cartera ficticia compartida y regalo de 50 $ cada hora."
+    "Huit machines : pirates, Minuit, SUPERNOVA, fleurs, petits monstres, dragon et félins. Un portefeuille fictif commun et un cadeau de 50 $ chaque heure.": {
+      "fr": "Huit machines : pirates, Minuit, SUPERNOVA, fleurs, petits monstres, dragon et félins. Un portefeuille fictif commun et un cadeau de 50 $ chaque heure.",
+      "en": "Eight machines: pirates, Midnight, SUPERNOVA, flowers, little monsters, a dragon and cats. One shared fictitious wallet and a $50 hourly gift.",
+      "es": "Ocho máquinas: piratas, Medianoche, SUPERNOVA, flores, pequeños monstruos, un dragón y felinos. Cartera ficticia compartida y regalo de 50 $ cada hora."
     },
     "Seabyss Casino, accueil": {
       "fr": "Seabyss Casino, accueil",
@@ -812,10 +812,10 @@ window.SeabyssI18n.register({
       "en": "FICTITIOUS",
       "es": "FICTICIO"
     },
-    "SEPT MONDES À EXPLORER": {
-      "fr": "SEPT MONDES À EXPLORER",
-      "en": "SEVEN WORLDS TO EXPLORE",
-      "es": "SIETE MUNDOS POR EXPLORAR"
+    "HUIT MONDES À EXPLORER": {
+      "fr": "HUIT MONDES À EXPLORER",
+      "en": "EIGHT WORLDS TO EXPLORE",
+      "es": "OCHO MUNDOS POR EXPLORAR"
     },
     "Choisissez votre": {
       "fr": "Choisissez votre",
@@ -832,10 +832,10 @@ window.SeabyssI18n.register({
       "en": "From mysterious depths to enchanted gardens.",
       "es": "De las profundidades misteriosas a los jardines encantados."
     },
-    "SEPT UNIVERS": {
-      "fr": "SEPT UNIVERS",
-      "en": "SEVEN WORLDS",
-      "es": "SIETE UNIVERSOS"
+    "HUIT UNIVERS": {
+      "fr": "HUIT UNIVERS",
+      "en": "EIGHT WORLDS",
+      "es": "OCHO UNIVERSOS"
     },
     "Un même casino.": {
       "fr": "Un même casino.",
@@ -1237,10 +1237,10 @@ window.SeabyssI18n.register({
       "en": "Your balance follows you.",
       "es": "Tu saldo te acompaña."
     },
-    "Un portefeuille commun aux sept machines.": {
-      "fr": "Un portefeuille commun aux sept machines.",
-      "en": "One wallet shared by seven machines.",
-      "es": "Una cartera compartida entre siete máquinas."
+    "Un portefeuille commun aux huit machines.": {
+      "fr": "Un portefeuille commun aux huit machines.",
+      "en": "One wallet shared by eight machines.",
+      "es": "Una cartera compartida entre ocho máquinas."
     },
     "À votre rythme.": {
       "fr": "À votre rythme.",
@@ -1422,10 +1422,10 @@ window.SeabyssI18n.register({
       "en": "the triggering bet. These prizes add to line wins. Keys stay until the siege ends, while burning reels release after each assault. No retriggers.",
       "es": "la apuesta inicial. Estos premios se suman a las líneas ganadoras. Las llaves se conservan hasta el final del asedio; los rodillos en llamas se liberan tras cada asalto. No se reactiva."
     },
-    "Portefeuille commun aux sept machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants ; les assauts gratuits s’y ajoutent. Les démonstrations utilisent des crédits séparés.": {
-      "fr": "Portefeuille commun aux sept machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants ; les assauts gratuits s’y ajoutent. Les démonstrations utilisent des crédits séparés.",
-      "en": "One wallet shared by seven machines. Start with $100; bets $0.25–$20. Claim $50 every hour. AUTO: 10, 25, 50 or 100 paid spins plus free assaults. Demos use separate credits.",
-      "es": "Cartera compartida entre siete máquinas. Empiezas con 100 $; apuestas de 0,25 $ a 20 $. Reclama 50 $ cada hora. AUTO: 10, 25, 50 o 100 giros pagados más asaltos gratis. Las demos usan créditos separados."
+    "Portefeuille commun aux huit machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants ; les assauts gratuits s’y ajoutent. Les démonstrations utilisent des crédits séparés.": {
+      "fr": "Portefeuille commun aux huit machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants ; les assauts gratuits s’y ajoutent. Les démonstrations utilisent des crédits séparés.",
+      "en": "One wallet shared by eight machines. Start with $100; bets $0.25–$20. Claim $50 every hour. AUTO: 10, 25, 50 or 100 paid spins plus free assaults. Demos use separate credits.",
+      "es": "Cartera compartida entre ocho máquinas. Empiezas con 100 $; apuestas de 0,25 $ a 20 $. Reclama 50 $ cada hora. AUTO: 10, 25, 50 o 100 giros pagados más asaltos gratis. Las demos usan créditos separados."
     },
     "La mise reste fixe durant le siège.": {
       "fr": "La mise reste fixe durant le siège.",
@@ -2847,10 +2847,10 @@ window.SeabyssI18n.register({
       "en": "Set sail again?",
       "es": "¿Volver a zarpar?"
     },
-    "Votre partie pirate sera remise à zéro, avec une mise de 1,00 $. Le solde commun aux sept machines reviendra à 100,00 $ fictifs.": {
-      "fr": "Votre partie pirate sera remise à zéro, avec une mise de 1,00 $. Le solde commun aux sept machines reviendra à 100,00 $ fictifs.",
-      "en": "Your pirate game resets with a $1.00 bet. The balance shared by all seven machines returns to $100.00 in fictitious money.",
-      "es": "Tu partida pirata se reinicia con una apuesta de 1,00 $. El saldo compartido por las siete máquinas vuelve a 100,00 $ ficticios."
+    "Votre partie pirate sera remise à zéro, avec une mise de 1,00 $. Le solde commun aux huit machines reviendra à 100,00 $ fictifs.": {
+      "fr": "Votre partie pirate sera remise à zéro, avec une mise de 1,00 $. Le solde commun aux huit machines reviendra à 100,00 $ fictifs.",
+      "en": "Your pirate game resets with a $1.00 bet. The balance shared by all eight machines returns to $100.00 in fictitious money.",
+      "es": "Tu partida pirata se reinicia con una apuesta de 1,00 $. El saldo compartido por las ocho máquinas vuelve a 100,00 $ ficticios."
     },
     "RECOMMENCER AVEC 100,00 $": {
       "fr": "RECOMMENCER AVEC 100,00 $",
@@ -3207,10 +3207,10 @@ window.SeabyssI18n.register({
       "en": "$50 every hour",
       "es": "50 $ cada hora"
     },
-    "Un cadeau commun aux sept machines.": {
-      "fr": "Un cadeau commun aux sept machines.",
-      "en": "One gift shared by seven machines.",
-      "es": "Un regalo compartido entre siete máquinas."
+    "Un cadeau commun aux huit machines.": {
+      "fr": "Un cadeau commun aux huit machines.",
+      "en": "One gift shared by eight machines.",
+      "es": "Un regalo compartido entre ocho máquinas."
     },
     "RÉCUPÉRER 50 $": {
       "fr": "RÉCUPÉRER 50 $",
