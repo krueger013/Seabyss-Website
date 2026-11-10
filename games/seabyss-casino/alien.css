@@ -35,4 +35,3 @@ body .hourly-gift{width:calc(100% - 36px);max-width:1090px;margin:0 auto 10px;pa
 .bonus-active .alien-bonus-strip #demo-button{display:none}
 @media(max-width:760px){.ufo-actor img{width:140%;max-width:140px}.bonus-active .ufo-actor img{width:120%;max-width:130px}.bonus-active .alien-bonus-strip>div:first-child{flex:1}.bonus-active .free-counter{flex-shrink:0}.alien-bonus-strip #capture-note{font-size:9px}}
 @media(min-width:1000px) and (max-height:850px){.alien-body .machine-caption{margin-top:-18px}.alien-body .ufo-track{height:85px}}
-
