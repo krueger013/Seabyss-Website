@@ -1,0 +1,40 @@
+L'ALCHIMISTE — AUDIO SOURCES
+Source pages and licenses checked on 2026-11-06.
+
+All three sounds: Creative Commons CC0 1.0 Universal.
+https://creativecommons.org/publicdomain/zero/1.0/
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+These files are public high-quality MP3 previews served by Freesound. They were downloaded without an account, renamed, and otherwise left byte-for-byte unchanged. They are not the original WAV masters. Credits identify the creators; they do not imply endorsement of Seabyss Casino.
+
+bubbles.mp3
+Title: water bubbling
+Creator: ultraaxvii
+Source: https://freesound.org/people/ultraaxvii/sounds/591151/
+Downloaded file: https://cdn.freesound.org/previews/591/591151_11076342-hq.mp3
+Description: bubbling water and ice recorded in a bucket, suitable for a cauldron.
+Source duration: 21.540 seconds. MP3 frame duration including encoding padding: 21.600 seconds.
+Format: MPEG Layer III, 48000 Hz, stereo. Size: 659136 bytes.
+SHA-256: 08162ff0e9f867d40b2a82999a63a5bb52c0909a457e51750eecffc4c3522c77
+
+pour.mp3
+Title: Pouring Liquid.wav
+Creator: Dvideoguy
+Source: https://freesound.org/people/Dvideoguy/sounds/207781/
+Downloaded file: https://cdn.freesound.org/previews/207/207781_2046066-hq.mp3
+Description: a short liquid pouring recording.
+Source duration: 2.832 seconds. MP3 frame duration including encoding padding: 2.899592 seconds.
+Format: MPEG Layer III, 44100 Hz, stereo. Size: 71658 bytes.
+SHA-256: 309bf3f785efe1283c360ce8a3c5e418a2a5fdc3986e6c54f92cfd83e0aaa79a
+
+glass.mp3
+Title: wine glass clink
+Creator: fleurescence
+Source: https://freesound.org/people/fleurescence/sounds/573160/
+Downloaded file: https://cdn.freesound.org/previews/573/573160_12947664-hq.mp3
+Description: a wine glass tapped with a finger.
+Source duration: 2.015 seconds. MP3 frame duration including encoding padding: 2.064 seconds.
+Format: MPEG Layer III, 48000 Hz, mono. Size: 44208 bytes.
+SHA-256: 15dd2239b316d41f1e1ebb05aaf302960ca546555086e5f2c007033cc4244f75
+
+Validation: downloads returned HTTP200 and audio/mpeg. Every MPEG Layer III frame parsed to the end with no invalid or truncated frame. No HTML or error document was saved as audio. Total runtime audio payload775002bytes (0.7391MiB). This file inspection does not replace listening or device playback testing; the bubbling source is not advertised as a seamless loop.

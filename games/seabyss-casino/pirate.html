@@ -1,25 +1,25 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8"><link rel="stylesheet" href="../../css/i18n.css?v=new-games-20261109"><link rel="stylesheet" href="translations.css?v=new-games-20261109"><script src="../../js/i18n.js?v=new-games-20261109"></script><script src="translations.js?v=new-games-20261109"></script>
+  <meta charset="utf-8"><link rel="stylesheet" href="../../css/i18n.css?v=alchemy-20261109"><link rel="stylesheet" href="translations.css?v=alchemy-20261109"><script src="../../js/i18n.js?v=alchemy-20261109"></script><script src="translations.js?v=alchemy-20261109"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#061315">
   <meta name="description" content="Seabyss Casino — une machine à sous pirate à cinq rouleaux, avec des jokers figés et un bonus dans les profondeurs.">
   <title>Seabyss Casino — Le Trésor des Abysses</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=new-games-20261109">
-  <link rel="stylesheet" href="atmosphere.css?v=new-games-20261109">
-  <link rel="stylesheet" href="enhancements.css?v=new-games-20261109">
-  <link rel="stylesheet" href="autoplay.css?v=new-games-20261109">
-  <script src="casino-wallet.js?v=new-games-20261109" defer></script><script src="casino-rewards.js?v=new-games-20261109" defer></script>
-  <script src="game-engine.js?v=new-games-20261109" defer></script>
-  <script src="autoplay.js?v=new-games-20261109" defer></script>
-  <script src="sound-bank.js?v=new-games-20261109" defer></script>
-  <script src="symbols.js?v=new-games-20261109" defer></script>
-  <script src="atmosphere.js?v=new-games-20261109" defer></script>
-  <script src="app.js?v=new-games-20261109" defer></script>
-<link rel="stylesheet" href="casino-rewards.css?v=new-games-20261109"></head>
+  <link rel="stylesheet" href="styles.css?v=alchemy-20261109">
+  <link rel="stylesheet" href="atmosphere.css?v=alchemy-20261109">
+  <link rel="stylesheet" href="enhancements.css?v=alchemy-20261109">
+  <link rel="stylesheet" href="autoplay.css?v=alchemy-20261109">
+  <script src="casino-wallet.js?v=alchemy-20261109" defer></script><script src="casino-rewards.js?v=alchemy-20261109" defer></script>
+  <script src="game-engine.js?v=alchemy-20261109" defer></script>
+  <script src="autoplay.js?v=alchemy-20261109" defer></script>
+  <script src="sound-bank.js?v=alchemy-20261109" defer></script>
+  <script src="symbols.js?v=alchemy-20261109" defer></script>
+  <script src="atmosphere.js?v=alchemy-20261109" defer></script>
+  <script src="app.js?v=alchemy-20261109" defer></script>
+<link rel="stylesheet" href="casino-rewards.css?v=alchemy-20261109"></head>
 <body>
   <div class="ocean-backdrop" aria-hidden="true"></div>
   <div class="sea-dust" aria-hidden="true"></div>
@@ -81,7 +81,7 @@
 
   <dialog id="summary-dialog" class="modal summary-modal" aria-labelledby="summary-title"><div class="eyebrow">LA MER VOUS REND VOTRE BUTIN</div><h2 id="summary-title">Une remontée en or.</h2><p>Gains cumulés pendant le bonus</p><strong id="summary-amount" class="summary-amount">0,00 $</strong><p id="summary-note"></p><button id="finish-bonus-button" class="gold-button">RETOUR À LA SURFACE <span>↑</span></button></dialog>
 
-  <dialog id="reset-dialog" class="modal reset-modal" aria-labelledby="reset-title"><button class="close-modal" data-close aria-label="Fermer">×</button><div class="eyebrow">UN NOUVEAU VOYAGE</div><h2 id="reset-title">Reprendre la mer ?</h2><p>Votre partie pirate sera remise à zéro, avec une mise de 1,00 $. Le solde commun aux huit machines reviendra à 100,00 $ fictifs.</p><button id="confirm-reset" class="gold-button">RECOMMENCER AVEC 100,00 $</button><button class="quiet-button" data-close>Garder ma session</button></dialog>
+  <dialog id="reset-dialog" class="modal reset-modal" aria-labelledby="reset-title"><button class="close-modal" data-close aria-label="Fermer">×</button><div class="eyebrow">UN NOUVEAU VOYAGE</div><h2 id="reset-title">Reprendre la mer ?</h2><p>Votre partie pirate sera remise à zéro, avec une mise de 1,00 $. Le solde commun aux neuf machines reviendra à 100,00 $ fictifs.</p><button id="confirm-reset" class="gold-button">RECOMMENCER AVEC 100,00 $</button><button class="quiet-button" data-close>Garder ma session</button></dialog>
   <dialog id="auto-dialog" class="modal autoplay-modal" aria-labelledby="auto-title"><button class="close-modal" data-close aria-label="Fermer">×</button><div class="eyebrow">CAP SUR LE PROCHAIN TRÉSOR</div><h2 id="auto-title">Pilote automatique</h2><p>Choisissez votre série. Vous pouvez l’arrêter à tout moment : le tour en cours se termine.</p><div class="auto-count-options" role="group" aria-label="Nombre de tours automatiques"><button data-auto-count="10" aria-pressed="true"><strong>10</strong><span>TOURS</span></button><button data-auto-count="25" aria-pressed="false"><strong>25</strong><span>TOURS</span></button><button data-auto-count="50" aria-pressed="false"><strong>50</strong><span>TOURS</span></button><button data-auto-count="100" aria-pressed="false"><strong>100</strong><span>TOURS</span></button></div><div class="auto-stake"><span>MISE FIXE PAR TOUR<strong id="auto-stake-value">1,00 $</strong></span><span>TOTAL DES MISES PRÉVUES<strong id="auto-budget-value">10,00 $</strong></span></div><p class="autoplay-explanation">Les tours gratuits viennent en plus. La série attend votre confirmation à l’entrée du bonus et au bilan, puis reprend. Elle s’arrête si le solde est insuffisant ou si vous quittez l’onglet.</p><button id="start-auto-button" class="gold-button">LANCER 10 TOURS <span>↻</span></button></dialog>
   <noscript>Activez JavaScript dans votre navigateur pour jouer à Seabyss Casino.</noscript>
 </body>
