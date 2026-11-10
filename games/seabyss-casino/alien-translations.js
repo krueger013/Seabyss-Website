@@ -185,9 +185,9 @@ SeabyssI18n.register({
       "en": "Cosmic Moo — Seabyss Casino",
       "es": "Cosmic Mu — Seabyss Casino"
     },
-    "CHAPITRE VIII · RENCONTRE DU TROISIÈME MEUH": {
-      "en": "CHAPTER VIII · CLOSE ENCOUNTERS OF THE MOO KIND",
-      "es": "CAPÍTULO VIII · ENCUENTROS DE LA TERCERA MU"
+    "CHAPITRE IX · RENCONTRE DU TROISIÈME MEUH": {
+      "en": "CHAPTER IX · CLOSE ENCOUNTERS OF THE MOO KIND",
+      "es": "CAPÍTULO IX · ENCUENTROS DE LA TERCERA MU"
     },
     "Meuh": {
       "en": "Moo",
@@ -285,9 +285,9 @@ SeabyssI18n.register({
       "en": "All five reels can become held. Captures on the normal spin that triggers the bonus are not kept. Free spins keep the triggering bet and do not award additional spins.",
       "es": "Los cinco rodillos pueden quedar fijados. Las capturas del giro normal que activa el bonus no se conservan. Los giros gratis mantienen la apuesta de activación y no otorgan giros adicionales."
     },
-    "Portefeuille commun aux huit machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants ; les tours gratuits s’ajoutent à la série. Elle se met en pause à l’introduction et au bilan du bonus, puis reprend après votre confirmation. Les démos utilisent des crédits séparés.": {
-      "en": "Wallet shared across eight machines. $100 to start. Bets from $0.25 to $20. A $50 gift to claim each hour. AUTO: 10, 25, 50 or 100 paid spins; free spins are added to the series. It pauses at the bonus introduction and summary, then resumes after your confirmation. Demos use separate credits.",
-      "es": "Cartera compartida entre ocho máquinas. 100 $ al empezar. Apuestas de 0,25 $ a 20 $. Regalo de 50 $ cada hora. AUTO: 10, 25, 50 o 100 giros de pago; los gratis se suman a la serie. Se pausa en la introducción y el resumen del bonus y continúa tras tu confirmación. Las demostraciones usan créditos separados."
+    "Portefeuille commun aux neuf machines. 100 $ au départ. Mises de 0,25 $ à 20 $. Cadeau de 50 $ à récupérer chaque heure. AUTO : 10, 25, 50 ou 100 tours payants ; les tours gratuits s’ajoutent à la série. Elle se met en pause à l’introduction et au bilan du bonus, puis reprend après votre confirmation. Les démos utilisent des crédits séparés.": {
+      "en": "Wallet shared across nine machines. $100 to start. Bets from $0.25 to $20. A $50 gift to claim each hour. AUTO: 10, 25, 50 or 100 paid spins; free spins are added to the series. It pauses at the bonus introduction and summary, then resumes after your confirmation. Demos use separate credits.",
+      "es": "Cartera compartida entre nueve máquinas. 100 $ al empezar. Apuestas de 0,25 $ a 20 $. Regalo de 50 $ cada hora. AUTO: 10, 25, 50 o 100 giros de pago; los gratis se suman a la serie. Se pausa en la introducción y el resumen del bonus y continúa tras tu confirmación. Las demostraciones usan créditos separados."
     },
     "Préparez le décollage.": {
       "en": "Prepare for lift-off.",
@@ -365,9 +365,9 @@ SeabyssI18n.register({
       "en": "CLOSE ENCOUNTERS OF THE MOO KIND",
       "es": "ENCUENTROS DE LA TERCERA MU"
     },
-    "CHAPITRE VIII": {
-      "en": "CHAPTER VIII",
-      "es": "CAPÍTULO VIII"
+    "CHAPITRE IX": {
+      "en": "CHAPTER IX",
+      "es": "CAPÍTULO IX"
     },
     "Deux soucoupes. Des vaches surprises.": {
       "en": "Two saucers. Some surprised cows.",
@@ -397,13 +397,13 @@ SeabyssI18n.register({
       "en": "The visitors are waiting →",
       "es": "Los visitantes te esperan →"
     },
-    "HUIT MONDES À EXPLORER": {
-      "en": "EIGHT WORLDS TO EXPLORE",
-      "es": "OCHO MUNDOS POR EXPLORAR"
+    "NEUF MONDES À EXPLORER": {
+      "en": "NINE WORLDS TO EXPLORE",
+      "es": "NUEVE MUNDOS POR EXPLORAR"
     },
-    "HUIT UNIVERS": {
-      "en": "EIGHT WORLDS",
-      "es": "OCHO UNIVERSOS"
+    "NEUF UNIVERS": {
+      "en": "NINE WORLDS",
+      "es": "NUEVE UNIVERSOS"
     }
   },
   "templates": [
