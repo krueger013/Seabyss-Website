@@ -237,21 +237,21 @@ SeabyssI18n.register({
       "en": "or discover",
       "es": "o descubrir"
     },
-    "Les sept machines de casino fictif": {
-      "en": "The seven fictitious casino machines",
-      "es": "Las siete máquinas de casino ficticio"
+    "Les huit machines de casino fictif": {
+      "en": "The eight fictitious casino machines",
+      "es": "Las ocho máquinas de casino ficticio"
     },
     "LA SALLE DES TRÉSORS": {
       "en": "THE TREASURE ROOM",
       "es": "LA SALA DE LOS TESOROS"
     },
-    "Sept machines.": {
-      "en": "Seven machines.",
-      "es": "Siete máquinas."
+    "Huit machines.": {
+      "en": "Eight machines.",
+      "es": "Ocho máquinas."
     },
-    "Sept mondes à part.": {
-      "en": "Seven worlds of their own.",
-      "es": "Siete mundos únicos."
+    "Huit mondes à part.": {
+      "en": "Eight worlds of their own.",
+      "es": "Ocho mundos únicos."
     },
     "Pirates, sorcières, dragons et galaxies…": {
       "en": "Pirates, witches, dragons and galaxies…",
@@ -269,9 +269,9 @@ SeabyssI18n.register({
       "en": "Fictitious money only · No deposits or withdrawals",
       "es": "Solo dinero ficticio · Sin depósitos ni retiradas"
     },
-    "COLLECTION / 07": {
-      "en": "COLLECTION / 07",
-      "es": "COLECCIÓN / 07"
+    "COLLECTION / 08": {
+      "en": "COLLECTION / 08",
+      "es": "COLECCIÓN / 08"
     },
     "SOUS UN MÊME PAVILLON": {
       "en": "UNDER ONE FLAG",
@@ -458,9 +458,9 @@ SeabyssI18n.register({
       "en": "The Seabyss machines",
       "es": "Las máquinas de Seabyss"
     },
-    "Sept univers. Un solde fictif partagé. Aucun argent réel.": {
-      "en": "Seven worlds. One shared fictitious balance. No real money.",
-      "es": "Siete universos. Un saldo ficticio compartido. Sin dinero real."
+    "Huit univers. Un solde fictif partagé. Aucun argent réel.": {
+      "en": "Eight worlds. One shared fictitious balance. No real money.",
+      "es": "Ocho universos. Un saldo ficticio compartido. Sin dinero real."
     },
     "Le catalogue fait une pause.": {
       "en": "The catalogue is taking a break.",
@@ -570,9 +570,9 @@ SeabyssI18n.register({
       "en": "A pirate machine with a ghost captain, a kraken and persistent wilds. Fictitious money game.",
       "es": "Una máquina pirata con capitán fantasma, kraken y comodines persistentes. Juego con dinero ficticio."
     },
-    "Souris ou toucher. Espace : lancer. Solde fictif commun aux sept machines, enregistré sur cet appareil. Aucun dépôt ni retrait.": {
-      "en": "Mouse or touch. Space: spin. Fictitious balance shared by seven machines, saved on this device. No deposits or withdrawals.",
-      "es": "Ratón o toque. Espacio: girar. Saldo ficticio compartido entre siete máquinas, guardado en este dispositivo. Sin depósitos ni retiradas."
+    "Souris ou toucher. Espace : lancer. Solde fictif commun aux huit machines, enregistré sur cet appareil. Aucun dépôt ni retrait.": {
+      "en": "Mouse or touch. Space: spin. Fictitious balance shared by eight machines, saved on this device. No deposits or withdrawals.",
+      "es": "Ratón o toque. Espacio: girar. Saldo ficticio compartido entre ocho máquinas, guardado en este dispositivo. Sin depósitos ni retiradas."
     },
     "La fortune des pirates": {
       "en": "The pirates’ fortune",
@@ -711,3 +711,5 @@ SeabyssI18n.register({source:'fr',strings:{'Station 77':{en:'Station 77',es:'Est
 SeabyssI18n.register({source:'fr',strings:{'Les polices du jeu de dames sont chargées depuis Google Fonts.':{en:'The draughts game loads its fonts from Google Fonts.',es:'El juego de damas carga sus fuentes desde Google Fonts.'}}});
 
 SeabyssI18n.register({"source":"fr","strings":{"Les Dames du Corsaire":{"en":"The Corsair’s Draughts","es":"Las damas del corsario"},"Défie le capitaine ou un ami aux dames internationales : 100 cases, prises obligatoires et dames volantes dans un univers pirate.":{"en":"Challenge the captain or a friend to international draughts: 100 squares, compulsory captures and flying kings in a pirate world.","es":"Desafía al capitán o a un amigo a las damas internacionales: 100 casillas, capturas obligatorias y damas voladoras en un mundo pirata."},"Souris ou toucher : choisir une pièce puis sa destination. Flèches : parcourir le damier. Entrée ou Espace : jouer. Duel enregistré sur cet appareil.":{"en":"Mouse or touch: choose a piece, then its destination. Arrows: browse the board. Enter or Space: play. Duel saved on this device.","es":"Ratón o toque: elige una pieza y su destino. Flechas: recorrer el tablero. Intro o Espacio: jugar. Duelo guardado en este dispositivo."},"Douze jeux, des univers singuliers. Embarque dans l’arcade Seabyss, directement dans ton navigateur.":{"en":"Twelve games, unique worlds. Embark on the Seabyss arcade, right in your browser.","es":"Doce juegos, mundos singulares. Embárcate en la sala de juegos Seabyss, directamente en tu navegador."},"Les Dames du Corsaire conserve le duel en cours, les coups précédents, la sélection et les réglages de jeu dans ce navigateur.":{"en":"The Corsair’s Draughts stores the current duel, previous moves, selection and game settings in this browser.","es":"Las damas del corsario guarda el duelo en curso, los movimientos anteriores, la selección y los ajustes en este navegador."}}});
+
+SeabyssI18n.register({"source":"fr","strings":{"Mahjong des ombres":{"en":"Shadow Mahjong","es":"Mahjong de las sombras"},"Cosmic Meuh":{"en":"Cosmic Moo","es":"Cosmic Mu"},"Associe les reliques libres et identiques dans trois plateaux de 36, 72 ou 108 tuiles. Un solitaire pirate avec indices, annulation et mélange.":{"en":"Match identical free relics on three boards of 36, 72 or 108 tiles. A pirate solitaire with hints, undo and shuffle.","es":"Empareja reliquias libres e idénticas en tres tableros de 36, 72 o 108 fichas. Un solitario pirata con pistas, deshacer y mezclar."},"Souris ou toucher : associer deux tuiles libres. Indice, Annuler, Mélanger et agrandissement disponibles. Progression enregistrée sur cet appareil.":{"en":"Mouse or touch: match two free tiles. Hint, Undo, Shuffle and enlarged view available. Progress saved on this device.","es":"Ratón o toque: empareja dos fichas libres. Pista, Deshacer, Mezclar y vista ampliada disponibles. Progreso guardado en este dispositivo."},"Solitaire · Trois plateaux":{"en":"Solitaire · Three boards","es":"Solitario · Tres tableros"},"Des soucoupes aspirent les vaches et transforment leurs rouleaux en jokers. Une invasion cosmique avec argent fictif uniquement.":{"en":"Saucers abduct cows and turn their reels wild. A cosmic invasion with fictitious money only.","es":"Los platillos capturan vacas y convierten sus rodillos en comodines. Una invasión cósmica solo con dinero ficticio."},"Souris ou toucher. Espace : lancer. Solde fictif partagé avec les autres machines, enregistré sur cet appareil. Aucun dépôt ni retrait.":{"en":"Mouse or touch. Space: spin. Fictitious balance shared with the other machines, saved on this device. No deposits or withdrawals.","es":"Ratón o toque. Espacio: girar. Saldo ficticio compartido con las otras máquinas, guardado en este dispositivo. Sin depósitos ni retiradas."},"Rencontre du troisième meuh":{"en":"Close encounters of the moo kind","es":"Encuentros de la tercera mu"},"Quatorze jeux, des univers singuliers. Embarque dans l’arcade Seabyss, directement dans ton navigateur.":{"en":"Fourteen games, unique worlds. Embark on the Seabyss arcade, right in your browser.","es":"Catorce juegos, mundos singulares. Embárcate en la sala de juegos Seabyss, directamente en tu navegador."},"Le Mahjong des ombres conserve la partie, la sélection, les annulations et les réglages sur cet appareil.":{"en":"Shadow Mahjong saves the game, selection, undo history and settings on this device.","es":"Mahjong de las sombras guarda la partida, la selección, el historial para deshacer y los ajustes en este dispositivo."}}});

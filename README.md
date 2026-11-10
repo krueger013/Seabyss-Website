@@ -1,14 +1,14 @@
 # Seabyss — Portail de jeux navigateur
 
-Seabyss est le portail du studio : catalogue de jeux, recherche, filtres, tri, favoris locaux et lecteur intégré avec ouverture dans un onglet. La direction visuelle pirate magique associe un noir profond, un navire fantôme, de l’or ancien et des lueurs vert spectral. Une brume mouvante et quelques particules lumineuses donnent vie au décor. L’accueil présente trois découvertes, puis le catalogue regroupe les quatre jeux d’aventure, stratégie et simulation avant les sept machines de casino fictif. La recherche, les favoris et les tris affichent une liste globale sans regroupement.
+Seabyss est le portail du studio : catalogue de jeux, recherche, filtres, tri, favoris locaux et lecteur intégré avec ouverture dans un onglet. La direction visuelle pirate magique associe un noir profond, un navire fantôme, de l’or ancien et des lueurs vert spectral. Une brume mouvante et quelques particules lumineuses donnent vie au décor. L’accueil présente trois découvertes, puis le catalogue regroupe les quatre jeux d’aventure, stratégie et simulation avant les huit machines de casino fictif. La recherche, les favoris et les tris affichent une liste globale sans regroupement.
 
-Les deux bannières sont des illustrations décoratives générées pour le studio : un navire devant un portail abyssal et une salle au trésor. Les quatre jeux hors casino utilisent des captures de gameplay existantes, optimisées en WebP. Les sept machines utilisent leurs décors et personnages authentiques, avec un titre de couverture lisible ; ces cartes portent la mention « Illustration ». Les images ne sont plus désaturées ni assombries par un filtre global. Les polices Cormorant Garamond et Manrope sont servies localement ; leurs licences sont conservées dans `assets/fonts/`. Les commandes du lecteur restent accessibles au-dessus du jeu, et les cartes passent sur une colonne sur les petits écrans.
+Les deux bannières sont des illustrations décoratives générées pour le studio : un navire devant un portail abyssal et une salle au trésor. Les quatre jeux hors casino utilisent des captures de gameplay existantes, optimisées en WebP. Les huit machines utilisent leurs décors et personnages authentiques, avec un titre de couverture lisible ; ces cartes portent la mention « Illustration ». Les images ne sont plus désaturées ni assombries par un filtre global. Les polices Cormorant Garamond et Manrope sont servies localement ; leurs licences sont conservées dans `assets/fonts/`. Les commandes du lecteur restent accessibles au-dessus du jeu, et les cartes passent sur une colonne sur les petits écrans.
 
 Les animations décoratives sont réalisées en CSS, sans bibliothèque ni boucle JavaScript. Le bouton d’ambiance mémorise un choix local sous `seabyss.motion.v1`. Les effets se mettent en pause hors écran, dans un onglet masqué et pendant la lecture d’un jeu. La préférence système de réduction des mouvements reste prioritaire ; le contenu reste accessible sans effets.
 
 ## Langues du portail et des jeux
 
-Le sélecteur Français / English / Español traduit l’accueil, le catalogue, la confidentialité et les douze jeux. Le choix est conservé dans `seabyss.language.v1` et propagé aux onglets et au lecteur intégré. Un lien `?lang=fr`, `?lang=en` ou `?lang=es` permet aussi d’ouvrir directement une langue. Le changement ne recharge pas une partie et ne réécrit aucun identifiant ni aucune sauvegarde.
+Le sélecteur Français / English / Español traduit l’accueil, le catalogue, la confidentialité et les quatorze jeux. Le choix est conservé dans `seabyss.language.v1` et propagé aux onglets et au lecteur intégré. Un lien `?lang=fr`, `?lang=en` ou `?lang=es` permet aussi d’ouvrir directement une langue. Le changement ne recharge pas une partie et ne réécrit aucun identifiant ni aucune sauvegarde.
 
 `js/i18n.js` applique les dictionnaires aux textes et attributs accessibles, aux messages dynamiques et aux libellés dessinés dans les canvas. Chaque dossier de jeu contient son `translations.js`. Les packs de l’accueil et de la confidentialité sont dans `js/portal-translations.js` et `js/privacy-translations.js`. Aucune requête à un service de traduction externe n’est nécessaire.
 
@@ -20,9 +20,9 @@ Vérifications : `npm install`, puis `npm test` pour les cas de changement de la
 
 ## Hébergement
 
-Le catalogue comprend aussi les sept machines de Seabyss Casino : Le Trésor des Abysses, Le Pacte de Minuit, SUPERNOVA, Le Jardin Sauvage, Monstres & Merveilles, Le Trône du Dragon et Jungle Félins. Elles sont regroupées sous `games/seabyss-casino/`, avec leur hall et leur portefeuille fictif partagé. Les fichiers d’exécution proviennent de `C:\KRUEGER\Main Folder\Seabyss Game\Seabyss Casino` ; les tests et le serveur local ne sont pas publiés. Les crédits publics et les licences audio accompagnent les actifs. Les polices du casino sont chargées depuis Google Fonts.
+Le catalogue comprend aussi les huit machines de Seabyss Casino : Le Trésor des Abysses, Le Pacte de Minuit, SUPERNOVA, Le Jardin Sauvage, Monstres & Merveilles, Le Trône du Dragon et Jungle Félins. Elles sont regroupées sous `games/seabyss-casino/`, avec leur hall et leur portefeuille fictif partagé. Les fichiers d’exécution proviennent de `C:\KRUEGER\Main Folder\Seabyss Game\Seabyss Casino` ; les tests et le serveur local ne sont pas publiés. Les crédits publics et les licences audio accompagnent les actifs. Les polices du casino sont chargées depuis Google Fonts.
 
-Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `main`. Le fichier `CNAME` conserve `www.seabyss.com`. Aucun serveur applicatif ni étape de compilation n’est nécessaire pour le portail ou les douze jeux actuels. Une modification publiée sur `main` déclenche le déploiement Pages ; vérifier le résultat dans les actions GitHub avant de considérer une publication terminée.
+Site statique HTML/CSS/JavaScript publié par GitHub Pages depuis la branche `main`. Le fichier `CNAME` conserve `www.seabyss.com`. Aucun serveur applicatif ni étape de compilation n’est nécessaire pour le portail ou les quatorze jeux actuels. Une modification publiée sur `main` déclenche le déploiement Pages ; vérifier le résultat dans les actions GitHub avant de considérer une publication terminée.
 
 Pour prévisualiser le catalogue, servir la racine avec un serveur HTTP statique, puis ouvrir son adresse locale. L’ouverture directe de `index.html` avec `file://` ne suffit pas au chargement de `data/games.json`.
 
@@ -116,3 +116,7 @@ Les anciens écrans compte, connexion, inscription, profil, téléchargement, bo
 - Vérifier la page de confidentialité et les anciennes adresses HTML : elles doivent ramener au catalogue sans proposer les anciens écrans MMO.
 - Vérifier dans les outils réseau du navigateur l’absence d’actifs manquants et d’appels à l’ancienne API depuis le portail.
 - Après publication, confirmer le succès du déploiement GitHub Pages, l’accès au domaine et la disponibilité inchangée des manifests historiques.
+
+## Ajouts du 9 novembre 2026
+
+Mahjong des ombres est publié dans games/mahjong/ avec les trois plateaux et les copies WebP existantes. Cosmic Meuh est la huitième machine, sous games/seabyss-casino/alien.html ; seuls ses fichiers d’exécution et actifs optimisés sont publiés. Les deux jeux disposent des traductions FR/EN/ES et conservent leurs clés de sauvegarde canoniques.

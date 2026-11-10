@@ -25,3 +25,5 @@
 /* Authentic tiger from the jungle game's five-guardian sprite sheet. */
 .sprite-feline{background-image:url('../games/seabyss-casino/assets/feline/gardiens.webp');background-size:500% auto;background-position:25% center;width:60%;right:-2%;bottom:4%;aspect-ratio:1}
 [data-game=jungle-felins] .cover-name{color:#ffe3a3}[data-game=jungle-felins] .cover-kicker{color:#b9f0a6}
+
+[data-game=mahjong-des-ombres] .cover-character{height:89%;width:58%;right:-2%;bottom:0}[data-game=mahjong-des-ombres] .cover-name{color:#ffe1a5}[data-game=cosmic-meuh] .cover-name{color:#d9ffbd}

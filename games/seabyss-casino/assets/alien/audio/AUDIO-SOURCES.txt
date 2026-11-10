@@ -1,0 +1,21 @@
+COSMIC MEUH — AUDIO SOURCES
+Source page and license checked on2026-11-09.
+
+cow-moo.mp3
+Title: Cow - Moo 3 - 96kHz.wav
+Creator: JarredGibb (Jarred Gibb - Animal Farm).
+Source: https://freesound.org/people/JarredGibb/sounds/233128/
+Downloaded file: https://cdn.freesound.org/previews/233/233128_4056007-hq.mp3
+License stated on original source: Creative Commons CC0 1.0 Universal.
+https://creativecommons.org/publicdomain/zero/1.0/
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+A short natural cow moo field recording. Downloaded from Freesound's public high-quality MP3 preview without an account, renamed for the game and otherwise unchanged. This is the MP3 preview, not the original96kHz WAV master. Credit identifies the creator and does not imply endorsement of Seabyss Casino.
+
+Source duration:2.090seconds.
+MP3 frame duration including encoding padding:2.160seconds.
+Runtime format: MPEG LayerIII,48000Hz,mono.
+Size:56640bytes.
+SHA-256:92dc3d71d96f22cd5b90c1d08d2408f564c595b428a31badae5e78d19554185e
+
+Validation: HTTP200,Content-Type audio/mpeg. All90MP3 frames parsed successfully to the end, no invalid/truncated frame, noHTML/error document. Playback and volume balance must also be verified in the game.
