@@ -1,0 +1,80 @@
+[
+  {
+    "id": "tycho-remnant",
+    "source": "https://chandra.harvard.edu/photo/2019/tycho/tycho_xray.jpg",
+    "final": "https://chandra.harvard.edu/photo/2019/tycho/tycho_xray.jpg",
+    "original": [
+      864,
+      865
+    ],
+    "sha256": "1f06f6eb8b202f6548d2ee4c4f3508356b7ba9251311803b83a480c246b01846",
+    "assets": [
+      {
+        "name": "deep-thumb-tycho-remnant.webp",
+        "width": 400,
+        "height": 400,
+        "bytes": 14152,
+        "sha256": "23ac24938e0adaa63a4d2258bb55bf94799fcbd90a62a507442697b384cd3934"
+      },
+      {
+        "name": "plate-tycho-remnant.webp",
+        "width": 864,
+        "height": 865,
+        "bytes": 57896,
+        "sha256": "657d85351d59ce2bbee1e2ccf82492312de62233cc4716f160419909f3b0c4fd"
+      }
+    ]
+  },
+  {
+    "id": "sn1006",
+    "source": "https://chandra.harvard.edu/photo/2013/sn1006/sn1006_xray.jpg",
+    "final": "https://chandra.harvard.edu/photo/2013/sn1006/sn1006_xray.jpg",
+    "original": [
+      864,
+      864
+    ],
+    "sha256": "7b225d47a443533bb28ed25f53c563c376f3efd1f2c8ef2c19467bb37a0ede24",
+    "assets": [
+      {
+        "name": "deep-thumb-sn1006.webp",
+        "width": 400,
+        "height": 400,
+        "bytes": 8106,
+        "sha256": "e8346af250893c87ae57fbe285d02e82ec68371b467610eb643ccb723a6a17d5"
+      },
+      {
+        "name": "plate-sn1006.webp",
+        "width": 864,
+        "height": 864,
+        "bytes": 57334,
+        "sha256": "f85d9dde7ca1fe0082364fca1e87336f8c3928525f9baaa6b5927fdbec9c0aab"
+      }
+    ]
+  },
+  {
+    "id": "butterfly-nebula",
+    "source": "https://cdn.esahubble.org/archives/images/large/heic2011b.jpg",
+    "final": "https://cdn.esahubble.org/archives/images/large/heic2011b.jpg",
+    "original": [
+      3379,
+      3005
+    ],
+    "sha256": "c801653a3d08973167e5c0f8d32b761db3cee724b8da360b80dbf5ecac6e8ec2",
+    "assets": [
+      {
+        "name": "deep-thumb-butterfly-nebula.webp",
+        "width": 450,
+        "height": 400,
+        "bytes": 44656,
+        "sha256": "eb26186f68f82357e2dc3a7d9bfd649b1d58a7c2699d83d42be7daaa29ac568e"
+      },
+      {
+        "name": "plate-butterfly-nebula.webp",
+        "width": 1100,
+        "height": 978,
+        "bytes": 226552,
+        "sha256": "03bd4f4521829245a2d7e13bcb7d7d8a4567b4f579dbcbb906fa2bc372ca7e6c"
+      }
+    ]
+  }
+]
