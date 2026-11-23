@@ -1,0 +1,25 @@
+name: Vérifier la publication Universe Explorer
+on:
+  push:
+    branches: [release/verification-universe-18-ui]
+permissions:
+  contents: read
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v6
+      - name: Vérifier les fichiers et les parcours sur le domaine publié
+        run: |
+          set -eu
+          mkdir -p "$RUNNER_TEMP/seabyss-check"
+          cp verification/check.cjs verification/release.json "$RUNNER_TEMP/seabyss-check/"
+          cd "$RUNNER_TEMP/seabyss-check"
+          npm install --no-save --no-audit --no-fund playwright-core@1
+          if command -v google-chrome >/dev/null; then
+            export CHROME_PATH=$(command -v google-chrome)
+          else
+            npx playwright-core install --with-deps chromium
+          fi
+          node check.cjs
