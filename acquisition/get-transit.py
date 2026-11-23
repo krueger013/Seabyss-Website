@@ -22,7 +22,9 @@ with fits.open(io.BytesIO(data),checksum=True) as f:
     assert h['TICID']==420814525 and h['SECTOR']==56 and hdr['TIMESYS']=='TDB'
     assert hdr['BJDREFI']==2457000 and abs(hdr['BJDREFF'])<1e-10 and hdr['TIMEUNIT'].lower()=='d'
     assert 119<hdr['TIMEDEL']*86400<121
-    assert 'electron' in ext.columns['PDCSAP_FLUX'].unit.lower()
+    unit=ext.columns['PDCSAP_FLUX'].unit.lower().replace(' ','')
+    print('FITS PDCSAP_FLUX unit:',repr(unit),flush=True)
+    assert unit in ('e-/s','electron/s','electrons/s','e-/sec','electron/sec','electrons/sec')
     t=ext.data['TIME']; flux=ext.data['PDCSAP_FLUX']; err=ext.data['PDCSAP_FLUX_ERR']; q=ext.data['QUALITY']
     pivot=2840.8789; hrs=(t-pivot)*24
     window=np.isfinite(t)&(abs(hrs)<=4.25)
@@ -39,10 +41,9 @@ with fits.open(io.BytesIO(data),checksum=True) as f:
     obj={'planetId':'hd-209458-b','targetName':'HD 209458 b','instrument':'TESS · SPOC · secteur 56','sourceTitle':'MAST / NASA · Courbe de lumière SPOC de TIC 420814525','sourceUrl':url,
          'missionUrl':'https://archive.stsci.edu/missions-and-data/tess','productUri':uri,'sourceSha256':hashlib.sha256(data).hexdigest(),'tic':420814525,'sector':56,
          'epoch':date+' · BJD_TDB '+str(ref),'referenceBjdTdb':ref,'observationDate':date,'cadenceSeconds':round(float(hdr['TIMEDEL']*86400),3),
-         'processing':'Flux PDCSAP corrigé par SPOC, en électrons par seconde. Mesures à ±4,25 h du repère temporel, avec QUALITY = 0, flux et incertitude finis et positifs. Normalisation par la médiane des mesures à plus de 2,5 h du repère de chaque côté réunies. Aucun lissage, regroupement ni comblement des lacunes. Le zéro est le repère choisi près du milieu du transit.',
+         'processing':'Flux PDCSAP corrigé par SPOC, en électrons par seconde. Mesures à ±4,25 h du repère temporel, avec QUALITY = 0, flux et incertitude finis et positifs. Normalisation par la médiane des mesures à plus de 2,5 h du repère de chaque côté réunies. Chaque point correspond à une exposition conservée. Le zéro est le repère choisi près du milieu du transit.',
          'baselineElectronsPerSecond':round(baseline,3),'windowCount':int(window.sum()),'retainedCount':len(hrs),'normalizationCount':int(wings.sum()),
-         'columns':['heures depuis le repère','flux relatif normalisé'],'points':[[round(float(x),8),round(float(v),8)] for x,v in zip(hrs,rel)],
-         'relativeUncertainties':[round(float(v/baseline),8) for v in err]}
+         'columns':['heures depuis le repère','flux relatif normalisé','incertitude de flux relative (1 sigma)'],'points':[[round(float(x),8),round(float(v),8),round(float(e/baseline),8)] for x,v,e in zip(hrs,rel,err)]}
     print('Sector:',h['SECTOR'],'TIC:',h['TICID'],'BJD:',ref,'date:',date,'range:',np.min(hrs),np.max(hrs),'median depth:',depth,'counts:',obj['windowCount'],len(hrs))
     encoded=json.dumps(obj,ensure_ascii=False,separators=(',',':'))+'\n'
     assert len(encoded.encode())<40000
