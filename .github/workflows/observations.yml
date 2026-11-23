@@ -1,0 +1,59 @@
+name: Actualiser les observations astronomiques
+on:
+  push:
+    branches: [release/universe-explorer-observations]
+    paths:
+      - '.github/workflows/observations.yml'
+      - 'scripts/refresh-solar.mjs'
+      - 'scripts/refresh-travellers.mjs'
+  schedule:
+    - cron: '27 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: observations-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Actualiser la photographie du Soleil
+        id: solar
+        continue-on-error: true
+        run: node scripts/refresh-solar.mjs assets
+      - name: Renouveler les trajectoires JPL Horizons
+        id: horizons
+        continue-on-error: true
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "schedule" && "$(date -u +%u%H)" != "100" ]]; then exit 0; fi
+          annee=$(date -u +%Y)
+          node scripts/refresh-travellers.mjs "$annee-01-01" "$((annee+2))-01-01" ./traveller-ephemerides.js
+      - name: Enregistrer les nouvelles observations
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [[ "${{ steps.solar.outcome }}" == "success" ]]; then
+            photo=$(node -p 'require("./assets/solar-frame.json").image')
+            [[ "$photo" =~ ^solar-photosphere-[0-9a-f]{12}\.jpg$ ]]
+            git add -- assets/solar-frame.json "assets/$photo"
+            for file in assets/solar-photosphere-*.jpg; do
+              if [[ "$file" != "assets/$photo" ]] && git ls-files --error-unmatch -- "$file" >/dev/null 2>&1; then
+                git rm -- "$file"
+              fi
+            done
+          fi
+          if [[ "${{ steps.horizons.outcome }}" == "success" ]]; then git add -- traveller-ephemerides.js; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Actualiser les observations astronomiques"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+          if [[ "$GITHUB_REF_NAME" == "main" ]]; then gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"; fi
+      - name: Signaler une acquisition incomplète
+        if: steps.solar.outcome == 'failure' || steps.horizons.outcome == 'failure'
+        run: exit 1

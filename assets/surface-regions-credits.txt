@@ -1,0 +1,61 @@
+Régions de surface
+
+Les circuits et les relevés des balises sont simulés. Un site reprend les
+coordonnées de l’alunissage, du point d’atterrissage ou du centre de la
+formation nommée. Une étendue de terrain est reconstituée autour de ce point.
+Les longitudes positives à l’ouest du Gazetteer ont été converties en
+longitudes signées vers l’est pour calculer le ciel. Les autres coordonnées
+et les altitudes lunaires reprennent la convention du modèle d’observation.
+
+Lune
+NASA NSSDC, position du module d’Apollo 11 :
+https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html
+NASA ARES, échantillons rapportés par Apollo 11 :
+https://ares.jsc.nasa.gov/astromaterials3d/sample-catalog.htm?origin=A11
+Lunar Reconnaissance Orbiter Camera, position affinée de Chang’e 4 :
+https://lroc.im-ldi.com/images/1168
+
+Mars
+NASA GISS Mars24, coordonnées de Jezero et Gale :
+https://www.giss.nasa.gov/tools/mars24/help/landers.html
+Observations et interprétations des reliefs :
+https://science.nasa.gov/resource/perseverance-view-of-the-delta-in-jezero-crater/
+https://science.nasa.gov/resource/sedimentation-and-erosion-in-gale-crater-mars/
+
+Europe
+Gazetteer IAU/USGS, cratère Pwyll et bande Agenor Linea :
+https://planetarynames.wr.usgs.gov/Feature/4878
+https://planetarynames.wr.usgs.gov/Feature/84
+NASA Galileo, couleurs des rayons de Pwyll :
+https://science.nasa.gov/resource/pwyll-crater-on-europa/
+
+Titan
+Gazetteer IAU/USGS, cratère Selk et canaux Vid Flumina :
+https://planetarynames.wr.usgs.gov/Feature/14334
+https://planetarynames.wr.usgs.gov/Feature/15088
+NASA Dragonfly, région de Selk et dunes équatoriales :
+https://science.nasa.gov/solar-system/nasas-dragonfly-mission-sets-sights-on-titans-mysteries/
+Canyons de Vid Flumina observés avec Cassini :
+https://doi.org/10.1002/2016GL069679
+
+Mercure
+Gazetteer IAU/USGS, Rachmaninoff et Hokusai :
+https://planetarynames.wr.usgs.gov/SearchResults?Target=14_Mercury
+https://planetarynames.wr.usgs.gov/Feature/14644
+NASA MESSENGER, plaines intérieures et rayons d’éjectas :
+https://science.nasa.gov/photojournal/rachmaninoff-in-concert-with-recently-named-craters-on-mercury/
+https://science.nasa.gov/resource/the-impressive-rays-of-hokusai/
+
+Encelade
+Gazetteer IAU/USGS, Damascus Sulcus et Samarkand Sulci :
+https://planetarynames.wr.usgs.gov/Feature/14252
+https://planetarynames.wr.usgs.gov/Feature/5291
+NASA Cassini, fractures actives de Damascus Sulcus :
+https://science.nasa.gov/resource/damascus-sulcus-on-enceladus/
+
+Ganymède
+Gazetteer IAU/USGS, Galileo Regio et cratère Tros :
+https://planetarynames.wr.usgs.gov/Feature/2076
+https://planetarynames.wr.usgs.gov/Feature/6091
+NASA Galileo, limite entre terrains clairs et sombres de Galileo Regio :
+https://www.jpl.nasa.gov/images/pia01616-highly-fractured-dark-and-bright-terrain/

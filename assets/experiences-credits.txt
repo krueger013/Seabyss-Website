@@ -1,0 +1,19 @@
+EXPÉDITIONS DE SURFACE ET PHÉNOMÈNES
+
+Le terrain, les itinéraires, les balises et les données de mission sont générés pour le jeu. Les lieux reprennent des caractéristiques générales des sept mondes. Les altitudes, les panaches et les mesures d'une expédition appartiennent à la simulation.
+
+Repères de la NASA
+Lune et régolithe : https://science.nasa.gov/moon/facts/
+Poussière et relief de Mars : https://science.nasa.gov/mars/facts/
+Glace et fractures d'Europe : https://science.nasa.gov/jupiter/jupiter-moons/europa/europa-facts/
+Brume et surface de Titan : https://science.nasa.gov/saturn/moons/titan/facts/
+Fossés de Caloris : https://science.nasa.gov/photojournal/its-complicated/
+Dépressions claires dans Caloris : https://science.nasa.gov/photojournal/unnamed-hollows/
+Fracture polaire d'Encelade : https://science.nasa.gov/resource/enceladus-warm-baghdad-sulcus-in-context/
+Terrains clairs et sombres d'Arbela Sulcus : https://science.nasa.gov/resource/ganymede-bright-and-dark-terrain/
+Mercure, vignette et carte de texture originales générées pour le jeu.
+
+Les visualisations de phénomènes utilisent des modèles interactifs. Le rendu du disque et de la déviation de la lumière près du trou noir est illustratif.
+Déviation de la lumière par un trou noir : https://science.nasa.gov/universe/black-holes/
+Ombre, pénombre et couronne pendant une éclipse : https://science.nasa.gov/eclipses/geometry/
+Anneaux de Saturne : https://science.nasa.gov/saturn/facts/

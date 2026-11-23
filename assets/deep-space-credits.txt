@@ -1,0 +1,34 @@
+UNIVERSE EXPLORER — ATLAS DU CIEL PROFOND
+
+Exoplanètes
+
+Les rayons et périodes des sept planètes de TRAPPIST-1 s’appuient sur la solution d’Agol et al. (2021). Les valeurs des systèmes Kepler-186 et Kepler-62 proviennent des tables de paramètres de la NASA Exoplanet Archive. Les rayons terrestres utilisent 6 371 km. Les rayons stellaires utilisent 695 700 km. Les entrées de l’archive donnent également les incertitudes et les différentes solutions publiées.
+
+https://exoplanetarchive.ipac.caltech.edu/overview/TRAPPIST-1
+https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186
+https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62
+https://science.nasa.gov/exoplanet-catalog/55-cancri-e/
+https://science.nasa.gov/exoplanet-catalog/hd-189733-b/
+
+Les distances et les périodes du catalogue sont arrondies. Les orbites extrasolaires sont ici circulaires. Leur orientation dans la scène et leur position au jour zéro sont illustratives. La rotation synchrone adoptée pour présenter les globes est une hypothèse de visualisation. Les continents, les glaces, les nuages et les couleurs de surface sont des interprétations. Une orbite dans la zone habitable décrit l’énergie reçue de l’étoile. L’habitabilité effective dépend aussi de l’atmosphère et d’autres propriétés du monde.
+
+Étoiles remarquables
+
+Les directions équatoriales se rapportent au repère J2000. Les fiches SIMBAD et la compilation de Western Washington University fournissent des identifiants et des astrométries. La mesure interférométrique de Polaris provient du réseau CHARA. Les rayons utilisés pour les géantes, les étoiles aplaties et les étoiles variables représentent une sphère de référence.
+
+https://simbad.cds.unistra.fr/simbad/
+https://astro101.wwu.edu/a101_brightstars.html
+https://chara.gsu.edu/photos-videos/image-gallery/polaris
+
+Nébuleuses, amas et galaxies
+
+Les catalogues Messier et Caldwell de la mission Hubble donnent les classifications, les distances approximatives, les constellations et les caractéristiques observées. Les valeurs désignent des régions étendues de luminosité décroissante. Le « rayon » du jeu est un rayon visuel arrondi de la région représentée. La concentration d’étoiles d’un amas et la profondeur d’un nuage sont reconstituées pour l’exploration.
+
+Repères Messier : M1, M8, M11, M13, M16, M27, M33, M42, M44, M45, M57, M78, M81, M82, M87, M101 et M104.
+https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/
+https://science.nasa.gov/wp-content/uploads/2023/09/Astrophotography_Guide.pdf
+
+Caldwell 77 (Centaurus A), 80 (Oméga du Centaure) et 92 (nébuleuse de la Carène).
+https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-77/
+https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-80/
+https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-92/

@@ -1,0 +1,48 @@
+SEABYSS UNIVERS — CRÉDITS DES IMAGES
+
+Terre
+La texture et la vignette combinent la mosaïque de surface Blue Marble: Next Generation de mai 2004 et une mosaïque de nuages Blue Marble. Données et images de NASA Earth Observatory et NASA Goddard Space Flight Center. Travail de Reto Stöckli et Robert Simmon. La couleur et le contraste ont été adaptés pour l'éclairage du jeu. Les deux mosaïques représentent des périodes différentes.
+https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/
+https://science.nasa.gov/earth/earth-observatory/the-blue-marble-true-color-global-imagery-at-1km-resolution/
+Surface distribuée par NASA WorldWind (BMNG_world.topo.bathy.200405.3.2048x1024.jpg).
+https://github.com/NASAWorldWind/WebWorldWind/tree/develop/images
+Couche de nuages distribuée dans Celestia 1.6.1 (earth-clouds.png).
+https://github.com/CelestiaProject/Celestia/tree/1.6.1/textures/medres
+Le globe 3D utilise séparément la surface (océans assombris), l'opacité des nuages et la luminance nocturne. Cette dernière provient du fichier earthnight.jpg distribué par Celestia 1.6.1. Les nuages, les reflets océaniques et l'éclairage nocturne représentent une composition d'atlas.
+https://github.com/CelestiaProject/Celestia/blob/1.6.1/textures/medres/earthnight.jpg
+
+Les itinéraires terrestres mesurent les arcs au grand cercle sur une sphère de 6 371 km de rayon (NASA Earth Fact Sheet).
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+Repères de Forillon et des Hautes-Terres-du-Cap-Breton : Parcs Canada.
+https://parks.canada.ca/pn-np
+Quartier historique de Valparaíso : Centre du patrimoine mondial de l’UNESCO.
+https://whc.unesco.org/fr/list/959/cartes
+
+Lune
+La texture et la vignette utilisent la carte couleur 2019 du CGI Moon Kit (lroc_color_poles_1k.jpg). NASA Scientific Visualization Studio, Ernie Wright. Données de la Lunar Reconnaissance Orbiter Camera, NASA, GSFC et Arizona State University. Conversion en WebP et éclairage pour le jeu.
+https://svs.gsfc.nasa.gov/4720/
+
+Saturne
+La texture et la vignette utilisent l'image « Saturn » de la collection NASA 3D Resources. Conversion en WebP et adaptation de la saturation. Les anneaux et leur éclairage sont rendus pour le jeu.
+https://github.com/nasa/NASA-3D-Resources/tree/master/Images%20and%20Textures/Saturn
+
+Andromède
+Les bras et les régions actives du disque 3D reprennent la mosaïque ultraviolette GALEX PIA04921, assemblée à partir de dix observations de septembre 2003. Crédit image : NASA/JPL/California Institute of Technology. Le disque a été déprojeté et recoloré ; l'épaisseur, la lumière diffuse du disque et le bulbe sont modélisés. Les couleurs sont interprétées.
+https://www.jpl.nasa.gov/images/pia04921-andromeda-galaxy/
+https://www.jpl.nasa.gov/jpl-image-use-policy/
+
+Illustrations originales
+Les vignettes de Proxima du Centaure, de la Voie lactée et d'Andromède sont des illustrations. La bande de la Voie lactée vue du système solaire, son disque vu de l'extérieur et le disque de la galaxie du Tourbillon sont des synthèses procédurales.
+
+Mars, Jupiter et leurs voisines
+Les sources des cartes planétaires et des six lunes de Jupiter et Saturne figurent dans moons-credits.txt.
+
+Catalogue stellaire
+Les directions sont arrondies dans le repère équatorial J2000. Les distances,
+rayons effectifs et types spectraux servent à la visualisation. La séparation
+du couple Alpha Centauri est illustrative. Pour Bételgeuse, le catalogue
+utilise une distance arrondie à 700 années-lumière, sujette à incertitude.
+https://simbad.cds.unistra.fr/simbad/
+https://www.aanda.org/articles/aa/pdf/2017/02/aa29930-16.pdf
+https://science.nasa.gov/mission/hubble/science/science-behind-the-discoveries/time-travel-observing-cosmic-history/
+Le système 1697 et tous ses objets sont fictifs et générés pour le jeu.

@@ -1,0 +1,74 @@
+.earth-view {color:#e6eef2}
+.earth-route {
+  display:grid;grid-template-columns:minmax(175px,.9fr) minmax(0,1.5fr);align-items:center;gap:12px;
+  padding:8px 11px;margin-bottom:8px;border:1px solid #637a8d57;border-radius:7px;
+  background:linear-gradient(120deg,#193141,#111f2d 69%);
+}
+.earth-route:has([data-earth-tour-controls][hidden]) .earth-field {max-width:320px}
+.earth-route-details[hidden] {display:none}
+.earth-route-stops {display:grid;grid-template-columns:44px minmax(0,1fr) 44px auto;gap:5px;align-items:end}
+.earth-route-stops button {
+  min-height:44px;padding:0 9px;border-radius:5px;border:1px solid #7399ab66;
+  background:#1d3346;color:#e6f6fc;font:600 13px var(--sans);touch-action:manipulation;
+}
+.earth-route-stops :is([data-earth-tour-prev],[data-earth-tour-next]) {font:500 23px var(--mono)}
+.earth-route-stops [data-earth-tour-play] {background:#afdcdf;color:#112832;border-color:#afdcdf}
+.earth-route-stops [data-earth-tour-play][aria-pressed="true"] {background:#efd5ad;border-color:#efd5ad}
+.earth-route-stops button:disabled {opacity:.45;cursor:default}
+.earth-route output {display:block;margin-top:5px;color:#e2c899;font:11px/1.4 var(--mono)}
+.earth-main {display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:14px}
+.earth-globe {
+  position:relative;min-width:0;min-height:320px;margin:0;overflow:hidden;border:1px solid #5d718058;border-radius:7px;
+  background:radial-gradient(ellipse at 50% 45%,#132b43,#0b1726 45%,#060e18 74%);
+}
+.earth-globe canvas {position:absolute;inset:0;display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.earth-globe canvas:active {cursor:grabbing}
+.earth-scale {display:flex;gap:5px;position:absolute;bottom:30px;right:8px}
+.earth-scale button,.earth-view :is(select,input),.earth-view .earth-apply,.earth-links :is(a,button) {
+  min-height:44px;border:1px solid #8299aa48;border-radius:5px;color:#e4edf2;background:#12202de8;
+}
+.earth-scale button {width:44px;padding:0;font:500 19px var(--mono)}
+.earth-scale button:is(:hover,:focus-visible),.earth-links :is(a,button):is(:hover,:focus-visible) {border-color:#d7c297;background:#253345}
+.earth-globe figcaption {
+  position:absolute;bottom:7px;left:10px;color:#b8c5d3;font:10px/1.25 var(--mono);
+  pointer-events:none;text-shadow:0 1px 5px #000,0 1px 3px #000;
+}
+.earth-controls {
+  display:grid;gap:9px;align-content:start;min-width:0;padding:13px 14px;border:1px solid #637a8d57;border-radius:7px;
+  background:linear-gradient(150deg,#172736,#131d28 62%,#101a23)
+}
+.earth-controls h3 {margin:0 0 2px;font:400 clamp(28px,4vw,37px)/1.05 var(--serif);color:#faf0e0}
+.earth-field {display:grid;gap:4px;min-width:0;font:11px/1.3 var(--mono);color:#cbd9df}
+.earth-view :is(select,input) {box-sizing:border-box;width:100%;padding-inline:8px;font:14px var(--sans)}
+.earth-coordinate-form {display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) auto;gap:6px;align-items:end}
+.earth-view .earth-apply {padding-inline:9px;font:650 12px var(--sans);background:#afdcdf;color:#0b2630;border-color:#afdcdf}
+.earth-view .earth-apply:hover {background:#c7f2ee}
+.earth-orbit {text-align:left;touch-action:manipulation}
+.earth-controls output {min-height:18px;font:600 12px/1.4 var(--sans);color:#ddd1a8}
+.earth-links {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.earth-links :is(a,button) {
+  display:flex;justify-content:space-between;align-items:center;gap:5px;padding:6px 8px;min-width:0;
+  text-align:left;text-decoration:none;font:600 12px/1.25 var(--sans);touch-action:manipulation;
+}
+.earth-links a[data-earth-street] {color:#1e231f;background:#f2cf9f;border-color:#f2cf9f}
+.earth-links a[data-earth-street]:hover {background:#ffe1b6}
+.earth-links a span {flex:none;color:inherit;font-size:.85em}
+.earth-provider-note,.earth-embed p {margin:0;font:12px/1.45 var(--sans);color:#b9c6cd}
+.earth-embed {margin:9px 0 0;padding:0 10px 9px;border:1px solid #6b849546;border-radius:6px;background:#131c26}
+.earth-embed summary {min-height:40px;align-content:center;cursor:pointer;color:#dfebee;font-size:13px}
+.earth-embed a {color:#cadfe5}
+.earth-embed form {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:6px;margin-block:9px}
+.earth-embed iframe {display:block;width:100%;height:clamp(200px,44dvh,380px);border:0;border-radius:5px}
+@media (max-width:650px) {
+  .earth-main {gap:8px}
+  .earth-controls {padding:9px 8px;gap:7px}
+}
+@media (max-width:540px) {
+  .earth-main {grid-template-columns:minmax(0,1fr)}
+  .earth-globe {min-height:clamp(200px,36dvh,285px)}
+  .earth-route {grid-template-columns:minmax(0,1fr);gap:6px;padding:7px 8px}
+}
+@media (max-height:460px) and (orientation:landscape) {
+  .earth-main {grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .earth-globe {min-height:264px}
+}

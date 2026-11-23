@@ -1,0 +1,47 @@
+.sky-observer {display:grid;gap:10px;min-width:0;color:#e5e9ef;--sky-edge:#a0bdce39}
+.sky-filters {display:grid;grid-template-columns:.9fr .8fr 1.3fr;gap:8px}
+.sky-field {min-width:0;display:grid;gap:3px;color:#b2bfca;font:10px var(--mono,monospace);letter-spacing:.07em;text-transform:uppercase}
+.sky-field input,.sky-field select {height:42px;min-width:0;width:100%;border:1px solid var(--sky-edge);border-radius:4px;background:#101923;color:#eef0ed;padding:0 8px;font:13px var(--sans,sans-serif)}
+.sky-field input[type=search] {appearance:none}
+.sky-field input::placeholder {color:#94a7b4}
+.sky-field select:disabled {color:#acadb4}
+.sky-frame {position:relative;isolation:isolate;background:#09121e;border:1px solid var(--sky-edge);border-radius:5px;overflow:hidden;height:clamp(275px,44dvh,540px)}
+.sky-frame canvas {display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.sky-frame canvas:active {cursor:grabbing}
+.sky-compass,.sky-scale {position:absolute;pointer-events:none;font:600 10px var(--mono,monospace);color:#d2d9da;padding:5px 7px;border-radius:3px;background:#0a1421d9;letter-spacing:.04em}
+.sky-compass {top:9px;left:9px}
+.sky-scale {bottom:10px;left:10px}
+.sky-settings,.sky-zoom {position:absolute;display:flex;align-items:center;gap:2px;background:#0b1522e8;border:1px solid #9fb6c536;border-radius:5px}
+.sky-settings {right:8px;top:6px}
+.sky-zoom {right:8px;bottom:6px}
+.sky-settings button,.sky-zoom button {border:0;border-radius:3px;min-height:38px;background:transparent;color:#bac6d0;cursor:pointer}
+.sky-settings button {font:600 11px var(--sans,sans-serif);padding:0 8px}
+.sky-settings button[aria-pressed=true]{color:#acd9d6;background:#25444c6b}
+.sky-zoom button {font:20px var(--sans,sans-serif);min-width:40px;padding:0}
+.sky-zoom button:disabled {opacity:.4}
+.sky-observer :is(button,canvas,input,select):focus-visible{outline:2px solid #efba7a;outline-offset:-2px}
+.sky-info {display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sky-copy {display:grid;gap:2px;min-width:0}
+.sky-type {font:10px var(--mono,monospace);letter-spacing:.09em;text-transform:uppercase;color:#e4b47d}
+.sky-name {font:400 clamp(22px,2.7vw,29px)/1.1 var(--serif,Georgia,serif);color:#fcf3e2}
+.sky-position,.sky-alt {font:12px/1.45 var(--mono,monospace);color:#ccd5d9;overflow-wrap:anywhere}
+.sky-alt {color:#add2bd}
+.sky-travel {min-height:44px;flex-shrink:0}
+.sky-note {margin:0;border-top:1px solid var(--sky-edge);padding-top:8px;color:#93a5b4;font:12px/1.4 var(--sans,sans-serif)}
+@media (max-width:650px) {
+ .sky-filters {grid-template-columns:1.25fr 1fr;gap:5px}
+ .sky-field:last-child {grid-column:1/-1}
+ .sky-field input,.sky-field select {font-size:13px;min-height:44px}
+ .sky-frame {height:clamp(215px,38dvh,350px)}
+ .sky-zoom button {min-width:44px;min-height:44px}
+ .sky-settings button {min-height:44px;padding-inline:6px;font-size:10px}
+ .sky-settings,.sky-zoom {right:4px}
+ .sky-name {font-size:21px}
+ .sky-position,.sky-alt {font-size:10px}
+}
+@media (max-height:470px) and (orientation:landscape) {
+ .sky-filters {grid-template-columns:1fr 1fr 1.3fr}
+ .sky-field:last-child {grid-column:auto}
+ .sky-observer {gap:5px}
+ .sky-frame {height:clamp(178px,55dvh,260px)}
+}

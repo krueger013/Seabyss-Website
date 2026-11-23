@@ -1,0 +1,11 @@
+.waves-comparison {min-width:0;display:grid;gap:7px;color:#d9dbf4}
+.waves-comparison p {margin:2px 0;color:#b8bfdf;font:12px/1.42 var(--sans)}
+.waves-compare-actions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+#waves-workspace .waves-compare-actions button {min-height:44px;padding:4px 6px}
+.waves-comparison table {width:100%;margin:4px 0;border-collapse:collapse;table-layout:fixed;font:12px/1.35 var(--sans)}
+.waves-comparison table th,.waves-comparison table td {text-align:start;padding:5px 4px;border-bottom:1px solid #6d76ac55;overflow-wrap:anywhere}
+.waves-comparison :is(thead th:first-child,tbody th) {width:44%}
+.waves-comparison :is(thead th:nth-child(2),tbody td:nth-child(2)) {color:#e5c6ff}
+.waves-comparison :is(thead th:nth-child(3),tbody td:nth-child(3)) {color:#acfaee}
+.waves-comparison td {font-family:var(--mono);font-variant-numeric:tabular-nums}
+.waves-comparison [data-waves-compare-ratio] {color:#c3ede9;font-weight:600}

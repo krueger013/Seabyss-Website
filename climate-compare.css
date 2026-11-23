@@ -1,0 +1,60 @@
+.climate-compare {
+  --compare-a:#a2ebe1;
+  --compare-b:#ffc39a;
+  --compare-border:#63869d63;
+  display:grid;
+  align-content:start;
+  gap:9px;
+  min-width:0;
+}
+.climate-compare-slots {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.climate-compare-slot {
+  display:flex;flex-direction:column;min-width:0;gap:5px;padding:7px;
+  background:#0c1927;border:1px solid var(--compare-border);border-top-color:var(--compare-color);border-radius:6px;
+}
+.climate-compare-slot[data-climate-compare-slot=a] {--compare-color:var(--compare-a)}
+.climate-compare-slot[data-climate-compare-slot=b] {--compare-color:var(--compare-b)}
+.climate-compare-slot[data-pinned=true] {background:linear-gradient(160deg,color-mix(in srgb,var(--compare-color) 13%,#0c1927),#0c1927 72%)}
+.climate-compare-pin {display:flex;align-items:flex-start;gap:5px;min-width:0}
+.climate-compare-pin b {
+  display:grid;place-items:center;flex:none;width:21px;height:21px;border-radius:3px;
+  color:#101c28;background:var(--compare-color);font:700 13px var(--mono,monospace);
+}
+.climate-compare-pin span {padding-top:2px;color:#e6eff2;font-size:12px;font-weight:600;overflow-wrap:anywhere}
+.climate-compare-slot small {color:#bfd0dc;font:10px/1.35 var(--mono,monospace);overflow-wrap:anywhere}
+#climate-lab .climate-compare-slot button {min-height:44px;margin-top:auto;color:var(--compare-color);padding:4px 5px}
+.climate-compare [data-climate-compare-help],.climate-compare .climate-compare-status {color:#bdd2df;font-size:12px}
+.climate-compare-status:empty {display:none}
+.climate-compare-results {display:grid;gap:8px;min-width:0}
+.climate-compare-heading {display:flex;align-items:center;justify-content:space-between;gap:4px 7px;flex-wrap:wrap}
+.climate-compare-heading h3 {margin:0;color:#edf4f6;font:500 20px/1.12 var(--serif,serif)}
+#climate-lab .climate-compare-heading :is(button,select) {font-size:12px;padding-inline:5px}
+.climate-compare-table {width:100%;border-collapse:collapse;table-layout:fixed;font:11px/1.3 var(--sans,sans-serif)}
+.climate-compare-table :is(th,td) {padding:5px 3px;overflow-wrap:anywhere;vertical-align:top}
+.climate-compare-table thead {border-bottom:1px solid var(--compare-border);color:#c4d8e3;font-weight:700}
+.climate-compare-table thead th:first-child {width:35%;text-align:start}
+.climate-compare-table thead th:nth-child(2) {color:var(--compare-a)}
+.climate-compare-table thead th:nth-child(3) {color:var(--compare-b)}
+.climate-compare-table tbody tr:nth-child(odd) {background:#0a1725}
+.climate-compare-table tbody th {color:#d9e7ed;text-align:start;font-weight:600}
+.climate-compare-table tbody td {color:#dfeef3;font:11px/1.28 var(--mono,monospace);text-align:center;font-variant-numeric:tabular-nums}
+.climate-compare-table tbody td[data-value] {color:#eaf7ef;font-weight:650}
+.climate-compare-chart {display:block;width:100%;min-width:0;height:150px;background:#091521;border:1px solid var(--compare-border);border-radius:5px}
+.climate-compare-latitude {display:grid;gap:2px;color:#bfd4e1;font:12px/1.2 var(--sans,sans-serif)}
+.climate-compare-latitude>span {display:flex;justify-content:space-between;align-items:center;gap:3px}
+.climate-compare-latitude output {color:#e8f8f8;font-family:var(--mono,monospace)}
+.climate-compare-latitude input {width:100%;height:44px;margin:0;accent-color:var(--compare-a)}
+.climate-compare-reading {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:0}
+.climate-compare-reading div {display:grid;gap:2px;min-width:0;padding:6px;text-align:center;background:#0c1927;border-radius:4px}
+.climate-compare-reading dt {color:#c4d8e3;font:11px/1.25 var(--mono,monospace)}
+.climate-compare-reading div:first-child dt {color:var(--compare-a)}
+.climate-compare-reading div:nth-child(2) dt {color:var(--compare-b)}
+.climate-compare-reading dd {margin:0;color:#edf6f7;font:12px/1.35 var(--mono,monospace);overflow-wrap:anywhere}
+.climate-compare-options {border-top:1px solid var(--compare-border)}
+.climate-compare-options summary {min-height:44px;padding:11px 2px 5px;cursor:pointer;color:#dceef1;font-weight:600}
+@media (max-height:490px) and (orientation:landscape) {
+  .climate-compare,.climate-compare-results {gap:6px}
+  .climate-compare-slot {padding:5px}
+  .climate-compare-heading h3 {font-size:17px}
+  .climate-compare-chart {height:128px}
+}

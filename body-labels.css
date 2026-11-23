@@ -1,0 +1,36 @@
+.body-labels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.body-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px 8px;
+  border: 1px solid #c3d5ed3d;
+  border-radius: 4px;
+  color: #e9eef4;
+  background: #09101cdb;
+  font: 500 12px/17px "Segoe UI", Arial, sans-serif;
+  white-space: nowrap;
+}
+.body-label::after {
+  position: absolute;
+  left: calc(50% - .5px);
+  top: 100%;
+  width: 1px;
+  height: 5px;
+  background: #a7b6c794;
+  content: "";
+}
+.body-label.is-target {
+  color: #ffe8ca;
+  border-color: #e7b37e88;
+  background: #171512e8;
+  font-weight: 600;
+}
+.body-label.is-target::after { background: #ebbd8f; }

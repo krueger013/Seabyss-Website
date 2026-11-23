@@ -1,0 +1,112 @@
+Galerie du ciel profond — Images et lecture des planches
+
+Les quatorze photographies Messier ci-dessous représentent les objets observés. Les filtres des instruments et la composition des canaux peuvent produire une palette différente de celle que verrait l’œil humain. Les images ont été réduites et converties en WebP. Le cadrage de la vignette s’adapte à l’écran. Les exemplaires utilisés pour cette conversion proviennent de la collection m7kn/messier et correspondent aux photographies identifiées sur Wikimedia Commons.
+https://github.com/m7kn/messier/tree/master/static/images
+
+Les images de M42, M1, M16, M27, M45, M57 et M104 peuvent aussi contribuer au rendu spatial. Dans ce cas, la texture du plan du ciel sert de référence à une reconstitution du volume. La profondeur, l’aspect vu depuis un autre angle et les couleurs relatives sont interprétés.
+
+M1 — La nébuleuse du Crabe
+NASA, ESA, J. Hester and A. Loll (Arizona State University)
+Hubble, matériel du domaine public avec attribution.
+https://commons.wikimedia.org/wiki/File:Crab_Nebula.jpg
+
+M8 — La nébuleuse de la Lagune
+Hunter Wilson (Hewholooks)
+CC BY-SA 3.0. La vignette dérivée conserve cette licence.
+https://creativecommons.org/licenses/by-sa/3.0/
+https://commons.wikimedia.org/wiki/File:LagoonHunterWilson.jpg
+
+M11 — Amas du Canard sauvage
+ESO
+CC BY 4.0.
+https://creativecommons.org/licenses/by/4.0/
+https://www.eso.org/public/images/eso1430a/
+https://commons.wikimedia.org/wiki/File:Eso1430a.jpg
+
+M13 — Grand amas d’Hercule
+NASA, STScI, WikiSky
+Hubble, matériel du domaine public avec attribution.
+https://commons.wikimedia.org/wiki/File:Messier_13_Hubble_WikiSky.jpg
+
+M16 — La nébuleuse de l’Aigle
+ESO
+CC BY 4.0.
+https://creativecommons.org/licenses/by/4.0/
+https://www.eso.org/public/images/eso0926a/
+https://commons.wikimedia.org/wiki/File:Eagle_Nebula_from_ESO.jpg
+
+M27 — La nébuleuse de l’Haltère
+ESO/I. Appenzeller, W. Seifert, O. Stahl, M. Zamani
+CC BY 4.0.
+https://creativecommons.org/licenses/by/4.0/
+https://www.eso.org/public/images/eso9846a/
+https://commons.wikimedia.org/wiki/File:M27_-_Dumbbell_Nebula.jpg
+
+M33 — La galaxie du Triangle
+ESO
+CC BY 4.0.
+https://creativecommons.org/licenses/by/4.0/
+https://www.eso.org/public/images/eso1424a/
+https://commons.wikimedia.org/wiki/File:VST_snaps_a_very_detailed_view_of_the_Triangulum_Galaxy.jpg
+
+M42 — La nébuleuse d’Orion
+NASA, ESA, M. Robberto (Space Telescope Science Institute/ESA) and the Hubble Space Telescope Orion Treasury Project Team
+Hubble, matériel du domaine public avec attribution.
+https://science.nasa.gov/image-detail/orion-nebula-xlarge_web/
+https://commons.wikimedia.org/wiki/File:Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg
+
+M44 — Amas de la Crèche
+Giuseppe Donatiello
+CC0 1.0, dédicace au domaine public.
+https://creativecommons.org/publicdomain/zero/1.0/
+https://commons.wikimedia.org/wiki/File:Messier_44_2018.jpg
+
+M45 — Les Pléiades
+Bob Star, M45 Carranza Field
+CC BY 2.0.
+https://creativecommons.org/licenses/by/2.0/
+https://commons.wikimedia.org/wiki/File:Bob_Star_-_M45_Carranza_Field_(by).jpg
+
+M57 — La nébuleuse de l’Anneau
+The Hubble Heritage Team (AURA/STScI/NASA)
+Hubble, matériel du domaine public avec attribution.
+https://commons.wikimedia.org/wiki/File:M57_The_Ring_Nebula.JPG
+
+M81 — La galaxie de Bode
+Ken Crawford
+CC BY-SA 4.0. La vignette dérivée conserve cette licence.
+https://creativecommons.org/licenses/by-sa/4.0/
+https://commons.wikimedia.org/wiki/File:M81.jpg
+
+M87 — Messier 87
+NASA, STScI, WikiSky
+Hubble, matériel du domaine public avec attribution.
+https://commons.wikimedia.org/wiki/File:Messier_87_Hubble_WikiSky.jpg
+
+M104 — La galaxie du Sombrero
+NASA/ESA and The Hubble Heritage Team (STScI/AURA)
+Hubble, matériel du domaine public avec attribution.
+https://commons.wikimedia.org/wiki/File:M104_ngc4594_sombrero_galaxy_hi-res.jpg
+
+Planches orbitales
+Les planches cuivrées représentent les systèmes et leurs planètes au jour zéro du jeu. Les anneaux montrent les demi-grands axes d’après le catalogue de la simulation. L’anneau de la planète sélectionnée est mis en évidence. Les distances sont comprimées et les corps sont agrandis. Les longitudes de départ sont illustratives.
+
+Cartes de repérage
+Les cartes bleues des objets sans photographie sont des projections gnomoniques centrées sur l’objet, avec le nord en haut, l’est à gauche et une grille équatoriale espacée de 10 degrés. Les étoiles de magnitude visuelle inférieure ou égale à 5,5 proviennent de XHIP, An Extended Hipparcos Compilation, Anderson & Francis (2012), VizieR V/137D. Le réticule orange désigne le centre recherché. Les positions du catalogue des destinations sont arrondies.
+https://cdsarc.cds.unistra.fr/viz-bin/cat/V/137D
+https://github.com/ofrohn/d3-celestial/blob/master/data/stars.6.json
+
+La conversion du fichier de distribution D3-Celestial en cartes statiques conserve la notice de diffusion suivante.
+
+Copyright (c) 2015, Olaf Frohn
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

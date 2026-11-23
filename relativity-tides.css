@@ -1,0 +1,12 @@
+.relativity-tides {
+  min-width:0;padding:0 10px 8px;border:1px solid #5d779e75;border-radius:6px;background:#112033;
+}
+.relativity-tides summary {min-height:44px;padding:11px 0;color:#dfecfa;font-weight:650;cursor:pointer}
+.relativity-tides label {display:flex;align-items:center;justify-content:space-between;gap:6px;margin:2px 0 7px;font-size:13px;color:#c4d5e9}
+.relativity-tides select {min-height:44px;min-width:63px;padding-inline:4px;color:#f3efff;background:#0d1728;border:1px solid #7494bc}
+.relativity-tidal-readings {display:grid;gap:4px;margin:7px 0;padding:0}
+.relativity-tidal-readings div {min-width:0;padding:6px;background:#0c1524;border-radius:4px}
+.relativity-tidal-readings dt {font-size:11px;color:#aabfd9}
+.relativity-tidal-readings dd {margin:4px 0 0;color:#f0d1a2;font:12px/1.4 var(--mono);overflow-wrap:anywhere}
+.relativity-tides p {margin:5px 0 0;font:12px/1.42 var(--sans);color:#b6cbe2}
+.relativity-tides [data-relativity-tidal-note] {color:#ffd0a5}

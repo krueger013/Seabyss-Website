@@ -1,0 +1,30 @@
+.climate-orbit {
+  display:grid;gap:7px;min-width:0;
+}
+.climate-orbit-figure {
+  display:grid;gap:4px;min-width:0;margin:0;
+  border:1px solid var(--cl-border,#678eaa55);border-radius:5px;
+  background:radial-gradient(ellipse at center,#172e40,#0a1523 78%);
+}
+.climate-orbit-figure canvas {
+  display:block;width:100%;height:clamp(121px,22dvh,169px);
+}
+.climate-orbit-figure figcaption {
+  display:flex;justify-content:center;flex-wrap:wrap;gap:3px 11px;padding:0 5px 7px;
+  color:#ccdde8;font-size:11px;
+}
+.climate-orbit-figure figcaption span {display:inline-flex;align-items:center;gap:4px}
+.climate-orbit-figure figcaption span::before {
+  display:inline-block;width:7px;height:7px;border-radius:50%;flex:none;
+  box-sizing:border-box;content:'';background:var(--cl-orbit-dot,transparent);
+}
+.cl-orbit-star {--cl-orbit-dot:#ffe4a1}
+.cl-orbit-world {--cl-orbit-dot:#83dfe5}
+.climate-orbit-figure .cl-orbit-season::before {border:1px solid #b0cedd}
+.cl-orbit-readouts dd {color:#d5f5f7}
+.climate-panel .cl-orbit-phase {color:#cbebed;font-size:13px}
+.cl-orbit-action {display:grid;gap:3px;min-width:0;margin-bottom:4px}
+.cl-orbit-action > div {min-width:0;display:flex;align-items:stretch;gap:4px}
+.cl-orbit-action select {width:100%;min-width:0}
+.cl-orbit-action button {flex:none}
+.cl-orbit-action :is(label,output) {color:#c5d6e1;font-size:12px}

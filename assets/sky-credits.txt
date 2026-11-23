@@ -1,0 +1,24 @@
+Ciel depuis la Terre
+
+Les positions équatoriales (J2000), les magnitudes visuelles et les indices de couleur B−V des 1627 étoiles de magnitude V ≤ 5 viennent de XHIP, An Extended Hipparcos Compilation (E. Anderson et C. Francis, 2012 ; VizieR V/137D), via le fichier stars.6.json de D3-Celestial. Les positions sont arrondies à 0,01°. Les noms issus de starnames.json sont ceux du même projet. Les tracés et les noms français des 88 constellations sont adaptés de constellations.lines.json et constellations.json. Les tracés relient visuellement des directions et représentent une convention graphique.
+https://cdsarc.cds.unistra.fr/viz-bin/cat/V/137D
+https://github.com/ofrohn/d3-celestial/tree/master/data
+https://www.iau.org/public/themes/constellations/
+
+La grille de coordonnées et les mesures angulaires utilisent la sphère équatoriale J2000. L’horizon géométrique indicatif est calculé pour le centre de Lévis (46,8° N, 71,18333° O) à partir du temps sidéral moyen. Les altitudes ne tiennent pas compte de la réfraction atmosphérique ni du relief. Les positions planétaires instantanées dans le système solaire sont illustratives dans Universe Explorer et sont exclues de cette carte du ciel profond.
+https://toponymie.gouv.qc.ca/ct/ToposWeb/fiche.aspx?no_seq=375774
+https://aa.usno.navy.mil/faq/GAST
+
+Copyright (c) 2015, Olaf Frohn
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+

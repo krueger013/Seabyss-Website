@@ -1,0 +1,36 @@
+UNIVERSE EXPLORER — CARTES PLANÉTAIRES ET DONNÉES ORBITALES
+
+Jupiter et Mars
+La carte des bandes et des tourbillons de Jupiter provient des images de Voyager (JPL/Caltech). La carte de Mars utilise les observations de Viking traitées par l’USGS (NASA/JPL-Caltech). Elles représentent les conditions observées par les missions. Les adaptations réduisent légèrement la saturation et le contraste avant l’encodage WebP. Pour Jupiter, la couleur actuelle et la longitude des tempêtes peuvent différer.
+https://science.nasa.gov/3d-resources/jupiter/
+https://science.nasa.gov/3d-resources/mars/
+
+Io, Europe, Ganymède et Callisto
+Cartes équirectangulaires du Solar System Simulator du JPL, crédits USGS, JPL et Caltech. La carte d’Io (version B) combine une mosaïque de Voyager avec les couleurs de Galileo. Les trois autres cartes utilisent des images de Voyager en niveaux de gris, adaptées pour ce jeu avec une teinte et un contraste propres à chaque lune. Les résolutions et la couverture des pôles varient selon les survols.
+https://science.nasa.gov/3d-resources/jupiter-io-b/
+https://maps.jpl.nasa.gov/tmaps/jupiter.html
+
+Encelade
+Carte de décembre 2008, NASA/JPL/Space Science Institute (PIA11145). Elle rassemble des images de Cassini et de Voyager. La copie cartographique distribuée par Celestia 1.6.1 a été teintée et convertie en WebP pour l’éclairage du jeu.
+https://www.jpl.nasa.gov/images/pia11145-map-of-enceladus-december-2008/
+https://github.com/CelestiaProject/Celestia/blob/1.6.1/textures/medres/enceladus.jpg
+
+Titan
+Illustration atmosphérique de David Seal (JPL/Caltech) fondée sur la couleur observée par Voyager. La carte représente la brume qui cache le sol dans le visible. Une palette ambre et un contraste réduit ont été appliqués.
+https://science.nasa.gov/3d-resources/saturn-titan/
+https://maps.jpl.nasa.gov/tmaps/saturn.html
+
+Les fichiers NASA ont été obtenus auprès de la collection officielle NASA 3D Resources. Les adaptations pour le jeu comprennent le passage en WebP et une réduction des dimensions lorsque nécessaire.
+https://github.com/nasa/NASA-3D-Resources/tree/master/Images%20and%20Textures
+https://www.jpl.nasa.gov/jpl-image-use-policy/
+
+Données de navigation
+Les rayons moyens des satellites proviennent des paramètres physiques du JPL. Leurs demi-grands axes sont ceux des éléments moyens JUP365 et SAT441. Les périodes sidérales en jours sont issues des fiches de la NASA. Les huit planètes utilisent des périodes et des éléments orbitaux arrondis du JPL. L’horloge part d’une configuration illustrative et anime les positions en régime képlérien. Les positions à une date civile donnée sont disponibles via JPL Horizons. Pour le système fictif 1697, les orbites proviennent du générateur du jeu. La vue d’ensemble utilise des copies réduites des cartes de surface créditées, regroupées dans une seule image.
+https://ssd.jpl.nasa.gov/planets/approx_pos.html
+https://ssd.jpl.nasa.gov/planets/phys_par.html
+https://ssd.jpl.nasa.gov/sats/phys_par/
+https://ssd.jpl.nasa.gov/sats/elem/
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/joviansatfact.html
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/saturniansatfact.html
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/
+https://ssd.jpl.nasa.gov/horizons/

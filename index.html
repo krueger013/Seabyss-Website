@@ -2,95 +2,152 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore les jeux Seabyss : aventures, objets cachés, stratégie et casino fictif. Choisis ton univers et joue gratuitement dans ton navigateur.">
-  <meta name="theme-color" content="#060808">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; connect-src 'self'; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'none'">
-  <link rel="stylesheet" href="css/i18n.css?v=alchemy-20261109">
-  <script src="js/i18n.js?v=alchemy-20261109"></script>
-  <script src="js/portal-translations.js?v=alchemy-20261109"></script>
-  <meta property="og:title" content="Seabyss — L’aventure n’attend que toi">
-  <meta property="og:description" content="Quinze jeux, des univers singuliers. Embarque dans l’arcade Seabyss, directement dans ton navigateur.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.seabyss.com/assets/images/seabyss-portal-hero.webp">
-  <meta property="og:url" content="https://www.seabyss.com/">
-  <title>Seabyss — L’aventure n’attend que toi</title>
-  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=alchemy-20261109">
-  <script src="js/catalog.js?v=alchemy-20261109" defer></script>
-  <script src="js/atmosphere.js?v=alchemy-20261109" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b10">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1017'/%3E%3Cg fill='none' stroke='%23ffba78' stroke-width='3'%3E%3Ccircle cx='32' cy='32' r='15'/%3E%3Cellipse cx='32' cy='32' rx='27' ry='8' transform='rotate(-32 32 32)'/%3E%3C/g%3E%3C/svg%3E">
+  <title>SEABYSS</title>
+  <meta name="description" content="Explore le Système solaire, observe le Soleil et suis les trajectoires de Halley, de ʻOumuamua et des sondes Voyager.">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./atlas.css">
+  <link rel="stylesheet" href="./deep-atlas.css">
+  <link rel="stylesheet" href="./observations.css">
+  <link rel="stylesheet" href="./expeditions.css">
+  <link rel="stylesheet" href="./system-view.css">
+  <link rel="stylesheet" href="./body-labels.css">
+  <link rel="stylesheet" href="./simulation-controls.css">
+  <link rel="stylesheet" href="./sandbox-view.css">
+  <link rel="stylesheet" href="./sandbox-workspace.css">
+  <link rel="stylesheet" href="./sandbox-editor.css">
+  <link rel="stylesheet" href="./sandbox-analysis.css">
+  <link rel="stylesheet" href="./sandbox-comparison.css">
+  <link rel="stylesheet" href="./climate-lab.css">
+  <link rel="stylesheet" href="./climate-globe.css">
+  <link rel="stylesheet" href="./climate-compare.css">
+  <link rel="stylesheet" href="./climate-orbit.css">
+  <link rel="stylesheet" href="./cryosphere-panel.css">
+  <template id="relativity-styles">
+  <link rel="stylesheet" href="./relativity-scene.css">
+  <link rel="stylesheet" href="./relativity-lab.css">
+  <link rel="stylesheet" href="./relativity-tides.css">
+  </template>
+  <template id="waves-styles">
+  <link rel="stylesheet" href="./waves-lab.css">
+  <link rel="stylesheet" href="./waves-view.css">
+  <link rel="stylesheet" href="./waves-compare.css">
+  </template>
+  <template id="phase-styles"><link rel="stylesheet" href="./phase-lab.css"></template>
+  <template id="traveller-styles"><link rel="stylesheet" href="./traveller-lab.css"></template>
+  <template id="solar-styles"><link rel="stylesheet" href="./solar-observer.css"></template>
+  <link rel="stylesheet" href="./cinema.css">
+  <link rel="stylesheet" href="./sky-observer.css">
+  <link rel="stylesheet" href="./surface-workspace.css">
+  <link rel="stylesheet" href="./surface-atlas.css">
+  <link rel="stylesheet" href="./surface-sky.css">
+  <link rel="stylesheet" href="./phenomena.css">
+  <link rel="stylesheet" href="./experiences.css">
+  <link rel="stylesheet" href="./earth-explorer.css">
+  <link rel="stylesheet" href="./landing-flight.css">
+  <link rel="stylesheet" href="./photo-studio.css">
+  <script type="module" src="./app.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#catalogue">Aller aux jeux</a>
-  <header class="site-header">
-    <div class="header-main shell">
-      <span data-language-picker></span>
-      <a class="brand" href="./" aria-label="Seabyss, accueil"><img class="brand-symbol" src="assets/images/compass-mark.svg" alt="" width="44" height="44"><span>SEABYSS<small>INDIE GAME STUDIO</small></span></a>
-      <nav class="main-nav" aria-label="Navigation principale"><a class="nav-home" href="#catalogue" data-browse-category="all">Les jeux</a><a href="#casino">Le casino</a><a href="#studio">Le studio</a></nav>
-      <div class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><label class="sr-only" for="search-games">Rechercher un jeu</label><input id="search-games" type="search" placeholder="Trouver mon prochain jeu…" autocomplete="off" maxlength="100"><a id="search-jump" class="search-jump" href="#catalogue" hidden>Voir les résultats →</a></div>
+  <header class="masthead">
+    <div class="brand" aria-label="SEABYSS">
+      <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="15.5"/><ellipse cx="24" cy="24" rx="23" ry="6.1" transform="rotate(-39 24 24)"/><path d="M24 5v4m0 30v4M5 24h4m30 0h4"/><circle cx="35.8" cy="13.6" r="2.4" fill="currentColor" stroke="none"/></svg>
+      <span class="brand-type"><strong>SEABYSS</strong></span>
+    </div>
+    <nav class="main-nav" aria-label="Navigation principale">
+      <button id="system-open" class="nav-item active" aria-current="page" title="Vue du système"><i data-icon="system"></i><span>Système</span></button>
+      <button id="sandbox-open" class="nav-item" title="Atelier gravitationnel · créer un système"><i data-icon="gravity"></i><span>Atelier</span></button>
+      <button id="climate-open" class="nav-item" title="Laboratoire climatique"><i data-icon="climate"></i><span>Climat</span></button>
+      <button id="explore-tab" class="nav-item" title="Observer un astre"><i data-icon="orbit"></i><span>Explorer</span></button>
+      <button id="atlas-open" class="nav-item"><i data-icon="grid"></i><span>Atlas</span></button>
+      <button id="journal-open" class="nav-item"><i data-icon="book"></i><span>Carnet</span></button>
+    </nav>
+    <div class="header-tools">
+      <button id="help-open" class="icon-btn" aria-label="Aide et commandes" title="Aide et commandes"><i data-icon="help"></i></button>
+      <button id="fullscreen" class="icon-btn" aria-label="Plein écran" title="Plein écran"><i data-icon="expand"></i></button>
     </div>
   </header>
-  <main>
-    <div class="shell">
-      <section class="hero" aria-labelledby="hero-title">
-        <picture><source media="(max-width:680px)" srcset="assets/images/hero-mobile.webp"><img class="hero-backdrop ambient-motion" src="assets/images/seabyss-portal-hero.webp" alt="" width="1672" height="941" fetchpriority="high"></picture>
-        <div class="hero-shade" aria-hidden="true"></div>
-        <div class="hero-atmosphere" aria-hidden="true"><div class="sea-mist ambient-motion"></div><div class="sea-sparks"><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i><i class="ambient-motion"></i></div></div>
-        <button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="true" hidden><span class="motion-indicator" aria-hidden="true"></span><span data-motion-label>Ambiance animée</span></button>
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="status-dot"></span> LE PORTAIL DES MONDES SINGULIERS</p>
-          <h1 id="hero-title">L’AVENTURE<br><em>n’attend que toi.</em></h1>
-          <p class="hero-intro">Des châteaux à conquérir. Des mystères à résoudre.<br>Un nouvel univers à découvrir à chaque partie.</p>
-          <div class="hero-actions"><a href="#catalogue" class="button button-primary" data-browse-category="all">Trouver mon jeu <span aria-hidden="true">↗</span></a><a href="#decouvertes" class="hero-secondary">Les découvertes du moment <span aria-hidden="true">↓</span></a></div>
-          <p class="hero-caption"><span aria-hidden="true">✦</span> Gratuit · Sans installation · Sans compte</p>
+  <main id="workspace">
+    <section id="sandbox-workspace" hidden aria-label="Atelier gravitationnel"></section>
+    <section id="climate-lab" hidden aria-label="Laboratoire climatique"></section>
+    <section id="relativity-workspace" hidden aria-label="Laboratoire des trous noirs"></section>
+    <section id="waves-workspace" hidden aria-label="Laboratoire des ondes gravitationnelles"></section>
+    <section id="phase-workspace" hidden aria-label="Observatoire des phases"></section>
+    <section id="traveller-workspace" hidden aria-label="Comètes et sondes"></section>
+    <section id="solar-workspace" hidden aria-label="Observation du Soleil"></section>
+    <section id="surface-workspace" hidden aria-label="Expédition au sol"></section>
+    <section id="landing-workspace" hidden aria-label="Pilotage de la descente"></section>
+    <section id="observatory" aria-label="Observatoire spatial">
+      <canvas id="space" tabindex="0" aria-label="Vue spatiale 3D interactive. Commandes disponibles dans l’aide."></canvas>
+      <div id="navigation-mark" hidden aria-hidden="true"></div>
+      <div id="object-frame" aria-hidden="true"></div>
+      <div class="scene-shade" aria-hidden="true"></div>
+      <div class="stage-heading">
+        <button type="button" id="capture-orbit" title="Ouvrir le studio photo" aria-label="Ouvrir le studio photo"><i data-icon="photo"></i></button>
+        <button type="button" id="time-open" title="Horloge et affichage"><i data-icon="clock"></i><span>Horloge</span></button>
+        <span class="indicator"></span><span id="mode-status" role="status">Observation</span>
+      </div>
+      <div class="target-info">
+        <button id="object-dossier" class="location" title="Ouvrir la fiche de l’astre"><i data-icon="orbit"></i><span id="location">Système solaire</span><span aria-hidden="true">↗</span></button>
+        <h1 id="target-name">Terre</h1>
+        <p id="target-description"></p>
+        <dl class="telemetry" aria-label="Télémétrie">
+          <div><dt>Distance au centre</dt><dd id="distance">–</dd></div>
+          <div><dt>Rayon</dt><dd id="radius">–</dd></div>
+        </dl>
+        <div class="hero-actions">
+          <button id="enter-flight" class="primary-btn"><i data-icon="navigate"></i>Vol libre</button>
+          <button id="surface-open" class="square-btn" hidden aria-label="Atterrir" title="Atterrir"><i data-icon="terrain"></i><span>Atterrir</span></button>
+          <button id="earth-open" class="square-btn" hidden aria-label="Explorer la Terre" title="Explorer la Terre"><i data-icon="earth"></i><span>Terre</span></button>
+          <button id="enter-cinema" class="square-btn cinema-trigger" aria-label="Vue cinéma" title="Vue cinéma"><i data-icon="cinema"></i><span>Vue cinéma</span></button>
+          <button id="save-position" class="square-btn" aria-label="Enregistrer cette position" title="Enregistrer cette position"><i data-icon="bookmark"></i></button>
+          <button id="photo-open" class="square-btn" hidden aria-label="Photographies de mission" title="Photographies de mission"><i data-icon="photo"></i><span>Photos</span></button>
         </div>
-        <div class="hero-coordinate" aria-hidden="true">EXPÉDITION 001 <span>LE PASSAGE DES ABYSSES</span></div>
-      </section>
-      <div class="welcome-strip"><p><strong data-game-count>15</strong> jeux à explorer</p><span aria-hidden="true">✦</span><p>Un studio indépendant</p><span aria-hidden="true">✦</span><p>Joue dans ton navigateur</p><a href="#catalogue">À toi de jouer <span aria-hidden="true">→</span></a></div>
-
-      <section id="decouvertes" class="discoveries" aria-labelledby="discovery-title">
-        <div class="section-top"><div><p class="eyebrow">PRENDS LE LARGE</p><h2 id="discovery-title">Ta prochaine aventure.</h2></div><a class="text-link" href="#catalogue" data-browse-category="all">Tous les jeux <span aria-hidden="true">↗</span></a></div>
-        <div class="spotlight-grid">
-          <article class="spotlight spotlight-large"><img src="assets/images/covers/castle-war.webp" alt="Arène et cartes de déploiement de Castle War." width="960" height="540" loading="lazy"><div class="spotlight-copy"><span class="feature-tag">STRATÉGIE · TEMPS RÉEL</span><h3>Castle War</h3><p>Un château. Une armée. Ton prochain royaume.</p><button type="button" data-play="castle-war" class="spotlight-link" aria-label="Jouer à Seabyss Castle War">Conquérir le royaume <span aria-hidden="true">↗</span></button></div></article>
-          <article class="spotlight"><img src="assets/images/covers/les-heures-perdues.webp" alt="Le cabinet d’étude et sa liste d’objets à retrouver." width="960" height="667" loading="lazy"><div class="spotlight-copy"><span class="feature-tag">OBJETS CACHÉS</span><h3>Les Heures <br>Perdues</h3><button type="button" data-play="les-heures-perdues" class="spotlight-link" aria-label="Jouer aux Heures Perdues">Ouvrir l’enquête <span aria-hidden="true">↗</span></button></div></article>
-          <article class="spotlight"><img src="assets/images/covers/marios-ghost.webp" alt="Plateformes et héros dans Mario’s Ghost." width="960" height="540" loading="lazy"><div class="spotlight-copy"><span class="feature-tag">ACTION · PLATEFORME</span><h3>Mario’s <br>Ghost</h3><button type="button" data-play="marios-ghost" class="spotlight-link" aria-label="Jouer à Mario’s Ghost">Braver la nuit <span aria-hidden="true">↗</span></button></div></article>
+        <section id="earth-overflight" aria-label="Survol terrestre" hidden>
+          <output id="earth-overflight-location"></output>
+          <label for="earth-overflight-altitude">Altitude <select id="earth-overflight-altitude"><option value="800">800 km</option><option value="2100">2 100 km</option><option value="4800" selected>4 800 km</option><option value="12000">12 000 km</option></select></label>
+          <button type="button" id="earth-overflight-light" aria-pressed="true">Éclairage de carte</button>
+          <button type="button" id="earth-overflight-return">Carte terrestre</button>
+        </section>
+      </div>
+      <section id="system-view" hidden aria-label="Vue orbitale interactive"></section>
+      <button id="exit-cinema" class="square-btn" hidden title="Quitter la vue cinéma (Échap)"><i data-icon="close"></i>Quitter la vue cinéma</button>
+      <div class="flight-hud" hidden>
+        <div class="flight-target"><span>Cible</span><strong id="flight-name">Terre</strong><output id="flight-distance"></output></div>
+        <button id="flight-lock" class="square-btn" title="Verrouiller la visée souris (L)" aria-label="Verrouiller la visée souris" aria-pressed="false"><i data-icon="drag"></i></button>
+        <button id="flight-exit" class="square-btn" title="Recentrer et revenir à l’observation" aria-label="Recentrer et revenir à l’observation"><i data-icon="focus"></i></button>
+      </div>
+      <div class="reticle" hidden aria-hidden="true"></div>
+      <div class="flight-controls" hidden>
+        <div class="pad" aria-label="Déplacement">
+          <button class="square-btn" data-move="left" aria-label="Gauche"><i data-icon="left"></i></button>
+          <button id="thrust-forward" class="square-btn" data-move="forward" aria-label="Avancer"><i data-icon="up"></i></button>
+          <button class="square-btn" data-move="right" aria-label="Droite"><i data-icon="right"></i></button>
+          <button class="square-btn" data-move="down" aria-label="Descendre"><i data-icon="descend"></i></button>
+          <button class="square-btn" data-move="back" aria-label="Reculer"><i data-icon="down"></i></button>
+          <button class="square-btn" data-move="up" aria-label="Monter"><i data-icon="ascend"></i></button>
         </div>
-      </section>
-
-      <section class="catalogue" id="catalogue" aria-labelledby="catalogue-title">
-        <div class="section-top"><div><p class="eyebrow">LA COLLECTION SEABYSS</p><h2 id="catalogue-title">Choisis ton univers.</h2></div><p class="section-caption">Une envie de découverte ?<br>Le prochain clic est le bon.</p></div>
-        <div id="category-filters" class="category-list" role="group" aria-label="Catégories de jeux">
-          <button type="button" data-category="all" class="is-active" aria-pressed="true">Tous les jeux <span data-game-count>15</span></button>
-          <button type="button" data-category="action" aria-pressed="false">Action</button>
-          <button type="button" data-category="strategy" aria-pressed="false">Stratégie</button>
-          <button type="button" data-category="puzzle" aria-pressed="false">Objets cachés & énigmes</button>
-          <button type="button" data-category="simulation" aria-pressed="false">Compagnons & détente</button>
-          <button type="button" data-category="casino" aria-pressed="false">Casino fictif</button>
+        <div class="speed-panel">
+          <div class="flight-readouts"><div><span>Vitesse réelle</span><strong id="flight-velocity">–</strong></div><div><span>Allure réglée</span><strong id="speed">–</strong></div></div>
+          <div class="speed-actions"><button class="brake-btn" id="flight-brake" aria-label="Freiner" title="Freiner (X)">Freiner</button><button class="square-btn" id="speed-down" aria-label="Réduire la vitesse"><i data-icon="minus"></i></button><button class="square-btn" id="speed-up" aria-label="Augmenter la vitesse"><i data-icon="plus"></i></button></div>
         </div>
-        <div class="catalogue-toolbar"><div class="view-tabs" role="group" aria-label="Affichage des jeux"><button type="button" data-view="all" class="is-active" aria-pressed="true">La collection</button><button type="button" data-view="recent" aria-pressed="false">Nouveautés</button><button type="button" data-view="favorites" aria-pressed="false">Mes favoris <span data-bookmark-count>0</span></button></div><div class="sort-wrap"><label class="sr-only" for="sort-games">Trier les jeux</label><select id="sort-games"><option value="featured">La sélection Seabyss</option><option value="newest">Les plus récents</option><option value="title">De A à Z</option></select></div></div>
-        <p id="results-count" class="results-count" aria-live="polite">Chargement du catalogue…</p><p id="catalog-status" class="catalog-status" role="status" hidden></p>
-        <div id="game-grid" class="game-grid"></div>
-        <div id="empty-state" class="empty-state" hidden><span class="empty-icon" aria-hidden="true">◇</span><h3 id="empty-title">Le catalogue arrive bientôt.</h3><p id="empty-copy">Les premières créations du studio prendront place ici.</p><button id="reset-filters" type="button" class="button button-outline" hidden>Voir tous les jeux</button></div>
-        <noscript><p class="catalog-status">Active JavaScript pour rechercher des jeux et utiliser les favoris. Tu peux déjà jouer à <a href="games/castle-war/index.html">Castle War</a>, <a href="games/marios-ghost/index.html">Mario’s Ghost</a>, <a href="games/les-heures-perdues/index.html">Les Heures Perdues</a>, <a href="games/petits-compagnons/index.html">Petits Compagnons</a> ou découvrir <a href="games/seabyss-casino/index.html">Les neuf machines de casino fictif</a>.</p></noscript>
-      </section>
-
-      <section class="casino-banner" id="casino" aria-labelledby="casino-title">
-        <img class="casino-backdrop" src="assets/images/seabyss-casino-lounge.webp" alt="" width="1440" height="810" loading="lazy">
-        <div class="casino-copy"><p class="eyebrow">LA SALLE DES TRÉSORS</p><h2 id="casino-title">Neuf machines.<br><em>Neuf mondes à part.</em></h2><p>Pirates, sorcières, dragons et galaxies…<br>Entre dans les univers de Seabyss Casino.</p><a href="#catalogue" data-browse-category="casino" class="button button-primary">Explorer les machines <span aria-hidden="true">↗</span></a><small>Argent fictif uniquement · Aucun dépôt ni retrait</small></div>
-        <span class="banner-seal" aria-hidden="true">SEABYSS<br><strong>CASINO</strong><span>COLLECTION / 09</span></span>
-      </section>
-
-      <section class="studio-section" id="studio" aria-labelledby="studio-title"><div class="studio-heading"><img src="assets/images/compass-mark.svg" alt="" width="62" height="62"><p class="eyebrow">SOUS UN MÊME PAVILLON</p><h2 id="studio-title">Petite équipe.<br><em>Grands horizons.</em></h2></div><div class="studio-copy"><p>Seabyss, c’est la liberté de créer des mondes qui ne se ressemblent pas. Un compagnon à adopter, un royaume à défendre, une histoire à démêler.</p><p>Pas besoin de télécharger. Installe-toi, choisis ton aventure et fais comme chez toi.</p><a href="#catalogue" class="text-link" data-browse-category="all">Découvrir les créations du studio <span aria-hidden="true">↗</span></a></div></section>
-    </div>
+      </div>
+    </section>
+    <section class="destinations" aria-labelledby="strip-title">
+      <div id="expedition-hud" hidden></div>
+      <header class="strip-header"><h2 id="strip-title">Destinations</h2><span class="deck-rule" aria-hidden="true"></span><div class="strip-actions"><button id="surface-atlas-open" class="text-btn"><i data-icon="terrain"></i>Surfaces</button><button id="atlas-all" class="text-btn">Atlas <i data-icon="grid"></i></button></div></header>
+      <div id="destination-strip" class="strip"></div>
+    </section>
   </main>
-  <footer class="site-footer"><div class="shell footer-inner"><a class="footer-brand" href="./"><img src="assets/images/compass-mark.svg" alt="" width="30" height="30">SEABYSS</a><p>L’aventure appartient aux curieux.</p><div><a href="#catalogue">Les jeux</a><a href="privacy.html">Confidentialité</a><span>© 2026 Seabyss</span></div></div></footer>
-  <dialog id="game-dialog" class="game-dialog" aria-labelledby="player-title">
-    <div class="player-heading"><div><p class="eyebrow">SEABYSS / À TOI DE JOUER</p><h2 id="player-title"></h2></div><button id="close-player" class="icon-button" type="button" aria-label="Fermer le jeu">✕</button></div>
-    <div class="player-quick-actions"><a id="open-game" class="text-link" target="_blank" rel="noopener noreferrer">Ouvrir dans un onglet <span aria-hidden="true">↗</span></a><button id="fullscreen-game" class="button button-outline" type="button" hidden>Plein écran</button></div>
-    <div id="player-stage" class="player-stage"><img id="player-poster" class="player-poster" alt="" hidden><iframe id="game-frame" title="Jeu navigateur" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms" allow="fullscreen; gamepad" allowfullscreen hidden></iframe><button id="start-game" type="button" class="button button-primary">Lancer le jeu <span aria-hidden="true">▶</span></button><a id="launch-game" class="button button-primary" target="_blank" rel="noopener noreferrer" hidden>Jouer dans un onglet <span aria-hidden="true">↗</span></a></div>
-    <div class="player-details"><p id="player-description"></p><p id="player-controls"></p><p id="player-note" role="status"></p></div>
+  <dialog id="overlay" aria-labelledby="dialog-title">
+    <header class="dialog-header"><h2 id="dialog-title"></h2><button id="close-dialog" class="icon-btn" aria-label="Fermer"><i data-icon="close"></i></button></header>
+    <div id="dialog-body"></div>
   </dialog>
+  <div id="toast" role="status"></div>
+  <input type="file" id="climate-file" accept=".json,application/json" hidden>
+  <noscript>Active JavaScript pour explorer l’univers.</noscript>
 </body>
 </html>

@@ -1,0 +1,37 @@
+.cinema-camera[hidden] { display:none; }
+.cinema-camera {
+  position:absolute;
+  z-index:3;
+  inset:auto auto max(18px,env(safe-area-inset-bottom)) 50%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:2px;
+  max-width:calc(100% - 24px);
+  padding:4px;
+  border:1px solid #65778580;
+  border-radius:12px;
+  background:#0a141be8;
+  box-shadow:0 5px 20px #0006;
+  color:#e4eeef;
+  font:500 13px/1.2 system-ui,sans-serif;
+}
+.cinema-camera :is(button,select) {
+  display:flex; gap:9px; align-items:center; justify-content:center;
+  min-width:44px; min-height:44px; padding:0 10px;
+  border:0; border-radius:8px; background:transparent; color:inherit;
+  font:inherit; white-space:nowrap; cursor:pointer;
+}
+.cinema-camera select { color-scheme:dark; padding-inline:5px; }
+.cinema-camera button[aria-pressed=true] { color:#9fe1df; background:#1b3039; }
+.cinema-camera :is(button,select):focus-visible { outline:2px solid #9fe1df; outline-offset:-2px; }
+.cinema-camera [data-cinema-reverse] { font-size:22px; }
+.cinema-play-mark {
+  display:block; width:0; height:0;
+  border-block:5px solid transparent; border-left:8px solid currentColor;
+}
+.cinema-camera [aria-pressed=true] .cinema-play-mark {
+  width:8px; height:11px; box-sizing:border-box;
+  border:0; border-inline:3px solid currentColor;
+}
+.cinema-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }

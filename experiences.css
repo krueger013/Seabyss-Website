@@ -1,0 +1,56 @@
+.experience-links {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:10px}
+.experience-links button {
+  display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:6px 10px;border-radius:5px;
+  background:#1a2530;border:1px solid #5c74864d;color:#f5e8d9;font:600 13px/1.2 var(--sans);touch-action:manipulation;
+}
+.experience-links button:hover {border-color:#eeb886}
+.experience-links i {flex:none;color:#f0b580}
+.experience-links [data-experience="climate"] {grid-column:1/-1;background:#142e34;border-color:#658f9180;color:#d8f5ed}
+.experience-links [data-experience="climate"] i {color:#a0dfd0}
+.experience-links:has([data-experience="relativity"]) :is([data-experience="climate"],[data-experience="relativity"]) {grid-column:span 2}
+.experience-links [data-experience="relativity"] {background:linear-gradient(120deg,#362735,#29233c);border-color:#b193a778;color:#f9e8ed}
+.experience-links [data-experience="relativity"] i {color:#f2b796}
+.experience-links [data-experience="relativity"]:hover {border-color:#eab49d}
+.experience-links [data-experience="waves"] {grid-column:1/-1;background:linear-gradient(110deg,#202749,#2b234f);border-color:#8d83c3;color:#f1e9ff}
+.experience-links [data-experience="waves"] i {color:#c2b2fd}
+.experience-links [data-experience="waves"]:hover {border-color:#bcb1ed}
+.experience-links button:focus-visible {outline:2px solid #ffc7aa;outline-offset:-2px}
+.landing-intro {margin:8px 0 14px;color:#c6cbd1;font-size:14px;line-height:1.45}
+.landing-status {margin:0 0 8px;padding:8px 10px;border-left:2px solid #e9b378;background:#251d16;color:#f6debf}
+.pilot-choices {display:grid;gap:7px}
+.archive-entry + .archive-entry {margin-top:7px}
+#surface-open {min-width:44px;min-height:44px;color:#ffe0b2;background:#382919;border-color:#d7a56a80}
+#surface-open:hover {background:#513823}
+#surface-open i svg {width:18px;height:18px}
+#earth-open {color:#cfe9f6;border-color:#7aa3b280;min-width:44px}
+#earth-open:hover {background:#1e3948}
+#navigation-mark {
+  position:absolute;z-index:3;width:25px;height:25px;transform:translate(-50%,-50%);
+  pointer-events:none;border:1px solid #ffcf95;border-radius:50%;
+  box-shadow:0 0 12px #edaa6d65,inset 0 0 5px #edaa6d5b;
+}
+#navigation-mark::after {content:'';position:absolute;inset:10px;border-radius:50%;background:#fff2c6}
+body.surface-active #workspace > :not(#surface-workspace),body.landing-active #workspace > :not(#landing-workspace) {display:none}
+.stage-heading #capture-orbit {display:grid;place-items:center;min-width:44px;min-height:44px;pointer-events:auto;color:#f6dcac}
+#capture-orbit svg {width:18px;height:18px}
+.stage-heading #capture-orbit:hover {color:#fff1d9}
+#earth-overflight {pointer-events:auto;display:flex;align-items:center;flex-wrap:wrap;gap:6px 11px;margin-top:10px;font:600 12px var(--sans);color:#d5e6ea}
+#earth-overflight-location {font-family:var(--mono)}
+#earth-overflight :is(button,select) {min-height:44px;padding:5px 7px;border:1px solid #829fa675;border-radius:4px;background:#102532;color:#f1f7fa}
+body.earth-overflight-active .target-info :is(.telemetry,p) {display:none}
+#dialog-body>[data-open-album] {margin-top:8px}
+.surface-entry-links {display:grid;gap:6px;margin:15px 0}
+.strip-actions {display:flex;align-items:center;gap:clamp(5px,2vw,26px)}
+#surface-atlas-open {color:#ffd497;white-space:nowrap}
+#surface-atlas-open svg {width:15px;height:15px}
+@media (max-width:450px) {
+  .experience-links {grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  .experience-links button {padding:5px 4px;gap:3px;font-size:11px}
+  .experience-links i svg {width:14px;height:14px}
+  .experience-links:has([data-experience="relativity"]) :is([data-experience="climate"],[data-experience="relativity"]) {grid-column:span 1}
+}
+@media (max-height:500px) and (orientation:landscape) {
+  #earth-overflight {column-gap:6px}
+  #earth-overflight-location {width:100%}
+}
+@media (max-width:900px) {:is(#surface-open,#earth-open) span {display:none}}

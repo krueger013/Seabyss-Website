@@ -1,0 +1,52 @@
+body.system-active .destinations,
+body.system-active #observatory > :is(.stage-heading,.target-info,.scene-shade,.flight-hud,.flight-controls,.reticle,.body-labels,#space) { visibility:hidden; pointer-events:none; }
+#time-open { pointer-events:auto; min-height:44px; display:inline-flex; align-items:center; gap:6px; padding:0 10px; color:var(--muted); border-radius:6px; font:12px var(--sans); letter-spacing:0; text-transform:none; }
+#time-open i svg { width:16px; height:16px; }
+#time-open:hover, #time-open:focus-visible { color:var(--text); background:#151a22; }
+.sim-toolbar { display:inline-flex; align-items:center; gap:2px; max-width:100%; min-width:0; height:44px; border:1px solid #abbcce3d; border-radius:7px; background:#0c121bef; color:#f1f0ec; font:12px var(--sans); }
+.sim-toolbar button, .sim-toolbar select { min-width:38px; height:44px; padding:0 8px; border:0; border-radius:4px; background:none; color:inherit; cursor:pointer; font:inherit; }
+.sim-toolbar button { display:inline-flex; align-items:center; justify-content:center; }
+.sim-toolbar button svg, .sim-lab-button svg { width:17px; height:17px; }
+.sim-toolbar button:hover, .sim-toolbar select:hover, .sim-lab-button:hover { background:#26313b; }
+.sim-toolbar :focus-visible, .gravity-panel :focus-visible { outline:2px solid var(--accent); outline-offset:-3px; }
+.sim-toolbar select { min-width:82px; padding-right:1px; font-weight:600; }
+.sim-toolbar option, .gravity-panel select option { background:#141c26; color:#f5f2ed; }
+#sim-elapsed { min-width:55px; padding:0 6px; color:#bfc8d0; text-align:center; font:11px var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; }
+#sim-names { border-left:1px solid #8393a440; border-radius:0 5px 5px 0; color:#8c99a7; }
+#sim-names[aria-pressed=true] { color:var(--accent); }
+.sim-lab-button { display:inline-flex; align-items:center; justify-content:center; gap:7px; height:44px; border:1px solid #cd9a685c; border-radius:7px; padding:0 11px; background:#1a1918f0; color:#ffd2a6; font:600 12px var(--sans); }
+.gravity-panel { color:var(--text); }
+.gravity-heading { display:grid; gap:3px; margin-bottom:18px; }
+.gravity-key { color:var(--muted); font:10px var(--mono); text-transform:uppercase; letter-spacing:.12em; }
+.gravity-heading strong { font:400 38px/1.1 var(--serif); }
+.gravity-mass { display:flex; align-items:center; justify-content:space-between; gap:14px; font:600 15px var(--sans); }
+.gravity-mass select { min-width:104px; min-height:44px; padding:0 8px; border:1px solid #b1987d72; border-radius:5px; font:15px var(--mono); color:var(--accent); background:#14181f; }
+.gravity-note, .gravity-feedback { color:var(--muted); font:13px/1.5 var(--sans); }
+.gravity-result { margin:18px 0 10px; padding:15px 0; border-block:1px solid var(--line); }
+.gravity-result h3 { margin:0 0 12px; font:600 14px var(--sans); }
+.gravity-result dl { margin:0; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.gravity-result dt { color:var(--muted); font:12px var(--sans); }
+.gravity-result dd { margin:4px 0 0; font:16px var(--mono); }
+.gravity-orbits { display:flex; align-items:center; gap:9px; min-height:44px; font:14px var(--sans); }
+.gravity-orbits input { width:17px; height:17px; accent-color:var(--accent); }
+.gravity-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:7px; padding-top:8px; }
+.gravity-feedback { color:#e8bc92; }
+.gravity-feedback:empty {display:none}
+@media (max-width:900px) {
+  #time-open { height:36px; min-height:36px; padding:0 6px; }
+  #time-open span { display:none; }
+  .stage-heading { z-index:2; }
+  .sim-toolbar button { min-width:44px; }
+}
+@media (max-width:380px) { .masthead .brand-type { display:none; } }
+@media (min-width:381px) and (max-width:435px) {
+  .masthead { padding-inline:max(10px,env(safe-area-inset-left)) max(10px,env(safe-area-inset-right)); }
+  .masthead .brand { gap:5px; }
+  .masthead .brand-mark { width:25px; height:25px; }
+  .masthead .brand-type { font-size:14px; }
+}
+@media (max-height:460px) and (orientation:landscape) {
+  .gravity-heading { display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+  .gravity-heading strong {font-size:27px}
+  .gravity-result {margin:8px 0;padding:8px 0}
+}

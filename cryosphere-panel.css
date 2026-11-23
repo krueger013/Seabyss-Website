@@ -1,0 +1,101 @@
+.cryosphere-panel {
+  --cryo-line:#6c9fb94f;
+  --cryo-blue:#b0edf7;
+  --cryo-purple:#e2d2fb;
+  min-width:0;
+  display:grid;
+  align-content:start;
+  gap:8px;
+}
+
+.cryosphere-readouts,.cryosphere-site-readouts {
+  display:grid;
+  gap:4px;
+  margin:0;
+  font-variant-numeric:tabular-nums;
+}
+.cryosphere-readouts {grid-template-columns:repeat(3,minmax(0,1fr))}
+.cryosphere-site-readouts {grid-template-columns:repeat(2,minmax(0,1fr))}
+.cryosphere-readouts div,.cryosphere-site-readouts div {
+  min-width:0;
+  display:grid;
+  gap:3px;
+  align-content:start;
+  padding:6px;
+  border-radius:5px;
+  border:1px solid var(--cryo-line);
+  background:linear-gradient(170deg,#122c3f,#0b1825);
+}
+.cryosphere-readouts div:nth-child(2) {background:linear-gradient(170deg,#262742,#0b1825)}
+.cryosphere-readouts dt,.cryosphere-site-readouts dt {
+  color:#bad2df;
+  font:600 11px/1.2 var(--sans,sans-serif);
+  overflow-wrap:anywhere;
+}
+.cryosphere-readouts dd,.cryosphere-site-readouts dd {
+  margin:0;
+  color:#eaf6f8;
+  font:600 13px/1.24 var(--mono,monospace);
+  overflow-wrap:anywhere;
+}
+.cryosphere-readouts [data-cryosphere-sea-area] {color:var(--cryo-blue)}
+.cryosphere-readouts [data-cryosphere-land-mass] {color:var(--cryo-purple)}
+.cryosphere-layers {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+#climate-lab .cryosphere-layers button {
+  min-inline-size:44px;
+  min-block-size:44px;
+  padding-inline:5px;
+}
+#climate-lab .cryosphere-layers button[aria-pressed="true"] {
+  border-color:#9ac8d5;
+  background:#214557;
+  color:#d6f7fa;
+}
+#climate-lab .cryosphere-layers button[data-cryosphere-layer="landIce"][aria-pressed="true"] {
+  border-color:#c6a6e0;
+  background:#383150;
+  color:#efdffd;
+}
+#climate-lab .cryosphere-layers button[data-cryosphere-layer="cryosphere"][aria-pressed="true"] {
+  border-color:#abc7ed;
+  background:linear-gradient(135deg,#244957,#3a3353);
+  color:#eef2ff;
+}
+.cryosphere-site-card,.cryosphere-scenarios,.cryosphere-method {
+  display:grid;
+  gap:6px;
+  min-width:0;
+  border-top:1px solid var(--cryo-line);
+  padding-top:7px;
+}
+.cryosphere-site-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:4px;
+}
+.cryosphere-site-head h3 {
+  margin:0;
+  font:500 20px/1.15 var(--serif,serif);
+  color:#e4f2f6;
+}
+#climate-lab .cryosphere-site-head select {max-width:min(65%,240px);padding-inline:5px}
+.cryosphere-panel .cryosphere-site-position {
+  color:#bad9e6;
+  font:12px/1.35 var(--mono,monospace);
+  overflow-wrap:anywhere;
+}
+.cryosphere-scenarios label {font:600 12px/1.25 var(--sans,sans-serif);color:#bcd1dc}
+.cryosphere-scenarios select {width:100%;min-width:0;max-width:100%}
+.cryosphere-scenarios p,.cryosphere-method p {font:12px/1.4 var(--sans,sans-serif)}
+.cryosphere-method summary {min-height:44px;padding:9px 0;cursor:pointer;font-weight:600;color:#d5e8ef}
+.cryosphere-method p+p {margin-top:7px}
+.cryosphere-method a {color:var(--cryo-blue)}
+
+@media (max-width:390px), (max-height:490px) and (orientation:landscape) {
+  .cryosphere-panel {gap:6px}
+  .cryosphere-readouts div,.cryosphere-site-readouts div {padding:5px 3px}
+  .cryosphere-readouts dd,.cryosphere-site-readouts dd {font-size:12px}
+  #climate-lab .cryosphere-layers button {font-size:12px}
+}

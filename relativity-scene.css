@@ -1,0 +1,89 @@
+.relativity-scene {
+  display:grid;
+  grid-template-rows:minmax(0,1fr) auto auto;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  background:#0b1020;
+  color:#e0edf7;
+}
+.rl-scene-stage {
+  position:relative;
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  isolation:isolate;
+  background:radial-gradient(ellipse at 55% 45%,#202740,#080c16 72%);
+}
+.rl-scene-stage canvas {
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  outline-offset:-3px;
+  touch-action:manipulation;
+}
+.rl-scene-stage canvas[data-mode="lens"][data-view="diagram"] {cursor:crosshair}
+.rl-scene-stage canvas:focus-visible {outline:2px solid #a3dbe8}
+.rl-scene-note {
+  position:absolute;
+  inset-block-start:7px;
+  inset-inline-start:8px;
+  pointer-events:none;
+  border:1px solid #bacffa40;
+  border-radius:4px;
+  padding:4px 6px;
+  background:#12182cdd;
+  color:#dce9f4;
+  font:500 11px/1.1 var(--mono,monospace);
+}
+.rl-scene-controls {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:5px;
+  min-width:0;
+  padding:4px 8px;
+  border-top:1px solid #9aafda31;
+  background:#141b2d;
+}
+.rl-view-switch,.rl-scaling {display:flex;gap:3px}
+.relativity-scene .rl-scene-controls button {
+  min-height:44px;
+  min-width:44px;
+  padding:3px clamp(4px,1.1vw,10px);
+  border:1px solid #95b2d962;
+  border-radius:4px;
+  background:#19263a;
+  color:#e3eef9;
+  font:600 13px/1 var(--sans,system-ui,sans-serif);
+}
+.relativity-scene .rl-scene-controls button[aria-pressed="true"] {
+  background:#213754;
+  border-color:#8ec5de;
+  color:#d5f3ff;
+}
+.relativity-scene .rl-scene-controls button:disabled {opacity:.43}
+.rl-scene-guide {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px 12px;
+  padding:5px 8px;
+  border-top:1px solid #9aafda26;
+  background:#0d1525;
+  color:#d1e1ed;
+  font:500 11px/1.25 var(--sans,system-ui,sans-serif);
+}
+.rl-scene-guide span {display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.rl-scene-guide span::before {display:block;content:'';width:9px;height:9px;border:1px solid #ffc683;border-radius:50%}
+.rl-scene-guide span:nth-child(2)::before {border-style:dashed;border-color:#b9a8fa}
+.rl-scene-guide span:nth-child(3)::before {border-style:dotted;border-color:#88cadd}
+@media (max-width:370px) and (orientation:portrait) {
+  .rl-scene-guide {gap:2px 7px;padding:3px 6px;font-size:10px}
+}
+@media (max-height:490px) and (orientation:landscape) {
+  .rl-scene-controls {padding:2px 6px}
+  .rl-scene-guide {gap:2px 7px;padding:3px 6px;font-size:10px}
+}

@@ -1,0 +1,65 @@
+.surface-sky {position:absolute;top:9px;left:9px;z-index:4}
+.surface-sky :is(button,select,input):focus-visible {outline:2px solid var(--surface-accent);outline-offset:-2px}
+.surface-sky button,.surface-sky :is(select,input[type=datetime-local]) {
+  min-height:44px;border:1px solid #627a7f9c;border-radius:5px;background:#132026;
+  color:#eef4f5;padding:5px 9px;font:600 12px/1.26 var(--sans);
+}
+.surface-sky button:hover:not(:disabled) {border-color:var(--surface-accent)}
+.surface-sky .surface-sky-toggle {
+  display:flex;align-items:center;gap:6px;min-width:106px;min-height:44px;
+  padding:4px 7px;background:#0b141bf2;text-align:left;
+}
+.surface-sky-toggle svg {width:15px;height:15px;flex:none;color:var(--surface-accent)}
+.surface-sky-hud {display:grid;flex:1;gap:2px}
+.surface-sky-hud-line {display:flex;align-items:baseline;gap:4px;justify-content:space-between;white-space:nowrap}
+.surface-sky-hud strong {font:600 11px/1.1 var(--sans);color:#e5eef0}
+.surface-sky-hud [data-sky-hud-sun] {font:10px/1 var(--mono);color:#f9deab}
+.surface-sky-hud time {font:10px/1.2 var(--mono);color:#a8c3cb;font-variant-numeric:tabular-nums;white-space:nowrap}
+.surface-sky-toggle[data-mode="live"] .surface-sky-hud strong {color:#a6e4ca}
+.surface-sky-panel {
+  position:absolute;top:50px;left:0;width:min(350px,calc(100vw - 20px));
+  max-height:min(var(--surface-sky-height,68dvh),calc(var(--surface-sky-height,68dvh) - 57px));
+  padding:10px;overflow:auto;overscroll-behavior:contain;
+  background:#101c24f8;border:1px solid #67828b;border-radius:6px;color:#e9f2f2;box-shadow:0 9px 25px #01080daa;
+}
+.surface-scene {container-type:size}
+@supports (height:1cqh) {.surface-sky-panel {--surface-sky-height:100cqh}}
+@supports (width:1cqw) {.surface-sky-panel {width:min(350px,calc(100cqw - 18px))}}
+.surface-sky-heading {
+  position:sticky;top:-10px;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:6px;
+  margin:-10px -10px 8px;padding:10px;background:#101c24;border-bottom:1px solid #5167736b
+}
+.surface-sky-heading h2 {margin:2px 0 5px;font:400 24px/1 var(--serif);color:#fff6e7}
+.surface-sky-heading p {margin:0;font:11px/1.35 var(--mono);color:#c4d6db}
+.surface-sky .surface-sky-close {flex:none;min-height:44px;width:44px;font-size:21px;line-height:1}
+.surface-sky-summary {
+  display:grid;gap:4px;margin:0 0 9px;padding:7px 9px;border-left:2px solid var(--surface-accent);
+  background:#162731;color:#d1e3e7
+}
+.surface-sky-summary strong {font:600 13px/1.2 var(--sans);color:#f3ece3}
+.surface-sky-summary span {font:11px/1.3 var(--mono)}
+.surface-sky-time,.surface-sky-presets {display:flex;align-items:end;gap:5px;margin-bottom:7px}
+.surface-sky-time label,.surface-sky-site {display:grid;flex:1;gap:3px;min-width:0;font:11px/1.2 var(--mono);color:#c8d8de}
+.surface-sky-time input {width:100%;min-width:0}
+.surface-sky [aria-pressed=true] {border-color:var(--surface-accent);color:var(--surface-accent)}
+.surface-sky-presets {align-items:center}
+.surface-sky-presets label {display:inline-flex;align-items:center;min-height:44px;gap:5px;font:11px/1.15 var(--sans);color:#cbd9de}
+.surface-sky-presets input {width:18px;height:18px;accent-color:var(--surface-accent)}
+.surface-sky-site {margin-bottom:8px}
+.surface-sky-rate {display:grid;grid-template-columns:1fr minmax(138px,auto);align-items:center;gap:6px;margin-bottom:7px;color:#c8d8de;font:11px/1.2 var(--mono)}
+.surface-sky-comparison {margin:0 0 8px;color:#ffdda8;font:11px/1.35 var(--sans)}
+.surface-sky-object {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;border-top:1px solid #51677381;padding:8px 0 5px}
+.surface-sky-readout {display:grid;grid-template-columns:1fr auto;gap:4px 6px;align-items:baseline}
+.surface-sky-readout strong {font:650 14px/1.2 var(--sans)}
+.surface-sky-readout span {font:11px/1.2 var(--mono);color:#ffe6b4;white-space:nowrap}
+.surface-sky-readout small {grid-column:1/-1;font:11px/1.2 var(--sans);color:#c1d1d7}
+.surface-sky button:disabled {opacity:.72;font-size:10px;max-width:76px}
+.surface-sky-model,.surface-sky-offline {font:11px/1.4 var(--sans);color:#a9bac1;margin:8px 0 0}
+.surface-sky-eclipse {font:12px/1.35 var(--sans);color:#ffdbab;background:#6f432c52;padding:7px 8px;margin:7px 0;border-left:2px solid #de9a5e}
+@media (max-height:485px) and (orientation:landscape) {
+  .surface-sky {top:4px;left:5px}
+}
+@container (max-width:305px) {
+  .surface-sky .surface-sky-toggle {padding-inline:5px;min-width:86px}
+  .surface-sky-toggle svg {display:none}
+}

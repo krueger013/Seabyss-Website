@@ -1,0 +1,73 @@
+.exp-list,
+.exp-hud-card {
+  --exp-copper: #e0aa83;
+  --exp-ivory: #f5eee1;
+  --exp-muted: #cfbcaa;
+  --exp-line: #ad805b65;
+  color: var(--exp-ivory);
+}
+.exp-list { display: grid; gap: .7rem; }
+.exp-route,
+.exp-hud-card {
+  border: 1px solid var(--exp-line);
+  border-inline-start: 3px solid #b7835e;
+  border-radius: .4rem;
+  background: linear-gradient(120deg, #2c211b, #161515 70%);
+  overflow-wrap: anywhere;
+}
+.exp-route { padding: .85rem 1rem; }
+.exp-title,
+.exp-hud-stop { margin: 0; font-weight: 600; line-height: 1.2; }
+.exp-title { font-size: 1.05rem; }
+.exp-stops {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .2rem .45rem;
+  margin: .45rem 0 .6rem;
+  padding: 0;
+  list-style: none;
+  color: var(--exp-muted);
+  font-size: .88rem;
+  line-height: 1.4;
+}
+.exp-stops li + li::before { content: '·'; padding-right: .45rem; color: var(--exp-copper); }
+.exp-stops [aria-current] { color: var(--exp-ivory); text-decoration: underline; text-underline-offset: .18em; }
+.exp-button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: .4rem .8rem;
+  border: 1px solid var(--exp-line);
+  border-radius: .3rem;
+  color: var(--exp-ivory);
+  background: transparent;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.exp-primary { color: #211610; background: var(--exp-copper); border-color: var(--exp-copper); }
+.exp-button:focus-visible { outline: 2px solid #fff5e7; outline-offset: 2px; }
+@media (hover: hover) {
+  .exp-button:hover { border-color: var(--exp-ivory); }
+  .exp-primary:hover { background: #f4cba4; }
+}
+.exp-hud-card {
+  width: 100%;
+  padding: .7rem .8rem;
+  display: grid;
+  gap: .55rem;
+  pointer-events: auto;
+}
+.exp-hud-copy { min-width: 0; }
+.exp-hud-route { margin: 0 0 .18rem; color: var(--exp-copper); font-size: .79rem; line-height: 1.3; }
+.exp-hud-stop { display: flex; align-items: baseline; justify-content: space-between; gap: .4rem; font-size: 1.05rem; }
+.exp-count { flex: none; color: var(--exp-muted); font: .76rem/1.2 var(--mono, monospace); }
+.exp-observation { margin: .28rem 0 0; color: var(--exp-ivory); font-size: .9rem; line-height: 1.35; }
+.exp-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+@media (max-height: 430px) and (orientation: landscape) {
+  .exp-hud-card { padding: .4rem .55rem; gap: .3rem; }
+  .exp-hud-route, .exp-count { font-size: .75rem; }
+  .exp-observation { font-size: .82rem; line-height: 1.2; margin-top: .15rem; }
+}

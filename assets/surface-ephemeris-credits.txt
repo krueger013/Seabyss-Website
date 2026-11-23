@@ -1,0 +1,26 @@
+CIEL DES EXPÉDITIONS
+
+Les éphémérides fonctionnent hors ligne avec Astronomy Engine v2.1.19. La copie de son module JavaScript est distribuée sous la licence MIT indiquée dans le fichier.
+https://github.com/cosinekitty/astronomy/tree/v2.1.19
+
+Le calcul tient compte du lieu, de la date UTC, de la distance au centre de chaque astre, de sa taille apparente et du temps de propagation de la lumière. L'horizon est géométrique. La rotation IAU, le dessin des disques et les phases sont des modèles. La scène ne reproduit pas la photométrie, les nuages à une date réelle, la réfraction ni le relief topographique complet. Pour Titan et Encelade, le modèle utilise une orbite moyenne synchrone. Sur Titan, le ciel reste une visualisation derrière la brume.
+
+Orientation des corps, NAIF/JPL
+https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc
+
+Éléments orbitaux moyens de Titan et Encelade, JPL
+https://ssd.jpl.nasa.gov/sats/elem/
+
+Vérification lunaire avec les données de NASA Scientific Visualization Studio
+https://svs.gsfc.nasa.gov/5587/
+
+Coordonnées des sites USGS et LROC
+https://planetarynames.wr.usgs.gov/Feature/3678
+https://planetarynames.wr.usgs.gov/Feature/6288
+https://planetarynames.wr.usgs.gov/Feature/1282
+https://planetarynames.wr.usgs.gov/Feature/14399
+https://planetarynames.wr.usgs.gov/Feature/979
+https://planetarynames.wr.usgs.gov/Feature/14248
+https://planetarynames.wr.usgs.gov/Feature/345
+https://lroc.im-ldi.com/featured_sites/apollo-11/temporal-traverse
+https://lroc.im-ldi.com/images/1100

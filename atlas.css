@@ -1,0 +1,41 @@
+#overlay[data-panel="atlas"] { width:min(830px,calc(100% - 24px)); }
+#overlay[data-panel="atlas"][data-atlas-view="surfaces"] {width:min(1080px,calc(100% - 24px))}
+.atlas-tools { display:flex; margin:0 0 1rem; border-bottom:1px solid var(--line,#34393e); gap:clamp(6px,2vw,24px); overflow-x:auto; scrollbar-width:thin; scrollbar-color:#62717a transparent; }
+.atlas-tools button { flex:none; border:0; border-radius:0; background:transparent; color:var(--muted,#b5b6ba); min-height:44px; padding:0 3px; font:inherit; font-size:.88rem; cursor:pointer; touch-action:manipulation; }
+.atlas-tools button[aria-pressed="true"] { box-shadow:inset 0 -2px var(--accent,#deb67a); color:var(--text,#f0eadf); }
+.atlas-tools button:focus-visible {outline-offset:-2px}
+.atlas-search-line { display:flex; gap:10px; flex-wrap:wrap; margin:0 0 12px; }
+.atlas-search-line .search-wrap { flex:1 1 220px; margin:0; }
+.atlas-filter,.chart-select { color:#f0eae1; color-scheme:dark; background:#14191e; border:1px solid #434747; border-radius:4px; padding:0 8px; min-height:44px; font:inherit; font-size:.87rem; }
+.atlas-filter { max-width:100%; }
+.atlas-group-count { color:var(--muted,#adb5bb); margin:.5rem 0; font-size:.78rem; }
+.chart-toolbar { display:flex; gap:12px; flex-wrap:wrap; margin:0 0 .75rem; }
+.chart-field { display:flex; flex:1 1 165px; min-width:0; flex-direction:column; color:#bcc2c7; font-size:.76rem; gap:5px; }
+.chart-field select {width:100%; min-width:0;}
+.chart-plot { width:100%; height:clamp(190px,32vh,320px); position:relative; isolation:isolate; overflow:hidden; border:1px solid #383b3c; border-radius:6px; background:radial-gradient(ellipse at 50% 50%,#1d2329 0,#11171e 51%,#0b0f14 90%); }
+.chart-plot canvas,.chart-pins { position:absolute; inset:0; width:100%; height:100%; }
+.chart-pin { position:absolute; transform:translate(-50%,-50%); width:38px; height:38px; border:0; background:none; border-radius:50%; display:grid; place-items:center; cursor:pointer; padding:0; }
+.chart-pin::before { content:""; width:8px; height:8px; background:var(--body-color); box-shadow:0 0 7px var(--body-color); border-radius:100%; }
+.chart-pin[aria-pressed="true"]::after { content:""; position:absolute; width:17px; height:17px; border:1px solid #f9d9ac; border-radius:100%; }
+.chart-note { color:#b5bdc0; line-height:1.45; font-size:.74rem; margin:7px 0 14px; }
+.chart-detail { display:grid; grid-template-columns:1fr auto; gap:8px 14px; align-items:center; padding:12px 0 4px; border-top:1px solid var(--line,#373c40); }
+.chart-identity small { color:var(--accent,#d6b27f); font-size:.78rem; }
+.chart-identity h3 { font-family:Georgia,serif; font-weight:400; font-size:clamp(1.6rem,3vw,2.2rem); line-height:1.15; margin:3px 0; color:#f6f0e7; }
+.chart-identity p,.chart-description { color:#c6cbd0; font-size:.86rem; margin:5px 0 0; line-height:1.45; }
+.chart-description { grid-column:1/-1; grid-row:2; }
+.chart-actions { grid-column:2; grid-row:1; display:flex; flex-wrap:wrap; gap:8px; justify-content:end; }
+.chart-secondary { background:transparent; color:#f0e2cd; border:1px solid #6e6559; border-radius:4px; min-height:44px; padding:0 12px; cursor:pointer; font:inherit; font-size:.84rem; }
+#expedition-hud[hidden] {display:none;}
+.source-notes {white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;font-size:.9rem;color:#dcd8d2;}
+.destinations:has(#expedition-hud:not([hidden])) > :is(.strip-header,#destination-strip) {display:none;}
+@media (pointer:coarse){.chart-pin {width:44px;height:44px;}}
+@media (max-width:560px) {
+  #overlay[data-panel="atlas"],#overlay[data-panel="atlas"][data-atlas-view="surfaces"] {width:calc(100% - 12px);}
+  #overlay[data-panel="atlas"][data-atlas-view="surfaces"] #dialog-body {padding-inline:12px}
+  .atlas-search-line {gap:6px;} .atlas-search-line .search-wrap {flex-basis:155px;}
+  .atlas-filter {flex:1 1 105px; min-width:0;}
+  .chart-toolbar {gap:6px;} .chart-field {flex-basis:112px;}
+  .chart-detail {grid-template-columns:1fr;} .chart-description,.chart-actions {grid-column:1;grid-row:auto;}
+  .chart-actions {justify-content:start;}
+}
+@media (max-height:440px) { .chart-plot {height:162px;} .atlas-tools {margin-bottom:.4rem;} }
