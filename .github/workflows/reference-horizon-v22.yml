@@ -1,0 +1,14 @@
+name: Références topocentriques JPL Horizons
+on:
+  push:
+    branches: ['release/verification-universe-22']
+    paths: ['.github/workflows/reference-horizon-v22.yml', 'checks/horizons-reference.py']
+permissions: { contents: read }
+jobs:
+  reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extraire six positions du service JPL
+        run: python3 checks/horizons-reference.py
