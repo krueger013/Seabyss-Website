@@ -1,0 +1,43 @@
+name: Actualiser les observations astronomiques
+on:
+  push:
+    branches: [release/universe-explorer-observations]
+    paths:
+      - '.github/workflows/observations.yml'
+      - 'scripts/refresh-solar.mjs'
+  schedule:
+    - cron: '27 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: observations-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Actualiser la photographie du Soleil
+        run: node scripts/refresh-solar.mjs assets
+      - name: Enregistrer les nouvelles observations
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          photo=$(node -p 'require("./assets/solar-frame.json").image')
+          [[ "$photo" =~ ^solar-photosphere-[0-9a-f]{12}\.jpg$ ]]
+          git add -- assets/solar-frame.json "assets/$photo"
+          for file in assets/solar-photosphere-*.jpg; do
+            if [[ "$file" != "assets/$photo" ]] && git ls-files --error-unmatch -- "$file" >/dev/null 2>&1; then
+              git rm -- "$file"
+            fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Actualiser les observations astronomiques"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+          if [[ "$GITHUB_REF_NAME" == "main" ]]; then gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"; fi
