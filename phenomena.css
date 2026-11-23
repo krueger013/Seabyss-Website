@@ -21,7 +21,8 @@
   font:600 13px/1.2 var(--sans,'Segoe UI',sans-serif);
 }
 .ph-tabs button[aria-pressed=true],.ph-actions button[aria-pressed=true] {background:#3b2e28;border-color:#d0a77b;color:#ffe7c5}
-.phenomena :is(button,input,a):focus-visible {outline:2px solid var(--ph-accent);outline-offset:-2px}
+.phenomena :is(button,input,select,a):focus-visible {outline:2px solid var(--ph-accent);outline-offset:-2px}
+.phenomena [hidden] {display:none}
 .ph-window {
   position:relative;
   height:clamp(235px,42dvh,490px);
@@ -62,13 +63,18 @@
 }
 .ph-control-heading {display:flex;gap:10px;align-items:baseline;justify-content:space-between;color:#e1eaf1;font:14px/1.3 var(--sans,sans-serif)}
 .ph-control-heading output {flex:none;color:#ffe0ac;font:12px/1.2 var(--mono,monospace);font-variant-numeric:tabular-nums}
-.ph-controls input[type=range] {width:100%;margin:0;min-height:36px;accent-color:#e9bb82;cursor:pointer}
+.ph-controls input[type=range] {width:100%;margin:0;min-height:44px;accent-color:#e9bb82;cursor:pointer}
+.ph-remnant {display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 9px;margin-top:3px;padding-top:7px;border-top:1px solid var(--ph-edge);font:13px/1.3 var(--sans,sans-serif)}
+.ph-remnant select {min-height:44px;max-width:100%;color:#e2eef5;background:#122535;border:1px solid var(--ph-edge);border-radius:4px;padding:4px;font:inherit}
+.ph-remnant dl {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;grid-column:1/-1;margin:0}
+.ph-remnant dt {color:var(--ph-muted);font-size:12px}
+.ph-remnant dd {margin:3px 0 0;color:#a9e7ef;font:14px/1.25 var(--mono,monospace);font-variant-numeric:tabular-nums}
 .ph-detail h3 {margin:0;color:#f9efe0;font:400 clamp(19px,2.4vw,26px)/1.06 var(--serif,Georgia,serif)}
 .ph-detail p {margin:0;color:var(--ph-muted);font:14px/1.4 var(--sans,sans-serif)}
 .ph-detail a,.ph-detail span {font:12px/1.35 var(--sans,sans-serif)}
 .ph-detail a {width:fit-content;color:#efcd9b;text-underline-offset:2px}
 .ph-detail span {color:#a4adbd}
-.ph-relativity {
+.ph-relativity,.ph-visit {
   min-height:44px;
   padding:6px 10px;
   border:1px solid #b193a778;
@@ -80,9 +86,11 @@
   touch-action:manipulation;
 }
 .ph-relativity:hover {border-color:#eab49d}
+.ph-visit {width:fit-content;background:#172f3a;border-color:#6793a5;color:#d5f3ff;cursor:pointer}
+.ph-visit:hover {border-color:#b3d5dc}
 @media (max-width:630px) and (orientation:portrait) {
   .phenomena {gap:7px}
-  .ph-tabs {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ph-tabs {display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
   .ph-tabs button,.ph-actions button {padding-inline:7px}
   .ph-window {height:clamp(156px,29dvh,320px)}
   .ph-console {grid-template-columns:minmax(0,1fr);gap:7px}

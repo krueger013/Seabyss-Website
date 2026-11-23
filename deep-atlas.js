@@ -10,14 +10,26 @@ const photos = {
   'wild-duck':'ESO · CC BY 4.0', 'hercules-cluster':'NASA, STScI et WikiSky',
   'beehive':'Giuseppe Donatiello · CC0', 'pleiades':'Bob Star · CC BY 2.0',
   'triangulum':'ESO · CC BY 4.0', 'bodes-galaxy':'Ken Crawford · CC BY-SA 4.0',
-  'm87':'NASA, STScI et WikiSky', 'sombrero':'NASA/ESA et Hubble Heritage Team (STScI/AURA)'
+  'm87':'NASA, STScI et WikiSky', 'sombrero':'NASA/ESA et Hubble Heritage Team (STScI/AURA)',
+  'cassiopeia-a':'Chandra · NASA/CXC/Meiji Univ./T. Sato et al. · Traitement NASA/CXC/SAO/N. Wolk',
+  'tycho-remnant':'Chandra · NASA/CXC/RIKEN & GSFC/T. Sato et al.',
+  'sn1006':'Chandra · NASA/CXC/Middlebury College/F. Winkler',
+  'southern-ring-nebula':'Webb/MIRI · NASA, ESA, CSA, STScI et Webb ERO Production Team',
+  'butterfly-nebula':'Hubble · NASA, ESA et J. Kastner (RIT)',
+  'ngc281':'Spitzer · NASA/JPL/CfA/S. Wolk'
 };
 const esoImages = {'wild-duck':'eso1430a','eagle-nebula':'eso0926a','triangulum':'eso1424a','dumbbell-nebula':'eso9846a'};
-const editorial = ['orion-nebula','pleiades','sombrero','trappist-1-e','crab-nebula','triangulum',
+const editorial = ['orion-nebula','cassiopeia-a','pleiades','butterfly-nebula','sombrero','tycho-remnant',
+  'trappist-1-e','southern-ring-nebula','sn1006','ngc281','crab-nebula','triangulum',
   'ring-nebula','hercules-cluster','55-cancri-e','eagle-nebula','m87','dumbbell-nebula','beehive',
   'hd-189733-b','bodes-galaxy','wild-duck','kepler-186-f','lagoon-nebula','carina-nebula'];
 const format = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:1});
 const kindOptions = [['all','Toutes les familles'],['nebula','Nébuleuses'],['cluster','Amas d’étoiles'],['galaxy','Galaxies'],['planet','Exoplanètes'],['star','Étoiles']];
+const phenomena = [
+  ['remnant','Rémanents de supernova', b => b.morphology === 'remnant'],
+  ['planetary-nebula','Nébuleuses planétaires', b => ['planetary','bipolar'].includes(b.morphology)],
+  ['nursery','Pouponnières stellaires', b => ['emission','pillars'].includes(b.morphology) || ['carina-nebula','lagoon-nebula','westerlund2','m78'].includes(b.id)]
+];
 const regionOptions = [['all','Toutes les régions'],['galactic','Voie lactée'],['extragalactic','Au-delà de la Voie lactée'],['exoplanetaires','Systèmes exoplanétaires']];
 function node(tag, klass, text) {
   const result = document.createElement(tag);
@@ -26,6 +38,10 @@ function node(tag, klass, text) {
   return result;
 }
 function region(body) { return body.system ? 'exoplanetaires' : body.kind === 'galaxy' ? 'extragalactic' : 'galactic'; }
+function searchKey(value) {
+  return (value || '').toLowerCase().normalize('NFD').replace(/\p{M}/gu,'')
+    .replace(/œ/g,'oe').replace(/[^a-z0-9]/g,'');
+}
 function shortDistance(body) {
   const d = Math.hypot(...body.position)/LIGHT_YEAR;
   if (d >= 1e6) return format.format(d/1e6)+' M al';
@@ -50,15 +66,25 @@ function selectFilter(attribute, label, entries) {
 export function createDeepAtlas(container, {objects, travel}) {
   const gallery=node('section','deep-gallery');
   gallery.setAttribute('aria-label','Découvrir le ciel profond');
-  const discovered=objects.filter(b=>b.observation && !b.simulated);
+  const discovered=objects.filter(b=>b.observation && !b.simulated && !b.solarFamily);
+  const searchIndex=new Map(discovered.map(b=>[b.id,[b.name,b.designation,b.region,b.category].map(searchKey)]));
   const rank=new Map(editorial.map((id,i)=>[id,i]));
   discovered.sort((a,b)=>(rank.get(a.id)??100)-(rank.get(b.id)??100) || a.name.localeCompare(b.name,'fr'));
   const filters=node('div','deep-filters');
   const family=selectFilter('data-deep-kind','Famille',kindOptions);
+  const group=node('optgroup');
+  group.label='Phénomènes stellaires';
+  for (const [value,caption] of phenomena) group.append(new Option(caption,value));
+  family.select.append(group);
   const zone=selectFilter('data-deep-region','Région',regionOptions);
+  const searchField=node('label','deep-filter deep-search');
+  const search=node('input');
+  search.type='search'; search.placeholder='Nom ou catalogue (ex. SN 1572)';
+  search.setAttribute('data-deep-search','');
+  searchField.append(node('span','','Rechercher un astre'),search);
   const count=node('output','deep-count');
   count.setAttribute('aria-live','polite');
-  filters.append(family.field,zone.field,count);
+  filters.append(family.field,zone.field,searchField,count);
   const hero=node('div','deep-feature');
   const cards=node('div','deep-grid');
   const credits=node('details','deep-credits');
@@ -87,7 +113,7 @@ export function createDeepAtlas(container, {objects, travel}) {
     button.type='button'; button.dataset.deepTravel=body.id;
     button.setAttribute('aria-label','Observer '+body.name);
     button.onclick=()=>travel(body.id);
-    const artwork=node('div','deep-artwork');
+    const artwork=node('div',body.radiusBasis==='field'?'deep-artwork deep-field':'deep-artwork');
     const image=node('img');
     image.alt=''; image.decoding='async'; image.loading=featured?'eager':'lazy';
     image.src=assetUrl('deep-thumb-'+body.id+'.webp');
@@ -104,14 +130,19 @@ export function createDeepAtlas(container, {objects, travel}) {
     button.append(artwork,copy);
     article.append(button);
     const byline=node('p','deep-byline');
-    if (esoImages[body.id]) byline.append(sourceLink(photos[body.id], 'https://www.eso.org/public/images/'+esoImages[body.id]+'/'));
+    if (body.sourceUrl && photos[body.id]) byline.append(sourceLink(photos[body.id],body.sourceUrl));
+    else if (esoImages[body.id]) byline.append(sourceLink(photos[body.id], 'https://www.eso.org/public/images/'+esoImages[body.id]+'/'));
     else byline.textContent = photos[body.id] || plateKind(body)+(body.system?' · jour zéro':' · étoiles XHIP');
+    if (body.sourceUrl && !photos[body.id]) byline.append(' · ',sourceLink('Fiche de mission',body.sourceUrl));
     article.append(byline);
     return article;
   }
   function filter() {
-    const matching=discovered.filter(b=>(family.select.value==='all'||b.kind===family.select.value) &&
-      (zone.select.value==='all'||region(b)===zone.select.value));
+    const familyValue=family.select.value;
+    const phenomenon=phenomena.find(([value])=>value===familyValue);
+    const term=searchKey(search.value);
+    const matching=discovered.filter(b=>(phenomenon?phenomenon[2](b):familyValue==='all'||b.kind===familyValue) &&
+      (zone.select.value==='all'||region(b)===zone.select.value) && searchIndex.get(b.id).some(s=>s.includes(term)));
     count.textContent=matching.length+' destination'+(matching.length===1?'':'s');
     hero.replaceChildren(); cards.replaceChildren();
     if (matching.length) {
@@ -121,11 +152,12 @@ export function createDeepAtlas(container, {objects, travel}) {
       const empty=node('div','deep-empty');
       empty.append(node('p','','Aucune destination pour cette combinaison.'));
       const reset=node('button','chart-secondary','Afficher toute la galerie');
-      reset.type='button'; reset.onclick=()=>{family.select.value='all';zone.select.value='all';filter();family.select.focus();};
+      reset.type='button'; reset.onclick=()=>{family.select.value='all';zone.select.value='all';search.value='';filter();search.focus();};
       empty.append(reset); hero.append(empty);
     }
   }
   family.select.onchange=zone.select.onchange=filter;
+  search.oninput=filter;
   gallery.append(filters,hero,cards,credits);
   container.replaceChildren(gallery);
   filter();

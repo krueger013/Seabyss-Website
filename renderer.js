@@ -110,7 +110,7 @@ function stars() {
 function skyExposure(items,eye,sun,shortEdge) {
   let brightest=0;
   for(const {obj,bounds,visible,radius} of items) {
-    if(!bounds || !visible || radius<4 || !['planet','moon','star'].includes(obj.kind)) continue;
+    if(!bounds || !visible || radius<4 || !['planet','moon','star','dwarf','asteroid'].includes(obj.kind)) continue;
     const disk=clamp(radius/(shortEdge*.32),0,1);
     const phase=obj.kind==='star'?1:(1+dot(unit(minus(eye,obj.position)),unit(minus(obj.lightPosition||sun,obj.position))))*.5;
     brightest=Math.max(brightest,disk*phase);

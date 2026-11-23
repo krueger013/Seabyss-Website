@@ -5,7 +5,10 @@ import { createDoublePress } from './double-press.js';
 const circle = Math.PI * 2;
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 const format = new Intl.NumberFormat('fr-CA', { maximumFractionDigits: 2 });
-const scopeNames = { sun: 'Système solaire', earth: 'Terre et Lune', jupiter: 'Système jovien', saturn: 'Système saturnien' };
+const scopeNames = {sun: 'Système solaire', earth: 'Terre et Lune', mars: 'Lunes de Mars',
+  jupiter: 'Système jovien', saturn: 'Système saturnien', uranus: 'Lunes d’Uranus',
+  neptune: 'Lunes de Neptune', pluto: 'Pluton et Charon'};
+const minorScope = 'sun-minor';
 const tiles = ['earth','moon','mars','jupiter','saturn','io','europa','ganymede','callisto','titan','enceladus'];
 
 function node(tag, className, content) {
@@ -169,7 +172,7 @@ export function createGlobes(redraw) {
 export function createSystemView(container, { objects, getPosition = b => b.position, getRotation = b => b.spinAngle || 0,
   orbitPath, getRevision = () => 0, onObserve, onExit, onDiscover }) {
   const byId = new Map(objects.map(b => [b.id, b]));
-  const scopes = objects.filter(b => ['star','planet'].includes(b.kind) && objects.some(o => o.parentId === b.id));
+  const scopes = objects.filter(b => ['star','planet','dwarf'].includes(b.kind) && objects.some(o => o.parentId === b.id));
   scopes.sort((a,b) => Number(b.id === 'sun') - Number(a.id === 'sun'));
   const scopeIds = new Set(scopes.map(b => b.id));
   container.classList.add('system-view');
@@ -182,7 +185,11 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
   const scope = node('select');
   scope.dataset.systemScope = '';
   scope.setAttribute('aria-label','Changer de système');
-  for (const b of scopes) scope.add(new Option(scopeNames[b.id] || b.name, b.id));
+  const hasMinorWorlds = objects.some(b => b.solarFamily === 'minor');
+  for (const b of scopes) {
+    scope.add(new Option(scopeNames[b.id] || b.name, b.id));
+    if (b.id === 'sun' && hasMinorWorlds) scope.add(new Option('Astéroïdes et planètes naines', minorScope));
+  }
   systemField.append(scope);
   const gravity = node('div','system-gravity');
   gravity.dataset.systemGravity = '';
@@ -319,7 +326,7 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
     category.textContent = selected.category;
     if(selected.id==='sun' && !solarRequested)loadSolarSymbol();
     const observed=selected.id==='sun' && solarImage;
-    legend.textContent=observed?'SDO/HMI · '+solarStamp:'Échelle comprimée · corps agrandis';
+    legend.textContent=observed?'SDO/HMI · '+solarStamp:selected.orbitPhaseIllustrative ? 'Orbite simulée · échelle comprimée' : 'Échelle comprimée · corps agrandis';
     legend.title=observed?'Disque observé depuis la Terre. Échelle des orbites comprimée, corps agrandis.':'';
     legend.dataset.systemSolarFrame=observed?solarStamp:'';
     if(observed)category.textContent='Vue depuis la Terre';
@@ -342,7 +349,11 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
   function recalculateTracks() {
     lastRevision = getRevision();
     projectionKey = null;
-    const children = objects.filter(b => b.parentId === center.id);
+    const children = objects.filter(b => {
+      if (b.parentId !== center.id) return false;
+      if (center.id !== 'sun') return true;
+      return scope.value === minorScope ? b.solarFamily === 'minor' : b.kind === 'planet';
+    });
     far = Math.max(1, ...children.map(b => b.orbitRadiusKm || 1));
     reference = Math.max(1, far * .003, Math.min(...children.map(b => b.orbitRadiusKm || 1)) * .72);
     tracks = children.sort((a,b) => a.orbitRadiusKm - b.orbitRadiusKm).map(body => {
@@ -357,11 +368,12 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
     needPaint = true;
   }
   function selectScope(id, preferred = id) {
-    center = byId.get(id); scope.value = id;
+    center = byId.get(id === minorScope ? 'sun' : id); scope.value = id;
     recalculateTracks();
     const moonsOnly = tracks.every(entry=>entry.body.kind==='moon');
     const count = tracks.length;
-    summary.textContent = center.name + ' · ' + count + (moonsOnly ? count === 1 ? ' lune' : ' lunes' : count === 1 ? ' planète' : ' planètes');
+    const unit = id === minorScope ? 'corps' : (moonsOnly ? 'lune' : 'planète') + (count === 1 ? '' : 's');
+    summary.textContent = center.name + ' · ' + count + ' ' + unit;
     labels.replaceChildren(); pins.clear();
     const listed = [center, ...tracks.map(o => o.body)];
     target.replaceChildren(...listed.map(b => new Option(b.name,b.id)));
@@ -675,7 +687,7 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
     open(id='earth') {
       const object=byId.get(id) || byId.get('earth');
       container.hidden=false;document.body.classList.add('system-view-active');
-      const group=scopeIds.has(object.parentId) ? object.parentId : scopeIds.has(id) ? id : 'sun';
+      const group=object.solarFamily === 'minor' ? minorScope : scopeIds.has(object.parentId) ? object.parentId : scopeIds.has(id) ? id : 'sun';
       selectScope(group,id); canvas.focus({preventScroll:true});
     },
     close() { container.hidden=true;document.body.classList.remove('system-view-active');pointers.clear();doublePress.reset(); },

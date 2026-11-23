@@ -73,6 +73,24 @@ const routes = [
       ['kepler-62-f', 'Regarde maintenant la période de Kepler-62 f. Son orbite est bien plus longue que celles des deux planètes précédentes.'],
       ['kepler-186-f', 'Termine sur Kepler-186 f. Sa taille est proche de celle de la Terre. Sa surface et son atmosphère restent inconnues.']
     ]
+  },
+  {
+    title:'Du Soleil à la ceinture de Kuiper',
+    stops:[
+      ['ceres','Entre Mars et Jupiter, repère Cérès dans la ceinture principale. Sa taille vaut une fraction de celle de notre Lune.'],
+      ['vesta','Compare le rayon de Vesta à celui de Cérès, puis poursuis le voyage vers Neptune.'],
+      ['triton','Chez Neptune, Triton décrit une orbite rétrograde. Ouvre sa fiche pour examiner sa période.'],
+      ['pluto','Au-delà de Neptune, approche Pluton. Sa plus grande lune est la prochaine étape.'],
+      ['charon','Depuis Charon, compare le rayon et la période orbitale aux mesures relevées sur Pluton.']
+    ]
+  },
+  {
+    title:'Sur les traces de trois supernovæ',
+    stops:[
+      ['tycho-remnant','La lumière de cette explosion est arrivée sur Terre en 1572. Ouvre Photos pour examiner les débris révélés par Chandra.'],
+      ['kepler-remnant','Cette autre explosion est devenue visible en 1604. Change de point de vue autour de son enveloppe.'],
+      ['sn1006','Ouvre la photographie en rayons X et retrouve les deux bords brillants de la coquille.']
+    ]
   }
 ];
 

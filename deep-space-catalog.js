@@ -1,3 +1,5 @@
+import {remnantEntries} from './stellar-remnants.js';
+
 // Equatorial sky coordinates (J2000; RA in hours, declination in degrees).
 // For diffuse objects the radius is the luminous region used in the scene.
 // Measurement sources and the assumptions behind the renderings are in deep-space-credits.txt.
@@ -141,9 +143,9 @@ const hosts = [
 ];
 
 export function createDeepSpaceCatalog({body, skyPosition, AU, LIGHT_YEAR}) {
-  const result = diffuseCatalog.map(([id,name,kind,morphology,category,designation,region,distance,radius,ra,dec,color,description,observation]) =>
+  const result = [...diffuseCatalog,...remnantEntries].map(([id,name,kind,morphology,category,designation,region,distance,radius,ra,dec,color,description,observation,sourceUrl,radiusBasis]) =>
     body(id, name, kind, category, designation, radius * LIGHT_YEAR, skyPosition(distance,ra,dec), color, description,
-      {parentId: kind === 'galaxy' ? null : 'milky-way', region, morphology, observation}));
+      {parentId: kind === 'galaxy' ? null : 'milky-way', region, morphology, observation,sourceUrl,radiusBasis}));
   for (const [id,name,designation,constellation,distance,radius,ra,dec,color,description,observation] of brightStars) {
     result.push(body(id,name,'star','Étoile remarquable',designation,radius * 695700,skyPosition(distance,ra,dec),color,description,
       {region:'Voie lactée · ' + constellation, observation}));

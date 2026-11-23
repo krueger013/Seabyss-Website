@@ -22,6 +22,24 @@ export function eclipseObservation(offset) {
   return {coverage:(a+moonSquared*b-.5*chord)/Math.PI,phase:offset<0?'Phase partielle entrante':'Phase partielle sortante'};
 }
 
+// Ejecta mass of 1.4 solar masses in a uniform medium of one H nucleus/cm³.
+// Including helium gives a gas mass density of 1.4 m_H per cubic centimetre.
+const LIGHT_KMS=299792.458;
+const YEAR_SECONDS=365.25*86400;
+const SWEPT_RADIUS_KM=Math.cbrt(3*1.4*1.98847e30/(4*Math.PI*1.4*1.6735575e-27*1e6))/1000;
+export function remnantExpansion(years,initialKms=10000) {
+  if(!Number.isFinite(years) || years<0 || years>3000 || ![5000,10000,15000].includes(initialKms)) return null;
+  const transitionYears=SWEPT_RADIUS_KM/(initialKms*YEAR_SECONDS);
+  const decelerating=years>transitionYears;
+  // Match both radius and speed at the illustrative transition, then approach
+  // the Sedov-Taylor R ∝ t^(2/5) solution as swept-up mass comes to dominate.
+  const timeRatio=decelerating?1+(years/transitionYears-1)*2.5:1;
+  const radiusLy=decelerating
+    ? SWEPT_RADIUS_KM/(YEAR_SECONDS*LIGHT_KMS)*timeRatio**.4
+    : years*initialKms/LIGHT_KMS;
+  return {radiusLy,speedKms:initialKms*timeRatio**(-.6),transitionYears,decelerating};
+}
+
 function createCachedCanvas(width,height=width) {
   const layer=document.createElement('canvas');
   layer.width=width;
@@ -292,12 +310,49 @@ function saturnRings(ctx,radius,tilt,image,age) {
   }
 }
 
+function shockFront() {
+  const size=512, layer=createCachedCanvas(size),ctx=layer.getContext('2d');
+  ctx.translate(size/2,size/2);
+  const r=size*.46,random=randomSource(19205);
+  const shell=ctx.createRadialGradient(0,0,0,0,0,r*1.04);
+  for(const [at,col] of [[0,'#0e1a3015'],[.52,'#79414630'],[.74,'#b35b4e5c'],[.88,'#ec936e5e'],[.95,'#70bbc5a3'],[.995,'#527aaf88'],[1,'#30527a00']])shell.addColorStop(at,col);
+  ctx.fillStyle=shell;ctx.fillRect(-size/2,-size/2,size,size);
+  ctx.globalCompositeOperation='screen';ctx.lineCap='round';
+  for(let i=0;i<860;i++) {
+    const start=random()*TAU,arc=.03+random()*.30,bend=random()*TAU;
+    const rim=i<260, radius=r*(rim?.94+.055*random():.20+.73*Math.sqrt(random()));
+    ctx.strokeStyle=rim?'rgba(140,207,242,'+(.11+.52*random())+')':'rgba(249,152,101,'+(.11+.64*random())+')';
+    ctx.lineWidth=rim?.65+random()*1.5:.5+random()*2.7;ctx.beginPath();
+    for(let k=0;k<=12;k++){
+      const f=k/12,a=start+f*arc;
+      const dist=radius*(1+.012*Math.sin(6*a)+.017*Math.sin(11*a+.7)+(.009+(rim?0:.025))*Math.sin(f*6+bend));
+      const x=dist*Math.cos(a),y=dist*Math.sin(a);
+      if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+  return {layer,r};
+}
+
+function paintRemnant(ctx,w,h,state,shell,dpr) {
+  // Keep the same physical field when scrubbing or comparing speeds.
+  const pxPerLy=Math.min(h*.43,w*.44)/remnantExpansion(3000,15000).radiusLy;
+  const size=state.radiusLy*pxPerLy*shell.layer.width/shell.r;
+  ctx.drawImage(shell.layer,-size/2,-size/2,size,size);
+  ctx.lineWidth=dpr;ctx.strokeStyle='#c8cace8c';ctx.beginPath();
+  ctx.moveTo(-4*dpr,0);ctx.lineTo(4*dpr,0);ctx.moveTo(0,-4*dpr);ctx.lineTo(0,4*dpr);ctx.stroke();
+  const x=w*.5-14*dpr,y=h*.51-15*dpr;
+  ctx.beginPath();ctx.moveTo(x-5*pxPerLy,y-4*dpr);ctx.lineTo(x-5*pxPerLy,y);ctx.lineTo(x,y);ctx.lineTo(x,y-4*dpr);ctx.stroke();
+  ctx.fillStyle='#c8d9e4';ctx.font=(11*dpr)+'px monospace';ctx.textAlign='right';
+  ctx.fillText('5 al',x,y-7*dpr);
+}
+
 export function createPhenomenaRenderer(canvas) {
   const ctx=canvas.getContext('2d',{alpha:false});
-  let sky, sun;
+  let sky, sun, shell;
   const saturn=new Map();
   return {
-    draw(id,value,age) {
+    draw(id,value,age,initialKms=10000) {
       const dpr=Math.min(window.devicePixelRatio || 1,1.75);
       const width=Math.round(canvas.clientWidth*dpr),height=Math.round(canvas.clientHeight*dpr);
       if (!width || !height) return;
@@ -315,6 +370,9 @@ export function createPhenomenaRenderer(canvas) {
         const key=Math.round(value/4);
         if (!saturn.has(key)) saturn.set(key,saturnPhotosphere(205,key*4*DEG));
         saturnRings(ctx,Math.min(width*.194,height*.31),value*DEG,saturn.get(key),age);
+      } else if(id==='supernova') {
+        shell ||= shockFront();
+        paintRemnant(ctx,width,height,remnantExpansion(value,initialKms),shell,dpr);
       } else lensedDisk(ctx,Math.min(width*.47,height*.57),value*DEG,age);
       ctx.restore();
     }

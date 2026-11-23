@@ -3,8 +3,6 @@ import { Navigation } from './navigation.js';
 import { UniverseRenderer, directionAtPixel } from './renderer.js';
 import { createEarthOverflight, DEFAULT_OVERFLIGHT_ALTITUDE } from './earth-overflight.js';
 import { createDoublePress } from './double-press.js';
-import { createStarChart } from './atlas-map.js';
-import { createDeepAtlas } from './deep-atlas.js';
 import { SURFACE_MISSIONS } from './surface-missions.js';
 import { experienceLinks, renderLandingChoices } from './experiences.js';
 import { hasObservation, openObservations, observationCredits } from './observations.js';
@@ -463,6 +461,7 @@ function syncTarget() {
   $('#surface-open').setAttribute('aria-label','Atterrir sur '+object.name);
   $('#earth-open').hidden = object.id!=='earth';
   setText('radius', measure(object.radius));
+  $('#radius').previousElementSibling.textContent=object.radiusBasis==='field'?'Rayon du champ':'Rayon';
   setText('flight-name', object.name);
   for (const card of strip.children) {
     const selected = card.dataset.id === object.id;
@@ -757,6 +756,8 @@ function renderDirectory(container) {
   const search = container.querySelector('input');
   const category = container.querySelector('select');
   category.add(new Option('Comètes et sondes','traveller'));
+  category.add(new Option('Planètes naines','dwarf'));
+  category.add(new Option('Astéroïdes','asteroid'));
   const tracked=[
     ['halley','1P/Halley','Comète périodique'],
     ['oumuamua','1I/ʻOumuamua','Objet interstellaire'],
@@ -884,7 +885,7 @@ function openDossier() {
   const data = document.createElement('dl'); data.className='dossier-data';
   const solar = objects.find(o => o.id==='sun');
   const distanceFromSun = Math.hypot(...body.position.map((n,i) => n-solar.position[i]));
-  const readings = [['Région',region(body)],['Rayon de référence',measure(body.radius)]];
+  const readings = [['Région',region(body)],[body.radiusBasis==='field'?'Rayon du champ illustré':'Rayon de référence',measure(body.radius)]];
   if (body.id !== 'sun') readings.push(['Distance au Soleil',measure(distanceFromSun)]);
   if (body.orbitPeriodDays) readings.push(['Période orbitale',numeric[2].format(body.orbitPeriodDays)+' j']);
   if (body.rotationPeriodHours) readings.push(['Rotation',numeric[2].format(Math.abs(body.rotationPeriodHours))+' h'+(body.rotationPeriodHours<0?' · rétrograde':'')]);
@@ -893,6 +894,20 @@ function openDossier() {
     dt.textContent=name;dd.textContent=val;pair.append(dt,dd);data.append(pair);
   }
   dialogBody.append(meta,description,data);
+  if(body.orbitPhaseIllustrative) {
+    const note=document.createElement('p');note.className='help-copy';
+    note.textContent='La phase de départ de cette orbite est illustrative.';dialogBody.append(note);
+  }
+  if(body.sourceUrl) {
+    const source=document.createElement('a');source.className='archive-entry';source.target='_blank';source.rel='noopener noreferrer';
+    source.href=body.sourceUrl;source.textContent='Consulter la fiche astronomique de référence';dialogBody.append(source);
+  }
+  if(body.morphology==='remnant') {
+    const launch=document.createElement('button');
+    launch.type='button';launch.className='archive-entry';launch.dataset.dossierSupernova='';
+    launch.textContent='Simuler l’expansion d’un rémanent';
+    launch.onclick=()=>openAtlas('phenomena','supernova');dialogBody.append(launch);
+  }
   if (['earth','moon','venus','mercury','mars','jupiter','io','europa','ganymede','callisto'].includes(body.id)) {
     const observer = body.id==='earth' ? 'moon' : 'earth';
     const observerName = observer==='moon' ? 'la Lune' : 'la Terre';
@@ -988,13 +1003,17 @@ function openAtlas(first = 'catalog',initialWorld) {
       archive.type='button'; archive.className='archive-entry'; archive.dataset.archiveOpen='';
       archive.innerHTML=icon('photo')+'Photographies de mission';
       archive.onclick=() => openPhoto(nav.selectedId,true);
-      panel.append(experienceLinks({surfaces:()=>open('surfaces'),pilot:()=>open('pilot'),phenomena:()=>open('phenomena'),
+      panel.append(experienceLinks({surfaces:()=>open('surfaces'),pilot:()=>open('pilot'),phenomena:()=>open('phenomena'),events:()=>open('events'),
         sandbox:()=>openSandbox('shatter'),climate:()=>openClimate(),relativity:()=>openRelativity(),waves:()=>openWaves(),
         phase:()=>phaseLab.open(),traveller:()=>travellerLab.open(),solar:()=>solarLab.open()}),archive,gallery);
       icons(panel);
-      releaseChart = createDeepAtlas(gallery,{objects,travel,currentId:nav.selectedId});
+      releaseChart=openAtlasModule(gallery,import('./deep-atlas.js').then(({createDeepAtlas})=>host=>createDeepAtlas(host,{objects,travel,currentId:nav.selectedId})),'de la galerie');
     }],
     ['catalog','Répertoire', () => renderDirectory(panel)],
+    ['events','Cataclysmes', () => {
+      releaseChart=openAtlasModule(panel,import('./cosmic-events.js').then(({renderCosmicEvents})=>host=>
+        renderCosmicEvents(host,openSandbox,()=>openAtlas('phenomena','supernova'))),'des cataclysmes');
+    }],
     ['sky','Planétarium', () => {
       releaseChart=openAtlasModule(panel,import('./sky-observer.js').then(({createSkyObserver})=>
         target=>createSkyObserver(target,{objects,travel,currentId:nav.selectedId})),'du planétarium');
@@ -1017,11 +1036,14 @@ function openAtlas(first = 'catalog',initialWorld) {
     }],
     ['phenomena','Phénomènes', () => {
       releaseChart=openAtlasModule(panel,import('./phenomena.js').then(({createPhenomena})=>host=>createPhenomena(host,{
-        initialId:initialWorld==='black-hole'?'black-hole':undefined,
+        initialId:initialWorld==='supernova'?'supernova':undefined,
+        onVisit:travel,
         onRelativity:()=>openRelativity(undefined,()=>openAtlas('phenomena','black-hole'))
       })),'de l’observatoire');
     }],
-    ['map','Carte', () => { releaseChart = createStarChart(panel,{objects,currentId:nav.selectedId,measure,travel}); }],
+    ['map','Carte', () => {
+      releaseChart=openAtlasModule(panel,import('./atlas-map.js').then(({createStarChart})=>host=>createStarChart(host,{objects,currentId:nav.selectedId,measure,travel})),'de la carte');
+    }],
     ['routes','Itinéraires', () => expeditions.renderPanel(panel)]
   ];
   function open(id) {

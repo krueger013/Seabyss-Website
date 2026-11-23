@@ -1,5 +1,32 @@
 Galerie du ciel profond — Images et lecture des planches
 
+Naissance et fin des étoiles
+Les six observations suivantes sont consultables hors ligne. Chaque vignette et chaque planche a été réduite et convertie en WebP à partir de l’image diffusée par l’observatoire. Les couleurs des observations infrarouges et X représentent des bandes invisibles à l’œil humain.
+
+Cassiopée A — Chandra, rayons X. NASA/CXC/Meiji Univ./T. Sato et al. Traitement de l’image par NASA/CXC/SAO/N. Wolk.
+https://chandra.harvard.edu/photo/2025/casa/more.html
+
+Rémanent de Tycho — Chandra, rayons X. NASA/CXC/RIKEN & GSFC/T. Sato et al.
+https://chandra.harvard.edu/photo/2019/tycho/
+
+SN 1006 — Chandra, rayons X. NASA/CXC/Middlebury College/F. Winkler.
+https://chandra.harvard.edu/photo/2013/sn1006/
+
+Nébuleuse du Papillon (NGC 6302) — Hubble/WFC3. NASA, ESA et J. Kastner (RIT).
+https://esahubble.org/images/heic2011b/
+https://esahubble.org/copyright/
+
+Anneau austral (NGC 3132) — Webb/MIRI, infrarouge moyen. NASA, ESA, CSA, STScI et Webb ERO Production Team.
+https://esawebb.org/images/weic2207c/
+https://esawebb.org/copyright/
+
+Nébuleuse Pacman (NGC 281) — Spitzer, infrarouge. NASA/JPL/CfA/S. Wolk.
+https://chandra.harvard.edu/photo/2011/ngc281/more.html
+
+Les cartes de Kepler (SN 1604), W49B, G292.0+1.8, NGC 6543, NGC 6357 et Westerlund 2 sont centrées sur les coordonnées équatoriales J2000 de leurs fiches. La largeur entière de chaque carte couvre 48 degrés du ciel. Le réticule situe la cible parmi les étoiles du catalogue XHIP. La fiche de mission de chaque carte permet de consulter l’observation d’origine.
+
+Collection Messier
+
 Les quatorze photographies Messier ci-dessous représentent les objets observés. Les filtres des instruments et la composition des canaux peuvent produire une palette différente de celle que verrait l’œil humain. Les images ont été réduites et converties en WebP. Le cadrage de la vignette s’adapte à l’écran. Les exemplaires utilisés pour cette conversion proviennent de la collection m7kn/messier et correspondent aux photographies identifiées sur Wikimedia Commons.
 https://github.com/m7kn/messier/tree/master/static/images
 

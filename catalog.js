@@ -1,6 +1,7 @@
 // One world unit is one kilometre. The catalog is the simulation's initial snapshot.
 // Distances to external objects and visible galaxy radii are rounded estimates.
 import { createDeepSpaceCatalog } from './deep-space-catalog.js';
+import { createSolarWorlds } from './solar-worlds.js';
 
 export const AU = 149597870.7;
 export const LIGHT_YEAR = 9460730472580.8;
@@ -141,7 +142,7 @@ export function generateSystem(seed) {
   return result;
 }
 
-export const objects = Object.freeze([
+const baseObjects = [
   body('earth', 'Terre', 'planet', 'Planète tellurique', 'Sol III', 6371, [0, 0, 0], '#77b8ee',
     'Une mince couche d’air dessine un halo bleu au-dessus des océans et des continents.'),
   body('moon', 'Lune', 'moon', 'Satellite naturel', 'Luna', 1737.4, skyPosition(384400 / LIGHT_YEAR, 1.1, 8), '#d9d6cf',
@@ -181,4 +182,5 @@ export const objects = Object.freeze([
   ...majorSatellites,
   ...generateSystem(1697),
   ...createDeepSpaceCatalog({body, skyPosition, AU, LIGHT_YEAR})
-]);
+];
+export const objects=Object.freeze([...baseObjects,...createSolarWorlds({body,AU,existing:baseObjects})]);

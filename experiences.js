@@ -8,8 +8,9 @@ const worlds = [
   {id:'ganymede',name:'Ganymède',description:'Le long des sillons d’Arbela',color:'#cabdcf'}
 ];
 
-export function experienceLinks({surfaces,pilot,phenomena,sandbox,climate,relativity,waves,phase,traveller,solar}) {
+export function experienceLinks({surfaces,pilot,phenomena,sandbox,climate,relativity,waves,phase,traveller,solar,events}) {
   const choices = [
+    ['events','fragments','Cataclysmes cosmiques',events],
     ['traveller','navigate','Comètes et sondes',traveller],
     ['solar','eclipse','Soleil observé',solar],
     ['phase','eclipse','Observatoire des phases',phase],

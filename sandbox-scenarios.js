@@ -229,6 +229,30 @@ function stellarTransit() {
   return balance([host,visitor,inner,outer]);
 }
 
+function cometTrain() {
+  const giant=body('ambre-geante','Ambre','planet','#e9ae75',.000955,69911);
+  const colors=['#aeeaf5','#dbedcc','#ebd9b5','#c8ccfb'];
+  const fragments=colors.map((color,i)=>body('eclat-'+(i+1),'Noyau '+(i+1),'comet',color,
+    (4-i)*1e-15,4-i*.45,[.0022+i*.00085,0,.00012+i*.000025],[-.0015,0,0]));
+  return balance([giant,...fragments]);
+}
+
+function starfall() {
+  const star=body('ocre-rouge','Ocre','star','#ffa274',1.1,14500000);
+  const fickle=orbit(body('silex-interieur','Silex','planet','#cabca2',EARTH_MASS,6371),
+    star,.21,Math.PI,{eccentricity:.64});
+  const outer=orbit(body('anemone','Anémone','planet','#87b7d2',2.6*EARTH_MASS,8900),star,.53,.83);
+  return balance([star,fickle,outer]);
+}
+
+function moonTheft() {
+  const home=body('albatre','Albâtre','planet','#afd0e5',.0007,.00037*AU_KM);
+  const visitor=body('jaspe','Jaspe','planet','#e4b88c',.0013,.0004*AU_KM,
+    [-.027,0,.002],[.023,0,0]);
+  const moon=orbit(body('pervenche','Pervenche','moon','#cfb7e7',3e-8,.000011*AU_KM),home,.0025,1.25*Math.PI);
+  return balance([home,visitor,moon]);
+}
+
 function custom() {
   return [body('helios','Hélios','star','#ffdfab',1,695700)];
 }
@@ -236,9 +260,13 @@ function custom() {
 const initialConditions = {solar,binary,comet,collision,resonance,encounter,shatter,rings,custom,
   'figure-eight':figureEight,retrograde,escape,trojans,'white-dwarf':whiteDwarf,ricochet,
   'roche-pass':rochePass,'shock-duel':shockDuel,'eccentric-twins':eccentricTwins,
-  'moon-exchange':moonExchange,'stellar-transit':stellarTransit};
+  'moon-exchange':moonExchange,'stellar-transit':stellarTransit,
+  'comet-train':cometTrain,starfall,'moon-theft':moonTheft};
 
 export const SANDBOX_SCENARIOS = [
+  {id:'comet-train',name:'Une chaîne d’impacts',caption:'Quatre fragments de comète arrivent successivement sur la géante Ambre. Dans ce système fictif, les noyaux sont déjà séparés au départ. Le journal indique l’instant de chaque impact.',rate:.085,span:.011,focusId:'ambre-geante',guide:'Suivre les quatre impacts',collisionMode:'merge'},
+  {id:'starfall',name:'Un monde englouti',caption:'Silex suit une orbite dont le point le plus proche se trouve à l’intérieur de la géante rouge Ocre. Anémone décrit une orbite plus large. Le rayon de l’étoile est fixe pendant cette expérience.',rate:3.1,span:1.2,focusId:'ocre-rouge',guide:'Suivre Silex jusqu’à la photosphère',collisionMode:'merge'},
+  {id:'moon-theft',name:'Une lune change de planète',caption:'La géante Jaspe croise Albâtre et sa lune Pervenche. Suis la lune pendant la rencontre puis compare son énergie orbitale autour de chacune des deux planètes.',rate:.5,span:.062,focusId:'pervenche',guide:'Observer un transfert gravitationnel'},
   {id:'roche-pass',name:'La traversée de Roche',caption:'Craie frôle la géante Porte de glace. Le modèle de marée peut disloquer cette lune peu dense dès qu’elle s’approche trop. Veilleur poursuit son orbite au large.',rate:.062,span:.0064,focusId:'porte-de-glace',guide:'Observer une rupture de marée',tidesEnabled:true},
   {id:'shock-duel',name:'Deux régimes de choc',caption:'Deux paires de corps de mêmes masses se percutent à des vitesses différentes. Observe le résultat de chaque choc en mode Fragmentation, puis compare avec Rebond ou Fusion.',rate:.26,span:.013,focusId:'',guide:'Comparer les énergies d’impact',collisionMode:'fragment'},
   {id:'eccentric-twins',name:'Deux orbites, une année',caption:'Cadence et Élan partent sur des orbites de même demi-grand axe. Suis le changement de vitesse d’Élan au cours de son année autour de Méridien.',rate:6.5,span:1.18,focusId:'orbe-des-jumeaux',guide:'Mesurer les deux extrêmes d’Élan'},
@@ -275,6 +303,24 @@ export function createScenario(id) {
 }
 
 const guides = {
+  'comet-train': [
+    ['Premier noyau','Lance la simulation en mode Fusion. Le premier noyau doit toucher Ambre.'],
+    ['Deuxième noyau','Suis le trajet du deuxième fragment jusqu’à la géante.'],
+    ['Troisième noyau','Observe l’heure du troisième contact dans le journal.'],
+    ['Dernier noyau','Suis le quatrième fragment sur sa trajectoire entrante.'],
+    ['Quatre impacts mesurés','Le journal conserve séparément les contacts des quatre noyaux avec Ambre.']
+  ],
+  starfall: [
+    ['Approche de la géante','Suis Silex depuis le point de son orbite le plus éloigné d’Ocre.'],
+    ['Contact avec Ocre','Observe le contact de Silex avec la géante en mode Fusion.'],
+    ['Engloutissement observé','Silex a atteint la surface d’Ocre. Anémone poursuit son orbite extérieure.']
+  ],
+  'moon-theft': [
+    ['Autour d’Albâtre','L’énergie orbitale de Pervenche est initialement négative autour d’Albâtre.'],
+    ['Le passage de Jaspe','Observe les deux géantes se rapprocher.'],
+    ['Après le survol','Suis Pervenche pendant que les géantes s’éloignent.'],
+    ['Transfert observé','Les géantes se sont éloignées. Pervenche a une énergie orbitale négative autour de Jaspe et positive autour d’Albâtre.']
+  ],
   'roche-pass': [
     ['L’approche de Craie','Active Marées et laisse Craie s’approcher de la géante.'],
     ['Trajectoire d’un éclat','Sélectionne un éclat de Craie pour suivre son mouvement après la rupture.'],
@@ -473,7 +519,28 @@ export function createGuide(id, saved = null) {
     state.lastDay = sim.days;
     const get = key => sim.bodies.find(b => b.id === key);
     let fraction = 0;
-    if (id === 'solar') {
+    if(id==='comet-train') {
+      const hits=new Set();
+      for(const event of sim.events) {
+        if(event.type==='collision' && event.survivorId==='ambre-geante' && !event.fragmentIds?.length) {
+          for(const target of event.bodyIds) if(/^eclat-[1-4]$/.test(target)) hits.add(target);
+        }
+      }
+      state.step=Math.max(state.step,hits.size);
+    } else if(id==='starfall') {
+      const orbit=measureOrbit(get('silex-interieur'),get('ocre-rouge'));
+      if(orbit?.radialSpeed<0 && orbit.radius<.24) state.step=Math.max(state.step,1);
+      if(get('anemone') && sim.events.some(e=>e.type==='collision' && e.survivorId==='ocre-rouge' &&
+        e.bodyIds.includes('silex-interieur') && !e.fragmentIds?.length)) state.step=total;
+    } else if(id==='moon-theft') {
+      const home=get('albatre'), visitor=get('jaspe'), moon=get('pervenche');
+      const fromHome=measureOrbit(moon,home),fromVisitor=measureOrbit(moon,visitor),pass=measureOrbit(visitor,home);
+      if (fromHome && fromVisitor && pass) {
+        if(state.step===0 && fromHome.energy<0 && fromVisitor.energy>0)state.step=1;
+        if(state.step===1 && pass.radius<.005)state.step=2;
+        if(state.step===2 && pass.radius>.035 && pass.radialSpeed>0 && fromHome.energy>0 && fromVisitor.energy<0)state.step=total;
+      }
+    } else if (id === 'solar') {
       fraction=measuredRevolution(state,get('earth'),get('moon'),selectedId,1);
     } else if (id==='retrograde') {
       fraction=measuredRevolution(state,get('saros'),get('nereis'),selectedId,-1);
