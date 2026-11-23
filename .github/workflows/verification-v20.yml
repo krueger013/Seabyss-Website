@@ -1,0 +1,33 @@
+name: Vérifier Universe Explorer 20 en production
+on:
+  push:
+    branches: [release/verification-universe-20]
+permissions:
+  contents: read
+jobs:
+  public-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        test: [hashes, screens]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Vérifier le site public
+        env:
+          CHECK: ${{ matrix.test }}
+        run: |
+          set -eu
+          mkdir -p "$RUNNER_TEMP/seabyss-check"
+          cp verification/check.cjs verification/release.json "$RUNNER_TEMP/seabyss-check/"
+          cd "$RUNNER_TEMP/seabyss-check"
+          if [[ "$CHECK" == "screens" ]]; then
+            npm install --no-save --no-audit --no-fund playwright-core@1
+            if command -v google-chrome >/dev/null; then
+              export CHROME_PATH=$(command -v google-chrome)
+            else
+              npx playwright-core install --with-deps chromium
+            fi
+          fi
+          node check.cjs "$CHECK"
