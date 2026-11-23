@@ -8,7 +8,10 @@ async function checkSurfaceTracking(page) {
   const badge=page.locator('[data-sky-surface-toggle]');
   const release=page.locator('[data-sky-surface-release]');
   const terrain=page.locator('[data-surface-canvas]');
-  const openPanel=()=>act('[data-sky-surface-toggle]');
+  const openPanel=async()=>{
+    if(await badge.getAttribute('aria-expanded')!=='true') await act('[data-sky-surface-toggle]');
+    await panel.waitFor();
+  };
   const date=page.locator('[data-sky-surface-date]');
   const rate=page.locator('[data-sky-surface-rate]');
   if(await page.locator('#overlay').isVisible()) await act('#close-dialog');
@@ -56,7 +59,10 @@ async function checkSurfaceTracking(page) {
     const session=await page.context().newCDPSession(page);
     try {
       await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});
+      await page.waitForTimeout(70);
       await session.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:point.x+28,y:point.y+11}]});
+      await release.waitFor({state:'hidden'});
+      await page.waitForTimeout(90);
       await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
     } finally {await session.detach();}
   } else {
