@@ -144,5 +144,4 @@ body.sandbox-active #sandbox-open {color:#b0e8ee;border-color:#79c6d2}
   .sb-metrics {gap:10px;flex-wrap:wrap}
   .sb-metrics dd {font-size:12px}
 }
-@media (max-width:450px) {.masthead .brand-type {display:none}.masthead .brand {flex:1}}
 @media (max-width:700px) {#sandbox-open span {position:static;width:auto;height:auto;clip-path:none;font-size:9px;line-height:1}#sandbox-open {flex-direction:column;gap:1px}}

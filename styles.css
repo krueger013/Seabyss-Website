@@ -417,6 +417,9 @@ body #overlay::backdrop { background: #03060acb; }
   .hero-actions #earth-open { width:44px; padding:0; }
   .hero-actions #earth-open span { display:none; }
 }
+@media (max-width:450px) {
+  .masthead .brand-type {display:none}
+}
 @media (max-width:380px) {
   .masthead .main-nav { flex:1; justify-content:space-between; }
 }

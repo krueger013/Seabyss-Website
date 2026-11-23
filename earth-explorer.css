@@ -44,6 +44,11 @@
 .earth-view .earth-apply {padding-inline:9px;font:650 12px var(--sans);background:#afdcdf;color:#0b2630;border-color:#afdcdf}
 .earth-view .earth-apply:hover {background:#c7f2ee}
 .earth-orbit {text-align:left;touch-action:manipulation}
+.earth-observe {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(128px,100%),1fr));gap:6px}
+.earth-observe:not(:has(button:not([hidden]))) {display:none}
+.earth-observe button {padding:6px 8px;text-align:center;touch-action:manipulation}
+.earth-observe:has([data-earth-sky]:not([hidden])) .earth-orbit {background:#1c3445;color:#e3edf2;border-color:#6e85996b}
+.earth-observe button:focus-visible {outline:2px solid #ffce9b;outline-offset:-2px}
 .earth-controls output {min-height:18px;font:600 12px/1.4 var(--sans);color:#ddd1a8}
 .earth-links {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
 .earth-links :is(a,button) {

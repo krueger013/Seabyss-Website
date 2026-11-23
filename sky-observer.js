@@ -128,7 +128,7 @@ function button(text,label) {
   return b;
 }
 
-export function createSkyObserver(container,{objects,travel,currentId}) {
+export function createSkyObserver(container,{objects,travel,currentId,onEarthSky}) {
   const root=make('section','sky-observer');
   root.setAttribute('aria-label','Planétarium équatorial');
   const controls=make('div','sky-filters');
@@ -161,6 +161,10 @@ export function createSkyObserver(container,{objects,travel,currentId}) {
   info.append(copy,fly);
   const note=make('p','sky-note','Glisse pour parcourir le ciel et touche un repère pour l’identifier. La carte montre les directions (J2000). Les distances sont exprimées en années-lumière.');
   root.append(controls,frame,info,note);container.append(root);
+  if (onEarthSky) {
+    const local=button('Ciel terrestre','Observer le Soleil, la Lune et les planètes depuis un lieu');
+    local.className='chart-secondary';local.onclick=onEarthSky;root.append(local);
+  }
 
   const destinations=chartDestinations(objects);
   const lookup=new Map(destinations.map(b=>[b.id,b]));

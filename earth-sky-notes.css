@@ -1,0 +1,12 @@
+.earth-sky-notes{margin-block:1rem;padding-block:.9rem;border-top:1px solid #7492aa4d;color:#e7eff6;min-width:0}
+.earth-sky-notes h3{font-size:1rem;margin:0 0 .55rem}
+.earth-sky-notes ul{list-style:none;margin:0;padding:0}
+.earth-sky-notes li{display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;padding:.6rem 0;border-bottom:1px solid #7492aa29}
+.earth-sky-notes strong,.earth-sky-notes time,.earth-sky-notes small{display:block;overflow-wrap:anywhere}
+.earth-sky-notes time,.earth-sky-notes small,.earth-sky-notes-empty{font-size:.87rem;color:#c4d6e1}
+.earth-sky-notes .earth-sky-notes-empty{border:0}
+.earth-sky-note-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+.earth-sky-note-actions button{min-height:44px;padding:.4rem .8rem;border:1px solid #728fa36b;border-radius:.55rem;background:#122735;color:#d7edf6;font:inherit;cursor:pointer}
+.earth-sky-note-actions button:hover,.earth-sky-note-actions button:focus-visible{border-color:#8adce2;background:#1b3744}
+.earth-sky-notes [role=status]{color:#d1e4dd;font-size:.87rem;margin:.35rem 0 0}
+.earth-sky-notes [role=status]:empty{display:none}

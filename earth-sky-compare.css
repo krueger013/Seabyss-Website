@@ -1,0 +1,23 @@
+.es-compare {min-width:0;border-top:1px solid var(--es-edge,#a19db647);font:inherit}
+.es-compare>summary {box-sizing:border-box;min-height:44px;padding:12px 2px;color:#f3d8b0;cursor:pointer;font-weight:600}
+.es-compare>summary:focus-visible {outline:2px solid #f7c88b;outline-offset:1px}
+.es-compare-body {display:grid;gap:10px;min-width:0;padding:2px 0 10px}
+.es-compare-tools,.es-compare-delta,.es-compare-reading {display:flex;align-items:center;justify-content:space-between;gap:7px 12px;flex-wrap:wrap}
+.es-compare-tools label {display:grid;gap:3px;flex:1 1 12rem;min-width:0;color:var(--es-muted,#cec4d3);font-size:13px}
+.es-compare-tools select {width:100%}
+.es-compare-instant {display:grid;gap:2px;min-width:0}
+.es-compare-instant strong {color:#f0e0c8;font:500 18px/1.2 var(--serif,Georgia,serif)}
+.es-compare time,.es-compare-visible,.es-compare-bearing {color:var(--es-muted,#c3bbce);font-size:12px;font-variant-numeric:tabular-nums}
+.es-compare-cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:8px;min-width:0}
+.es-compare-card {display:grid;align-content:start;min-width:0;padding:10px 12px;gap:3px;border:1px solid var(--es-edge,#a19db647);border-radius:6px;background:#171924}
+.es-compare-card h4 {margin:0;color:#f4e8d9;font:500 16px/1.25 var(--serif,Georgia,serif);overflow-wrap:anywhere}
+.es-compare-chart {position:relative;margin:6px 0 3px;border-radius:3px;overflow:hidden;background:linear-gradient(to bottom,#273645 0%,#50434e 49%,#b1a19a 50%,#39333e 51%,#24232d 100%) top/100% 66px no-repeat,#1b1d28}
+.es-compare-grid {position:relative;height:66px;margin:0 10px;background:repeating-linear-gradient(to right,#e4cabe24 0 1px,transparent 1px 25%)}
+.es-compare-horizon {position:absolute;top:50%;right:0;transform:translateY(-100%);color:#e6d7cf;font:10px var(--mono,monospace)}
+.es-compare-marker {position:absolute;width:8px;height:8px;border:1px solid #fff4df;border-radius:50%;transform:translate(-50%,-50%);background:var(--astro-color);box-shadow:0 0 6px var(--astro-color)}
+.es-compare-card[data-up=false] .es-compare-marker {border-style:dashed;background:#252432;box-shadow:none}
+.es-compare-bearings {display:flex;justify-content:space-between;padding:3px 7px;background:#1b1d28;color:#c7c1cf;font:10px/1.1 var(--mono,monospace)}
+.es-compare-reading {color:#d7cbd8;font-size:12px}
+.es-compare-reading strong,.es-compare-delta strong {color:#f4d2a1;font:600 15px/1.2 var(--mono,monospace);font-variant-numeric:tabular-nums}
+.es-compare-delta {padding:8px 1px 0;border-top:1px solid var(--es-edge,#a19db647);color:#e3dce6;font-size:13px}
+.es-compare-delta span {overflow-wrap:anywhere}

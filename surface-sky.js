@@ -7,6 +7,9 @@ const kilometres = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:0});
 const clock = new Intl.DateTimeFormat('fr-CA',{dateStyle:'medium',timeStyle:'short',timeZone:'UTC'});
 const signedDegrees = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:0,signDisplay:'exceptZero'});
 const acceleratedRates = new Set([3600,86400]);
+const octants=['N','N-E','E','S-E','S','S-O','O','N-O'];
+const compass = azimuth => octants[Math.round(((toDegrees(azimuth)%360)+360)%360/45)%8];
+const aboveHorizon = body => !!body && body.altitude >= -body.angularDiameter/2;
 const latestDate = Date.UTC(2101,0,1) - 1000;
 const starColour = index => [
   213 + Math.round(42 * Math.max(0,Math.min(1,index))),
@@ -45,7 +48,7 @@ function angularSize(angle) {
   return degrees<.1 ? number.format(degrees*3600)+'″' : diameter.format(degrees)+'°';
 }
 
-export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
+export function mountSurfaceSky(root,{look,onChange=()=>{},announce=()=>{}}={}) {
   const stage=root.querySelector('.surface-scene');
   const canvas=stage.querySelector('canvas');
   const wrapper=document.createElement('div');
@@ -61,11 +64,16 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
         <time data-sky-hud-clock></time>
       </span>
     </button>
+    <button type="button" class="surface-sky-release" data-sky-surface-release hidden>
+      <span><strong data-sky-track-name></strong><small data-sky-track-bearing></small></span>
+      <span aria-hidden="true">×</span>
+    </button>
     <section class="surface-sky-panel" data-sky-surface-panel id="surface-sky-panel" aria-label="Observation du ciel" hidden>
       <header class="surface-sky-heading">
         <div><h2>Ciel local</h2><p data-sky-surface-coordinates></p></div>
         <button type="button" class="surface-sky-close" aria-label="Fermer le ciel" data-sky-surface-close>×</button>
       </header>
+      <div data-sky-track-controls></div>
       <div class="surface-sky-offline" data-sky-surface-unavailable role="status" hidden></div>
       <div data-sky-surface-content>
         <div class="surface-sky-summary">
@@ -97,12 +105,16 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
       </div>
     </section>`;
   stage.append(wrapper);
+  const reticle=document.createElement('div');
+  reticle.className='surface-sky-reticle';reticle.setAttribute('aria-hidden','true');reticle.hidden=true;stage.append(reticle);
   const $=selector=>wrapper.querySelector(selector);
   const button=$('[data-sky-surface-toggle]'),panel=$('[data-sky-surface-panel]'),dateInput=$('[data-sky-surface-date]');
   const list=$('[data-sky-surface-objects]'),siteSelect=$('[data-sky-surface-site]'),starsInput=$('[data-sky-surface-stars]');
   const rateSelect=$('[data-sky-surface-rate]');
   const hudClock=$('[data-sky-hud-clock]'),hudMode=$('[data-sky-hud-mode]'),hudSun=$('[data-sky-hud-sun]');
   const objects=new Map();
+  const release=$('[data-sky-surface-release]'),trackName=$('[data-sky-track-name]'),trackBearing=$('[data-sky-track-bearing]');
+  let trackedId;
   let world,siteId,landedSite,date=new Date(),live=true,rate=0,nextUpdate=0,timePassed=0,snapshot=null,stars,loaded=false;
   let engine=null,failed=false,hudSnapshot;
 
@@ -112,6 +124,32 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
   }
   function setText(element,content) {
     if (element.textContent!==content) element.textContent=content;
+  }
+  function stopTracking(message) {
+    if(!trackedId) return false;
+    objects.get(trackedId)?.track.setAttribute('aria-pressed','false');
+    trackedId=null;reticle.hidden=true;release.hidden=true;
+    delete release.dataset.target;
+    if(message) announce(message);
+    return true;
+  }
+  function aimAt(body, continuing=false) {
+    if (!aboveHorizon(body) || typeof look!=='function') return false;
+    return look(body.azimuth,body.altitude,continuing)!==false;
+  }
+  function updateBearing(body) {
+    setText(trackBearing,compass(body.azimuth)+' · '+signedDegrees.format(toDegrees(body.altitude))+'°');
+  }
+  function startTracking(body) {
+    if(!aimAt(body)) return;
+    stopTracking();
+    trackedId=body.id;release.dataset.target=body.id;
+    setText(trackName,'Suivi · '+body.name);updateBearing(body);
+    release.setAttribute('aria-label','Arrêter le suivi de '+body.name);
+    release.title='Arrêter le suivi de '+body.name;
+    objects.get(trackedId).track.setAttribute('aria-pressed','true');
+    reticle.hidden=false;release.hidden=false;
+    open(false);canvas.focus({preventScroll:true});
   }
   function renderHud() {
     const shown=live?new Date():date;
@@ -139,6 +177,8 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
 
   function open(visible,focus=false) {
     panel.hidden=!visible;
+    if(visible) $('[data-sky-track-controls]').append(release);
+    else button.after(release);
     button.setAttribute('aria-expanded',String(visible));
     if (visible) {
       update(true);
@@ -162,15 +202,20 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
     aim.type='button'; aim.dataset.skySurfaceLook=object.id;
     aim.onclick=()=>{
       const found=snapshot?.objects.find(body=>body.id===object.id);
-      if (found && found.altitude>=-found.angularDiameter/2) {
-        if (look?.(found.azimuth,found.altitude)!==false) {
-          open(false);
-          canvas.focus({preventScroll:true});
-        }
-      }
+      if(!aimAt(found)) return;
+      stopTracking();open(false);canvas.focus({preventScroll:true});
     };
-    row.append(details,aim);list.append(row);
-    return {row,title,distance,angles,aspect,aim};
+    const track=document.createElement('button');
+    track.type='button';track.dataset.skySurfaceTrack=object.id;track.textContent='Suivre';
+    track.setAttribute('aria-pressed','false');track.setAttribute('aria-label','Suivre '+object.name+' dans le ciel');
+    track.onclick=()=>{
+      if(trackedId===object.id) stopTracking();
+      else startTracking(snapshot?.objects.find(body=>body.id===object.id));
+    };
+    const actions=document.createElement('div');
+    actions.className='surface-sky-actions';actions.append(aim,track);
+    row.append(details,actions);list.append(row);
+    return {row,title,distance,angles,aspect,aim,track};
   }
 
   function render() {
@@ -188,9 +233,9 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
     const point=site.name && (siteSelect.options.length>1 || site.name.length<26) ? site.name+' · ' : '';
     $('[data-sky-surface-coordinates]').textContent=point+latitude+' · '+longitude;
     const sun=sunInView();
-    const visibleSun=sun && sun.altitude>=-sun.angularDiameter/2;
+    const visibleSun=aboveHorizon(sun);
     setText($('[data-sky-surface-status]'),live?'Calcul en direct':rate?'Temps accéléré':'Instant choisi');
-    setText($('[data-sky-surface-sun]'),sun?'Soleil '+signedDegrees.format(toDegrees(sun.altitude))+'° · '+(visibleSun?'au-dessus de l’horizon':'sous l’horizon'):'');
+    setText($('[data-sky-surface-sun]'),sun?'Soleil '+signedDegrees.format(toDegrees(sun.altitude))+'° · '+(!visibleSun?'sous l’horizon':sun.altitude<sun.angularDiameter/2?'sur l’horizon':'au-dessus de l’horizon'):'');
     const comparison=$('[data-sky-surface-comparison]');
     const ground=landedSite ?? engine?.SURFACE_SKY_SITES[world]?.[0];
     comparison.hidden=!ground || site.id===ground.id;
@@ -200,16 +245,18 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
     $('[data-sky-surface-now]').setAttribute('aria-pressed',String(live));
     for (const body of bodies) {
       if(!objects.has(body.id))objects.set(body.id,objectRow(body));
-      const {row,title,distance,angles,aspect,aim}=objects.get(body.id);
-      const above=body.altitude>=-body.angularDiameter/2;
+      const {row,title,distance,angles,aspect,aim,track}=objects.get(body.id);
+      const above=aboveHorizon(body);
       row.dataset.above=String(above);
       title.textContent=body.name;
       distance.textContent=kilometres.format(body.distanceKm)+' km';
       distance.dataset.skyKm=String(body.distanceKm);
-      angles.textContent=number.format((toDegrees(body.azimuth)+360)%360)+'° az. · '+number.format(toDegrees(body.altitude))+'° haut.';
+      angles.textContent=compass(body.azimuth)+' · az. '+number.format((toDegrees(body.azimuth)+360)%360)+'° · hauteur '+number.format(toDegrees(body.altitude))+'°';
       aspect.textContent=angularSize(body.angularDiameter)+' de diamètre · '+age(body.distanceKm/299792.458)+' pour la lumière';
       aim.textContent=above?'Viser':'Sous l’horizon';
       aim.disabled=!above;
+      track.hidden=!above;
+      track.setAttribute('aria-pressed',String(trackedId===body.id));
       aim.setAttribute('aria-label',above?'Tourner vers '+body.name:body.name+' sous l’horizon');
     }
     const eclipse=$('[data-sky-surface-eclipse]'),cover=snapshot.solarOccultation;
@@ -230,13 +277,20 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
       date=new Date(now);
     } else {
       if (!force && timePassed<nextUpdate) return;
-      nextUpdate=timePassed+.25;
+      nextUpdate=timePassed+(trackedId && rate && panel.hidden ? 1/15 : .25);
     }
     try {
       const data=engine.surfaceEphemeris(world,date,observer());
       snapshot={...data,stars:localStars(data.equatorialBasis,stars),showDayStars:starsInput.checked};
     } catch {
       snapshot=null;
+    }
+    if(trackedId) {
+      const body=snapshot?.objects.find(item=>item.id===trackedId);
+      if(!body) stopTracking('Suivi interrompu : éphémérides indisponibles.');
+      else if(!aboveHorizon(body)) stopTracking('Fin du suivi. '+body.name+' est sous l’horizon.');
+      else if(aimAt(body,true)) updateBearing(body);
+      else stopTracking();
     }
     if (!panel.hidden) render();
     renderHud();
@@ -256,6 +310,7 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
   function setWorld(id,region) {
     const place=region && Number.isFinite(region.latitude) && Number.isFinite(region.longitude) ? region : null;
     if(id===world && place?.id===landedSite?.id) {update(true);return;}
+    stopTracking();
     world=id;landedSite=place;siteId=place?.id;
     snapshot=null;objects.clear();list.replaceChildren();
     rate=0;rateSelect.value='0';live=true;
@@ -302,6 +357,11 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
   }
 
   button.onclick=()=>open(panel.hidden);
+  release.onclick=()=>{
+    const track=objects.get(trackedId)?.track;
+    stopTracking();
+    (panel.hidden?canvas:track)?.focus({preventScroll:true});
+  };
   $('[data-sky-surface-close]').onclick=()=>open(false,true);
   $('[data-sky-surface-now]').onclick=()=>{live=true;rate=0;rateSelect.value='0';update(true);};
   rateSelect.onchange=()=>{
@@ -316,6 +376,7 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
   for(const preset of wrapper.querySelectorAll('[data-sky-surface-event]')) {
     preset.onclick=()=>{
       const apollo=preset.dataset.skySurfaceEvent==='apollo';
+      stopTracking();
       siteId=apollo?'apollo-11':'imbrium';
       siteSelect.value=siteId;
       jump(new Date(apollo?'1969-07-20T20:17:40Z':'2022-11-08T10:59:00Z'));
@@ -330,7 +391,7 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
     }
     jump(changed);
   };
-  siteSelect.onchange=()=>{siteId=siteSelect.value;update(true);};
+  siteSelect.onchange=()=>{stopTracking();siteId=siteSelect.value;update(true);};
   starsInput.onchange=()=>update(true);
   wrapper.addEventListener('keydown',event=>{
     if (event.key==='Escape' && !panel.hidden) {event.preventDefault();event.stopPropagation();open(false,true);}
@@ -338,9 +399,9 @@ export function mountSurfaceSky(root,{look,onChange=()=>{}}={}) {
   });
 
   return {
-    setWorld,
+    setWorld,stopTracking,
     observe:()=>snapshot,
-    close:()=>open(false),
+    close:()=>{stopTracking();open(false);},
     tick(dt) {
       if(live || rate) {
         timePassed+=dt;

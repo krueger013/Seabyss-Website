@@ -38,7 +38,6 @@ body.system-active #observatory > :is(.stage-heading,.target-info,.scene-shade,.
   .stage-heading { z-index:2; }
   .sim-toolbar button { min-width:44px; }
 }
-@media (max-width:380px) { .masthead .brand-type { display:none; } }
 @media (min-width:381px) and (max-width:435px) {
   .masthead { padding-inline:max(10px,env(safe-area-inset-left)) max(10px,env(safe-area-inset-right)); }
   .masthead .brand { gap:5px; }

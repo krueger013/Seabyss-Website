@@ -924,6 +924,12 @@ function openDossier() {
     dt.textContent=name;dd.textContent=val;pair.append(dt,dd);data.append(pair);
   }
   dialogBody.append(meta,description,data);
+  if (['earth','sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune'].includes(body.id)) {
+    const localSky=document.createElement('button');
+    localSky.type='button';localSky.className='archive-entry';localSky.dataset.dossierEarthSky=body.id;
+    localSky.textContent=body.id==='earth'?'Observer le ciel depuis la Terre':'Repérer cet astre dans le ciel terrestre';
+    localSky.onclick=()=>openEarthSky({targetId:body.id==='earth'?'moon':body.id});dialogBody.append(localSky);
+  }
   const transitPlanet=isTransitPlanet(body)?body:body.kind==='star' && objects.find(p=>p.parentId===body.id && isTransitPlanet(p));
   if (transitPlanet) {
     const orbit=document.createElement('button'),transit=document.createElement('button');
@@ -1061,7 +1067,8 @@ function openDossier() {
 $('#object-dossier').onclick=openDossier;
 $('#photo-open').onclick = () => nav.selectedId==='sun' ? solarLab.open(undefined,()=>travel('sun',false)) : openPhoto(nav.selectedId);
 $('#earth-open').onclick = () => openAtlas('earth');
-function openAtlas(first = 'catalog',initialWorld,initialImpact) {
+function openEarthSky(observation={}) {openAtlas('earth-sky',undefined,undefined,observation);}
+function openAtlas(first = 'catalog',initialWorld,initialImpact,observation={}) {
   showDialog('Atlas céleste','atlas-open');
   const tools = document.createElement('nav');
   tools.className = 'atlas-tools'; tools.setAttribute('aria-label','Vues de l’atlas');
@@ -1075,7 +1082,7 @@ function openAtlas(first = 'catalog',initialWorld,initialImpact) {
       releaseChart=openAtlasModule(panel,import('./deep-atlas.js').then(({createDeepAtlas})=>host=>{
         const dispose=createDeepAtlas(host,{objects,travel,experiences,
             openArchive:()=>openPhoto(nav.selectedId,true),openCompare:()=>openAtlas('compare'),
-            openTransit:id=>openAtlas('transits',id)});
+            openTransit:id=>openAtlas('transits',id),openEarthSky:()=>openAtlas('earth-sky')});
         icons(host);
         return dispose;
       }),'de la galerie');
@@ -1098,7 +1105,13 @@ function openAtlas(first = 'catalog',initialWorld,initialImpact) {
     }],
     ['sky','Planétarium', () => {
       releaseChart=openAtlasModule(panel,withPanelStyles('sky',import('./sky-observer.js')).then(({createSkyObserver})=>
-        target=>createSkyObserver(target,{objects,travel,currentId:nav.selectedId})),'du planétarium');
+        target=>createSkyObserver(target,{objects,travel,currentId:nav.selectedId,onEarthSky:()=>openEarthSky()})),'du planétarium');
+    }],
+    ['earth-sky','Ciel terrestre', () => {
+      const ready=withPanelStyles('earth-sky',import('./earth-sky-workspace.js')).then(module=>host=>
+        module.createEarthSkyWorkspace(host,{observation,onRecall:openEarthSky,
+          onMap:(site,state)=>openAtlas('earth',undefined,undefined,{...state,site})}));
+      releaseChart=openAtlasModule(panel,ready,'du ciel terrestre');
     }],
     ['surfaces','Surfaces', () => {
       const view=Promise.all([import('./surface-registry.js'),withPanelStyles('surface-atlas',import('./surface-atlas.js'))]).then(([registry,atlas])=>target=>{
@@ -1114,7 +1127,8 @@ function openAtlas(first = 'catalog',initialWorld,initialImpact) {
     ['pilot','Pilotage', () => renderLandingChoices(panel,{worlds:pilotWorlds,start:openLanding})],
     ['earth','Terre', () => {
       releaseChart=openAtlasModule(panel,withPanelStyles('earth-atlas',import('./earth-explorer.js')).then(({createEarthExplorer})=>
-        target=>createEarthExplorer(target,{onOrbit:openOverflight})),'de la carte terrestre');
+        target=>createEarthExplorer(target,{initialSite:observation.site,onOrbit:openOverflight,
+          onSky:site=>openEarthSky({...observation,site})})),'de la carte terrestre');
     }],
     ['phenomena','Phénomènes', () => {
       releaseChart=openAtlasModule(panel,withPanelStyles('phenomena',import('./phenomena.js')).then(({createPhenomena})=>host=>createPhenomena(host,{
@@ -1192,6 +1206,16 @@ function openTransitObservation(id) {
     .then(([module])=>host=>module.createTransitObservation(host,{onReturn:()=>openAtlas('transits',id)}));
   releaseChart=openAtlasModule(dialogBody,ready,'de la photométrie');
 }
+function openEarthSkyNotes() {
+  showDialog('Observations du ciel terrestre','journal-open');
+  const ready=withPanelStyles('earth-sky',import('./earth-sky-notes.js')).then(module=>host=>{
+    const back=document.createElement('button');
+    back.type='button';back.className='chart-secondary';back.textContent='Retour au carnet';back.onclick=openJournal;
+    const list=document.createElement('div');host.append(back,list);
+    return module.createEarthSkyNotebook(list,{onRecall:openEarthSky}).dispose;
+  });
+  releaseChart=openAtlasModule(dialogBody,ready,'du carnet d’observations');
+}
 function openJournal() {
   showDialog('Carnet de vol','journal-open');
   const save = document.createElement('button');
@@ -1203,7 +1227,10 @@ function openJournal() {
   const transits=document.createElement('button');
   transits.type='button';transits.className='archive-entry';transits.dataset.journalTransits='';
   transits.textContent='Mesures de transit';transits.onclick=openTransitNotes;
-  dialogBody.append(save,album,transits);
+  const skyNotes=document.createElement('button');
+  skyNotes.type='button';skyNotes.className='archive-entry';skyNotes.dataset.journalEarthSky='';
+  skyNotes.textContent='Observations du ciel terrestre';skyNotes.onclick=openEarthSkyNotes;
+  dialogBody.append(save,album,transits,skyNotes);
   for (const {lab,id,symbol,label} of [
     {lab:phaseLab,id:'phase',symbol:'eclipse',label:'Reprendre l’observation des phases'},
     {lab:travellerLab,id:'traveller',symbol:'navigate',label:'Reprendre le suivi des trajectoires'},

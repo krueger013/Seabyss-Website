@@ -1,4 +1,5 @@
 import { assetUrl } from './assets.js';
+import { EARTH_SKY_SITES as sites, resolveEarthSkySite } from './earth-sky-sites.js';
 
 const rad = Math.PI / 180;
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
@@ -7,23 +8,6 @@ const coordinateKey = 'seabyss-universe.earth-pin.v1';
 const maps = 'https://www.google.com/maps/@';
 const earthRadiusKm = 6371;
 
-const sites = [
-  {id:'levis', name:'Terrasse de Lévis', group:'Québec et Canada', latitude:46.8124, longitude:-71.1802},
-  {id:'quebec', name:'Vieux-Québec', group:'Québec et Canada', latitude:46.8118, longitude:-71.2048},
-  {id:'montreal', name:'Mont-Royal', group:'Québec et Canada', latitude:45.5037, longitude:-73.5877},
-  {id:'perce', name:'Village de Percé', group:'Québec et Canada', latitude:48.5239, longitude:-64.2128},
-  {id:'forillon', name:'Parc national Forillon', group:'Québec et Canada', latitude:48.89, longitude:-64.35},
-  {id:'cap-breton', name:'Hautes-Terres-du-Cap-Breton', group:'Québec et Canada', latitude:46.73, longitude:-60.64},
-  {id:'banff', name:'Banff', group:'Québec et Canada', latitude:51.1767, longitude:-115.5719},
-  {id:'grand-canyon', name:'Rive sud du Grand Canyon', group:'Amériques', latitude:36.0587, longitude:-112.1077},
-  {id:'cusco', name:'Plaza de Armas, Cusco', group:'Amériques', latitude:-13.5167, longitude:-71.9786},
-  {id:'valparaiso', name:'Quartier historique, Valparaíso', group:'Amériques', latitude:-33.04064, longitude:-71.628},
-  {id:'paris', name:'Trocadéro, Paris', group:'Europe, Afrique et Asie', latitude:48.8614, longitude:2.2887},
-  {id:'venice', name:'Place Saint-Marc, Venise', group:'Europe, Afrique et Asie', latitude:45.4341, longitude:12.3393},
-  {id:'cape-town', name:'Waterfront du Cap', group:'Europe, Afrique et Asie', latitude:-33.9065, longitude:18.4187},
-  {id:'tokyo', name:'Shibuya, Tokyo', group:'Europe, Afrique et Asie', latitude:35.6595, longitude:139.7005},
-  {id:'sydney', name:'Circular Quay, Sydney', group:'Océanie', latitude:-33.8607, longitude:151.2123}
-];
 const tours = [
   {id:'saint-laurent', name:'Du Saint-Laurent à l’Atlantique', stops:['montreal','quebec','levis','perce','forillon','cap-breton']},
   {id:'cordillere', name:'Des Rocheuses jusqu’aux Andes', stops:['banff','grand-canyon','cusco','valparaiso']},
@@ -72,10 +56,15 @@ function selectCoordinates(latitude, longitude) {
   return {latitude:Number(latitude.toFixed(5)), longitude:Number(longitude.toFixed(5))};
 }
 
+function observerPin(value) {
+  const point=selectCoordinates(value?.latitude,value?.longitude);
+  return point ? resolveEarthSkySite({...value,...point}) : null;
+}
+
 function readPin() {
   try {
     const stored = JSON.parse(localStorage.getItem(coordinateKey));
-    return selectCoordinates(stored?.latitude,stored?.longitude);
+    return observerPin(stored);
   } catch { return null; }
 }
 
@@ -329,7 +318,7 @@ function createGlobe(canvas,{view,select,turn,magnify}) {
   };
 }
 
-export function createEarthExplorer(container,{initialSite,onOrbit}={}) {
+export function createEarthExplorer(container,{initialSite,onOrbit,onSky}={}) {
   const panel=document.createElement('section');
   panel.className='earth-view';
   panel.setAttribute('aria-label','Exploration terrestre');
@@ -369,7 +358,10 @@ export function createEarthExplorer(container,{initialSite,onOrbit}={}) {
           <button type="submit" class="earth-apply">Repérer</button>
         </form>
         <output data-earth-status role="status">Choisis un lieu ou touche le globe.</output>
-        <button type="button" class="earth-orbit earth-apply" data-earth-orbit hidden>Survoler ce lieu en orbite</button>
+        <div class="earth-observe">
+          <button type="button" class="earth-apply" data-earth-sky hidden>Voir le ciel ici</button>
+          <button type="button" class="earth-orbit earth-apply" data-earth-orbit hidden>Survoler ce lieu en orbite</button>
+        </div>
         <div class="earth-links" aria-label="Ouvrir en ligne">
           <a data-earth-street target="_blank" rel="noopener noreferrer">Google Street View <span aria-hidden="true">↗</span></a>
           <a data-earth-satellite target="_blank" rel="noopener noreferrer">Google Maps satellite <span aria-hidden="true">↗</span></a>
@@ -411,21 +403,17 @@ export function createEarthExplorer(container,{initialSite,onOrbit}={}) {
     groups.get(site.group).append(new Option(site.name,site.id));
   }
   for (const tour of tours) tourMenu.append(new Option(tour.name,tour.id));
-  const favorite=sites.find(site=>site.id===initialSite) || readPin() || sites[0];
+  const favorite=observerPin(typeof initialSite==='string'?sitesById.get(initialSite):initialSite) || readPin() || observerPin(sites[0]);
   const view={center:{...favorite},pin:{...favorite},zoom:1,tour:null,stop:0,animating:false};
   const decimal = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:5,minimumFractionDigits:2,useGrouping:false});
   const kilometers = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:0});
   const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
   let playing=false, resumeAtStop=false, ticker=0, flightFrame=0;
-  function currentSite() {
-    return sites.find(site=>site.latitude===view.pin.latitude&&site.longitude===view.pin.longitude);
-  }
   function update() {
-    const site=currentSite();
     latitude.value=decimal.format(view.pin.latitude);
     longitude.value=decimal.format(view.pin.longitude);
-    menu.value=site?.id || '';
-    status.value=site?.name || 'Point sélectionné';
+    menu.value=sitesById.has(view.pin.id)?view.pin.id:'';
+    status.value=view.pin.name || 'Point sélectionné';
     const links=earthExploreUrls(view.pin);
     $('[data-earth-street]').href=links.street;
     $('[data-earth-satellite]').href=links.satellite;
@@ -433,7 +421,8 @@ export function createEarthExplorer(container,{initialSite,onOrbit}={}) {
     globe.render();
   }
   function placePin(point, center=false) {
-    const next=selectCoordinates(point.latitude,point.longitude);
+    const samePin=point.latitude===view.pin.latitude && point.longitude===view.pin.longitude;
+    const next=observerPin(samePin?{...view.pin,...point}:point);
     if (!next) return;
     if (panorama.firstChild) {
       panorama.replaceChildren();
@@ -457,7 +446,7 @@ export function createEarthExplorer(container,{initialSite,onOrbit}={}) {
       pauseTour();
       syncTourControls();
     }
-    view.center.latitude=clamp(view.center.latitude+latitudeDelta,-88,88);
+    view.center.latitude=clamp(view.center.latitude+latitudeDelta,-90,90);
     view.center.longitude=wrap(view.center.longitude+longitudeDelta);
     globe.render();
   }
@@ -555,11 +544,15 @@ export function createEarthExplorer(container,{initialSite,onOrbit}={}) {
     const value=input.value.trim().replace(',', '.').replace('−','-');
     return /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(value) ? Number(value) : NaN;
   };
+  function readPositionFields() {
+    const point=selectCoordinates(parse(latitude),parse(longitude));
+    if (!point) status.value='Latitude de −90° à 90° et longitude de −180° à 180°.';
+    return point;
+  }
   $('[data-earth-position]').onsubmit=event=>{
     event.preventDefault();
-    const point=selectCoordinates(parse(latitude),parse(longitude));
+    const point=readPositionFields();
     if (point) select(point,true);
-    else status.value='Latitude de −90° à 90° et longitude de −180° à 180°.';
   };
   $('[data-earth-center]').onclick=()=>{
     if (view.animating || playing) {
@@ -580,6 +573,14 @@ export function createEarthExplorer(container,{initialSite,onOrbit}={}) {
   const orbit=$('[data-earth-orbit]');
   orbit.hidden=typeof onOrbit!=='function';
   orbit.onclick=()=>onOrbit?.(view.pin.latitude,view.pin.longitude);
+  const sky=$('[data-earth-sky]');
+  sky.hidden=typeof onSky!=='function';
+  sky.onclick=()=>{
+    const point=readPositionFields();
+    if (!point) return;
+    if (point.latitude!==view.pin.latitude || point.longitude!==view.pin.longitude) select(point,true);
+    onSky?.({...view.pin});
+  };
   $('[data-earth-embed-form]').onsubmit=event=>{
     event.preventDefault();
     if (!canEmbed) return;

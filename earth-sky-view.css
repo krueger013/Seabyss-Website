@@ -1,0 +1,64 @@
+.earth-sky-view {
+  --es-edge:#a19db647;--es-muted:#c3bbce;--es-amber:#f4cf97;
+  display:grid;gap:11px;min-width:0;color:#eee9ed;font:14px/1.4 var(--sans,'Segoe UI',sans-serif);
+}
+.earth-sky-view [hidden],.earth-sky-view :is([data-earth-sky-compare],[data-earth-sky-notebook],[data-earth-sky-status],.es-horizon):empty {display:none}
+.es-pickers {display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr) auto;gap:8px;align-items:end}
+.es-pickers label,.es-time-tools label,.es-scrubber label {display:grid;gap:4px;color:var(--es-muted);min-width:0;font-size:13px}
+.earth-sky-view :is(button,select,input:not([type=range])) {
+  box-sizing:border-box;min-height:44px;min-width:0;max-width:100%;border:1px solid var(--es-edge);border-radius:5px;
+  padding:4px 10px;background:#201e2d;color:#eee9ef;color-scheme:dark;font:inherit;touch-action:manipulation;
+}
+.earth-sky-view :is(button,select) {cursor:pointer}
+.earth-sky-view button:hover {border-color:#ac9db9}
+.earth-sky-view button:disabled {opacity:.5;cursor:default}
+.earth-sky-view :is(button,input,select,a):focus-visible {outline:2px solid #f7c88b;outline-offset:-2px}
+.es-pickers select {width:100%}
+.es-heading,.es-scrubber,.es-time-tools,.es-footer {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:7px 10px;min-width:0}
+.es-heading>div {display:grid;min-width:0;gap:2px}
+.es-heading strong {color:#f2e3ce;font:500 clamp(17px,2.4vw,23px)/1.2 var(--serif,Georgia,serif)}
+.es-heading [data-earth-sky-zone],.es-figures figcaption span,.es-footer,.es-horizon {color:var(--es-muted);font-size:12px}
+.es-light {color:var(--es-amber)}
+.es-figures {display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:8px}
+.es-figures figure {display:flex;flex-direction:column;margin:0;min-width:0;overflow:hidden;border:1px solid var(--es-edge);border-radius:7px;background:linear-gradient(150deg,#191827,#11141f)}
+.es-figures figcaption {display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 5px;padding:7px 9px 0;font-weight:600}
+.es-figures canvas {display:block;width:100%;cursor:crosshair}
+[data-earth-sky-dome] {height:clamp(196px,34dvh,320px)}
+[data-earth-sky-chart] {height:clamp(134px,22dvh,230px);margin:auto 0}
+.es-events {display:flex;flex-wrap:wrap;gap:4px;padding:3px 6px 6px}
+.earth-sky-view .es-events button {display:grid;gap:0;flex:1 1 55px;align-content:center;justify-content:center;padding:3px 5px;line-height:1.17}
+.es-events button span {color:var(--es-muted);font-size:11px}
+.es-events button strong {font-size:13px;font-weight:500;color:var(--es-amber)}
+.es-events button[aria-pressed=true],.earth-sky-view :is([data-earth-sky-play],[data-earth-sky-now])[aria-pressed=true] {border-color:#d8b181;background:#382b2e}
+.es-horizon {margin:0 7px 6px}
+.es-measures {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0}
+.es-measures div {min-width:0;padding:5px 1px;border-top:1px solid var(--es-edge)}
+.es-measures dt {color:var(--es-muted);font-size:12px}
+.es-measures dd {margin:3px 0 0;color:#f4d5a8;font:500 clamp(15px,2.6vw,21px)/1.2 var(--mono,monospace);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.es-scrubber label {flex:1 1 155px;gap:0}
+.es-scrubber input {width:100%;min-width:0;min-height:44px;margin:0;accent-color:#e3b779}
+.es-time-tools {justify-content:start;align-items:end}
+.es-days {display:flex;flex-wrap:wrap;gap:4px}
+.es-footer {padding-top:7px;border-top:1px solid var(--es-edge)}
+.es-footer>div {flex:1 1 225px}
+.es-footer [data-earth-sky-coordinates] {color:#ded4df;font-variant-numeric:tabular-nums}
+.es-footer p,.earth-sky-view [data-earth-sky-status] {margin:2px 0 0}
+.es-footer [data-earth-sky-save] {color:var(--es-amber);border-color:#9f80634f}
+@media(max-width:600px) and (orientation:portrait) {
+  .earth-sky-view {gap:7px}
+  .es-pickers {grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:5px}
+  .es-pickers [data-earth-sky-map] {grid-column:1/-1;justify-self:start}
+  .es-figures {grid-template-columns:minmax(0,1fr);gap:5px}
+  [data-earth-sky-dome] {height:clamp(168px,28dvh,220px)}
+  [data-earth-sky-chart] {height:clamp(110px,18dvh,155px)}
+  .es-measures {gap:4px}
+  .es-measures dt {line-height:1.2}
+  .earth-sky-view :is(button,select,input:not([type=range])) {padding-inline:6px}
+  .es-scrubber {align-items:end}
+}
+@media(max-height:455px) and (orientation:landscape) {
+  .earth-sky-view {gap:6px}
+  [data-earth-sky-dome] {height:clamp(141px,40dvh,184px)}
+  [data-earth-sky-chart] {height:clamp(94px,26dvh,125px)}
+  .es-figures figcaption span {font-size:11px}
+}

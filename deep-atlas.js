@@ -139,12 +139,12 @@ function transitSystems(objects,travel,openTransit) {
   return panel;
 }
 
-function discoveryTools({objects, travel, experiences, openArchive, openCompare, openTransit}) {
+function discoveryTools({objects, travel, experiences, openArchive, openCompare, openTransit, openEarthSky}) {
   const tools=node('section','discover-tools');
   tools.setAttribute('aria-label','Outils de découverte');
   const bar=node('div','discover-actions');
   const panels=[];
-  function action(attribute,label,icon,activate) {
+  function action(attribute,label,icon,activate,parent=bar) {
     const button=node('button','discover-choice');
     button.type='button'; button.setAttribute(attribute,'');
     const glyph=node('i');
@@ -152,7 +152,7 @@ function discoveryTools({objects, travel, experiences, openArchive, openCompare,
     glyph.setAttribute('aria-hidden','true');
     button.append(glyph,node('span','',label));
     button.onclick=activate;
-    bar.append(button);
+    parent.append(button);
     return button;
   }
   function disclosure(attribute,label,icon,panel,id) {
@@ -191,6 +191,10 @@ function discoveryTools({objects, travel, experiences, openArchive, openCompare,
     disclosure('data-discover-nearby','Voisinage stellaire','navigate',neighbours,'atlas-nearby-stars');
   }
   action('data-discover-compare','Comparer les astres','grid',openCompare);
+  if (openEarthSky) {
+    const sky=action('data-discover-earth-sky','Ciel terrestre','earth',openEarthSky,experiences);
+    experiences.prepend(sky);
+  }
   disclosure('data-discover-labs','Laboratoires','fragments',experiences,'atlas-discovery-labs');
   action('data-archive-open','Photos de mission','photo',openArchive);
   tools.append(bar,...panels.map(item=>item.panel));

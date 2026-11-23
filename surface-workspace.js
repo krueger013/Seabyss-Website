@@ -10,7 +10,7 @@ const SCAN_RANGE = 13;
 const GUIDE_SPEED = 24;
 const DISPLAY_RADIUS = 164;
 const MAX_POSITION = 335;
-const MAX_PITCH = 1.45;
+const MAX_PITCH = Math.PI/2-.00001;
 const DIRECTION = {w:[0,1],z:[0,1],ArrowUp:[0,1],s:[0,-1],ArrowDown:[0,-1],a:[-1,0],q:[-1,0],d:[1,0]};
 const clamp = (value,min,max) => Math.max(min,Math.min(max,value));
 const wrap = angle => Math.atan2(Math.sin(angle),Math.cos(angle));
@@ -120,16 +120,16 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
   let currentReport='';
   const renderer=createSurfaceTerrain(canvas,{onInvalidate:()=>{needsDraw=true;}});
   const sky=mountSurfaceSky(root,{
-    look:(heading,pitch)=>{
+    look:(heading,pitch,continuing)=>{
       if(!state?.landed) return false;
-      stopGuide();
+      if(!continuing) {stopGuide();stopInput();}
       state.heading=wrap(heading);
       state.pitch=clamp(pitch,-MAX_PITCH,MAX_PITCH);
       needsDraw=true;
-      refreshHud();
-      canvas.focus({preventScroll:true});
+      if(!continuing) refreshHud();
       return true;
     },
+    announce,
     onChange:()=>{needsDraw=true;}
   });
   for (const [id,value] of Object.entries(SURFACE_MISSIONS)) world.add(new Option(value.name,id));
@@ -315,6 +315,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
   }
   function align() {
     if (!state?.landed) return;
+    sky.stopTracking();
     state.heading=azimuth(waypoint??selected(),state);
     state.pitch=-.035;
     needsDraw=true;
@@ -322,6 +323,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
   }
   function startScan() {
     if (!state?.landed || scan.disabled || distance(selected(),state)>SCAN_RANGE || state.visited.includes(state.selected)) return;
+    sky.stopTracking();
     stopGuide();
     stopInput();
     scanning=1.25;
@@ -435,6 +437,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
   element('[data-surface-skip]').onclick=touchDown;
   guide.onclick=()=>{
     if(guide.disabled) return;
+    sky.stopTracking();
     if(autopilot) stopGuide();
     else autopilot=true;
     stopInput();
@@ -442,6 +445,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
   };
   scan.onclick=startScan;
   function moveToScreenPoint(event) {
+    sky.stopTracking();
     if (needsDraw) paint();
     const bounds=canvas.getBoundingClientRect();
     const ray=renderer.screenGroundRay(event.clientX-bounds.left,event.clientY-bounds.top);
@@ -471,6 +475,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
     const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
     if(!drag.moved && Math.hypot(dx,dy)<6) return;
     drag.moved=true;
+    sky.stopTracking();
     doublePress.reset();
     stopGuide();
     state.heading=wrap(state.heading-dx*.0065);
@@ -495,6 +500,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
     const direction=button.dataset.surfaceDir;
     button.onpointerdown=event=>{
       if(!state?.landed || scanning>0 || event.button>0)return;
+      sky.stopTracking();
       stopGuide();
       button.setPointerCapture(event.pointerId);
       pointers.set(event.pointerId,direction);
@@ -506,6 +512,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
     };
     button.onclick=event=>{
       if(!state?.landed || scanning>0 || event.detail!==0)return;
+      sky.stopTracking();
       const [strafe,forward]=DIRECTION[direction];
       stopGuide();
       move(forward,strafe,state.heading,.55);
@@ -515,6 +522,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
     if(!isOpen() || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey)return;
     if(event.key==='Escape') {
       event.preventDefault();event.stopPropagation();
+      if(sky.stopTracking()) return;
       if(autopilot) {stopGuide();refreshHud();} else onExit?.(worldId);
       return;
     }
@@ -522,6 +530,7 @@ export function createSurfaceWorkspace(root,{onExit,onCapture,announce=()=>{},re
     const key=event.key.length===1 ? event.key.toLowerCase() : event.key;
     if(!DIRECTION[key] && key!=='ArrowLeft' && key!=='ArrowRight') return;
     event.preventDefault();
+    sky.stopTracking();
     keys.add(key);
   });
   window.addEventListener('keyup',event=>keys.delete(event.key.length===1?event.key.toLowerCase():event.key));

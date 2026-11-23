@@ -5,6 +5,7 @@
   color:#eef4f5;padding:5px 9px;font:600 12px/1.26 var(--sans);
 }
 .surface-sky button:hover:not(:disabled) {border-color:var(--surface-accent)}
+.surface-sky button {touch-action:manipulation}
 .surface-sky .surface-sky-toggle {
   display:flex;align-items:center;gap:6px;min-width:106px;min-height:44px;
   padding:4px 7px;background:#0b141bf2;text-align:left;
@@ -49,6 +50,27 @@
 .surface-sky-rate {display:grid;grid-template-columns:1fr minmax(138px,auto);align-items:center;gap:6px;margin-bottom:7px;color:#c8d8de;font:11px/1.2 var(--mono)}
 .surface-sky-comparison {margin:0 0 8px;color:#ffdda8;font:11px/1.35 var(--sans)}
 .surface-sky-object {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;border-top:1px solid #51677381;padding:8px 0 5px}
+.surface-sky-actions {display:flex;gap:4px}
+.surface-sky-actions button {padding-inline:7px}
+.surface-sky-actions [data-sky-surface-track] {color:#c9ebe4;border-color:#77a99e94}
+.surface-sky-release:not([hidden]) {
+  position:absolute;top:48px;left:0;display:flex;align-items:center;justify-content:space-between;gap:7px;
+  white-space:nowrap;text-align:left;background:#0c1c22ed;border-color:#7caea5;
+}
+.surface-sky-release strong,.surface-sky-release small {display:block}
+.surface-sky-release strong {color:#ddf4e9;font:600 11px/1.2 var(--sans)}
+.surface-sky-release small {margin-top:2px;color:#b7d5da;font:10px/1.2 var(--mono)}
+.surface-sky-release>span:last-child {color:#b6d4cf;font-size:16px}
+[data-sky-track-controls] .surface-sky-release:not([hidden]) {position:static;width:100%;margin-bottom:8px}
+.surface-sky-reticle {
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+  width:38px;height:38px;z-index:2;color:#bbded2;
+  background:linear-gradient(currentColor,currentColor) center top/1px 5px,
+    linear-gradient(currentColor,currentColor) center bottom/1px 5px,
+    linear-gradient(currentColor,currentColor) left center/5px 1px,
+    linear-gradient(currentColor,currentColor) right center/5px 1px;
+  background-repeat:no-repeat;filter:drop-shadow(0 1px 1px #15211c);
+}
 .surface-sky-readout {display:grid;grid-template-columns:1fr auto;gap:4px 6px;align-items:baseline}
 .surface-sky-readout strong {font:650 14px/1.2 var(--sans)}
 .surface-sky-readout span {font:11px/1.2 var(--mono);color:#ffe6b4;white-space:nowrap}
@@ -62,4 +84,5 @@
 @container (max-width:305px) {
   .surface-sky .surface-sky-toggle {padding-inline:5px;min-width:86px}
   .surface-sky-toggle svg {display:none}
+  .surface-sky-readout {grid-template-columns:minmax(0,1fr)}
 }
