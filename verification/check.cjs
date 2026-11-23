@@ -3,21 +3,32 @@ const assert=require('node:assert/strict'), crypto=require('node:crypto');
 const meta=require('./release.json'), origin='https://www.seabyss.com/';
 const stamp='?check='+meta.release.slice(0,12)+'-'+Date.now();
 const sha=(b)=>crypto.createHash('sha1').update('blob '+b.length+'\0').update(b).digest('hex');
+async function request(url){
+ const transient=new Set([429,500,502,503,504]);
+ for(let attempt=0;attempt<6;attempt++){
+   const key=new URL(url);
+   if(attempt)key.searchParams.set('retry',String(attempt)+'-'+Date.now());
+   const res=await fetch(key);
+   if(!transient.has(res.status)||attempt===5)return res;
+   await res.arrayBuffer();
+   await new Promise(done=>setTimeout(done,1500*Math.pow(2,attempt)));
+ }
+}
 async function run(){
  let current;
  for(let i=0;i<18;i++){
-   const r=await fetch(origin+stamp+'&try='+i); const b=Buffer.from(await r.arrayBuffer());current=sha(b);
+   const r=await request(origin+stamp+'&try='+i); const b=Buffer.from(await r.arrayBuffer());current=sha(b);
    if(r.ok&&current===meta.files['index.html'])break;
    await new Promise(done=>setTimeout(done,10000));
  }
  assert.equal(current,meta.files['index.html'],'HTML de production avant ouverture');
  const entries=Object.entries(meta.files);
  for (let i=0;i<entries.length;i+=6) await Promise.all(entries.slice(i,i+6).map(async ([file,expected])=>{
-   const res=await fetch(new URL(file+stamp,origin));assert.equal(res.status,200,file);
+   const res=await request(new URL(file+stamp,origin));assert.equal(res.status,200,file);
    const bytes=Buffer.from(await res.arrayBuffer());assert.equal(sha(bytes),expected,file);
  }));
- for(const path of meta.retired){
-   const res=await fetch(new URL(path+stamp,origin));assert.equal(res.status,404,path);
+ for(const path of [...meta.retired,"games/castle-war/"]){
+   const res=await request(new URL(path+stamp,origin));await res.arrayBuffer();assert.equal(res.status,404,path);
  }
  console.log(entries.length+' fichiers identiques au lancement, '+meta.retired.length+' anciennes routes en 404.');
  const browser=await chromium.launch(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH,args:['--no-sandbox']}:{args:['--no-sandbox']});
