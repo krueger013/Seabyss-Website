@@ -1,0 +1,142 @@
+const fs=require('fs'),assert=require('node:assert/strict');
+async function checkReleaseTwentyOne(page) {
+  const touch = await page.evaluate(() => navigator.maxTouchPoints > 0);
+  const act = control => touch ? control.tap() : control.click();
+  const dialog = page.locator('#overlay');
+  const find = name => dialog.locator('[data-transit-' + name + ']');
+  const number = async (name, attribute = 'value') => {
+    const raw = await find(name).getAttribute('data-' + attribute);
+    assert.ok(raw !== null && raw !== '', 'Mesure absente : ' + name);
+    return Number(raw);
+  };
+  const atlas = async tab => {
+    await act(page.locator('#atlas-open'));
+    await act(dialog.locator('button[data-atlas-view="' + tab + '"]'));
+  };
+  await atlas('discover');
+  const systems = dialog.locator('[data-discover-transits]');
+  await act(systems);
+  assert.equal(await systems.getAttribute('aria-expanded'), 'true');
+  const host = dialog.locator('[data-discover-system]');
+  const planet = dialog.locator('[data-discover-planet]');
+  assert.deepEqual(await host.locator('option').evaluateAll(options => options.map(o => o.value).sort()),
+    ['gj-1214','hd-209458','kepler-10','wasp-39']);
+  await host.selectOption('wasp-39');
+  assert.equal(await planet.inputValue(), 'wasp-39-b');
+  await host.selectOption('kepler-10');
+  await planet.selectOption('kepler-10-c');
+  await act(dialog.locator('[data-discover-transit]'));
+  await find('disc').waitFor();
+  assert.equal(await find('target').inputValue(), 'kepler-10-c');
+  const preset = name => act(dialog.locator('[data-transit-preset="' + name + '"]'));
+  const time = find('time');
+  await preset('central');
+  await time.fill('0');
+  const centralDepth = await number('depth');
+  const duration = await number('duration','hours');
+  assert.ok(centralDepth > 0 && centralDepth < .01 && duration > 0);
+  assert.ok(Math.abs(await number('flux') + centralDepth - 1) < 1e-8);
+  const centralDisc = await find('disc').screenshot();
+  const centralCurve = await find('curve').screenshot();
+  await time.fill('-1');
+  assert.ok(Math.abs(await number('flux') - 1) < 1e-8);
+  await act(find('play'));
+  await page.waitForFunction(() => Number(document.querySelector('[data-transit-time]').value) > -1);
+  await act(find('play'));
+  assert.equal(await find('play').getAttribute('aria-pressed'), 'false');
+  await time.fill('0');
+  const notebook = find('notebook');
+  const entries = notebook.locator('[data-transit-entry]');
+  const initialCount = await entries.count();
+  await act(find('record'));
+  assert.equal(await entries.count(), initialCount + 1);
+  await preset('miss');
+  assert.equal(await number('depth'), 0);
+  assert.equal(await number('duration','hours'), 0);
+  assert.equal(await number('flux'), 1);
+  assert.ok(!centralDisc.equals(await find('disc').screenshot()));
+  assert.ok(!centralCurve.equals(await find('curve').screenshot()));
+  await find('target').selectOption('trappist-1-e');
+  await preset('grazing');
+  const grazing = await find('impact').inputValue();
+  assert.ok(await number('depth') > 0 && await number('duration','hours') > 0);
+  await act(find('record'));
+  assert.equal(await entries.count(), initialCount + 2);
+  await notebook.locator('[data-transit-difference]').waitFor();
+  if (touch) {
+    const size = page.viewportSize();
+    await page.setViewportSize({width:size.height,height:size.width});
+    assert.equal(await find('impact').inputValue(), grazing);
+    assert.equal(await find('target').inputValue(), 'trappist-1-e');
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true);
+    await page.setViewportSize(size);
+  }
+
+  await page.reload();
+  await act(page.locator('#journal-open'));
+  await act(dialog.locator('[data-journal-transits]'));
+  const journal = dialog.locator('[data-transit-entry]');
+  const second = journal.filter({hasText:/TRAPPIST-1 e/i});
+  await act(second.locator('[data-transit-recall]'));
+  assert.equal(await find('target').inputValue(), 'trappist-1-e');
+  assert.equal(await find('impact').inputValue(), grazing);
+  await act(entries.filter({hasText:/TRAPPIST-1 e/i}).locator('[data-transit-remove]'));
+  assert.equal(await entries.count(), initialCount + 1);
+  await act(entries.filter({hasText:/Kepler-10 c/i}).locator('[data-transit-remove]'));
+  assert.equal(await entries.count(), initialCount);
+  await act(find('visit'));
+  await dialog.waitFor({state:'hidden'});
+  assert.match(await page.locator('#target-name').innerText(), /TRAPPIST-1 e/i);
+
+  await atlas('transits');
+  await find('target').selectOption('hd-209458-b');
+  await act(find('observed'));
+  const observed = name => dialog.locator('[data-observed-' + name + ']');
+  await observed('curve').waitFor();
+  const sample = observed('sample');
+  assert.equal(await sample.getAttribute('max'), '254');
+  await sample.fill('10');
+  const baseline = Number(await observed('reading').getAttribute('data-flux'));
+  await act(observed('baseline'));
+  await sample.fill('127');
+  const trough = Number(await observed('reading').getAttribute('data-flux'));
+  await act(observed('trough'));
+  const measuredDepth = Number(await observed('depth').getAttribute('data-value'));
+  assert.ok(measuredDepth > .005 && measuredDepth < .025 && baseline > trough);
+  assert.ok(Math.abs(measuredDepth - (1 - trough / baseline)) < 1e-8);
+  const curveImage = () => observed('curve').evaluate(canvas => canvas.toDataURL());
+  const before = await curveImage();
+  const errorBars = observed('errors');
+  const wasChecked = await errorBars.isChecked();
+  await act(errorBars);
+  assert.notEqual(await errorBars.isChecked(), wasChecked);
+  assert.ok(before !== await curveImage(), 'Les barres d’incertitude doivent modifier la courbe.');
+  const downloadReady = page.waitForEvent('download');
+  await act(observed('csv'));
+  const csv = await downloadReady;
+  const rows = fs.readFileSync(await csv.path(),'utf8').trim().split(/\r?\n/);
+  assert.equal(rows.length, 256);
+  assert.equal(rows[0], 'time_from_reference_h,time_bjd_tdb,relative_flux,relative_flux_error');
+  assert.equal(Number(rows[128].split(',')[2]), trough);
+  await act(dialog.locator('[data-observation-return]'));
+  assert.equal(await find('target').inputValue(), 'hd-209458-b');
+  await act(dialog.locator('#close-dialog'));
+
+  await atlas('routes');
+  const route = dialog.locator('.exp-route').filter({hasText:'Cinq mondes en transit'});
+  const stops = await route.locator('li').allTextContents();
+  assert.deepEqual(stops, ['HD 209458 b','WASP-39 b','GJ 1214 b','Kepler-10 b','Kepler-10 c']);
+  await act(route.getByRole('button'));
+  for (const [index, name] of stops.entries()) {
+    if (index) await act(page.locator('[data-exp-action="next"]'));
+    assert.equal(await page.locator('#target-name').innerText(), name);
+  }
+  await act(page.getByRole('button', {name:'Terminer',exact:true}));
+  await require('./transit-map-browser.cjs').checkTransitMap(page);
+  await act(page.locator('[data-system-transit]'));
+  await find('target').waitFor();
+  assert.equal(await find('target').inputValue(), 'trappist-1-e');
+  await act(dialog.locator('#close-dialog'));
+}
+
+module.exports={check:checkReleaseTwentyOne};
