@@ -3,6 +3,7 @@
 import { createDeepSpaceCatalog } from './deep-space-catalog.js';
 import { createNearbyStars } from './nearby-stars.js';
 import { createSolarWorlds } from './solar-worlds.js';
+import { createTransitSystems } from './transit-systems.js';
 
 export const AU = 149597870.7;
 export const LIGHT_YEAR = 9460730472580.8;
@@ -182,6 +183,7 @@ const baseObjects = [
     body(id, name, 'star', 'Étoile · ' + spectral, name, radius * solarRadius, position, color, description)),
   ...majorSatellites,
   ...createNearbyStars({body, skyPosition, solarRadius}),
+  ...createTransitSystems({body, skyPosition, AU, solarRadius}),
   ...generateSystem(1697),
   ...createDeepSpaceCatalog({body, skyPosition, AU, LIGHT_YEAR})
 ];

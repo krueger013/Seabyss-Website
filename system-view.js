@@ -3,6 +3,7 @@ import { createOrbitalSky } from './orbital-sky.js';
 import { createDoublePress } from './double-press.js';
 
 const circle = Math.PI * 2;
+const auKm = 149597870.7;
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 const format = new Intl.NumberFormat('fr-CA', { maximumFractionDigits: 2 });
 const scopeNames = {sun: 'Système solaire', earth: 'Terre et Lune', mars: 'Lunes de Mars',
@@ -170,7 +171,7 @@ export function createGlobes(redraw) {
 }
 
 export function createSystemView(container, { objects, getPosition = b => b.position, getRotation = b => b.spinAngle || 0,
-  orbitPath, getRevision = () => 0, onObserve, onExit, onDiscover }) {
+  orbitPath, getRevision = () => 0, getDays = () => 0, onObserve, onExit, onDiscover, canTransit = () => false, onTransit }) {
   const byId = new Map(objects.map(b => [b.id, b]));
   const scopes = objects.filter(b => ['star','planet','dwarf'].includes(b.kind) && objects.some(o => o.parentId === b.id));
   scopes.sort((a,b) => Number(b.id === 'sun') - Number(a.id === 'sun'));
@@ -218,7 +219,17 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
   anglePreset.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><ellipse cx="12" cy="13" rx="9" ry="3.5" transform="rotate(-22 12 13)"/><path d="M12 4v14m-3-11 3-3 3 3"/><circle cx="12" cy="13" r="1.6" fill="currentColor" stroke="none"/></svg>';
   zoom.append(anglePreset,zoomOut, reset, zoomIn);
   const legend = node('span', 'system-legend', 'Échelle comprimée · corps agrandis');
-  stage.append(canvas, labels, legend, zoom);
+  const scaleBar = node('span','system-scale'); scaleBar.dataset.systemScale = '';
+  const orbitalTools = node('div','system-orbit-tools');
+  const focusOrbit = button('Cadrer seulement l’orbite sélectionnée','Cadrer l’orbite','system-secondary');
+  focusOrbit.dataset.systemOrbitFocus = '';
+  const mark = button('Marquer la position simulée de la planète','Marquer','system-secondary');
+  mark.dataset.systemMarker = '';
+  const since = node('output','system-marker-time'); since.dataset.systemMarkerElapsed = '';
+  since.setAttribute('aria-live','off');
+  since.setAttribute('aria-label','Temps simulé écoulé depuis le repère');
+  orbitalTools.append(focusOrbit,mark,since);
+  stage.append(canvas, labels, legend, scaleBar, zoom, orbitalTools);
 
   const foot = node('footer','system-foot');
   const selection = node('div','system-selection');
@@ -227,9 +238,10 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
   specimen.setAttribute('aria-hidden','true');
   const identity = node('label','system-identity');
   const category = node('span');
+  const compactPeriod = node('span','system-compact-period');
   const target = node('select'); target.dataset.systemTarget = '';
   target.setAttribute('aria-label','Astre sélectionné');
-  identity.append(category, target);
+  identity.append(category,compactPeriod,target);
   const metrics = node('div','system-metrics');
   const orbitRadius = node('strong'), period = node('strong');
   const distanceMetric = caption(orbitRadius,'Rayon orbital moyen');
@@ -240,13 +252,17 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
   moons.dataset.systemMoons = '';
   const observe = button('Observer la sélection', 'Observer', 'system-observe');
   observe.dataset.systemObserve = '';
-  actions.append(moons,observe);
+  const transit = button('Observer le transit','Observer le transit','system-secondary system-transit');
+  transit.dataset.systemTransit = '';
+  transit.replaceChildren(node('span','system-transit-full','Observer le transit'),node('span','system-transit-short','Transit'));
+  actions.append(moons,transit,observe);
   selection.append(specimen,identity,metrics,actions);
   const clock = node('div','system-clock-slot'); clock.dataset.systemClock = '';
   foot.append(selection,clock);
   container.append(head, stage, foot);
 
   let center = byId.get('sun'), selected = byId.get('earth'), tracks = [], reference = 1, far = 1;
+  let linear = false, isolated = false, marker = null;
   let yaw = -.30, elevation = .87, magnification = 1, panX = 0, panY = 0, showNames = true, showTracks = true, lastRevision;
   let points = [], width = 0, height = 0, dpr = 1, needPaint = true, lastPaint = -Infinity, lastSceneKey = '';
   let starCanvas, skyKey, orbitLayer, cachedProjection, projectionKey, layerProject, layerSelected, layerTracks;
@@ -303,6 +319,24 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
     elevation = aspect < .36 ? .43 : aspect > 1.28 ? .59 : aspect > .95 ? .90 : .68;
     magnification = 1; panX = 0; panY = 0; setPresetLabel('perspective'); needPaint = true; render();
   }
+  function clearMarker() {
+    marker=null;mark.setAttribute('aria-pressed','false');mark.textContent='Marquer';
+    mark.setAttribute('aria-label','Marquer la position simulée de la planète');mark.title=mark.getAttribute('aria-label');
+    since.hidden=true;delete since.dataset.days;
+  }
+  function showOrbitalTools() {
+    if (selected===center) isolated=false;
+    orbitalTools.hidden=!linear || selected===center;
+    focusOrbit.setAttribute('aria-pressed',String(isolated));
+    focusOrbit.textContent=isolated?'Tout le système':'Cadrer l’orbite';
+    focusOrbit.setAttribute('aria-label',isolated?'Afficher toutes les orbites du système':'Cadrer seulement l’orbite sélectionnée');
+    focusOrbit.title=focusOrbit.getAttribute('aria-label');
+    if (isolated) for (const [id,pin] of pins) {
+      if (id!==center.id && id!==selected.id) pin.hidden=true;
+    }
+    transit.hidden=typeof onTransit!=='function' || !canTransit(selected.id);
+    transit.setAttribute('aria-label','Observer le transit de '+selected.name);
+  }
   function setPresetLabel(current) {
     anglePreset.dataset.systemAngle=current;
     const next=current==='perspective'?'Voir le plan orbital de dessus':current==='face'?'Voir le plan orbital par la tranche':'Revenir à la perspective';
@@ -326,24 +360,30 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
     category.textContent = selected.category;
     if(selected.id==='sun' && !solarRequested)loadSolarSymbol();
     const observed=selected.id==='sun' && solarImage;
-    legend.textContent=observed?'SDO/HMI · '+solarStamp:selected.orbitPhaseIllustrative ? 'Orbite simulée · échelle comprimée' : 'Échelle comprimée · corps agrandis';
+    legend.textContent=linear?'Phase illustrative · corps agrandis':observed?'SDO/HMI · '+solarStamp:selected.orbitPhaseIllustrative ? 'Orbite simulée · échelle comprimée' : 'Échelle comprimée · corps agrandis';
+    scaleBar.hidden=!linear;
     legend.title=observed?'Disque observé depuis la Terre. Échelle des orbites comprimée, corps agrandis.':'';
     legend.dataset.systemSolarFrame=observed?solarStamp:'';
     if(observed)category.textContent='Vue depuis la Terre';
     target.value = selected.id;
     identity.style.setProperty('--object-color',selected.color);
-    distanceMetric.firstChild.textContent = selected === center ? 'Rayon' : 'Rayon orbital moyen';
+    distanceMetric.firstChild.textContent = selected === center ? 'Rayon' : linear ? 'Demi-grand axe' : 'Rayon orbital moyen';
     orbitRadius.textContent = distance(selected === center ? selected.radius : selected.orbitRadiusKm);
     periodMetric.hidden = selected === center || !selected.orbitPeriodDays;
     period.textContent = selected.orbitPeriodDays ? format.format(selected.orbitPeriodDays) + ' j' : '';
+    compactPeriod.hidden=!linear || selected===center;
+    if (!compactPeriod.hidden) compactPeriod.textContent='Période '+period.textContent;
     moons.hidden = selected === center || !scopeIds.has(selected.id);
     moons.setAttribute('aria-label','Explorer les satellites de ' + selected.name);
     observe.setAttribute('aria-label','Observer ' + selected.name);
+    showOrbitalTools();
     for (const [id, pin] of pins) pin.setAttribute('aria-pressed',String(id === selected.id));
   }
   function choose(id) {
-    if (!byId.has(id)) return;
-    selected = byId.get(id); refreshDetails(); needPaint = true; render();
+    if (!byId.has(id) || selected.id===id) return;
+    const refit=isolated;
+    selected = byId.get(id);clearMarker();refreshDetails();needPaint=true;
+    if (refit) restoreFrame(); else render();
   }
   function scaledRadius(r) { return Math.log1p(r/reference) / Math.log1p(far/reference); }
   function recalculateTracks() {
@@ -358,7 +398,7 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
     reference = Math.max(1, far * .003, Math.min(...children.map(b => b.orbitRadiusKm || 1)) * .72);
     tracks = children.sort((a,b) => a.orbitRadiusKm - b.orbitRadiusKm).map(body => {
       const radius = body.orbitRadiusKm || 1;
-      const scale = scaledRadius(radius) / radius;
+      const scale = linear ? 1/far : scaledRadius(radius)/radius;
       const path = orbitPath ? orbitPath(body, 104) : Array.from({length:105},(_,i) => {
         const theta = i * circle / 104;
         return [radius*Math.cos(theta),radius*Math.sin(theta)*.225,radius*Math.sin(theta)*.974];
@@ -369,6 +409,9 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
   }
   function selectScope(id, preferred = id) {
     center = byId.get(id === minorScope ? 'sun' : id); scope.value = id;
+    linear=center.kind==='star' && center.id!=='sun' && !center.simulated;
+    container.toggleAttribute('data-exoplanet-system',linear);
+    isolated=false;clearMarker();
     recalculateTracks();
     const moonsOnly = tracks.every(entry=>entry.body.kind==='moon');
     const count = tracks.length;
@@ -405,7 +448,7 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
 
   function cameraRoll() { return height>width*1.28?-1.28:height>width*.95?-.86:-.085; }
   function projection() {
-    const key = [yaw,elevation,width,height,magnification,panX,panY].join(',');
+    const key = [yaw,elevation,width,height,magnification,panX,panY,isolated?selected.id:''].join(',');
     if (projectionKey === key) return cachedProjection;
     const ax = Math.cos(yaw), az = Math.sin(yaw), ce = Math.cos(elevation), se = Math.sin(elevation);
     const angle = cameraRoll();
@@ -415,15 +458,27 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
       const side = (x*ax + z*az)*factor, along = (-x*az+z*ax)*factor;
       const up = -y*factor*ce + along*se;
       const depth = along*ce + y*factor*se;
-      const perspective = 1 / clamp(1 - .10*depth, .6, 1.6);
+      const perspective = linear ? 1 : 1 / clamp(1 - .10*depth, .6, 1.6);
       return {x:(side*rr-up*rs)*perspective, y:(side*rs+up*rr)*perspective, depth};
     }
-    let spanX=.15, spanY=.15;
-    for (const track of tracks) for(let i=0;i<track.path.length;i+=3) {
-      const p=normalize(track.path[i],track.scale);
-      spanX=Math.max(spanX,Math.abs(p.x));spanY=Math.max(spanY,Math.abs(p.y));
+    let spanX=isolated?1e-8:.15, spanY=spanX;
+    for (const track of tracks) {
+      if (isolated && track.body!==selected) continue;
+      for (let i=0;i<track.path.length;i+=3) {
+        const p=normalize(track.path[i],track.scale);
+        spanX=Math.max(spanX,Math.abs(p.x));spanY=Math.max(spanY,Math.abs(p.y));
+      }
     }
     const scale = magnification * Math.min((width*.5-Math.min(49,width*.095))/spanX, (height*.5-Math.min(39,height*.12))/spanY);
+    if(linear && scale>0) {
+      const maxAu=clamp(width*.17,54,88)*far/(scale*auKm);
+      const unit=10**Math.floor(Math.log10(maxAu));
+      const rulerAu=([5,2,1].find(n=>n*unit<=maxAu)||1)*unit;
+      scaleBar.textContent=rulerAu.toLocaleString('fr-CA',{maximumSignificantDigits:2})+' UA';
+      scaleBar.dataset.au=String(rulerAu);
+      scaleBar.style.width=(rulerAu*auKm*scale/far)+'px';
+      scaleBar.title='Échelle des distances projetées dans le plan de l’écran';
+    }
     cachedProjection=(v, factor = 1) => {
       const p=normalize(v,factor);
       p.x=width*.5+panX+p.x*scale;p.y=height*.495+panY+p.y*scale;
@@ -442,7 +497,7 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
       }
     }
     for (const track of tracks) {
-      if (!track.path || !track.path.length) continue;
+      if ((isolated && track.body!==selected) || !track.path || !track.path.length) continue;
       const active = track.body === selected;
       // Depth along the orbit subtly fades the far side of its path.
       const samples=track.path.map(v=>project(v,track.scale));
@@ -549,7 +604,9 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
     }
   }
   function positionLabels() {
-    const occupied = [];
+    const occupied = orbitalTools.hidden ? [] : [
+      {x:orbitalTools.offsetLeft,y:orbitalTools.offsetTop,w:orbitalTools.offsetWidth,h:orbitalTools.offsetHeight}
+    ];
     const ordered = [...points].sort((a,b) => Number(b.body === selected) - Number(a.body === selected));
     for (const p of ordered) {
       const pin = pins.get(p.body.id);
@@ -576,9 +633,21 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
       pin.style.transform='translate('+Math.round(best.x)+'px,'+Math.round(best.y)+'px)';
     }
   }
+  function paintMarker(project,track) {
+    const p=project(marker.position,track.scale);
+    ctx.save();
+    ctx.strokeStyle='#c3e5f0';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(p.x,p.y-5);ctx.lineTo(p.x+5,p.y);
+    ctx.lineTo(p.x,p.y+5);ctx.lineTo(p.x-5,p.y);ctx.closePath();ctx.stroke();ctx.restore();
+    const days=getDays()-marker.day, absolute=Math.abs(days);
+    const unit=absolute>=1 ? [1,'j'] : absolute>=1/24 ? [24,'h'] : absolute>=1/1440 ? [1440,'min'] : [86400,'s'];
+    const label='Δt '+(days<0?'−':'')+format.format(absolute*unit[0])+' '+unit[1];
+    if(since.textContent!==label) since.textContent=label;
+    since.dataset.days=String(days);
+  }
   function render() {
     if (container.hidden || !resize()) return;
-    if (lastRevision !== getRevision()) { recalculateTracks(); refreshDetails(); }
+    if (lastRevision !== getRevision()) {clearMarker();recalculateTracks();refreshDetails();}
     const now = performance.now();
     if (!needPaint && now-lastPaint < 1000/30) return;
     const parent = getPosition(center);
@@ -594,11 +663,16 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
     points=[{...origin,body:center,r:planetRadius(center,true)}];
     for(let i=0;i<tracks.length;i++) {
       const b=tracks[i].body;
+      if(isolated && b!==selected) continue;
       drawWake(tracks[i],bodies[i],project);
       points.push({...project(bodies[i],tracks[i].scale),body:b,r:planetRadius(b,false)});
     }
     points.sort((a,b)=>a.depth-b.depth);
     for (const p of points) paintBody(p,origin);
+    if(marker) {
+      const track=tracks.find(t=>t.body===selected);
+      if(track) paintMarker(project,track);
+    }
     positionLabels();
   }
   function zoomBy(factor, anchor) {
@@ -678,6 +752,20 @@ export function createSystemView(container, { objects, getPosition = b => b.posi
   container.addEventListener('pointerdown',()=>container.classList.remove('system-keyboard'),{capture:true});
   leave.onclick=()=>onExit();
   observe.onclick=()=>onObserve(selected.id);
+  transit.onclick=()=>{if(canTransit(selected.id)) onTransit?.(selected.id);};
+  focusOrbit.onclick=()=>{
+    isolated=!isolated;showOrbitalTools();restoreFrame();
+  };
+  mark.onclick=()=>{
+    if(marker) clearMarker();
+    else {
+      const position=getPosition(selected),origin=getPosition(center);
+      marker={position:position.map((n,i)=>n-origin[i]),day:getDays()};
+      mark.textContent='Effacer';mark.setAttribute('aria-label','Effacer le repère de position');
+      mark.title=mark.getAttribute('aria-label');mark.setAttribute('aria-pressed','true');since.hidden=false;
+    }
+    needPaint=true;render();
+  };
   scope.onchange=()=>selectScope(scope.value);
   target.onchange=()=>choose(target.value);
   moons.onclick=()=>selectScope(selected.id);

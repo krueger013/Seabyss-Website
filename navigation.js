@@ -96,7 +96,7 @@ function easeFromEnd(phase, length, scale) {
 // A moving destination can carry a guided trajectory through its own star.
 // Clip the whole chord and advance around the first obstructing sphere. A
 // tangent from each endpoint sets the maximum angle of a safe detour step.
-function guidedStep(start, end, solids) {
+function guidedStep(start, end, solids, arrivingBody) {
   const dx = end[0]-start[0], dy = end[1]-start[1], dz = end[2]-start[2];
   const length = Math.hypot(dx,dy,dz);
   if (!length) return end;
@@ -124,6 +124,16 @@ function guidedStep(start, end, solids) {
     if (entry < first) { first = entry; obstacle = body; }
   }
   if (!obstacle) return end;
+  if (obstacle.kind==='star' && arrivingBody?.parentId===obstacle.id && arrivingBody.orbitNormal) {
+    // A fast orbit can carry the destination behind the star again on every
+    // frame. From above its orbital plane the next approach clears the star.
+    // Clip the leg to the pole against every solid, just like the final leg.
+    const normal=arrivingBody.orbitNormal;
+    const towardCamera=delta(end,arrivingBody.position);
+    const side=towardCamera.reduce((sum,n,i)=>sum+n*normal[i],0)<0?-1:1;
+    const pole=obstacle.position.map((n,i)=>n+side*4*safeRadius(obstacle)*normal[i]);
+    return guidedStep(start,pole,solids);
+  }
   const from = delta(start,obstacle.position), to = delta(end,obstacle.position);
   const fromRadius = Math.hypot(...from), toRadius = Math.hypot(...to);
   const a = unit(from), b = toRadius ? unit(to) : a;
@@ -286,7 +296,7 @@ export class Navigation {
     const route = this.route;
     route.elapsed += dt;
     if (route.elapsed >= route.duration) {
-      const final = guidedStep(this.view.position,route.end,this.solids);
+      const final = guidedStep(this.view.position,route.end,this.solids,this.selected);
       if (final === route.end) this.finishTravel();
       else {
         this.view.position = final;

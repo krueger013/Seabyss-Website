@@ -100,6 +100,16 @@ const routes = [
       ['ross-128', 'Compare leurs tailles. Le rayon de Ross 128 atteint à peine plus d’un cinquième du rayon solaire.'],
       ['tau-ceti', 'Termine près d’une étoile de type G, comme le Soleil. La lumière de Tau Ceti met presque douze ans pour nous parvenir.']
     ]
+  },
+  {
+    title: 'Cinq mondes en transit',
+    stops: [
+      ['hd-209458-b', 'Commence par ce Jupiter chaud. Son rayon dépasse un dixième de celui de son étoile.'],
+      ['wasp-39-b', 'Compare les proportions de cette géante et de son étoile. Durant le transit, une partie de la lumière stellaire traverse aussi l’atmosphère de la planète.'],
+      ['gj-1214-b', 'Cette planète est nettement plus petite que les deux précédentes. Sa naine rouge est si petite que le transit reste bien visible dans sa courbe de lumière.'],
+      ['kepler-10-b', 'Passe à cette planète rocheuse. Sa petite silhouette devant une étoile de type G produit une baisse de lumière bien plus faible.'],
+      ['kepler-10-c', 'Garde la même étoile et compare les deux orbites dans la vue Système. La planète c est plus grande et ses passages sont beaucoup plus espacés.']
+    ]
   }
 ];
 

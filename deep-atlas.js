@@ -1,5 +1,6 @@
 import { assetUrl } from './assets.js';
-import { LIGHT_YEAR } from './catalog.js';
+import { AU, LIGHT_YEAR } from './catalog.js';
+import { isTransitPlanet } from './transit-targets.js';
 
 const photos = {
   'orion-nebula':'NASA, ESA, M. Robberto et l’équipe du projet Orion de Hubble',
@@ -25,6 +26,7 @@ const editorial = ['orion-nebula','cassiopeia-a','pleiades','butterfly-nebula','
   'hd-189733-b','bodes-galaxy','wild-duck','kepler-186-f','lagoon-nebula','carina-nebula'];
 const format = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:1});
 const starDistanceFormat = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:2});
+const orbitFormat = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:3});
 const kindOptions = [['all','Toutes les familles'],['nebula','Nébuleuses'],['cluster','Amas d’étoiles'],['galaxy','Galaxies'],['planet','Exoplanètes'],['star','Étoiles']];
 const phenomena = [
   ['remnant','Rémanents de supernova', b => b.morphology === 'remnant'],
@@ -64,7 +66,80 @@ function selectFilter(attribute, label, entries) {
   return {field,select};
 }
 
-function discoveryTools({objects, travel, experiences, openArchive, openCompare}) {
+function transitSystems(objects,travel,openTransit) {
+  const stars=objects.filter(b=>b.transitSystem && b.kind==='star');
+  const planets=objects.filter(b=>b.transitSystem && b.kind==='planet')
+    .sort((a,b)=>a.orbitRadiusKm-b.orbitRadiusKm);
+  const systems=stars.map(star=>({star,worlds:planets.filter(p=>p.parentId===star.id)}))
+    .filter(system=>system.worlds.length)
+    .sort((a,b)=>b.worlds.length-a.worlds.length || a.star.distanceLY-b.star.distanceLY);
+  if (!systems.length) return null;
+
+  const panel=node('section','discover-transits');
+  panel.setAttribute('aria-label','Systèmes à transits');
+  const host=selectFilter('data-discover-system','Étoile hôte',systems.map(({star})=>[star.id,star.name]));
+  const planet=selectFilter('data-discover-planet','Planète',[]);
+  const hostFacts=node('p','transit-host-facts');
+  const visitHost=node('button','transit-host-visit','Observer l’étoile');
+  visitHost.type='button'; visitHost.dataset.discoverHostTravel='';
+  const hostSection=node('div','transit-host');
+  hostSection.append(host.field,hostFacts,visitHost);
+
+  // Share a linear scale between hosts so a planet's horizontal distance
+  // has the same meaning after the observer switches systems.
+  const largest=Math.max(...planets.map(p=>p.orbitRadiusKm/AU));
+  const unit=10**Math.floor(Math.log10(largest));
+  const step=unit*(largest/unit > 5 ? 2 : largest/unit < 2 ? .5 : 1);
+  const tickCount=Math.ceil(largest/step);
+  const chart=node('figure','transit-distances'),track=node('div','transit-track');
+  chart.append(node('figcaption','','Demi-grand axe des orbites (UA)'),track);
+  const ticks=node('div','transit-ticks');
+  for (let i=0;i<=tickCount;i++) ticks.append(node('span','',orbitFormat.format(i*step)));
+  chart.append(ticks);
+  const orbitFacts=node('p','transit-orbit-facts');
+  const sources=node('p','transit-data-source');
+  const controls=node('div','transit-explore-actions');
+  const visit=node('button','','Observer la planète'),transit=node('button','','Voir le transit');
+  visit.type=transit.type='button';
+  visit.dataset.discoverPlanetTravel=''; transit.dataset.discoverTransit='';
+  controls.append(visit,transit);
+  const worldSection=node('div','transit-world');
+  worldSection.append(planet.field,orbitFacts,controls,sources);
+  panel.append(hostSection,chart,worldSection);
+
+  function updatePlanet() {
+    const system=systems.find(s=>s.star.id===host.select.value);
+    const selected=system.worlds.find(p=>p.id===planet.select.value);
+    orbitFacts.textContent='Période de '+orbitFormat.format(selected.orbitPeriodDays)+' j · '+orbitFormat.format(selected.orbitRadiusKm/AU)+' UA';
+    track.replaceChildren();
+    for (const p of system.worlds) {
+      const marker=node('span','transit-orbit-mark',p.name.split(' ').pop());
+      marker.classList.toggle('selected',p.id===selected.id);
+      marker.style.left=(100*p.orbitRadiusKm/AU/(step*tickCount))+'%';
+      marker.title=p.name+' · '+orbitFormat.format(p.orbitRadiusKm/AU)+' UA';
+      marker.setAttribute('aria-label',marker.title);
+      track.append(marker);
+    }
+    sources.replaceChildren();
+    if(selected.sourceUrl) sources.append(sourceLink('Données de la planète ↗',selected.sourceUrl));
+    visit.onclick=()=>travel(selected.id);
+    transit.onclick=()=>openTransit(selected.id);
+  }
+  function updateSystem() {
+    const {star,worlds}=systems.find(s=>s.star.id===host.select.value);
+    const n=worlds.length;
+    hostFacts.textContent=starDistanceFormat.format(star.distanceLY)+' al · Type '+star.spectralType+' · '+n+(n===1?' planète cataloguée':' planètes cataloguées');
+    visitHost.onclick=()=>travel(star.id);
+    planet.select.replaceChildren(...worlds.map(p=>new Option(p.name,p.id)));
+    updatePlanet();
+  }
+  host.select.onchange=updateSystem;
+  planet.select.onchange=updatePlanet;
+  updateSystem();
+  return panel;
+}
+
+function discoveryTools({objects, travel, experiences, openArchive, openCompare, openTransit}) {
   const tools=node('section','discover-tools');
   tools.setAttribute('aria-label','Outils de découverte');
   const bar=node('div','discover-actions');
@@ -94,6 +169,8 @@ function discoveryTools({objects, travel, experiences, openArchive, openCompare}
     button.setAttribute('aria-controls',id);
     panels.push({button,panel});
   }
+  const systems=transitSystems(objects,travel,openTransit);
+  if (systems) disclosure('data-discover-transits','Systèmes à transits','system',systems,'atlas-transit-systems');
   const nearby=objects.filter(b=>b.stellarNeighborhood)
     .sort((a,b)=>a.distanceLY-b.distanceLY);
   if (nearby.length) {
@@ -124,7 +201,7 @@ export function createDeepAtlas(container, options) {
   const {objects,travel}=options;
   const gallery=node('section','deep-gallery');
   gallery.setAttribute('aria-label','Découvrir le ciel profond');
-  const discovered=objects.filter(b=>b.observation && !b.simulated && !b.solarFamily);
+  const discovered=objects.filter(b=>(b.observation || b.transitSystem) && !b.simulated && !b.solarFamily);
   const searchIndex=new Map(discovered.map(b=>[b.id,[b.name,b.designation,b.region,b.category].map(searchKey)]));
   const rank=new Map(editorial.map((id,i)=>[id,i]));
   discovered.sort((a,b)=>(rank.get(a.id)??100)-(rank.get(b.id)??100) || a.name.localeCompare(b.name,'fr'));
@@ -190,7 +267,7 @@ export function createDeepAtlas(container, options) {
     const tag=designation.toLowerCase()===body.name.toLowerCase()?body.category:designation;
     const origin=node('p','deep-origin',tag+' · '+shortDistance(body));
     copy.append(origin,node(featured?'h3':'h4','deep-name',body.name));
-    const note=featured?body.observation:body.category;
+    const note=featured?(body.observation || body.description):body.category;
     copy.append(node('p','deep-description',note));
     if(featured) copy.append(node('span','deep-action','Observer'));
     else artwork.append(node('span','deep-arrow','↗'));
@@ -199,9 +276,16 @@ export function createDeepAtlas(container, options) {
     const byline=node('p','deep-byline');
     if (body.sourceUrl && photos[body.id]) byline.append(sourceLink(photos[body.id],body.sourceUrl));
     else if (esoImages[body.id]) byline.append(sourceLink(photos[body.id], 'https://www.eso.org/public/images/'+esoImages[body.id]+'/'));
-    else byline.textContent = photos[body.id] || plateKind(body)+(body.system?' · jour zéro':' · étoiles XHIP');
-    if (body.sourceUrl && !photos[body.id]) byline.append(' · ',sourceLink('Fiche de mission',body.sourceUrl));
+    else byline.textContent = photos[body.id] || plateKind(body)+(body.transitSystem?' · phase illustrative':body.system?' · jour zéro':' · étoiles XHIP');
+    if (body.sourceUrl && !photos[body.id]) byline.append(' · ',sourceLink(body.transitSystem?'Données du catalogue':'Fiche de mission',body.sourceUrl));
     article.append(byline);
+    if (isTransitPlanet(body) && (featured || family.select.value==='planet' || zone.select.value==='exoplanetaires')) {
+      const inspect=node('button','deep-transit-link','Étudier le transit');
+      inspect.type='button'; inspect.dataset.deepTransit=body.id;
+      inspect.setAttribute('aria-label','Étudier le transit de '+body.name);
+      inspect.onclick=()=>options.openTransit(body.id);
+      article.append(inspect);
+    }
     return article;
   }
   function filter() {

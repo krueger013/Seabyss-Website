@@ -12,6 +12,7 @@ import { assetUrl } from './assets.js';
 import { enableCinema } from './cinema.js';
 import { OrbitalSimulation, TIME_RATES } from './simulation.js';
 import { createSystemView } from './system-view.js';
+import { isTransitPlanet } from './transit-targets.js';
 import { createSimulationControls } from './simulation-controls.js';
 
 const $ = selector => document.querySelector(selector);
@@ -221,7 +222,7 @@ async function openSandbox(id) {
   const request=++landingRequest;
   if (!sandbox) {
     try {
-      const {createSandboxWorkspace}=await import('./sandbox-workspace.js');
+      const {createSandboxWorkspace}=await withPanelStyles('sandbox',import('./sandbox-workspace.js'));
       if (request!==landingRequest) return;
       sandbox=createSandboxWorkspace($('#sandbox-workspace'),{
         onExit:openSystem,onCapture:openStudio,onClimate:openClimateFromWorkshop,announce,reducedMotion:()=>motionPreference.matches
@@ -277,7 +278,7 @@ async function openClimate(setup,fromWorkshop=false) {
   if (!setup && climateIsOpen()) return;
   if (!climate) {
     try {
-      const [{createClimateLab}, exchange]=await Promise.all([import('./climate-lab.js'),import('./climate-exchange.js')]);
+      const [{createClimateLab}, exchange]=await Promise.all([withPanelStyles('climate',import('./climate-lab.js')),import('./climate-exchange.js')]);
       if (request!==landingRequest) return;
       const picker=$('#climate-file');
       climate=createClimateLab($('#climate-lab'),{
@@ -345,6 +346,9 @@ function loadPanelStyles(id) {
   loadedPanelStyles.set(id,ready);
   return ready;
 }
+function withPanelStyles(id,modulePromise) {
+  return Promise.all([modulePromise,loadPanelStyles(id)]).then(([module])=>module);
+}
 function createAtlasLab(id,load,label,extra={}) {
   const root=$('#'+id+'-workspace'), key='seabyss-universe.'+id+'.v1', activeClass=id+'-active';
   let instance, returnTo;
@@ -406,6 +410,9 @@ const activeAtlasLab=()=>astrophysics.find(lab=>lab.isOpen());
 function closeAstrophysics() {for(const lab of astrophysics) lab.close();}
 const systemView = createSystemView($('#system-view'), {
   objects,
+  canTransit:id=>isTransitPlanet(sim.byId.get(id)),
+  onTransit:id=>openAtlas('transits',id),
+  getDays:()=>sim.days,
   onDiscover: () => openAtlas('discover'),
   getRotation: body => body.spinAngle,
   getRevision: () => sim.revision,
@@ -426,17 +433,20 @@ function activateTab(id) {
     else item.removeAttribute('aria-current');
   }
 }
-function openSystem() {
+function openSystem(id) {
   if (dialog.open) dialog.close();
   closeLanding();endOverflight();
   closeSurface();
   closeSandbox();closeClimate();closeAstrophysics();
-  if (systemView.isOpen()) return;
+  if (systemView.isOpen()) {
+    if (typeof id==='string') systemView.open(id);
+    return;
+  }
   releaseControls();
   nav.cancelTravel();
   if (flying) { flight(false); nav.goTo(nav.selectedId,true); }
   document.body.classList.add('system-active');
-  systemView.open(nav.selectedId);
+  systemView.open(typeof id==='string'?id:nav.selectedId);
   controls.placeInSystem();
   activateTab('system-open');
 }
@@ -447,7 +457,7 @@ function closeSystem() {
   controls.leaveSystem();
   activateTab('explore-tab');
 }
-$('#system-open').onclick = openSystem;
+$('#system-open').onclick = () => openSystem();
 $('#time-open').onclick = controls.openClock;
 function syncTarget() {
   const object = nav.selected;
@@ -849,13 +859,13 @@ function openStudio(source,caption) {
 function showStudio(photo,caption) {
   showDialog('Studio photo','explore-tab');
   dialog.dataset.panel='studio';
-  releaseChart=openAtlasModule(dialogBody,import('./photo-studio.js').then(({createPhotoStudio})=>
+  releaseChart=openAtlasModule(dialogBody,withPanelStyles('studio',import('./photo-studio.js')).then(({createPhotoStudio})=>
     panel=>createPhotoStudio(panel,{capture:()=>photo,caption,onClose:()=>dialog.close()})),'du studio');
 }
 function openStudioGallery() {
   showDialog('Album d’exploration','journal-open');
   dialog.dataset.panel='studio';
-  releaseChart=openAtlasModule(dialogBody,import('./photo-studio.js').then(({openPhotoGallery})=>
+  releaseChart=openAtlasModule(dialogBody,withPanelStyles('studio',import('./photo-studio.js')).then(({openPhotoGallery})=>
     panel=>openPhotoGallery(panel,{onClose:()=>dialog.close()})),'de l’album');
 }
 function openOverflight(latitude,longitude) {
@@ -914,6 +924,16 @@ function openDossier() {
     dt.textContent=name;dd.textContent=val;pair.append(dt,dd);data.append(pair);
   }
   dialogBody.append(meta,description,data);
+  const transitPlanet=isTransitPlanet(body)?body:body.kind==='star' && objects.find(p=>p.parentId===body.id && isTransitPlanet(p));
+  if (transitPlanet) {
+    const orbit=document.createElement('button'),transit=document.createElement('button');
+    orbit.type=transit.type='button';orbit.className=transit.className='archive-entry';
+    orbit.dataset.dossierSystem=body.id;orbit.textContent='Explorer ce système planétaire';
+    orbit.onclick=()=>openSystem(body.id);
+    transit.dataset.dossierTransit=transitPlanet.id;transit.textContent='Observer le transit de '+transitPlanet.name;
+    transit.onclick=()=>openAtlas('transits',transitPlanet.id);
+    dialogBody.append(orbit,transit);
+  }
   if (!body.simulated) {
     const ruler=document.createElement('details'), heading=document.createElement('summary'), host=document.createElement('div');
     ruler.dataset.lightRuler='';
@@ -1041,7 +1061,7 @@ function openDossier() {
 $('#object-dossier').onclick=openDossier;
 $('#photo-open').onclick = () => nav.selectedId==='sun' ? solarLab.open(undefined,()=>travel('sun',false)) : openPhoto(nav.selectedId);
 $('#earth-open').onclick = () => openAtlas('earth');
-function openAtlas(first = 'catalog',initialWorld) {
+function openAtlas(first = 'catalog',initialWorld,initialImpact) {
   showDialog('Atlas céleste','atlas-open');
   const tools = document.createElement('nav');
   tools.className = 'atlas-tools'; tools.setAttribute('aria-label','Vues de l’atlas');
@@ -1054,12 +1074,19 @@ function openAtlas(first = 'catalog',initialWorld) {
         phase:()=>phaseLab.open(),traveller:()=>travellerLab.open(),solar:()=>solarLab.open()});
       releaseChart=openAtlasModule(panel,import('./deep-atlas.js').then(({createDeepAtlas})=>host=>{
         const dispose=createDeepAtlas(host,{objects,travel,experiences,
-          openArchive:()=>openPhoto(nav.selectedId,true),openCompare:()=>openAtlas('compare')});
+            openArchive:()=>openPhoto(nav.selectedId,true),openCompare:()=>openAtlas('compare'),
+            openTransit:id=>openAtlas('transits',id)});
         icons(host);
         return dispose;
       }),'de la galerie');
     }],
     ['catalog','Répertoire', () => renderDirectory(panel)],
+    ['transits','Transits', () => {
+      const ready=Promise.all([import('./transit-workspace.js'),loadPanelStyles('transits')])
+        .then(([module])=>host=>module.createTransitWorkspace(host,{objects,initialId:initialWorld || nav.selectedId,initialImpact,
+          onVisit:id=>travel(id,false),onRecall:recallTransit,onObservation:openTransitObservation}));
+      releaseChart=openAtlasModule(panel,ready,'des transits');
+    }],
     ['compare','Comparer', () => {
       const ready=Promise.all([import('./size-comparison.js'),loadPanelStyles('compare')])
         .then(([module])=>host=>module.createSizeComparison(host,{objects,initialId:initialWorld || nav.selectedId,onVisit:id=>travel(id,false)}));
@@ -1070,11 +1097,11 @@ function openAtlas(first = 'catalog',initialWorld) {
         renderCosmicEvents(host,openSandbox,()=>openAtlas('phenomena','supernova'))),'des cataclysmes');
     }],
     ['sky','Planétarium', () => {
-      releaseChart=openAtlasModule(panel,import('./sky-observer.js').then(({createSkyObserver})=>
+      releaseChart=openAtlasModule(panel,withPanelStyles('sky',import('./sky-observer.js')).then(({createSkyObserver})=>
         target=>createSkyObserver(target,{objects,travel,currentId:nav.selectedId})),'du planétarium');
     }],
     ['surfaces','Surfaces', () => {
-      const view=Promise.all([import('./surface-registry.js'),import('./surface-atlas.js')]).then(([registry,atlas])=>target=>{
+      const view=Promise.all([import('./surface-registry.js'),withPanelStyles('surface-atlas',import('./surface-atlas.js'))]).then(([registry,atlas])=>target=>{
         const worlds=Object.entries(SURFACE_MISSIONS).map(([id,mission])=>({
           id,name:mission.name,color:mission.color,canPilot:pilotWorlds.includes(id)
         }));
@@ -1086,11 +1113,11 @@ function openAtlas(first = 'catalog',initialWorld) {
     }],
     ['pilot','Pilotage', () => renderLandingChoices(panel,{worlds:pilotWorlds,start:openLanding})],
     ['earth','Terre', () => {
-      releaseChart=openAtlasModule(panel,import('./earth-explorer.js').then(({createEarthExplorer})=>
+      releaseChart=openAtlasModule(panel,withPanelStyles('earth-atlas',import('./earth-explorer.js')).then(({createEarthExplorer})=>
         target=>createEarthExplorer(target,{onOrbit:openOverflight})),'de la carte terrestre');
     }],
     ['phenomena','Phénomènes', () => {
-      releaseChart=openAtlasModule(panel,import('./phenomena.js').then(({createPhenomena})=>host=>createPhenomena(host,{
+      releaseChart=openAtlasModule(panel,withPanelStyles('phenomena',import('./phenomena.js')).then(({createPhenomena})=>host=>createPhenomena(host,{
         initialId:initialWorld==='supernova'?'supernova':undefined,
         onVisit:travel,
         onRelativity:()=>openRelativity(undefined,()=>openAtlas('phenomena','black-hole'))
@@ -1147,6 +1174,24 @@ function savePosition() {
   if (storeBookmarks([item, ...bookmarks])) announce('Position enregistrée dans le carnet');
 }
 $('#save-position').onclick = savePosition;
+function recallTransit(entry) { openAtlas('transits',entry.planetId,entry.impact); }
+function openTransitNotes() {
+  showDialog('Mesures de transit','journal-open');
+  const ready=Promise.all([import('./transit-notebook.js'),loadPanelStyles('transits')])
+    .then(([module])=>host=>{
+      const back=document.createElement('button');
+      back.type='button';back.className='chart-secondary';back.textContent='Retour au carnet';back.onclick=openJournal;
+      const list=document.createElement('div');host.append(back,list);
+      return module.createTransitNotebook(list,{objects,onRecall:recallTransit}).dispose;
+    });
+  releaseChart=openAtlasModule(dialogBody,ready,'du carnet de mesures');
+}
+function openTransitObservation(id) {
+  showDialog('Photométrie de HD 209458 b','atlas-open');
+  const ready=Promise.all([import('./transit-observation.js'),loadPanelStyles('transits')])
+    .then(([module])=>host=>module.createTransitObservation(host,{onReturn:()=>openAtlas('transits',id)}));
+  releaseChart=openAtlasModule(dialogBody,ready,'de la photométrie');
+}
 function openJournal() {
   showDialog('Carnet de vol','journal-open');
   const save = document.createElement('button');
@@ -1155,7 +1200,10 @@ function openJournal() {
   const album=document.createElement('button');
   album.type='button';album.className='archive-entry';album.dataset.openAlbum='';
   album.innerHTML=icon('photo')+'Album d’exploration';album.onclick=openStudioGallery;
-  dialogBody.append(save,album);
+  const transits=document.createElement('button');
+  transits.type='button';transits.className='archive-entry';transits.dataset.journalTransits='';
+  transits.textContent='Mesures de transit';transits.onclick=openTransitNotes;
+  dialogBody.append(save,album,transits);
   for (const {lab,id,symbol,label} of [
     {lab:phaseLab,id:'phase',symbol:'eclipse',label:'Reprendre l’observation des phases'},
     {lab:travellerLab,id:'traveller',symbol:'navigate',label:'Reprendre le suivi des trajectoires'},

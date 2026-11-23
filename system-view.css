@@ -150,6 +150,28 @@
 .system-secondary:hover,.system-icon:hover { border-color:#e6b57d; }
 .system-observe:hover { background:#ffd19c; }
 .system-clock-slot { flex:none; }
+.system-orbit-tools {
+  position:absolute;top:4px;left:max(var(--system-pad),env(safe-area-inset-left));
+  display:flex;align-items:center;gap:5px;
+}
+.system-orbit-tools .system-secondary {
+  padding:0 9px;background:#101923ed;border-color:#7e9aa74d;font:600 12px/1.1 var(--sans);
+}
+.system-orbit-tools [aria-pressed=true] {border-color:#92c6d3;color:#c6eff8}
+[data-system-marker]::before {
+  content:'';display:inline-block;width:6px;height:6px;margin-right:7px;
+  border:1px solid #c3e5f0;transform:rotate(45deg);vertical-align:1px;
+}
+.system-marker-time {padding:3px 5px;border-radius:3px;background:#08121bd9;color:#d6eaf0;font:10px/1.2 var(--mono)}
+.system-scale {
+  position:absolute;bottom:30px;left:max(var(--system-pad),env(safe-area-inset-left));padding-bottom:3px;
+  border-bottom:1px solid #c8deeb;color:#dfebf1;text-align:center;white-space:nowrap;
+  pointer-events:none;font:10px/1.1 var(--mono);font-variant-numeric:tabular-nums;text-shadow:0 1px 3px black;
+}
+.system-scale::before,.system-scale::after {content:'';position:absolute;bottom:-1px;height:4px;border-left:1px solid #c8deeb}
+.system-scale::before {left:0}.system-scale::after {right:0}
+.system-transit {border-color:#729daa84;color:#c7eaf3;background:#12232e}
+.system-compact-period,.system-transit-short {display:none}
 @media (max-width:1100px) {
   .system-specimen {display:none;}
   .system-foot { gap:13px;padding-inline:18px; }
@@ -175,6 +197,9 @@
   .system-head { padding-inline:12px; }
 }
 @media (max-width:520px) {
+  .system-orbit-tools {left:8px;top:2px}
+  .system-scale {left:10px;bottom:31px;font-size:9px}
+  .system-actions:has(.system-transit:not([hidden])) {flex-shrink:0}
   .system-head { gap:5px; }
   .system-title { flex:1;max-width:none; }
   .system-title select { padding-right:15px; }
@@ -197,8 +222,21 @@
 @media (max-width:355px) {
   .system-head {padding-inline:7px;}
   .system-title select {font-size:21px;}
+  [data-exoplanet-system] .system-discover {width:44px}
+  [data-exoplanet-system] .system-discover span {display:none}
+}
+@media (max-width:520px),(max-height:470px) and (orientation:landscape) {
+  [data-exoplanet-system] .system-identity {flex:1 1 auto;min-width:0;max-width:none}
+  [data-exoplanet-system] .system-identity:has(.system-compact-period:not([hidden]))>span:first-child,
+  .system-transit-full {display:none}
+  .system-compact-period:not([hidden]),.system-transit-short {display:block}
+  [data-exoplanet-system] .system-identity select {font-size:clamp(16px,5vw,22px)}
+  [data-exoplanet-system] .system-actions {flex-shrink:0}
 }
 @media (max-height:470px) and (orientation:landscape) {
+  .system-orbit-tools {left:9px;top:2px}
+  .system-scale {left:9px;bottom:19px;font-size:9px}
+  .system-actions:has(.system-transit:not([hidden])) {gap:3px}
   .system-head { padding:2px 10px; }
   .system-title { display:flex;align-items:center;gap:8px; }
   .system-title>span { display:none; }
