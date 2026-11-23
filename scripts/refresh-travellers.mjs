@@ -10,7 +10,7 @@ const unixJd = 2440587.5;
 const marker = /\/\/ BEGIN HORIZONS TABLES[\s\S]*?\/\/ END HORIZONS TABLES/g;
 const targets = [
   ['halley','DES=1P;CAP;NOFRAG',/\b1P\/Halley\b/i],
-  ['oumuamua','50788063',/Oumuamua/i],
+  ['oumuamua','DES=2017 U1;',/Oumuamua/i],
   ['voyager-1','-31',/Voyager 1 .*\(-31\)/i],
   ['voyager-2','-32',/Voyager 2 .*\(-32\)/i]
 ];
