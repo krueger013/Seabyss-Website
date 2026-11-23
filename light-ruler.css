@@ -1,0 +1,30 @@
+.light-ruler {
+  color:#eee8dd;
+  margin:.45rem 0 1rem;
+  padding:clamp(.7rem,2.5vw,1.25rem);
+  border:1px solid #484a49;
+  border-radius:7px;
+  background:linear-gradient(135deg,#16202a,#10171e 70%);
+}
+.light-fields,.light-readings {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem 1rem}
+.light-fields label,.light-playback label {display:grid;gap:.3rem;color:#c5cdd1;font-size:.86rem}
+.light-fields select,.light-playback button {color:#f4ede2;background:#19232c;border:1px solid #55626b;border-radius:5px;min-height:44px;padding:0 .55rem;font:inherit}
+.light-fields select {width:100%;min-width:0}
+.light-readings {margin:1rem 0 .6rem}
+.light-readings dt {color:#c1c8cb;font-size:.83rem}
+.light-readings dd {margin:.18rem 0 0;color:#ffe4bd;font:normal clamp(1.1rem,3.2vw,1.6rem)/1.15 Georgia,serif;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.light-track {position:relative;margin:.6rem .6rem 0;height:27px;--progress:0%}
+.light-beam {position:absolute;inset:50% 0 auto;height:1px;background:linear-gradient(to right,var(--origin),var(--destination));opacity:.62}
+.light-emitter,.light-receiver,.light-pulse {position:absolute;top:50%;transform:translate(-50%,-50%);border-radius:50%}
+.light-emitter,.light-receiver {width:13px;height:13px;left:0;background:var(--origin);outline:1px solid #d9dadd60;outline-offset:2px}
+.light-receiver {left:100%;background:var(--destination)}
+.light-pulse {left:var(--progress);width:6px;height:6px;background:#fff;box-shadow:0 0 7px 2px #ffda9590}
+.light-endpoints {display:flex;justify-content:space-between;gap:.5rem;color:#d6d9d8;font-size:.86rem}
+.light-endpoints span:last-child {text-align:right}
+.light-playback {display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-top:.9rem}
+.light-playback button {cursor:pointer;min-width:8rem}
+.light-playback label {flex:1 1 10rem;grid-template-columns:1fr auto;align-items:center}
+.light-playback output {font-variant-numeric:tabular-nums}
+.light-playback input {grid-column:1/-1;width:100%;margin:0;accent-color:#edc58b;min-height:30px}
+.light-note {margin:.6rem 0 0;line-height:1.45;color:#b7c1c7;font-size:.81rem}
+@media(max-width:405px){.light-fields{grid-template-columns:1fr}.light-readings{gap:.6rem}.light-playback input{min-height:44px}}

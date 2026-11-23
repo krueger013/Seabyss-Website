@@ -167,7 +167,7 @@ export class Navigation {
     if (!this.route) return 0;
     const { elapsed, duration, length } = this.route;
     const span = Math.log1p(length / LIGHT_YEAR) / Math.log(101);
-    return Math.sin(Math.PI * elapsed / duration) ** 2 * Math.min(1, span);
+    return Math.sin(Math.PI * Math.min(1, elapsed / duration)) ** 2 * Math.min(1, span);
   }
   get speed() { return Math.min(1e8 * LIGHT_YEAR, localScale(this.view.position,this.catalog) * 0.42 * 2 ** this.speedStep); }
 
@@ -196,7 +196,9 @@ export class Navigation {
     const departure = unit(startOffset);
     this.selectedId = id;
     this.lastTargetPosition = target.position.slice();
-    this.route = { start, end, length, departure, approachDirection: arrivalDirection(target,this.sun), startScale, endScale: framingDistance(target),
+    const endScale = framingDistance(target);
+    const lensLift = 4 * DEG * Math.min(1, Math.log10(1 + length / Math.min(startScale,endScale)) / 4);
+    this.route = { start, end, length, departure, approachDirection: arrivalDirection(target,this.sun), startScale, endScale, lensLift, progress:0,
       departureBody: Math.hypot(...startOffset) < 32*departureBody.radius ? departureBody : null, startOffset,
       yaw: this.view.yaw, targetYaw: this.view.yaw, pitch: this.view.pitch, fov: this.view.fov, elapsed: 0,
       duration: clamp(1.45 + 0.16 * Math.log10(1 + length / Math.min(startScale, target.radius)), 1.45, 4.6) };
@@ -204,6 +206,13 @@ export class Navigation {
   }
 
   cancelTravel() { this.route = null; this.pointRoute = null; }
+
+  finishTravel() {
+    if (this.route) {
+      this.route.progress = 1;
+      this.frame();
+    } else if (this.pointRoute) this.updatePointRoute(1);
+  }
 
   bodyAlong(direction,tolerance=0) {
     const ray=unit(direction);
@@ -278,7 +287,7 @@ export class Navigation {
     route.elapsed += dt;
     if (route.elapsed >= route.duration) {
       const final = guidedStep(this.view.position,route.end,this.solids);
-      if (final === route.end) this.frame();
+      if (final === route.end) this.finishTravel();
       else {
         this.view.position = final;
         const [dx,dy,dz] = delta(this.selected.position,final);
@@ -306,6 +315,7 @@ export class Navigation {
     const desired = route.start.map((n, i) => n * a + route.end[i] * b
       + route.departure[i] * leave + route.approachDirection[i] * approach);
     this.view.position = guidedStep(this.view.position,desired,this.solids);
+    route.progress = phase;
     const [dx, dy, dz] = delta(this.selected.position, this.view.position);
     const align = Math.min(1, ratio / 0.32);
     const turn = align * align * (3 - 2 * align);
@@ -314,7 +324,10 @@ export class Navigation {
     route.targetYaw += wrap(Math.atan2(dx, -dz) - route.targetYaw);
     this.view.yaw = wrap(route.yaw + turn * (route.targetYaw - route.yaw));
     this.view.pitch = route.pitch + turn * (Math.atan2(dy, Math.hypot(dx, dz)) - route.pitch);
-    this.view.fov = route.fov + (DEFAULT_FOV - route.fov) * phase;
+    // A smooth, bounded widening during cruise returns to the target's normal
+    // framing at arrival, with zero slope at either end.
+    const lensEnvelope = 16 * phase ** 2 * (1 - phase) ** 2;
+    this.view.fov = route.fov + (DEFAULT_FOV - route.fov) * phase + route.lensLift * lensEnvelope;
   }
 
   update(dt, input = {}) {

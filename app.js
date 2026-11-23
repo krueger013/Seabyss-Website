@@ -1,5 +1,6 @@
 import { AU, LIGHT_YEAR } from './catalog.js';
 import { Navigation } from './navigation.js';
+import { createVoyageIndicator } from './voyage-indicator.js';
 import { UniverseRenderer, directionAtPixel } from './renderer.js';
 import { createEarthOverflight, DEFAULT_OVERFLIGHT_ALTITUDE } from './earth-overflight.js';
 import { createDoublePress } from './double-press.js';
@@ -17,12 +18,15 @@ const $ = selector => document.querySelector(selector);
 const sim = new OrbitalSimulation();
 const objects = sim.objects;
 const nav = new Navigation(objects);
+const syncVoyage = createVoyageIndicator($('.stage-heading'));
 const canvas = $('#space');
 const dialog = $('#overlay');
 const dialogBody = $('#dialog-body');
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 sim.setPaused(motionPreference.matches);
-motionPreference.addEventListener('change', event => { if (event.matches) sim.setPaused(true); });
+motionPreference.addEventListener('change', event => {
+  if (event.matches) { sim.setPaused(true); nav.finishTravel(); updateTelemetry(); }
+});
 const featureIds = ['earth', 'moon', 'saturn', 'proxima', 'milky-way', 'andromeda'];
 const bookmarksKey = 'seabyss-universe.positions.v1';
 const symbols = {
@@ -325,23 +329,25 @@ $('#climate-lab').addEventListener('keydown',event=>{
   if(event.key!=='Escape' || event.defaultPrevented) return;
   event.preventDefault();exitClimate();
 });
+const loadedPanelStyles=new Map();
+function loadPanelStyles(id) {
+  if (loadedPanelStyles.has(id)) return loadedPanelStyles.get(id);
+  const fragment=document.getElementById(id+'-styles').content.cloneNode(true);
+  const elements=[...fragment.children];
+  const waiting=elements.filter(el=>el.tagName==='LINK').map(el=>new Promise((resolve,reject)=>{
+    el.onload=resolve;el.onerror=reject;
+  }));
+  document.head.append(fragment);
+  const ready=Promise.all(waiting).catch(error=>{
+    for(const el of elements) el.remove();
+    loadedPanelStyles.delete(id);throw error;
+  });
+  loadedPanelStyles.set(id,ready);
+  return ready;
+}
 function createAtlasLab(id,load,label,extra={}) {
   const root=$('#'+id+'-workspace'), key='seabyss-universe.'+id+'.v1', activeClass=id+'-active';
-  let instance, returnTo, stylesReady;
-  function loadStyles() {
-    if(stylesReady) return stylesReady;
-    const fragment=document.getElementById(id+'-styles').content.cloneNode(true);
-    const elements=[...fragment.children];
-    const waiting=elements.filter(el=>el.tagName==='LINK').map(el=>new Promise((resolve,reject)=>{
-      el.onload=resolve;el.onerror=reject;
-    }));
-    document.head.append(fragment);
-    stylesReady=Promise.all(waiting).catch(error=>{
-      for(const el of elements) el.remove();
-      stylesReady=null;throw error;
-    });
-    return stylesReady;
-  }
+  let instance, returnTo;
   const isOpen=()=>!!instance&&!root.hidden;
   function saved() {try {return JSON.parse(localStorage.getItem(key));} catch {return null;}}
   function store(snapshot) {
@@ -360,7 +366,7 @@ function createAtlasLab(id,load,label,extra={}) {
     const request=++landingRequest;
     if (!instance) {
       try {
-        const [create]=await Promise.all([load(),loadStyles()]);
+        const [create]=await Promise.all([load(),loadPanelStyles(id)]);
         if(request!==landingRequest) return;
         instance=create(root,{onExit:exit,onCapture:openStudio,onChange:store,notify:announce,
           reduceMotion:()=>motionPreference.matches,...extra});
@@ -471,6 +477,7 @@ function syncTarget() {
   updateTelemetry();
 }
 function updateTelemetry() {
+  syncVoyage(nav.route,nav.selected.name);
   setText('mode-status', nav.travelling ? 'Voyage en cours' : overflight ? 'Survol terrestre' : flying ? 'Vol libre' : 'Observation');
   const distance = measure(nav.distance);
   setText('distance', distance);
@@ -749,7 +756,8 @@ dialog.onclick = event => {
   const r = dialog.getBoundingClientRect();
   if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();
 };
-const fold = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const fold = value => value.toLowerCase().normalize('NFD').replace(/\p{M}/gu,'')
+  .replaceAll('œ','oe').replaceAll('æ','ae').replaceAll('ε','epsilon').replaceAll('τ','tau').replace(/[^\p{L}\p{N}]/gu,'');
 function renderDirectory(container) {
   container.innerHTML = '<div class="atlas-search-line"><label class="search-wrap">' + icon('search') + '<input type="search" aria-label="Rechercher un astre" placeholder="Rechercher un astre…" autocomplete="off"></label><select class="atlas-filter" aria-label="Catégorie"><option value="">Tous les astres</option><option value="planet">Planètes</option><option value="moon">Lunes</option><option value="star">Étoiles</option><option value="galaxy">Galaxies</option><option value="simulation">Simulations</option></select></div><p class="atlas-group-count" aria-live="polite"></p><div class="atlas-list"></div>';
   const list = container.querySelector('.atlas-list');
@@ -791,7 +799,13 @@ function renderDirectory(container) {
     }
     const n = list.children.length;
     container.querySelector('.atlas-group-count').textContent = n + (n > 1 ? ' destinations' : ' destination');
-    if (!n) list.innerHTML = '<p class="empty-copy">Aucun astre ne correspond à cette recherche.</p>';
+    if (!n) {
+      const empty=document.createElement('p'),reset=document.createElement('button');
+      empty.className='empty-copy';empty.textContent='Aucun astre ne correspond à cette recherche.';
+      reset.type='button';reset.className='chart-secondary';reset.textContent='Afficher tous les astres';
+      reset.onclick=()=>{search.value='';category.value='';filter();search.focus();};
+      list.append(empty,reset);
+    }
     icons(dialogBody);
   }
   search.oninput = filter;
@@ -887,6 +901,12 @@ function openDossier() {
   const distanceFromSun = Math.hypot(...body.position.map((n,i) => n-solar.position[i]));
   const readings = [['Région',region(body)],[body.radiusBasis==='field'?'Rayon du champ illustré':'Rayon de référence',measure(body.radius)]];
   if (body.id !== 'sun') readings.push(['Distance au Soleil',measure(distanceFromSun)]);
+  if (body.stellarNeighborhood) {
+    const raMinutes=Math.round(body.raHours*60)%1440;
+    readings.push(['Type spectral',body.spectralType],
+      ['Ascension droite (J2000)',Math.floor(raMinutes/60)+' h '+String(raMinutes%60).padStart(2,'0')+' min'],
+      ['Déclinaison (J2000)',numeric[2].format(body.decDegrees)+'°']);
+  }
   if (body.orbitPeriodDays) readings.push(['Période orbitale',numeric[2].format(body.orbitPeriodDays)+' j']);
   if (body.rotationPeriodHours) readings.push(['Rotation',numeric[2].format(Math.abs(body.rotationPeriodHours))+' h'+(body.rotationPeriodHours<0?' · rétrograde':'')]);
   for (const [name,val] of readings) {
@@ -894,6 +914,25 @@ function openDossier() {
     dt.textContent=name;dd.textContent=val;pair.append(dt,dd);data.append(pair);
   }
   dialogBody.append(meta,description,data);
+  if (!body.simulated) {
+    const ruler=document.createElement('details'), heading=document.createElement('summary'), host=document.createElement('div');
+    ruler.dataset.lightRuler='';
+    heading.className='archive-entry';
+    heading.textContent='Mesurer un trajet de lumière';
+    ruler.append(heading,host);dialogBody.append(ruler);
+    ruler.ontoggle=()=>{
+      if (!ruler.open || !ruler.isConnected || host.childElementCount) return;
+      const ready=Promise.all([import('./light-ruler.js'),loadPanelStyles('light')])
+        .then(([module])=>container=>module.createLightRuler(container,{objects,target:body,measure}));
+      releaseChart=openAtlasModule(host,ready,'de la mesure de distance');
+    };
+    if (body.radiusBasis!=='field' && ['star','planet','moon','dwarf','asteroid'].includes(body.kind)) {
+      const compare=document.createElement('button');
+      compare.type='button';compare.className='archive-entry';compare.dataset.dossierCompare=body.id;
+      compare.textContent='Comparer son diamètre';
+      compare.onclick=()=>openAtlas('compare',body.id);dialogBody.append(compare);
+    }
+  }
   if(body.orbitPhaseIllustrative) {
     const note=document.createElement('p');note.className='help-copy';
     note.textContent='La phase de départ de cette orbite est illustrative.';dialogBody.append(note);
@@ -901,6 +940,18 @@ function openDossier() {
   if(body.sourceUrl) {
     const source=document.createElement('a');source.className='archive-entry';source.target='_blank';source.rel='noopener noreferrer';
     source.href=body.sourceUrl;source.textContent='Consulter la fiche astronomique de référence';dialogBody.append(source);
+  }
+  if (body.stellarNeighborhood) {
+    const notes=document.createElement('details'),summary=document.createElement('summary');
+    summary.className='archive-entry';summary.textContent='Catalogue et méthode';
+    const note=document.createElement('p');note.className='help-copy';
+    note.textContent='La distance est déduite de la parallaxe. Les coordonnées donnent la direction à l’époque J2000. La surface stellaire est une illustration.';
+    notes.append(summary,note);
+    for (const [title,url] of [['Positions du catalogue RECONS',body.positionSourceUrl],['Parallaxes du catalogue des 10 parsecs',body.distanceSourceUrl]]) {
+      const link=document.createElement('a');link.className='archive-entry';link.target='_blank';link.rel='noopener noreferrer';
+      link.href=url;link.textContent=title;notes.append(link);
+    }
+    dialogBody.append(notes);
   }
   if(body.morphology==='remnant') {
     const launch=document.createElement('button');
@@ -998,18 +1049,22 @@ function openAtlas(first = 'catalog',initialWorld) {
   dialogBody.append(tools,panel);
   const sections = [
     ['discover','Découvrir', () => {
-      const gallery = document.createElement('div');
-      const archive = document.createElement('button');
-      archive.type='button'; archive.className='archive-entry'; archive.dataset.archiveOpen='';
-      archive.innerHTML=icon('photo')+'Photographies de mission';
-      archive.onclick=() => openPhoto(nav.selectedId,true);
-      panel.append(experienceLinks({surfaces:()=>open('surfaces'),pilot:()=>open('pilot'),phenomena:()=>open('phenomena'),events:()=>open('events'),
+      const experiences=experienceLinks({surfaces:()=>open('surfaces'),pilot:()=>open('pilot'),phenomena:()=>open('phenomena'),events:()=>open('events'),
         sandbox:()=>openSandbox('shatter'),climate:()=>openClimate(),relativity:()=>openRelativity(),waves:()=>openWaves(),
-        phase:()=>phaseLab.open(),traveller:()=>travellerLab.open(),solar:()=>solarLab.open()}),archive,gallery);
-      icons(panel);
-      releaseChart=openAtlasModule(gallery,import('./deep-atlas.js').then(({createDeepAtlas})=>host=>createDeepAtlas(host,{objects,travel,currentId:nav.selectedId})),'de la galerie');
+        phase:()=>phaseLab.open(),traveller:()=>travellerLab.open(),solar:()=>solarLab.open()});
+      releaseChart=openAtlasModule(panel,import('./deep-atlas.js').then(({createDeepAtlas})=>host=>{
+        const dispose=createDeepAtlas(host,{objects,travel,experiences,
+          openArchive:()=>openPhoto(nav.selectedId,true),openCompare:()=>openAtlas('compare')});
+        icons(host);
+        return dispose;
+      }),'de la galerie');
     }],
     ['catalog','Répertoire', () => renderDirectory(panel)],
+    ['compare','Comparer', () => {
+      const ready=Promise.all([import('./size-comparison.js'),loadPanelStyles('compare')])
+        .then(([module])=>host=>module.createSizeComparison(host,{objects,initialId:initialWorld || nav.selectedId,onVisit:id=>travel(id,false)}));
+      releaseChart=openAtlasModule(panel,ready,'du comparateur');
+    }],
     ['events','Cataclysmes', () => {
       releaseChart=openAtlasModule(panel,import('./cosmic-events.js').then(({renderCosmicEvents})=>host=>
         renderCosmicEvents(host,openSandbox,()=>openAtlas('phenomena','supernova'))),'des cataclysmes');
@@ -1314,6 +1369,7 @@ function draw(now) {
       if (turn || tilt) nav.look(turn * dt * 1.4, tilt * dt * 1.4);
     }
     nav.update(dt, flying ? input() : {});
+    if (syncVoyage(nav.route,nav.selected.name)) updateTelemetry();
     cinema.tick(dt);
     if (overflight && !nav.travelling) {
       const earth=nav.selected;

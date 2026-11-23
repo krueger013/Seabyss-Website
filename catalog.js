@@ -1,6 +1,7 @@
 // One world unit is one kilometre. The catalog is the simulation's initial snapshot.
 // Distances to external objects and visible galaxy radii are rounded estimates.
 import { createDeepSpaceCatalog } from './deep-space-catalog.js';
+import { createNearbyStars } from './nearby-stars.js';
 import { createSolarWorlds } from './solar-worlds.js';
 
 export const AU = 149597870.7;
@@ -180,6 +181,7 @@ const baseObjects = [
   ...stellarData.map(([id, name, spectral, radius, position, color, description]) =>
     body(id, name, 'star', 'Étoile · ' + spectral, name, radius * solarRadius, position, color, description)),
   ...majorSatellites,
+  ...createNearbyStars({body, skyPosition, solarRadius}),
   ...generateSystem(1697),
   ...createDeepSpaceCatalog({body, skyPosition, AU, LIGHT_YEAR})
 ];

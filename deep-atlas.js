@@ -24,6 +24,7 @@ const editorial = ['orion-nebula','cassiopeia-a','pleiades','butterfly-nebula','
   'ring-nebula','hercules-cluster','55-cancri-e','eagle-nebula','m87','dumbbell-nebula','beehive',
   'hd-189733-b','bodes-galaxy','wild-duck','kepler-186-f','lagoon-nebula','carina-nebula'];
 const format = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:1});
+const starDistanceFormat = new Intl.NumberFormat('fr-CA',{maximumFractionDigits:2});
 const kindOptions = [['all','Toutes les familles'],['nebula','Nébuleuses'],['cluster','Amas d’étoiles'],['galaxy','Galaxies'],['planet','Exoplanètes'],['star','Étoiles']];
 const phenomena = [
   ['remnant','Rémanents de supernova', b => b.morphology === 'remnant'],
@@ -63,7 +64,64 @@ function selectFilter(attribute, label, entries) {
   return {field,select};
 }
 
-export function createDeepAtlas(container, {objects, travel}) {
+function discoveryTools({objects, travel, experiences, openArchive, openCompare}) {
+  const tools=node('section','discover-tools');
+  tools.setAttribute('aria-label','Outils de découverte');
+  const bar=node('div','discover-actions');
+  const panels=[];
+  function action(attribute,label,icon,activate) {
+    const button=node('button','discover-choice');
+    button.type='button'; button.setAttribute(attribute,'');
+    const glyph=node('i');
+    glyph.dataset.icon=icon;
+    glyph.setAttribute('aria-hidden','true');
+    button.append(glyph,node('span','',label));
+    button.onclick=activate;
+    bar.append(button);
+    return button;
+  }
+  function disclosure(attribute,label,icon,panel,id) {
+    const button=action(attribute,label,icon,()=>{
+      const show=panel.hidden;
+      for (const item of panels) {
+        const selected=show && item.panel===panel;
+        item.panel.hidden=!selected;
+        item.button.setAttribute('aria-expanded',String(selected));
+      }
+    });
+    panel.id=id; panel.hidden=true;
+    button.setAttribute('aria-expanded','false');
+    button.setAttribute('aria-controls',id);
+    panels.push({button,panel});
+  }
+  const nearby=objects.filter(b=>b.stellarNeighborhood)
+    .sort((a,b)=>a.distanceLY-b.distanceLY);
+  if (nearby.length) {
+    const neighbours=node('section','discover-neighbours');
+    neighbours.append(node('h3','','Étoiles proches du Soleil'));
+    const list=node('ol','discover-stars');
+    for (const body of nearby) {
+      const item=node('li'),button=node('button');
+      button.type='button'; button.dataset.nearbyTravel=body.id; button.onclick=()=>travel(body.id);
+      const star=node('span','discover-star');
+      star.style.setProperty('--star-color',body.color); star.setAttribute('aria-hidden','true');
+      const identity=node('span','discover-star-name',body.name);
+      identity.append(node('small','','Type spectral '+body.spectralType));
+      button.append(star,identity,node('span','discover-distance',starDistanceFormat.format(body.distanceLY)+' al'));
+      item.append(button); list.append(item);
+    }
+    neighbours.append(list);
+    disclosure('data-discover-nearby','Voisinage stellaire','navigate',neighbours,'atlas-nearby-stars');
+  }
+  action('data-discover-compare','Comparer les astres','grid',openCompare);
+  disclosure('data-discover-labs','Laboratoires','fragments',experiences,'atlas-discovery-labs');
+  action('data-archive-open','Photos de mission','photo',openArchive);
+  tools.append(bar,...panels.map(item=>item.panel));
+  return tools;
+}
+
+export function createDeepAtlas(container, options) {
+  const {objects,travel}=options;
   const gallery=node('section','deep-gallery');
   gallery.setAttribute('aria-label','Découvrir le ciel profond');
   const discovered=objects.filter(b=>b.observation && !b.simulated && !b.solarFamily);
@@ -84,7 +142,7 @@ export function createDeepAtlas(container, {objects, travel}) {
   searchField.append(node('span','','Rechercher un astre'),search);
   const count=node('output','deep-count');
   count.setAttribute('aria-live','polite');
-  filters.append(family.field,zone.field,searchField,count);
+  filters.append(searchField,family.field,zone.field,count);
   const hero=node('div','deep-feature');
   const cards=node('div','deep-grid');
   const credits=node('details','deep-credits');
@@ -116,8 +174,17 @@ export function createDeepAtlas(container, {objects, travel}) {
     const artwork=node('div',body.radiusBasis==='field'?'deep-artwork deep-field':'deep-artwork');
     const image=node('img');
     image.alt=''; image.decoding='async'; image.loading=featured?'eager':'lazy';
+    if (featured) image.fetchPriority='high';
     image.src=assetUrl('deep-thumb-'+body.id+'.webp');
-    artwork.append(image);
+    const plate=body.id==='orion-nebula'?'orion-vis':body.radiusBasis==='field' && photos[body.id]?body.id:null;
+    if (featured && plate) {
+      const picture=node('picture');
+      const source=node('source');
+      source.media='(min-width: 680px), (min-resolution: 1.5dppx)';
+      source.srcset=assetUrl('plate-'+plate+'.webp');
+      picture.append(source,image);
+      artwork.append(picture);
+    } else artwork.append(image);
     const copy=node('div','deep-copy');
     const designation=body.designation.split(' · ')[0];
     const tag=designation.toLowerCase()===body.name.toLowerCase()?body.category:designation;
@@ -141,6 +208,9 @@ export function createDeepAtlas(container, {objects, travel}) {
     const familyValue=family.select.value;
     const phenomenon=phenomena.find(([value])=>value===familyValue);
     const term=searchKey(search.value);
+    const filtered=familyValue!=='all'||zone.select.value!=='all'||Boolean(term);
+    if (filtered && hero.previousElementSibling!==filters) filters.after(hero);
+    if (!filtered && gallery.firstElementChild!==hero) gallery.prepend(hero);
     const matching=discovered.filter(b=>(phenomenon?phenomenon[2](b):familyValue==='all'||b.kind===familyValue) &&
       (zone.select.value==='all'||region(b)===zone.select.value) && searchIndex.get(b.id).some(s=>s.includes(term)));
     count.textContent=matching.length+' destination'+(matching.length===1?'':'s');
@@ -158,7 +228,7 @@ export function createDeepAtlas(container, {objects, travel}) {
   }
   family.select.onchange=zone.select.onchange=filter;
   search.oninput=filter;
-  gallery.append(filters,hero,cards,credits);
+  gallery.append(hero,discoveryTools(options),filters,cards,credits);
   container.replaceChildren(gallery);
   filter();
   return () => { disposed=true; };

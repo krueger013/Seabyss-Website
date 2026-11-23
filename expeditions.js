@@ -91,6 +91,15 @@ const routes = [
       ['kepler-remnant','Cette autre explosion est devenue visible en 1604. Change de point de vue autour de son enveloppe.'],
       ['sn1006','Ouvre la photographie en rayons X et retrouve les deux bords brillants de la coquille.']
     ]
+  },
+  {
+    title: 'Les voisines du Soleil',
+    stops: [
+      ['lalande-21185', 'Commence à 8,3 années-lumière du Soleil. Cette naine rouge fait environ deux cinquièmes de son rayon.'],
+      ['epsilon-eridani', 'Passe du type M au type K. Epsilon Eridani a une photosphère plus chaude et un rayon presque deux fois plus grand que celui de Lalande 21185.'],
+      ['ross-128', 'Compare leurs tailles. Le rayon de Ross 128 atteint à peine plus d’un cinquième du rayon solaire.'],
+      ['tau-ceti', 'Termine près d’une étoile de type G, comme le Soleil. La lumière de Tau Ceti met presque douze ans pour nous parvenir.']
+    ]
   }
 ];
 

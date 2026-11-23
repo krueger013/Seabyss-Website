@@ -1,0 +1,42 @@
+.stage-heading .voyage-slot {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:9px;
+  width:clamp(126px,43vw,190px);
+}
+.stage-heading [data-voyage] {
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  align-items:baseline;
+  gap:5px 10px;
+  width:100%;
+  pointer-events:none;
+}
+.stage-heading [data-voyage][hidden], .stage-heading[data-guided] .voyage-slot > .indicator {display:none}
+.stage-heading[data-guided] #mode-status {
+  position:absolute;
+  width:1px;
+  height:1px;
+  clip-path:inset(50%);
+  overflow:hidden;
+}
+[data-voyage-phase] {color:#edc18c;font:600 10px/1.1 var(--mono);letter-spacing:.08em}
+[data-voyage-target] {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#eef3f4;
+  font:600 12px/1.2 var(--sans,system-ui);
+  text-align:right;
+  text-transform:none;
+  letter-spacing:0;
+}
+[data-voyage-progress] {
+  grid-column:1/-1;
+  height:3px;
+  overflow:hidden;
+  border-radius:2px;
+  background:#8995a35e;
+}
+[data-voyage-progress] i {display:block;height:100%;background:#f2c38d;transform-origin:left;transform:scaleX(0)}

@@ -15,6 +15,38 @@
 .experience-links [data-experience="waves"] i {color:#c2b2fd}
 .experience-links [data-experience="waves"]:hover {border-color:#bcb1ed}
 .experience-links button:focus-visible {outline:2px solid #ffc7aa;outline-offset:-2px}
+.discover-tools {margin:16px 0 20px}
+.discover-tools [hidden] {display:none}
+.discover-actions {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.discover-choice {display:flex;align-items:center;gap:8px;justify-content:flex-start;min-width:0;min-height:44px;padding:7px 10px;border:1px solid #697f8e60;border-radius:5px;background:#18242d;color:#edf0f1;text-align:left;font:600 13px/1.2 var(--sans);cursor:pointer;touch-action:manipulation}
+.discover-choice i {flex:none;color:#e3bb8e}
+.discover-choice i svg {width:16px;height:16px}
+.discover-choice[aria-expanded]::after {content:"";flex:none;width:6px;height:6px;margin-inline-start:auto;border:solid #a9b3b9;border-width:0 1px 1px 0;transform:rotate(45deg) translateY(-2px)}
+.discover-choice[aria-expanded="true"] {border-color:#cf9d68;background:#2e2a26}
+.discover-choice[aria-expanded="true"]::after {transform:rotate(225deg)}
+.discover-choice:focus-visible,.discover-stars button:focus-visible {outline:2px solid #ffc7aa;outline-offset:-2px}
+.discover-tools .experience-links,.discover-neighbours {margin:8px 0 0;padding:9px;background:#0d161e;border:1px solid #697f8e45;border-radius:6px}
+.discover-neighbours h3 {margin:3px 1px 10px;color:#f1e8da;font:400 22px/1.15 var(--serif)}
+.discover-stars {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;list-style:none;margin:0;padding:0}
+.discover-stars button {display:flex;align-items:center;gap:9px;width:100%;min-height:44px;padding:5px 9px;text-align:left;background:#18242e;color:#f2efeb;border:1px solid #47566483;border-radius:4px;font:500 13px var(--sans);cursor:pointer}
+.discover-star {flex:none;width:8px;height:8px;margin:0 3px;border-radius:50%;background:var(--star-color)}
+.discover-star-name small {display:block;margin-top:2px;color:#afbec6;font:11px/1.2 var(--sans)}
+.discover-distance {flex:none;margin-left:auto;color:#c9b391;font:11px var(--mono)}
+@media(hover:hover) {
+  .discover-choice:hover,.discover-stars button:hover {border-color:#cdad88;background:#24313b}
+}
+@media(max-width:680px) {
+  .discover-actions {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .discover-tools {margin:10px 0 15px}
+}
+@media(max-width:440px) {
+  .discover-choice {gap:5px;padding:6px;font-size:12px}
+  .discover-stars {grid-template-columns:minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:no-preference) {
+  .discover-tools :is(.experience-links,.discover-neighbours):not([hidden]) {animation:discover-reveal .16s ease-out}
+  @keyframes discover-reveal {from{opacity:.4;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+}
 .landing-intro {margin:8px 0 14px;color:#c6cbd1;font-size:14px;line-height:1.45}
 .landing-status {margin:0 0 8px;padding:8px 10px;border-left:2px solid #e9b378;background:#251d16;color:#f6debf}
 .pilot-choices {display:grid;gap:7px}
