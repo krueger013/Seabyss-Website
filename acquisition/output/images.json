@@ -76,5 +76,83 @@
         "sha256": "03bd4f4521829245a2d7e13bcb7d7d8a4567b4f579dbcbb906fa2bc372ca7e6c"
       }
     ]
+  },
+  {
+    "id": "cassiopeia-a",
+    "source": "https://chandra.harvard.edu/photo/2025/casa/casa_xray.jpg",
+    "final": "https://chandra.harvard.edu/photo/2025/casa/casa_xray.jpg",
+    "original": [
+      864,
+      864
+    ],
+    "sha256": "f3f0500ee0442c7b743e4ccf42e5fefd6df655beed8344cd618baf70d697cb22",
+    "assets": [
+      {
+        "name": "deep-thumb-cassiopeia-a.webp",
+        "width": 400,
+        "height": 400,
+        "bytes": 18436,
+        "sha256": "ed30d0decd0715f7729871a07900033bde2c1d68ae6a309656c4a65599de506b"
+      },
+      {
+        "name": "plate-cassiopeia-a.webp",
+        "width": 864,
+        "height": 864,
+        "bytes": 96728,
+        "sha256": "9c0fc58231ac61a74a2e6f94caf0d1188676ef1d3e4e95035f54d68650586ca4"
+      }
+    ]
+  },
+  {
+    "id": "southern-ring-nebula",
+    "source": "https://cdn.esawebb.org/archives/images/large/weic2207c.jpg",
+    "final": "https://cdn.esawebb.org/archives/images/large/weic2207c.jpg",
+    "original": [
+      1306,
+      1133
+    ],
+    "sha256": "343146d772560cdf2f42914a3b6df16886189bd175de575aee1e56623a27385c",
+    "assets": [
+      {
+        "name": "deep-thumb-southern-ring-nebula.webp",
+        "width": 461,
+        "height": 400,
+        "bytes": 9852,
+        "sha256": "868a20314a47690af546ccbdbf346e7488132b1958db0ccfcc7f4ac037fed93f"
+      },
+      {
+        "name": "plate-southern-ring-nebula.webp",
+        "width": 1100,
+        "height": 954,
+        "bytes": 54052,
+        "sha256": "08ae4e7b0e0411145064643d186c9dc407bcf2399bde8ed0a42bb9807997ea03"
+      }
+    ]
+  },
+  {
+    "id": "ngc281",
+    "source": "https://chandra.harvard.edu/photo/2011/ngc281/ngc281_ir.jpg",
+    "final": "https://chandra.harvard.edu/photo/2011/ngc281/ngc281_ir.jpg",
+    "original": [
+      864,
+      653
+    ],
+    "sha256": "f76afd6d031f25b606313e96dbae1bfdc88465589958c33a41785461e7a07d71",
+    "assets": [
+      {
+        "name": "deep-thumb-ngc281.webp",
+        "width": 529,
+        "height": 400,
+        "bytes": 50084,
+        "sha256": "69e4cbb67a064b4c5a6594b8fc631182b0ff5ef9070b4b5c8aae87ba06a346ea"
+      },
+      {
+        "name": "plate-ngc281.webp",
+        "width": 864,
+        "height": 653,
+        "bytes": 156948,
+        "sha256": "a29845ecd98ee32d3371efc2fd3681d32eedfc4f43ecce4003ec9d478df62172"
+      }
+    ]
   }
 ]
