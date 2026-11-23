@@ -1,0 +1,30 @@
+name: Vérifier SEABYSS 22 en production
+on:
+  push:
+    branches: [release/verification-universe-22]
+    paths: ['verification-v22/release.json']
+permissions:
+  contents: read
+jobs:
+  public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    strategy:
+      fail-fast: false
+      matrix:
+        check: [hashes, small, landscape, large]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Tester le domaine public
+        env:
+          CHECK: ${{ matrix.check }}
+        run: |
+          set -eu
+          mkdir -p "$RUNNER_TEMP/seabyss-qa"
+          cp verification-v22/* "$RUNNER_TEMP/seabyss-qa/"
+          cd "$RUNNER_TEMP/seabyss-qa"
+          if [[ "$CHECK" != hashes ]]; then
+            npm install --no-save --no-audit --no-fund playwright-core@1
+            if command -v google-chrome >/dev/null; then export CHROME_PATH=$(command -v google-chrome); else npx playwright-core install --with-deps chromium; fi
+          fi
+          node check.cjs "$CHECK"
