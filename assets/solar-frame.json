@@ -1,8 +1,8 @@
 {
-  "image": "solar-photosphere-272f8fd04345.jpg",
-  "source": "https://sdo.gsfc.nasa.gov/assets/img/browse/2026/11/27/20261127_162238_1024_HMII.jpg",
-  "observedAt": "2026-11-27T16:22:38Z",
-  "retrievedAt": "2026-11-27T16:50:05.903Z",
-  "publishedAt": "Fri, 27 Nov 2026 16:50:07 GMT",
-  "sha256": "272f8fd04345656cc70e51a8e6975118056eb5910cdae708af57c4d97c6a9c7e"
+  "image": "solar-photosphere-d529da70b8ad.jpg",
+  "source": "https://sdo.gsfc.nasa.gov/assets/img/browse/2026/11/28/20261128_010000_1024_HMIIF.jpg",
+  "observedAt": "2026-11-28T01:00:00Z",
+  "retrievedAt": "2026-11-28T01:30:29.404Z",
+  "publishedAt": "Sat, 28 Nov 2026 01:30:12 GMT",
+  "sha256": "d529da70b8ad3cc210aa1456d2e53db2272fee0e522dca687be8e8e6d5691886"
 }
